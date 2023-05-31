@@ -1,0 +1,74 @@
+version: '3'
+services:
+  wallet:
+    build:
+      context: .
+      args:
+        - NODE_ENV=local
+      dockerfile: Dockerfile_wallet
+    ports:
+        - "19000:19000"
+    restart: always
+    volumes:
+      - ./wallet:/home/
+    command: sh -c "npm run web"
+
+  issuerapp:
+    build:
+      context: .
+      args:
+        - NODE_ENV=local
+      dockerfile: Dockerfile_issuerapp
+    ports:
+        - "19001:3000"
+    restart: always
+    volumes:
+      - ./issuerapp:/home/
+    command: sh -c "npm start"
+
+  verifierapp:
+    build:
+      context: .
+      args:
+        - NODE_ENV=local
+      dockerfile: Dockerfile_verifierapp
+    ports:
+        - "19002:3000"
+    restart: always
+    volumes:
+      - ./verifierapp:/home/
+    command: sh -c "npm start"
+
+  walletapi:
+    image: waltid/ssikit
+    ports:
+        - "19010:7002"
+    restart: always
+    entrypoint: /app/bin/waltid-ssikit serve -b 0.0.0.0
+    volumes:
+      - './apidata/walletapidata:/app/data'
+
+  issuerapi:
+    image: waltid/ssikit
+    ports:
+        - "19011:7001"
+    restart: always
+    entrypoint: /app/bin/waltid-ssikit serve -b 0.0.0.0
+    volumes:
+      - './apidata/issuerapidata:/app/data'
+
+  verifierapi:
+    image: waltid/ssikit
+    ports:
+        - "19012:7003"
+    restart: always
+    entrypoint: /app/bin/waltid-ssikit serve -b 0.0.0.0
+    volumes:
+      - './apidata/verifierapidata:/app/data'
+
+
+
+  
+    
+volumes:
+    db_data: {}
