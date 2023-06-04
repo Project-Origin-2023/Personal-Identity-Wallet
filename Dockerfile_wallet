@@ -8,7 +8,7 @@ WORKDIR /home
 # ==== BUILD =====
 # Install dependencies (npm ci makes sure the exact versions in the lockfile gets installed)
 RUN npm install -g npm@9.6.7 \
-    && npm ci 
+    && npm install
 # ==== RUN =======
 # Set the env to "production"
 ENV NODE_ENV production
