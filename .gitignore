@@ -1,3 +1,4 @@
+# lATEX
 *.aux
 *.idx
 *.out
@@ -11,7 +12,6 @@
 *.ind
 *.lof
 *.lot
-*.DS_Store
 
 # Xcode
 !**/*.xcodeproj
@@ -86,6 +86,7 @@ local.properties
 node_modules
 *.log
 .nvm
+package-lock.json
 
 # OS X
 .DS_Store
