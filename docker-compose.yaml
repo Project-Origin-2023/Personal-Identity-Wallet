@@ -11,7 +11,7 @@ services:
     restart: always
     volumes:
       - ./wallet:/home/
-    command: sh -c "npm install && npm run web"
+    command: sh -c "npm run web"
 
   issuerapp:
     build:
@@ -24,7 +24,7 @@ services:
     restart: always
     volumes:
       - ./issuerapp:/home/
-    command: sh -c "npm install && npm start"
+    command: sh -c "npm start"
 
   verifierapp:
     build:
@@ -37,7 +37,7 @@ services:
     restart: always
     volumes:
       - ./verifierapp:/home/
-    command: sh -c "npm install && npm start"
+    command: sh -c "npm start"
 
   walletapi:
     image: waltid/ssikit

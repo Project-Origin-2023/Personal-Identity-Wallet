@@ -1,4 +1,3 @@
-# Latex
 *.aux
 *.idx
 *.out
@@ -12,6 +11,7 @@
 *.ind
 *.lof
 *.lot
+*.DS_Store
 
 # Xcode
 !**/*.xcodeproj
