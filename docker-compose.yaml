@@ -1,50 +1,44 @@
 version: '3'
 services:
-  wallet:
-    build:
-      context: .
-      args:
-        - NODE_ENV=local
-      dockerfile: Dockerfile_wallet
-    ports:
-        - "19000:19000"
-    restart: no
-    volumes:
-      - ./wallet:/home/
-    command: sh -c "npm install && npm run web"
-    networks:
-      - network
-
-  issuerapp:
-    build:
-      context: .
-      args:
-        - NODE_ENV=local
-      dockerfile: Dockerfile_issuerapp
-    ports:
-        - "19001:19001"
-    restart: no
-    volumes:
-      - ./issuerapp:/home/
-    command: sh -c "npm install && npm start"
-    networks:
-      - network
-
-  verifierapp:
-    build:
-      context: .
-      args:
-        - NODE_ENV=local
-      dockerfile: Dockerfile_verifierapp
-    ports:
-        - "19002:19002"
-    restart: no
-    volumes:
-      - ./verifierapp:/home/
-    command: sh -c "npm install && npm start"
-    networks:
-      - network
-
+#  wallet:
+#    build:
+#      context: .
+#      args:
+#        - NODE_ENV=local
+#      dockerfile: Dockerfile_wallet
+#    ports:
+#        - "19000:19000"
+#    restart: no
+#    volumes:
+#      - ./wallet:/home/
+#    command: sh -c "npm install && npm run web"
+#
+#  issuerapp:
+#    build:
+#      context: .
+#      args:
+#        - NODE_ENV=local
+#      dockerfile: Dockerfile_issuerapp
+#    ports:
+#        - "19001:19001"
+#    restart: no
+#    volumes:
+#      - ./issuerapp:/home/
+#    command: sh -c "npm install && npm start"
+#
+#  verifierapp:
+#    build:
+#      context: .
+#      args:
+#        - NODE_ENV=local
+#      dockerfile: Dockerfile_verifierapp
+#    ports:
+#        - "19002:19002"
+#    restart: no
+#    volumes:
+#      - ./verifierapp:/home/
+#    command: sh -c "npm install && npm start"
+#
   walletapi:
     image: waltid/ssikit
     ports:
