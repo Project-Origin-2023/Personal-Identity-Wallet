@@ -1,11 +1,9 @@
 #!/bin/bash
 
-docker-compose up -d &
+docker-compose up -d & #avvia i container necessari
+killall node #spegne i nodi ancora avviati
+./deployIssuerapp.sh & #avvia issuerapp
 
-./deployIssuerapp.sh &
+./deployVerifierapp.sh & #avvia verifierapp
 
-# Avvia lo script2.sh in background
-./deployVerifierapp.sh &
-
-# Avvia lo script3.sh in background
-./deployWallet.sh &
+./deployWallet.sh & #avviawalletapp
