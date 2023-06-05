@@ -12,6 +12,8 @@ services:
     volumes:
       - ./wallet:/home/
     command: sh -c "npm install && npm run web"
+    networks:
+      - network
 
   issuerapp:
     build:
@@ -25,6 +27,8 @@ services:
     volumes:
       - ./issuerapp:/home/
     command: sh -c "npm install && npm start"
+    networks:
+      - network
 
   verifierapp:
     build:
@@ -38,6 +42,8 @@ services:
     volumes:
       - ./verifierapp:/home/
     command: sh -c "npm install && npm start"
+    networks:
+      - network
 
   walletapi:
     image: waltid/ssikit
@@ -47,6 +53,8 @@ services:
     entrypoint: /app/bin/waltid-ssikit serve -b 0.0.0.0
     volumes:
       - './apidata/walletapidata:/app/data'
+    networks:
+      - network
 
   issuerapi:
     image: waltid/ssikit
@@ -56,6 +64,8 @@ services:
     entrypoint: /app/bin/waltid-ssikit serve -b 0.0.0.0
     volumes:
       - './apidata/issuerapidata:/app/data'
+    networks:
+      - network
 
   verifierapi:
     image: waltid/ssikit
@@ -65,9 +75,36 @@ services:
     entrypoint: /app/bin/waltid-ssikit serve -b 0.0.0.0
     volumes:
       - './apidata/verifierapidata:/app/data'
+    networks:
+      - network
+
+  dbissuerapp:
+    image: postgres
+    restart: no
+    environment:
+      POSTGRES_PASSWORD: admin
+      POSTGRES_USER: admin
+      POSTGRES_DB: issuerapp
+    networks:
+      network:
+        ipv4_address: 10.5.0.5
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+    networks:
+      - network
 
 
-
+networks:
+  network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.5.0.0/16
+          gateway: 10.5.0.1
   
     
 volumes:
