@@ -9,7 +9,7 @@ app.use(bodyParser.json());
 // Configurazione del pool di connessione al database PostgreSQL
 const pool = new Pool({
   user: 'admin',
-  host: '10.5.0.5',
+  host: 'localhost',
   database: 'issuerapp',
   password: 'admin',
   port: 5432,
@@ -54,12 +54,12 @@ app.get('/', async (req, res) => {
 // Endpoint per gestire la richiesta di credenziale
 app.post('/credential/request', async (req, res) => {
   try {
-    const { firstName, lastName, pin, password } = req.body;
+    const { firstname, lastname, pin, password } = req.body;
 
     // Esegui la query di inserimento per memorizzare i dati della richiesta nel database
-    const query = "INSERT INTO credential_request (first_name, last_name, pin, password) VALUES ($1, $2, $3, $4) RETURNING id ";
+    const query = "INSERT INTO credential_request (firstname, lastname, pin, password) VALUES ($1, $2, $3, $4) RETURNING id ";
 
-    const values = [firstName, lastName, pin, password];
+    const values = [firstname, lastname, pin, password];
 
     const result = await pool.query(query, values);
     console.log(result)
@@ -71,6 +71,23 @@ app.post('/credential/request', async (req, res) => {
     res.status(500).json({ success: false, message: 'Error processing credential request' });
   }
 });
+
+app.post('/credential/retrieve', async (req, res) => {
+    try {
+      const { pin, password } = req.body;
+  
+      // Esegui la query per recuperare le richieste utilizzando il PIN e la password
+      const query = "SELECT * FROM credential_request WHERE pin = $1 AND password = $2";
+      const values = [pin, password];
+      const result = await pool.query(query, values);
+  
+      // Restituisci le richieste trovate
+      res.json(result.rows);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ success: false, message: 'Error retrieving requests' });
+    }
+  });
 
 // Avvio del server
 app.listen(19101, () => {

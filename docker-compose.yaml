@@ -82,6 +82,8 @@ services:
     networks:
       network:
         ipv4_address: 10.5.0.5
+    ports:
+      - 5432:5432
 
   adminer:
     image: adminer

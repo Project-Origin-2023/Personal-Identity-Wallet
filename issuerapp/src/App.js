@@ -1,88 +1,33 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import RequestCredential from './components/RequestCredential';
+import RequestCredentialForm from './components/RequestCredentialForm';
 
 function App() {
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [pin, setPin] = useState('');
-  const [password, setPassword] = useState('');
-  const [response, setResponse] = useState(null);
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    try {
-      // Genera casualmente il PIN e la password
-      const generatedPin = generateRandomPin();
-      const generatedPassword = generateRandomPassword();
-
-      // Effettua la chiamata HTTP POST per inviare la richiesta di credenziale
-      const response = await axios.post('http://localhost:19101/credential/request', {
-        firstName: firstName,
-        lastName: lastName,
-        pin: generatedPin,
-        password: generatedPassword
-      });
-
-      // Mostra il PIN e la password all'utente
-      setPin(generatedPin);
-      setPassword(generatedPassword);
-
-      // Memorizza la risposta del server
-      setResponse(response.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  // Funzione per generare un PIN casuale
-  const generateRandomPin = () => {
-    // Logica per generare un PIN casuale
-    // Esempio: Genera un numero a 4 cifre tra 1000 e 9999
-    return Math.floor(Math.random() * 9000) + 1000;
-  };
-
-  // Funzione per generare una password casuale
-  const generateRandomPassword = () => {
-    // Logica per generare una password casuale
-    // Esempio: Genera una stringa di 8 caratteri casuali
-    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    let password = '';
-    for (let i = 0; i < 8; i++) {
-      password += characters.charAt(Math.floor(Math.random() * characters.length));
-    }
-    return password;
-  };
-
   return (
-    <div>
-      <h1>Credential Request</h1>
-      <form onSubmit={handleSubmit}>
-        <label>
-          First Name:
-          <input type="text" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
-        </label>
-        <br />
-        <label>
-          Last Name:
-          <input type="text" value={lastName} onChange={(e) => setLastName(e.target.value)} />
-        </label>
-        <br />
-        <button type="submit">Submit</button>
-      </form>
-      {response && (
-        <div>
-          <h2>Response:</h2>
-          <p>Success: {response.success}</p>
-          {response.success && (
-            <div>
-              <p>PIN: {pin}</p>
-              <p>Password: {password}</p>
-            </div>
-          )}
-        </div>
-      )}
-    </div>
+    <Router>
+      <div>
+        <nav>
+          <ul>
+            <li>
+              <Link to="/">Home</Link>
+            </li>
+            <li>
+              <Link to="/request">Request Credential</Link>
+            </li>
+            <li>
+              <Link to="/getRequest">get Request Credential</Link>
+            </li>
+          </ul>
+        </nav>
+
+        <Routes>
+          <Route path="/" />
+          <Route path="/request" element={<RequestCredentialForm />} />
+          <Route path="/getRequest" element={<RequestCredential />} />
+        </Routes>
+      </div>
+    </Router>
   );
 }
 
