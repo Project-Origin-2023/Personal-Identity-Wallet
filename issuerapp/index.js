@@ -88,6 +88,26 @@ app.post('/credential/retrieve', async (req, res) => {
       res.status(500).json({ success: false, message: 'Error retrieving requests' });
     }
   });
+// Endpoint per gestire la registrazione presso il sito dell'issuer
+  app.post('/register', async (req, res) => {
+    try {
+      const { familyName, firstName, email, password } = req.body;
+  
+      // Esegui la query di inserimento per memorizzare i dati della richiesta nel database
+      const query = 'INSERT INTO "IssuerRegister" ("familyName", "firstName", "email", "password") VALUES ($1, $2, $3, $4)';
+  
+      const values = [familyName, firstName, email, password];
+  
+      const result = await pool.query(query, values);
+      console.log(result)
+  
+      // Invia una risposta di successo al client
+      res.status(200).json({ success: true});
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ success: false, message: 'Error processing credential request' });
+    }
+  });
 
 // Avvio del server
 app.listen(19101, () => {

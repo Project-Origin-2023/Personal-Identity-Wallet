@@ -1,7 +1,8 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import RequestCredential from './components/RequestCredential';
+import Register from './components/Register';
 import RequestCredentialForm from './components/RequestCredentialForm';
+import RequestCredential from './components/RequestCredential';
 
 function App() {
   return (
@@ -11,6 +12,9 @@ function App() {
           <ul>
             <li>
               <Link to="/">Home</Link>
+            </li>
+            <li>
+              <Link to="/register">Registrati</Link>
             </li>
             <li>
               <Link to="/request">Request Credential</Link>
@@ -23,6 +27,7 @@ function App() {
 
         <Routes>
           <Route path="/" />
+          <Route path="/register" element={<Register />} />
           <Route path="/request" element={<RequestCredentialForm />} />
           <Route path="/getRequest" element={<RequestCredential />} />
         </Routes>
