@@ -100,8 +100,14 @@ app.post('/credential/retrieve', async (req, res) => {
       const values = [email, password];
       const result = await pool.query(query, values);
   
-      // Restituisci le richieste trovate
-      res.json(result.rows);
+      // Restituisci le richieste trovate se l'utente è stato trovato
+      if(result.rows.length>=1)
+      { //qui si dovrebbe ritornare un token di autenticazione
+        //const jwtToken=jwt.sign({id:email},process.env.JWT_SECRET); NON FUNZIONA
+        res.json({message:"Benvenuto! token: ",email});
+      } 
+      else
+      res.status(403).json({ success: false, message: 'Credenziali non valide' });
     } catch (error) {
       console.error(error);
       res.status(500).json({ success: false, message: 'Error retrieving requests' });

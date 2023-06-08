@@ -1,4 +1,5 @@
 import React from 'react';
+import { AuthProvider } from 'react-auth-kit'
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import Register from './components/Register';
 import RequestCredentialForm from './components/RequestCredentialForm';
