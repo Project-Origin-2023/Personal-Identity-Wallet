@@ -1,4 +1,4 @@
-cd ./wallet
+cd ./walletApp
 npm install
 npm start
 
