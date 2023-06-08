@@ -1,70 +1,66 @@
 version: '3'
 services:
-#  wallet:
-#    build:
-#      context: .
-#      args:
-#        - NODE_ENV=local
-#      dockerfile: Dockerfile_wallet
-#    ports:
-#        - "19000:19000"
-#    restart: no
-#    volumes:
-#      - ./wallet:/home/
-#    command: sh -c "npm install && npm run web"
-#
-#  issuerapp:
-#    build:
-#      context: .
-#      args:
-#        - NODE_ENV=local
-#      dockerfile: Dockerfile_issuerapp
-#    ports:
-#        - "19001:19001"
-#    restart: no
-#    volumes:
-#      - ./issuerapp:/home/
-#    command: sh -c "npm install && npm start"
-#
-#  verifierapp:
-#    build:
-#      context: .
-#      args:
-#        - NODE_ENV=local
-#      dockerfile: Dockerfile_verifierapp
-#    ports:
-#        - "19002:19002"
-#    restart: no
-#    volumes:
-#      - ./verifierapp:/home/
-#    command: sh -c "npm install && npm start"
-#
+
   walletapi:
     image: waltid/ssikit
     ports:
-        - "19010:7002"
+      - "19010:7002"
     restart: no
     entrypoint: /app/bin/waltid-ssikit serve -b 0.0.0.0
     volumes:
-      - './waltIdApiData/walletwaltIdApiData:/app/data'
+      - './waltIdApiData/walletapidata:/app/data'
+    networks:
+      - network
 
   issuerapi:
     image: waltid/ssikit
     ports:
-        - "19011:7001"
+      - "19011:7001"
     restart: no
     entrypoint: /app/bin/waltid-ssikit serve -b 0.0.0.0
     volumes:
-      - './waltIdApiData/issuerwaltIdApiData:/app/data'
+      - './waltIdApiData/issuerapidata:/app/data'
+    networks:
+      - network
 
   verifierapi:
     image: waltid/ssikit
     ports:
-        - "19012:7003"
+      - "19012:7003"
     restart: no
     entrypoint: /app/bin/waltid-ssikit serve -b 0.0.0.0
     volumes:
-      - './waltIdApiData/verifierwaltIdApiData:/app/data'
+      - './waltIdApiData/verifierapidata:/app/data'
+    networks:
+      - network
 
+  dbissuerapp:
+    image: postgres
+    restart: no
+    environment:
+      POSTGRES_PASSWORD: admin
+      POSTGRES_USER: admin
+      POSTGRES_DB: issuerapp
+    networks:
+      network:
+        ipv4_address: 10.5.0.5
+    ports:
+      - 5432:5432
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+    networks:
+      - network
+
+networks:
+  network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.5.0.0/16
+          gateway: 10.5.0.1
 volumes:
-    db_data: {}
+  db_data: {}
