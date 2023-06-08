@@ -46,7 +46,7 @@ services:
     restart: no
     entrypoint: /app/bin/waltid-ssikit serve -b 0.0.0.0
     volumes:
-      - './apidata/walletapidata:/app/data'
+      - './waltIdApiData/walletwaltIdApiData:/app/data'
 
   issuerapi:
     image: waltid/ssikit
@@ -55,7 +55,7 @@ services:
     restart: no
     entrypoint: /app/bin/waltid-ssikit serve -b 0.0.0.0
     volumes:
-      - './apidata/issuerapidata:/app/data'
+      - './waltIdApiData/issuerwaltIdApiData:/app/data'
 
   verifierapi:
     image: waltid/ssikit
@@ -64,11 +64,7 @@ services:
     restart: no
     entrypoint: /app/bin/waltid-ssikit serve -b 0.0.0.0
     volumes:
-      - './apidata/verifierapidata:/app/data'
+      - './waltIdApiData/verifierwaltIdApiData:/app/data'
 
-
-
-  
-    
 volumes:
     db_data: {}
