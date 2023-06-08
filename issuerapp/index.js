@@ -42,6 +42,8 @@ app.get('/credential/request', async (req, res) => {
     }
 });
 
+
+
 app.get('/', async (req, res) => {
     try {
       res.json("{'hello':'hello'}");
@@ -78,7 +80,7 @@ app.post('/credential/retrieve', async (req, res) => {
   
       // Esegui la query per recuperare le richieste utilizzando il PIN e la password
       const query = "SELECT * FROM credential_request WHERE pin = $1 AND password = $2";
-      const values = [pin, password];
+      const values = [email, password];
       const result = await pool.query(query, values);
   
       // Restituisci le richieste trovate
@@ -88,7 +90,26 @@ app.post('/credential/retrieve', async (req, res) => {
       res.status(500).json({ success: false, message: 'Error retrieving requests' });
     }
   });
-// Endpoint per gestire la registrazione presso il sito dell'issuer
+  
+  app.post('/Login', async (req, res) => {
+    try {
+      const { email, password } = req.body;
+  
+      // Esegui la query per accedere
+      const query = 'SELECT * FROM "IssuerRegister" WHERE email = $1 AND password = $2';
+      const values = [email, password];
+      const result = await pool.query(query, values);
+  
+      // Restituisci le richieste trovate
+      res.json(result.rows);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ success: false, message: 'Error retrieving requests' });
+    }
+  });
+
+
+  // Endpoint per gestire la registrazione presso il sito dell'issuer
   app.post('/register', async (req, res) => {
     try {
       const { familyName, firstName, email, password } = req.body;

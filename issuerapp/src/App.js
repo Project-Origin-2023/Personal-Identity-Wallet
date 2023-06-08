@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import Register from './components/Register';
 import RequestCredentialForm from './components/RequestCredentialForm';
 import RequestCredential from './components/RequestCredential';
+import Login from './components/Login';
 
 function App() {
   return (
@@ -22,6 +23,9 @@ function App() {
             <li>
               <Link to="/getRequest">get Request Credential</Link>
             </li>
+            <li>
+              <Link to="/login">Login</Link>
+            </li>
           </ul>
         </nav>
 
@@ -30,6 +34,7 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/request" element={<RequestCredentialForm />} />
           <Route path="/getRequest" element={<RequestCredential />} />
+          <Route path="/login" element={<Login />} />
         </Routes>
       </div>
     </Router>
