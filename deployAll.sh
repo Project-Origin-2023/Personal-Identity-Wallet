@@ -2,8 +2,8 @@
 
 docker-compose up -d & #avvia i container necessari
 killall node #spegne i nodi ancora avviati
-./deployIssuerapp.sh & #avvia issuerapp
+./deployIssuerApp.sh & #avvia issuerApp
 
-./deployVerifierapp.sh & #avvia verifierapp
+./deployVerifierApp.sh & #avvia verifierApp
 
-./deployWallet.sh & #avviawalletapp
+./deployWalletApp.sh & #avviawalletapp
