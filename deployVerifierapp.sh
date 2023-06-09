@@ -1,4 +1,4 @@
-cd ./verifierapp
+cd ./verifierApp
 npm install
 npm start
 
