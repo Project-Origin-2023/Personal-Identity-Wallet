@@ -1,4 +1,4 @@
-cd ./issuer_app
+cd ./issuerApp
 npm install 
 node index.js & 
 npm start
