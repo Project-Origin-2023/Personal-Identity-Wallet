@@ -15,7 +15,7 @@ app.use(bodyParser.json());
 const pool = new Pool({
   user: 'admin',
   host: 'localhost',
-  database: 'issuerApp',
+  database: 'issuerapp',
   password: 'admin',
   port: 5432,
 });
