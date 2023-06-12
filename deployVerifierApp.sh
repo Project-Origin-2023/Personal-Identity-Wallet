@@ -1,4 +1,5 @@
-cd ./wallet_app
+cd ./verifierApp
 npm install
 npm start
+
 
