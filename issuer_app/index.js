@@ -2,9 +2,14 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const { Pool } = require('pg');
 const cors = require('cors');
+const jwt = require("jsonwebtoken");
+const jwtKey = "my_secret_key"
+const jwtExpirySeconds = 3000
 
 const app = express();
 app.use(bodyParser.json());
+
+
 
 // Configurazione del pool di connessione al database PostgreSQL
 const pool = new Pool({
@@ -102,9 +107,20 @@ app.post('/credential/retrieve', async (req, res) => {
   
       // Restituisci le richieste trovate se l'utente è stato trovato
       if(result.rows.length>=1)
-      { //qui si dovrebbe ritornare un token di autenticazione
-        //const jwtToken=jwt.sign({id:email},process.env.JWT_SECRET); NON FUNZIONA
-        res.json({message:"Benvenuto! token: ",email});
+      { 
+        // Create a new token with the email in the payload
+        // and which expires 3000 seconds after issue
+        const token = jwt.sign({ email }, jwtKey, {
+          algorithm: "HS256",
+          expiresIn: jwtExpirySeconds,
+        })
+        console.log("token:", token)
+      
+        // set the cookie as the token string, with a similar max age as the token
+        // here, the max age is in milliseconds, so we multiply by 1000
+        res.cookie("token", token, { maxAge: jwtExpirySeconds * 1000 })
+        res.json({ success: true, message: 'Login Effettuato', email: email, token: token });
+        res.end()
       } 
       else
       res.status(403).json({ success: false, message: 'Credenziali non valide' });
