@@ -11,7 +11,7 @@ SET standard_conforming_strings = on;
 -- Drop databases (except postgres and template1)
 --
 
-DROP DATABASE issuerapp;
+DROP DATABASE issuerApp;
 
 
 
@@ -131,7 +131,7 @@ GRANT CONNECT ON DATABASE template1 TO PUBLIC;
 --
 
 --
--- Database "issuerapp" dump
+-- Database "issuerApp" dump
 --
 
 --
@@ -153,15 +153,15 @@ SET client_min_messages = warning;
 SET row_security = off;
 
 --
--- Name: issuerapp; Type: DATABASE; Schema: -; Owner: admin
+-- Name: issuerApp; Type: DATABASE; Schema: -; Owner: admin
 --
 
-CREATE DATABASE issuerapp WITH TEMPLATE = template0 ENCODING = 'UTF8' LOCALE_PROVIDER = libc LOCALE = 'en_US.utf8';
+CREATE DATABASE issuerApp WITH TEMPLATE = template0 ENCODING = 'UTF8' LOCALE_PROVIDER = libc LOCALE = 'en_US.utf8';
 
 
-ALTER DATABASE issuerapp OWNER TO admin;
+ALTER DATABASE issuerApp OWNER TO admin;
 
-\connect issuerapp
+\connect issuerApp
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
