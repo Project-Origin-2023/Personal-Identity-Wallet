@@ -15,9 +15,12 @@ function Login (){
           email: email,
           password: password
         });
-  
+        console.log(response);
         // Memorizza le richieste nella lista
         setRequests(response.data);
+        if (response.data.email) {
+          window.sessionStorage.setItem("user", JSON.stringify(response.data));
+        }
       } catch (error) {
         console.log(error);
       }
@@ -25,7 +28,7 @@ function Login (){
 
   return (
     <div>
-      <h2>Richiesta credenziali</h2>
+      <h2>Effettua il login</h2>
       <form onSubmit={handleLogin}>
         <label>
           Email:
