@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-
+import { TextField, Button, Container} from '@mui/material';
 function RequestCredentialForm() {
   const [firstname, setfirstname] = useState('');
   const [lastname, setlastname] = useState('');
@@ -55,20 +55,18 @@ function RequestCredentialForm() {
   };
 
   return (
-    <div>
+    <Container>
       <h1>Credential Request</h1>
       <form onSubmit={handleSubmit}>
-        <label>
-          First Name:
+        <TextField label="First Name:">
           <input type="text" value={firstname} onChange={(e) => setfirstname(e.target.value)} />
-        </label>
+        </TextField>
         <br />
-        <label>
-          Last Name:
+        <TextField label="Last Name:">
           <input type="text" value={lastname} onChange={(e) => setlastname(e.target.value)} />
-        </label>
+        </TextField>
         <br />
-        <button type="submit">Submit</button>
+        <Button type="submit">Submit</Button>
       </form>
       {response && (
         <div>
@@ -82,7 +80,7 @@ function RequestCredentialForm() {
           )}
         </div>
       )}
-    </div>
+    </Container>
   );
 }
 

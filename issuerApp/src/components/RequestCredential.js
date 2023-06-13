@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { TextField, Button, Container} from '@mui/material';
 
 function RequestCredential() {
   const [pin, setPin] = useState('');
@@ -24,20 +25,18 @@ function RequestCredential() {
   };
 
   return (
-    <div>
+    <Container>
       <h2>Request Retrieval</h2>
       <form onSubmit={handleRetrieve}>
-        <label>
-          PIN:
-          <input type="text" value={pin} onChange={(e) => setPin(e.target.value)} />
-        </label>
+        <TextField label="PIN: ">
+                    <input type="text" value={pin} onChange={(e) => setPin(e.target.value)} />
+        </TextField>
         <br />
-        <label>
-          Password:
+        <TextField label="Password: ">
           <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-        </label>
+        </TextField>
         <br />
-        <button type="submit">Retrieve Requests</button>
+        <Button type="submit">Retrieve Requests</Button>
       </form>
       {requests.length > 0 && (
         <div>
@@ -54,7 +53,7 @@ function RequestCredential() {
           </ul>
         </div>
       )}
-    </div>
+    </Container>
   );
 }
 

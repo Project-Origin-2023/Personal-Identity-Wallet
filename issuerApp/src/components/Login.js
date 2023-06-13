@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { TextField, Button, Container} from '@mui/material';
 
 function Login (){
   const [email, setEmail] = useState('');
@@ -27,20 +28,18 @@ function Login (){
   }; 
 
   return (
-    <div>
+    <Container>
       <h2>Effettua il login</h2>
       <form onSubmit={handleLogin}>
-        <label>
-          Email:
+        <TextField label="Email">
           <input type="text" value={email}  onChange={(e) => setEmail(e.target.value)} />
-        </label>
+        </TextField>
         <br />
-        <label>
-          Password:
+        <TextField label="Password">
           <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-        </label>
+        </TextField>
         <br />
-        <button type="submit">Accedi</button>
+        <Button type="submit">Accedi</Button>
       </form>
       {requests.length > 0 && (
         <div>
@@ -55,7 +54,7 @@ function Login (){
           </ul>
         </div>
       )}
-    </div>
+    </Container>
   );
 }
 

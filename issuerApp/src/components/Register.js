@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { TextField, Button, Container} from '@mui/material';
 
 function Register(){
     const [familyName, setFamilyName] = useState('');
@@ -7,8 +8,9 @@ function Register(){
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [requests, setRequests] = useState([]);
-    //const [confirmPassword, setConfirmPassword] = useState(''); chatgpt merda
 
+    //const [confirmPassword, setConfirmPassword] = useState(''); chatgpt merda
+   
     const handleRegister = async (e) => {
         e.preventDefault();
 
@@ -27,48 +29,48 @@ function Register(){
         }
     }
     return(
-        <div>
+        <Container>
       <h1>Registrazione</h1>
       <form onSubmit={handleRegister}>
         <div>
-          <label>Cognome:</label>
-          <input
+          <TextField  label="Cognome">
+         
             type="text"
             value={familyName}
             onChange={(e) => setFamilyName(e.target.value)}
             required
-          />
+          </TextField>
         </div>
         <div>
-          <label>Nome:</label>
-          <input
+          <TextField  label="Nome">
+         
             type="text"
             value={firstName}
             onChange={(e) => setFirstName(e.target.value)}
             required
-          />
+      </TextField>
         </div>
         <div>
-          <label>Email:</label>
-          <input
+          <TextField label="Email">
+          
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
-          />
+          </TextField>
         </div>
         <div>
-          <label>Password:</label>
-          <input
+          <TextField  label="Password">
+          
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
-          />
+          </TextField>
         </div>
-        <button type="submit">Registrati</button>
+        <Button type="submit">Registrati</Button>
       </form>
-    </div>
+    </Container>
     /*{response && (
         <div>
           <h2>Response:</h2>
