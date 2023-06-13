@@ -5,6 +5,7 @@ import Register from './components/Register';
 import RequestCredentialForm from './components/RequestCredentialForm';
 import RequestCredential from './components/RequestCredential';
 import Login from './components/Login';
+import Logout from './components/Logout';
 
 function App() {
   return (
@@ -27,6 +28,9 @@ function App() {
             <li>
               <Link to="/login">Login</Link>
             </li>
+            <li>
+              <Link to="/Logout">Logout</Link>
+            </li>
           </ul>
         </nav>
 
@@ -36,6 +40,7 @@ function App() {
           <Route path="/request" element={<RequestCredentialForm />} />
           <Route path="/getRequest" element={<RequestCredential />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/Logout" element={<Logout />}/>
         </Routes>
       </div>
     </Router>
