@@ -11,7 +11,7 @@ SET standard_conforming_strings = on;
 -- Drop databases (except postgres and template1)
 --
 
-DROP DATABASE issuerApp;
+DROP DATABASE "issuerApp";
 
 
 
@@ -28,7 +28,7 @@ DROP ROLE admin;
 --
 
 CREATE ROLE admin;
-ALTER ROLE admin WITH SUPERUSER INHERIT CREATEROLE CREATEDB LOGIN REPLICATION BYPASSRLS PASSWORD 'SCRAM-SHA-256$4096:YO91o1hdGUqDwMzDSS4DQw==$1D/aJk5BizYlR9t2LKaYsjxiBHRcEPXXZ5mdAyokAQ0=:dRce7O9L2Z3Dn+6kOoPPinuNXyhJN79oTd33OI3sWbA=';
+ALTER ROLE admin WITH SUPERUSER INHERIT CREATEROLE CREATEDB LOGIN REPLICATION BYPASSRLS PASSWORD 'SCRAM-SHA-256$4096:6aBevYrtP2v9WA/Q7UvF6A==$05wrJ1MBZ6n34bQe7TfqLJ8CvD1gm0Qr+u3ukmIWSF0=:LBJlRPmLF/qevxvGY7VbHZ8xd4RX3zpVU9qolj9MiEs=';
 
 --
 -- User Configurations
@@ -156,12 +156,12 @@ SET row_security = off;
 -- Name: issuerApp; Type: DATABASE; Schema: -; Owner: admin
 --
 
-CREATE DATABASE issuerApp WITH TEMPLATE = template0 ENCODING = 'UTF8' LOCALE_PROVIDER = libc LOCALE = 'en_US.utf8';
+CREATE DATABASE "issuerApp" WITH TEMPLATE = template0 ENCODING = 'UTF8' LOCALE_PROVIDER = libc LOCALE = 'en_US.utf8';
 
 
-ALTER DATABASE issuerApp OWNER TO admin;
+ALTER DATABASE "issuerApp" OWNER TO admin;
 
-\connect issuerApp
+\connect "issuerApp"
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -198,82 +198,26 @@ ALTER TABLE public."IssuerRegister" OWNER TO admin;
 --
 
 CREATE TABLE public.credential_request (
-    id integer NOT NULL,
+    personalid integer NOT NULL,
+    personalidfk integer NOT NULL,
+    dateofbirth date NOT NULL,
+    familyname character varying NOT NULL,
     firstname character varying NOT NULL,
-    lastname character varying NOT NULL,
-    pin integer NOT NULL,
-    password character varying NOT NULL
+    gender character varying NOT NULL,
+    nameandfamilynameatbirth character varying NOT NULL,
+    placeobirth character varying NOT NULL,
+    status boolean
 );
 
 
 ALTER TABLE public.credential_request OWNER TO admin;
 
 --
--- Name: credential_request_id_seq; Type: SEQUENCE; Schema: public; Owner: admin
---
-
-CREATE SEQUENCE public.credential_request_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.credential_request_id_seq OWNER TO admin;
-
---
--- Name: credential_request_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: admin
---
-
-ALTER SEQUENCE public.credential_request_id_seq OWNED BY public.credential_request.id;
-
-
---
--- Name: issuerregister_id_seq; Type: SEQUENCE; Schema: public; Owner: admin
---
-
-CREATE SEQUENCE public.issuerregister_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.issuerregister_id_seq OWNER TO admin;
-
---
--- Name: issuerregister_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: admin
---
-
-ALTER SEQUENCE public.issuerregister_id_seq OWNED BY public."IssuerRegister".id;
-
-
---
--- Name: IssuerRegister id; Type: DEFAULT; Schema: public; Owner: admin
---
-
-ALTER TABLE ONLY public."IssuerRegister" ALTER COLUMN id SET DEFAULT nextval('public.issuerregister_id_seq'::regclass);
-
-
---
--- Name: credential_request id; Type: DEFAULT; Schema: public; Owner: admin
---
-
-ALTER TABLE ONLY public.credential_request ALTER COLUMN id SET DEFAULT nextval('public.credential_request_id_seq'::regclass);
-
-
---
 -- Data for Name: IssuerRegister; Type: TABLE DATA; Schema: public; Owner: admin
 --
 
 COPY public."IssuerRegister" (id, "familyName", "firstName", email, password) FROM stdin;
-1	Rossi	Mario	mariorossi@gmail.com	rossi1234
-2	Bianchi	Gianni	gianni.bianchi69@hotmail.com	giannib69
-3	Avido	Ivo	ivoavido@email.com	ivoavido12345
+123	a	b	ab	ab
 \.
 
 
@@ -281,24 +225,18 @@ COPY public."IssuerRegister" (id, "familyName", "firstName", email, password) FR
 -- Data for Name: credential_request; Type: TABLE DATA; Schema: public; Owner: admin
 --
 
-COPY public.credential_request (id, firstname, lastname, pin, password) FROM stdin;
-1	Fabrizio	Neri	6258	opWpUbFV
-2	Germano	Mosconi	6651	eMVfN685
+COPY public.credential_request (personalid, personalidfk, dateofbirth, familyname, firstname, gender, nameandfamilynameatbirth, placeobirth, status) FROM stdin;
+1	123	1990-01-01	Rossi	Mario	Maschio	Mario Rossi	Roma	t
+2	123	1990-03-03	a	b	m	c	d	t
 \.
 
 
 --
--- Name: credential_request_id_seq; Type: SEQUENCE SET; Schema: public; Owner: admin
+-- Name: IssuerRegister IssuerRegister_pkey; Type: CONSTRAINT; Schema: public; Owner: admin
 --
 
-SELECT pg_catalog.setval('public.credential_request_id_seq', 2, true);
-
-
---
--- Name: issuerregister_id_seq; Type: SEQUENCE SET; Schema: public; Owner: admin
---
-
-SELECT pg_catalog.setval('public.issuerregister_id_seq', 3, true);
+ALTER TABLE ONLY public."IssuerRegister"
+    ADD CONSTRAINT "IssuerRegister_pkey" PRIMARY KEY (id);
 
 
 --
@@ -306,23 +244,15 @@ SELECT pg_catalog.setval('public.issuerregister_id_seq', 3, true);
 --
 
 ALTER TABLE ONLY public.credential_request
-    ADD CONSTRAINT credential_request_pkey PRIMARY KEY (id);
+    ADD CONSTRAINT credential_request_pkey PRIMARY KEY (personalid);
 
 
 --
--- Name: IssuerRegister issuerregister_email_key; Type: CONSTRAINT; Schema: public; Owner: admin
+-- Name: credential_request credential_request_personalidfk_fkey; Type: FK CONSTRAINT; Schema: public; Owner: admin
 --
 
-ALTER TABLE ONLY public."IssuerRegister"
-    ADD CONSTRAINT issuerregister_email_key UNIQUE (email);
-
-
---
--- Name: IssuerRegister issuerregister_pkey; Type: CONSTRAINT; Schema: public; Owner: admin
---
-
-ALTER TABLE ONLY public."IssuerRegister"
-    ADD CONSTRAINT issuerregister_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY public.credential_request
+    ADD CONSTRAINT credential_request_personalidfk_fkey FOREIGN KEY (personalidfk) REFERENCES public."IssuerRegister"(id);
 
 
 --

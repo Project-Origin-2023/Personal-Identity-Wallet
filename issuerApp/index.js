@@ -31,13 +31,34 @@ app.use(cors(corsOptions));
 // Endpoint per ottenere tutte le richieste di credenziali
 app.get('/credential/request', async (req, res) => {
     try {
-      // Query SQL per ottenere tutte le richieste di credenziali
+      const { dateofbirth, familyname, firstname, gender, nameandfamilynameatbirth, placeobirth} = req.body;
+      // Query SQL per ottenere tutte le richieste di credenziali 
+      //const query = `
+      //SELECT id from "IssuerRegister"     
+      //`; //dobbiamo recuperare l'id dell'utente attualmente loggato. La soluzione provvisoria sarebbe che l'id dell'utente sarà sempre "123"
+
+
       const query = `
-        SELECT * FROM credential_request
-      `;
+      INSERT INTO public.credential_request (
+        "personalid", "personalidfk", "dateofbirth", "familyname", "firstname", "gender",
+        "nameandfamilynameatbirth", "placeobirth","status"
+    )
+    VALUES (
+        2, -- Valore desiderato per personalid
+        123, -- Valore desiderato per personalidfk, che deve corrispondere a un id esistente in "IssuerRegister"
+        $1, -- Valore desiderato per dateOfBirth
+        $2, -- Valore desiderato per familyname
+        $3, -- Valore desiderato per firstName
+        $4, -- Valore desiderato per gender
+        $5, -- Valore desiderato per nameAndfamilyNameAtBirth
+        $6, -- Valore desiderato per placeOBirth
+        true-- Valore desiderato per status
+    );    
+      `; //tutte richieste approvate, quindi status= true sempre
   
       // Esegui la query
-      const result = await pool.query(query);
+      const values = [dateofbirth, familyname, firstname, gender, nameandfamilynameatbirth, placeobirth];
+      const result = await pool.query(query, values);
   
       // Invia la risposta con i dati delle richieste di credenziali
       res.json(result.rows);
