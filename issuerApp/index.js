@@ -58,43 +58,25 @@ app.get('/', async (req, res) => {
     }
 });
 
-// Endpoint per gestire la richiesta di credenziale
-app.post('/credential/request', async (req, res) => {
-  try {
-    const { firstname, lastname, pin, password } = req.body;
+  verifyToken = (req, res, next) => {
+    let token = req.headers["x-access-token"];
 
-    // Esegui la query di inserimento per memorizzare i dati della richiesta nel database
-    const query = "INSERT INTO credential_request (firstname, lastname, pin, password) VALUES ($1, $2, $3, $4) RETURNING id ";
-
-    const values = [firstname, lastname, pin, password];
-
-    const result = await pool.query(query, values);
-    console.log(result)
-
-    // Invia una risposta di successo al client
-    res.status(200).json({ success: true, requestId: result.rows[0].id });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ success: false, message: 'Error processing credential request' });
-  }
-});
-
-app.post('/credential/retrieve', async (req, res) => {
-    try {
-      const { pin, password } = req.body;
-  
-      // Esegui la query per recuperare le richieste utilizzando il PIN e la password
-      const query = "SELECT * FROM credential_request WHERE pin = $1 AND password = $2";
-      const values = [email, password];
-      const result = await pool.query(query, values);
-  
-      // Restituisci le richieste trovate
-      res.json(result.rows);
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ success: false, message: 'Error retrieving requests' });
+    if (!token) {
+      return res.status(403).send({
+        message: "No token provided!"
+      });
     }
-  });
+
+    jwt.verify(token, config.secret, (err, decoded) => {
+      if (err) {
+        return res.status(401).send({
+          message: "Unauthorized!"
+        });
+      }
+      req.userId = decoded.id;
+      next();
+    });
+  };
   
   app.post('/Login', async (req, res) => {
     try {
@@ -105,8 +87,8 @@ app.post('/credential/retrieve', async (req, res) => {
       const values = [email, password];
       const result = await pool.query(query, values);
   
-      // Restituisci le richieste trovate se l'utente è stato trovato
-      if(result.rows.length>=1)
+      // Restituisci le richieste trovate se l'utente è stato trovato ed è unico
+      if(result.rows.length==1)
       { 
         // Create a new token with the email in the payload
         // and which expires 3000 seconds after issue
@@ -114,10 +96,6 @@ app.post('/credential/retrieve', async (req, res) => {
           algorithm: "HS256",
           expiresIn: jwtExpirySeconds,
         })
-        console.log("token:", token)
-      
-        // set the cookie as the token string, with a similar max age as the token
-        // here, the max age is in milliseconds, so we multiply by 1000
         res.cookie("token", token, { maxAge: jwtExpirySeconds * 1000 })
         res.json({ success: true, message: 'Login Effettuato', email: email, token: token });
         res.end()
@@ -132,7 +110,7 @@ app.post('/credential/retrieve', async (req, res) => {
 
 
   // Endpoint per gestire la registrazione presso il sito dell'issuer
-  app.post('/register', async (req, res) => {
+  app.post('/Register', async (req, res) => {
     try {
       const { familyName, firstName, email, password } = req.body;
   
@@ -141,14 +119,15 @@ app.post('/credential/retrieve', async (req, res) => {
   
       const values = [familyName, firstName, email, password];
   
-      const result = await pool.query(query, values);
-      console.log(result)
-  
-      // Invia una risposta di successo al client
-      res.status(200).json({ success: true});
+      result = await pool.query(query, values);
+      if (result) {
+          res.status(200).json({ success: true, message: 'Registrazione avvenuta con successo' });
+      } else {
+          res.status(403).json({ success: false, message: 'Errore durante la registrazione' });
+      }
     } catch (error) {
-      console.error(error);
-      res.status(500).json({ success: false, message: 'Error processing credential request' });
+      // Gestione dell'errore della query di inserimento
+      res.status(403).json({ success: false, message: 'Errore durante la registrazione' });
     }
   });
 

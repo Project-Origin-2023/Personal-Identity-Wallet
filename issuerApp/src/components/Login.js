@@ -1,30 +1,33 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import PropTypes from 'prop-types';
 
-function Login (){
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [requests, setRequests] = useState([]);
+
+function Login ({ setToken }){
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
 
   const handleLogin = async (e) => {
     e.preventDefault();
     // Esegui l'elaborazione dell'accesso qui, ad esempio inviando i dati al server
     try {
         // Effettua la chiamata HTTP POST per recuperare le richieste utilizzando email e password
-        const response = await axios.post('http://localhost:19101/login', {
+        const response = await axios.post('http://localhost:19101/Login', {
           email: email,
           password: password
         });
-        console.log(response);
-        // Memorizza le richieste nella lista
-        setRequests(response.data);
-        if (response.data.email) {
-          window.sessionStorage.setItem("user", JSON.stringify(response.data));
+
+        if (response.data.success){
+          setToken(response.data.token);
+          alert(response.data.message);
         }
+
       } catch (error) {
         console.log(error);
       }
-  }; 
+  };
+
+  
 
   return (
     <div>
@@ -42,21 +45,12 @@ function Login (){
         <br />
         <button type="submit">Accedi</button>
       </form>
-      {requests.length > 0 && (
-        <div>
-          <h3>Retrieved Requests:</h3>
-          <ul>
-            {requests.map((request) => (
-              <li key={request.id}>
-                <p>Email: {request.email}</p>
-                <p>Password: {request.password}</p>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
     </div>
   );
+}
+
+Login.propTypes = {
+  setToken: PropTypes.func.isRequired
 }
 
 export default Login;

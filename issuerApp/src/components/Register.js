@@ -6,28 +6,27 @@ function Register(){
     const [firstName, setFirstName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [requests, setRequests] = useState([]);
     //const [confirmPassword, setConfirmPassword] = useState(''); chatgpt merda
 
     const handleRegister = async (e) => {
-        e.preventDefault();
-
-        try {
-            // Effettua la chiamata HTTP POST per inviare i dati di registrazione
-        const response = await axios.post('http://localhost:19101/register', { //dovrà essere creato questo endpoint
+      e.preventDefault();
+      try {
+        const response = await axios.post('http://localhost:19101/Register', { //dovrà essere creato questo endpoint
             familyName: familyName,
             firstName: firstName,
             email: email,
             password: password
         });
+        if (response.data.success)
+          alert(response.data.message);
+      } catch (error) {
+        // Gestisci gli errori di registrazione
+        console.error(error);
+      }
+    };
 
-      setRequests(response.data);
-        } catch (error) {
-            console.log(error);
-        }
-    }
     return(
-        <div>
+      <div>
       <h1>Registrazione</h1>
       <form onSubmit={handleRegister}>
         <div>
@@ -69,18 +68,6 @@ function Register(){
         <button type="submit">Registrati</button>
       </form>
     </div>
-    /*{response && (
-        <div>
-          <h2>Response:</h2>
-          <p>Success: {response.success}</p>
-          {response.success && (
-            <div>
-              <p>PIN: {pin}</p>
-              <p>Password: {password}</p>
-            </div>
-          )}
-        </div>
-      )}*/
     );
 }
 export default Register;
