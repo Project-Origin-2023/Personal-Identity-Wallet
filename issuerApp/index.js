@@ -24,47 +24,73 @@ const pool = new Pool({
 const corsOptions = {
   origin: 'http://localhost:19001',
 };
+//ottieni l'id dell'utente da un token jwt
+function getUserIdFromToken(token) {
+  try {
+    const decoded = jwt.verify(token, jwtKey);
+    return decoded.id;
+  } catch (error) {
+    console.error('Errore durante la verifica del token:', error);
+    return null;
+  }
+}
 
 // Abilita il middleware CORS con le opzioni configurate
 app.use(cors(corsOptions));
 
-// Endpoint per ottenere tutte le richieste di credenziali
-app.post('/credential/request', async (req, res) => {
-    try {
-      const { dateofbirth, familyname, firstname, gender, nameandfamilynameatbirth, placeobirth} = req.body;
-      // Query SQL per ottenere tutte le richieste di credenziali 
-      //const query = `
-      //SELECT id from "IssuerRegister"     
-      //`; //dobbiamo recuperare l'id dell'utente attualmente loggato. La soluzione provvisoria sarebbe che l'id dell'utente sarà sempre "123"
+verifyToken = (req, res, next) => {
+  let token = req.headers["x-access-token"];
 
+  if (!token) {
+    return res.status(403).send({
+      message: "No token provided!"
+    });
+  }
 
-      const query = `
-      INSERT INTO public.credential_request (
-         "personalidfk", "dateofbirth", "familyname", "firstname", "gender",
-        "nameandfamilynameatbirth", "placeobirth","status"
-    )
-    VALUES (
-        123, -- Valore desiderato per personalidfk, che deve corrispondere a un id esistente in "IssuerRegister"
-        $1, -- Valore desiderato per dateOfBirth
-        $2, -- Valore desiderato per familyname
-        $3, -- Valore desiderato per firstName
-        $4, -- Valore desiderato per gender
-        $5, -- Valore desiderato per nameAndfamilyNameAtBirth
-        $6, -- Valore desiderato per placeOBirth
-        true-- Valore desiderato per status
-    );    
-      `; //tutte richieste approvate, quindi status= true sempre
-  
-      // Esegui la query
-      const values = [dateofbirth, familyname, firstname, gender, nameandfamilynameatbirth, placeobirth];
-      const result = await pool.query(query, values);
-  
-      // Invia la risposta con i dati delle richieste di credenziali
-      res.json(result.rows);
-    } catch (error) {
-      console.error('Errore durante l\'esecuzione della query:', error);
-      res.status(500).json({ error: 'Errore durante l\'esecuzione della richiesta' });
+  jwt.verify(token, jwtKey, (err, decoded) => {
+    if (err) {
+      return res.status(401).send({
+        message: "Unauthorized!"
+      });
     }
+    req.userEmail = decoded.email;
+    //console.log(req.userEmail);
+    next();
+  });
+};
+
+// Endpoint per ottenere tutte le richieste di credenziali
+app.post('/credential/request', verifyToken, async (req, res) => {
+  try {
+    const { dateofbirth, familyname, firstname, gender, nameandfamilynameatbirth, placeobirth } = req.body;
+    const email = req.userEmail;
+    query='SELECT id FROM "IssuerRegister" WHERE email=$1';
+    values=[email];
+    result=await pool.query(query, values);
+    userId=result.rows[0].id;
+    //console.log(userId);
+
+    // Query SQL per inserire la richiesta di credenziali con l'ID dell'utente
+    query = `
+      INSERT INTO public.credential_request (
+        "personalidfk", "dateofbirth", "familyname", "firstname", "gender",
+        "nameandfamilynameatbirth", "placeobirth", "status"
+      )
+      VALUES (
+        $1, $2, $3, $4, $5, $6, $7, true
+      );
+    `;
+
+    // Esegui la query
+    values = [userId, dateofbirth, familyname, firstname, gender, nameandfamilynameatbirth, placeobirth];//valore di personalidfk hardcoded, da sistemare. dovrebbe essere userId, ma per qualche motivo è NULL
+    result = await pool.query(query, values);
+
+    // Invia la risposta con i dati delle richieste di credenziali
+    res.json(result.rows);
+  } catch (error) {
+    console.error('Errore durante l\'esecuzione della query:', error);
+    res.status(500).json({ error: 'Errore durante l\'esecuzione della richiesta' });
+  }
 });
 
 
@@ -78,25 +104,6 @@ app.get('/', async (req, res) => {
     }
 });
 
-  verifyToken = (req, res, next) => {
-    let token = req.headers["x-access-token"];
-
-    if (!token) {
-      return res.status(403).send({
-        message: "No token provided!"
-      });
-    }
-
-    jwt.verify(token, config.secret, (err, decoded) => {
-      if (err) {
-        return res.status(401).send({
-          message: "Unauthorized!"
-        });
-      }
-      req.userId = decoded.id;
-      next();
-    });
-  };
   
   app.post('/Login', async (req, res) => {
     try {
