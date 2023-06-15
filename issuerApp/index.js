@@ -29,7 +29,7 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 // Endpoint per ottenere tutte le richieste di credenziali
-app.get('/credential/request', async (req, res) => {
+app.post('/credential/request', async (req, res) => {
     try {
       const { dateofbirth, familyname, firstname, gender, nameandfamilynameatbirth, placeobirth} = req.body;
       // Query SQL per ottenere tutte le richieste di credenziali 
@@ -40,11 +40,10 @@ app.get('/credential/request', async (req, res) => {
 
       const query = `
       INSERT INTO public.credential_request (
-        "personalid", "personalidfk", "dateofbirth", "familyname", "firstname", "gender",
+         "personalidfk", "dateofbirth", "familyname", "firstname", "gender",
         "nameandfamilynameatbirth", "placeobirth","status"
     )
     VALUES (
-        2, -- Valore desiderato per personalid
         123, -- Valore desiderato per personalidfk, che deve corrispondere a un id esistente in "IssuerRegister"
         $1, -- Valore desiderato per dateOfBirth
         $2, -- Valore desiderato per familyname
