@@ -2,9 +2,16 @@ import React, { useState } from 'react';
 import axios from 'axios';
 
 function RequestCredentialForm() {
+  /*const [firstname, setfirstname] = useState('');
+  const [lastname, setlastname] = useState('');
+  const [pin, setPin] = useState('');
+  const [password, setPassword] = useState('');
+  const [response, setResponse] = useState(null);
+  */
   const [firstname, setfirstname] = useState('');
   const [lastname, setlastname] = useState('');
   const [pin, setPin] = useState('');
+ // const [email, setEmail] = useState(''); //da modificare
   const [password, setPassword] = useState('');
   const [response, setResponse] = useState(null);
 
@@ -13,19 +20,19 @@ function RequestCredentialForm() {
 
     try {
       // Genera casualmente il PIN e la password
-      const generatedPin = generateRandomPin();
+      const generatedPin = generateRandomPin(); //forse da modificare
       const generatedPassword = generateRandomPassword();
 
       // Effettua la chiamata HTTP POST per inviare la richiesta di credenziale
       const response = await axios.post('http://localhost:19101/credential/request', {
         firstname: firstname,
         lastname: lastname,
-        pin: generatedPin,
+        pin: generatedPin, //email
         password: generatedPassword
       });
 
       // Mostra il PIN e la password all'utente
-      setPin(generatedPin);
+      setPin(generatedPin); //email
       setPassword(generatedPassword);
 
       // Memorizza la risposta del server
@@ -76,7 +83,7 @@ function RequestCredentialForm() {
           <p>Success: {response.success}</p>
           {response.success && (
             <div>
-              <p>PIN: {pin}</p>
+              <p>PIN: {pin}</p> {/* email(?) */}
               <p>Password: {password}</p>
             </div>
           )}
