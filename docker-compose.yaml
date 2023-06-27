@@ -17,6 +17,7 @@ services:
     image: waltid/ssikit
     ports:
       - "19011:7001"
+      - "19021:7002"
     restart: no
     entrypoint: /app/bin/waltid-ssikit serve -b 0.0.0.0
     volumes:
@@ -25,10 +26,11 @@ services:
       network:
         ipv4_address: 10.5.0.3
 
-  verifierWaltId_apidata:
+  verifierWaltIdApiData:
     image: waltid/ssikit
     ports:
       - "19012:7003"
+      - "19022:7002"
     restart: "no"
     entrypoint: /app/bin/waltid-ssikit serve -b 0.0.0.0
     volumes:
