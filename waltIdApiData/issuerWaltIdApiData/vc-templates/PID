@@ -1,0 +1,40 @@
+{
+    "type": [
+      "VerifiableCredential",
+      "VerifiableAttestation",
+      "VerifiableId"
+    ],
+    "@context": [
+      "https://www.w3.org/2018/credentials/v1"
+    ],
+    "id": "",
+    "issuer": "",
+    "issuanceDate": "",
+    "issued": "",
+    "validFrom": "",
+    "credentialSchema": {
+      "id": "https://raw.githubusercontent.com/walt-id/waltid-ssikit-vclib/master/src/test/resources/schemas/VerifiableId.json",
+      "type": ""
+    },
+    "credentialSubject": {
+      "id": "",
+      "currentAddress": [],
+      "dateOfBirth": "",
+      "familyName": "",
+      "firstName": "",
+      "gender": "",
+      "nameAndFamilyNameAtBirth": "",
+      "personalIdentifier": "",
+      "placeOfBirth": ""
+    },
+    "evidence": [
+      {
+        "documentPresence": [],
+        "evidenceDocument": [],
+        "subjectPresence": "",
+        "type": [],
+        "verifier": ""
+      }
+    ]
+  }
+  
