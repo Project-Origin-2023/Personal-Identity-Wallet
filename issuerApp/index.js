@@ -91,8 +91,6 @@ app.post('/credential/request', verifyToken, async (req, res) => {
     console.error('Errore durante l\'esecuzione della query:', error);
     res.status(500).json({ error: 'Errore durante l\'esecuzione della richiesta' });
   }
-<<<<<<< Updated upstream
-=======
 });
 
 app.post('/View', async(req, res) => {
@@ -104,7 +102,6 @@ try {
   console.error('Errore durante l\'esecuzione della query:', error);
   res.status(500).json({ error: 'Errore durante l\'esecuzione della richiesta di view'});
   }
->>>>>>> Stashed changes
 });
 
 
