@@ -1,7 +1,5 @@
 {
     "type": [
-      "VerifiableCredential",
-      "VerifiableAttestation",
       "VerifiableId"
     ],
     "@context": [
