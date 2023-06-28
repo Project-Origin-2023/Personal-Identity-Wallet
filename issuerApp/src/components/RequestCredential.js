@@ -7,7 +7,7 @@ function RequestCredential() {
   const [firstname, setFirstName] = useState('');
   const [gender, setGender] = useState('');
   const [nameandfamilynameatbirth, setNameAndFamilyNameAtBirth] = useState('');
-  const [placeobirth, setPlaceOBirth] = useState('');
+  const [placeofbirth, setPlaceOfBirth] = useState('');
 
   const handleRequest = async (e) => {
     e.preventDefault();
@@ -21,7 +21,7 @@ function RequestCredential() {
         firstname: firstname,
         gender: gender,
         nameandfamilynameatbirth: nameandfamilynameatbirth,
-        placeobirth: placeobirth
+        placeofbirth: placeofbirth
       }, {
         headers: {
           'x-access-token': token // Passa il token come header della richiesta
@@ -65,7 +65,7 @@ function RequestCredential() {
         <br/>
         <label>
           Place of Birth: 
-          <input type="text" value={placeobirth} onChange={(e) => setPlaceOBirth(e.target.value)} />
+          <input type="text" value={placeofbirth} onChange={(e) => setPlaceOfBirth(e.target.value)} />
         </label>
         <br/>
        

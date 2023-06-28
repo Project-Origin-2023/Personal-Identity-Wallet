@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
-function CredentialView() {
+function CredentialViewOne() {
   const [credentialData, setCredentialData] = useState([]);
   const [selectedRecord, setSelectedRecord] = useState(null);
 
@@ -23,19 +23,27 @@ function CredentialView() {
   };
 
   const getStatusText = (status) => {
-    return status ? 'Active' : 'Inactive'; //True : False
+    return status ? 'Attivo' : 'Inattivo';
+  };
+
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const day = date.getDate().toString().padStart(2, '0');
+    return `${year}-${month}-${day}`;
   };
 
   return (
     <div>
-      <h2>Visualizzazione credenziali</h2>
+      <h2>Visualizzazione Credenziale</h2>
       {selectedRecord ? (
         <div>
           {Object.entries(selectedRecord).map(([key, value]) => {
-            if (key !== 'personalidfk') { //non vogliamo mostrare la foreign key
+            if (key !== 'user_fk') {
               return (
                 <p key={key}>
-                  <strong>{key}:</strong> {key === 'status' ? getStatusText(value) : value}
+                  <strong>{key}:</strong> {key === 'status' ? getStatusText(value) : key === 'dateofbirth' ? formatDate(value) : value}
                 </p>
               );
             }
@@ -49,16 +57,16 @@ function CredentialView() {
             <table>
               <thead>
                 <tr>
-                  <th>Date of Birth</th>
-                  <th>Family Name</th>
-                  <th>First Name</th>
-                  <th>Details</th>
+                  <th>Data di nascita</th>
+                  <th>Cognome</th>
+                  <th>Nome</th>
+                  <th>Dettagli</th>
                 </tr>
               </thead>
               <tbody>
                 {credentialData.map((rowData, index) => (
                   <tr key={index}>
-                    <td>{rowData.dateofbirth}</td>
+                    <td>{formatDate(rowData.dateofbirth)}</td>
                     <td>{rowData.familyname}</td>
                     <td>{rowData.firstname}</td>
                     <td>
@@ -71,7 +79,7 @@ function CredentialView() {
               </tbody>
             </table>
           ) : (
-            <p>Caricamento ...</p>
+            <p>Caricamento dati credenziali...</p>
           )}
         </>
       )}
@@ -79,4 +87,4 @@ function CredentialView() {
   );
 }
 
-export default CredentialView;
+export default CredentialViewOne;

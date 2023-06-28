@@ -62,7 +62,7 @@ verifyToken = (req, res, next) => {
 // Endpoint per ottenere tutte le richieste di credenziali
 app.post('/credential/request', verifyToken, async (req, res) => {
   try {
-    const { dateofbirth, familyname, firstname, gender, nameandfamilynameatbirth, placeobirth } = req.body;
+    const { dateofbirth, familyname, firstname, gender, nameandfamilynameatbirth, placeofbirth } = req.body;
     const email = req.userEmail;
     query='SELECT id FROM "IssuerRegister" WHERE email=$1';
     values=[email];
@@ -73,8 +73,8 @@ app.post('/credential/request', verifyToken, async (req, res) => {
     // Query SQL per inserire la richiesta di credenziali con l'ID dell'utente
     query = `
       INSERT INTO public.credential_request (
-        "personalidfk", "dateofbirth", "familyname", "firstname", "gender",
-        "nameandfamilynameatbirth", "placeobirth", "status"
+        "user_fk", "dateofbirth", "familyname", "firstname", "gender",
+        "nameandfamilynameatbirth", "placeofbirth", "status"
       )
       VALUES (
         $1, $2, $3, $4, $5, $6, $7, true
@@ -82,7 +82,7 @@ app.post('/credential/request', verifyToken, async (req, res) => {
     `;
 
     // Esegui la query
-    values = [userId, dateofbirth, familyname, firstname, gender, nameandfamilynameatbirth, placeobirth];//valore di personalidfk hardcoded, da sistemare. dovrebbe essere userId, ma per qualche motivo è NULL
+    values = [userId, dateofbirth, familyname, firstname, gender, nameandfamilynameatbirth, placeofbirth];//valore di personalidfk hardcoded, da sistemare. dovrebbe essere userId, ma per qualche motivo è NULL
     result = await pool.query(query, values);
 
     // Invia la risposta con i dati delle richieste di credenziali
