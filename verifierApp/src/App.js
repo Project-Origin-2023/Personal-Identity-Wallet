@@ -6,6 +6,7 @@ import { ThemeProvider } from '@mui/material/styles';
 
 import {Login} from "./components/views/Login";
 import {Services} from "./components/views/Services";
+import {Service} from "./components/views/Service";
 import { darkTheme } from './components/comps/Themes';
 import { Connect } from './components/views/Connect';
 
@@ -21,13 +22,16 @@ function App() {
               </Typography>
               <Button color="inherit" component={Link} to="/">Home</Button>
               <Button color="inherit" component={Link} to="/services">Services</Button>
+              <Button color="inherit" component={Link} to="/service">Service</Button>
               <Button color="inherit" component={Link} to="/connect">Connect</Button>
+              <Button color="inherit" component={Link} to="/login">Login</Button>
             </Toolbar>
           </AppBar>
           <Routes>
             <Route path="/" />
             <Route path="/login" element={<Login />} />
             <Route path="/services" element={<Services />} />
+            <Route path="/service" element={<Service />} />
             <Route path="/connect" element={<Connect />} />
           </Routes>
       </ThemeProvider>

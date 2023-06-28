@@ -9,7 +9,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 
-import { License } from '../comps/LicenseLabel';
+import { LicenseLabel } from '../comps/LicenseLabel';
 
 const cards = [1, 2, 3, 4, 5, 6];
 
@@ -83,7 +83,7 @@ export function Services() {
         >
           Informazioni da footer
         </Typography>
-        <License />
+        <LicenseLabel />
       </Box>
       {/* End footer */}
     </div>

@@ -12,7 +12,7 @@ import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 
-import { License } from '../comps/LicenseLabel';
+import { LicenseLabel } from '../comps/LicenseLabel';
 
 
 export function Login() {
@@ -100,7 +100,7 @@ export function Login() {
                   </Link>
                 </Grid>
               </Grid>
-              <License sx={{ mt: 5 }} />
+              <LicenseLabel sx={{ mt: 5 }} />
             </Box>
           </Box>
         </Grid>
