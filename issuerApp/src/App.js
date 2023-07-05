@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import Register from './components/Register';
 import Login from './components/Login';
 import RequestCredential from './components/RequestCredential';
-import CredentialView from './components/CredentialView';
+import ViewCredentialRequest from './components/ViewCredentialRequest';
 import LogoutButton from './components/LogoutButton';
 import useToken from './components/useToken';
 
@@ -35,7 +35,7 @@ function App() {
               <Link to="/RequestCredential">Richiesta di credenziale</Link>
             </li>
             <li>
-              <Link to="/CredentialView">Visualizzazione credenziale</Link>
+              <Link to="/ViewCredentialRequest">Visualizzazione richieste credenziale</Link>
             </li>
             <LogoutButton />
           </ul>
@@ -46,7 +46,7 @@ function App() {
           <Route path="/Register" element={<Register />} />
           <Route path="/Login" element={<Login setToken={setToken} />} />
           <Route path="/RequestCredential" element={<RequestCredential />} />
-          <Route path="/CredentialView" element={<CredentialView />} />
+          <Route path="/ViewCredentialRequest" element={<ViewCredentialRequest />} />
         </Routes>
       </div>
     </Router>

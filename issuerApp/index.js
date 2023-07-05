@@ -24,16 +24,6 @@ const pool = new Pool({
 const corsOptions = {
   origin: 'http://localhost:19001',
 };
-//ottieni l'id dell'utente da un token jwt
-function getUserIdFromToken(token) {
-  try {
-    const decoded = jwt.verify(token, jwtKey);
-    return decoded.id;
-  } catch (error) {
-    console.error('Errore durante la verifica del token:', error);
-    return null;
-  }
-}
 
 // Abilita il middleware CORS con le opzioni configurate
 app.use(cors(corsOptions));
@@ -93,7 +83,7 @@ app.post('/credential/request', verifyToken, async (req, res) => {
   }
 });
 
-app.post('/View', async(req, res) => {
+app.post('/credential/view_request', async(req, res) => {
 try {
   const query=`SELECT * FROM "credential_request"`;
   const result = await pool.query(query);

@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
-function CredentialViewOne() {
+function ViewRequests() {
   const [credentialData, setCredentialData] = useState([]);
   const [selectedRecord, setSelectedRecord] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.post('http://localhost:19101/View');
+        const response = await axios.post('http://localhost:19101/credential/view_request');
         setCredentialData(response.data);
       } catch (error) {
         console.log(error);
@@ -87,4 +87,4 @@ function CredentialViewOne() {
   );
 }
 
-export default CredentialViewOne;
+export default ViewRequests;
