@@ -40,10 +40,10 @@ function ViewRequests() {
       {selectedRecord ? (
         <div>
           {Object.entries(selectedRecord).map(([key, value]) => {
-            if (key !== 'user_fk') {
+            if (key !== 'user_id') {
               return (
                 <p key={key}>
-                  <strong>{key}:</strong> {key === 'status' ? getStatusText(value) : key === 'dateofbirth' ? formatDate(value) : value}
+                  <strong>{key}:</strong> {key === 'status' ? getStatusText(value) : key === 'date_of_birth' ? formatDate(value) : value}
                 </p>
               );
             }
@@ -66,9 +66,9 @@ function ViewRequests() {
               <tbody>
                 {credentialData.map((rowData, index) => (
                   <tr key={index}>
-                    <td>{formatDate(rowData.dateofbirth)}</td>
-                    <td>{rowData.familyname}</td>
-                    <td>{rowData.firstname}</td>
+                    <td>{formatDate(rowData.date_of_birth)}</td>
+                    <td>{rowData.family_name}</td>
+                    <td>{rowData.first_name}</td>
                     <td>
                       <button onClick={() => handleRecordClick(rowData)}>
                         Visualizza dettagli

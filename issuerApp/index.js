@@ -54,7 +54,7 @@ app.post('/credential/request', verifyToken, async (req, res) => {
   try {
     const { dateofbirth, familyname, firstname, gender, nameandfamilynameatbirth, placeofbirth } = req.body;
     const email = req.userEmail;
-    query='SELECT id FROM "IssuerRegister" WHERE email=$1';
+    query='SELECT id FROM "registered_users" WHERE email=$1';
     values=[email];
     result=await pool.query(query, values);
     userId=result.rows[0].id;
@@ -63,8 +63,8 @@ app.post('/credential/request', verifyToken, async (req, res) => {
     // Query SQL per inserire la richiesta di credenziali con l'ID dell'utente
     query = `
       INSERT INTO public.credential_request (
-        "user_fk", "dateofbirth", "familyname", "firstname", "gender",
-        "nameandfamilynameatbirth", "placeofbirth", "status"
+        "user_id", "date_of_birth", "family_name", "first_name", "gender",
+        "name_and_family_name_at_birth", "place_of_birth", "status"
       )
       VALUES (
         $1, $2, $3, $4, $5, $6, $7, true
@@ -111,7 +111,7 @@ app.get('/', async (req, res) => {
       const { email, password } = req.body;
   
       // Esegui la query per accedere
-      const query = 'SELECT * FROM "IssuerRegister" WHERE email = $1 AND password = $2';
+      const query = 'SELECT * FROM "registered_users" WHERE email = $1 AND password = $2';
       const values = [email, password];
       const result = await pool.query(query, values);
   
@@ -143,7 +143,7 @@ app.get('/', async (req, res) => {
       const { familyName, firstName, email, password } = req.body;
   
       // Esegui la query di inserimento per memorizzare i dati della richiesta nel database
-      const query = 'INSERT INTO "IssuerRegister" ("familyName", "firstName", "email", "password") VALUES ($1, $2, $3, $4)';
+      const query = 'INSERT INTO "registered_users" ("family_name", "first_name", "email", "password") VALUES ($1, $2, $3, $4)';
   
       const values = [familyName, firstName, email, password];
   
