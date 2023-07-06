@@ -1,56 +1,82 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import PropTypes from 'prop-types';
+import { Typography, TextField, Button, Box, styled } from '@mui/material';
 
+const LoginContainer = styled('div')({
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  gap: '16px',
+  maxWidth: '300px',
+  margin: '0 auto',
+});
 
-function Login ({ setToken }){
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
+const Title = styled(Typography)({
+  fontWeight: 'bold',
+  fontSize: '24px',
+  marginBottom: '16px',
+});
+
+const FieldsContainer = styled(Box)({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '8px',
+});
+
+const Login = ({ setToken }) => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    // Esegui l'elaborazione dell'accesso qui, ad esempio inviando i dati al server
     try {
-        // Effettua la chiamata HTTP POST per recuperare le richieste utilizzando email e password
-        const response = await axios.post('http://localhost:19101/Login', {
-          email: email,
-          password: password
-        });
+      const response = await axios.post('http://localhost:19101/Login', {
+        email: email,
+        password: password,
+      });
 
-        if (response.data.success){
-          setToken(response.data.token);
-          alert(response.data.message);
-        }
-
-      } catch (error) {
-        console.log(error);
+      if (response.data.success) {
+        setToken(response.data.token);
+        alert(response.data.message);
       }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
-  
-
   return (
-    <div>
-      <h2>Effettua il login</h2>
+    <LoginContainer>
+      <Title variant="h6">Effettua il login</Title>
       <form onSubmit={handleLogin}>
-        <label>
-          Email:
-          <input type="text" value={email}  onChange={(e) => setEmail(e.target.value)} />
-        </label>
-        <br />
-        <label>
-          Password:
-          <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-        </label>
-        <br />
-        <button type="submit">Accedi</button>
+        <FieldsContainer>
+          <TextField
+            label="Email"
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            variant="outlined"
+            size="small"
+          />
+          <TextField
+            label="Password"
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            variant="outlined"
+            size="small"
+          />
+        </FieldsContainer>
+        <Button type="submit" variant="contained" color="primary">
+          Accedi
+        </Button>
       </form>
-    </div>
+    </LoginContainer>
   );
-}
+};
 
 Login.propTypes = {
-  setToken: PropTypes.func.isRequired
-}
+  setToken: PropTypes.func.isRequired,
+};
 
 export default Login;

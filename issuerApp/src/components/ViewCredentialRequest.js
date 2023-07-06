@@ -1,7 +1,45 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { Typography, Button, styled } from '@mui/material';
 
-function ViewRequests() {
+const ViewRequestsContainer = styled('div')({
+  textAlign: 'center',
+});
+
+const Title = styled(Typography)({
+  fontWeight: 'bold',
+  fontSize: '24px',
+  marginBottom: '16px',
+});
+
+const RecordContainer = styled('div')({
+  marginBottom: '16px',
+});
+
+const BackButton = styled(Button)({
+  backgroundColor: 'transparent',
+  border: 'none',
+  textDecoration: 'underline',
+  cursor: 'pointer',
+});
+
+const Table = styled('table')({
+  margin: '0 auto',
+  borderCollapse: 'collapse',
+  width: '100%',
+});
+
+const TableHead = styled('thead')({
+  backgroundColor: '#f5f5f5',
+});
+
+const TableBody = styled('tbody')({
+  '& tr:nth-child(even)': {
+    backgroundColor: '#f9f9f9',
+  },
+});
+
+const ViewRequests = () => {
   const [credentialData, setCredentialData] = useState([]);
   const [selectedRecord, setSelectedRecord] = useState(null);
 
@@ -34,57 +72,66 @@ function ViewRequests() {
     return `${year}-${month}-${day}`;
   };
 
+  const handleBackButtonClick = () => {
+    setSelectedRecord(null);
+  };
+
   return (
-    <div>
-      <h2>Visualizzazione Credenziale</h2>
+    <ViewRequestsContainer>
+      <Title variant="h6">Visualizzazione Credenziale</Title>
       {selectedRecord ? (
-        <div>
+        <RecordContainer>
           {Object.entries(selectedRecord).map(([key, value]) => {
             if (key !== 'user_id') {
               return (
                 <p key={key}>
-                  <strong>{key}:</strong> {key === 'status' ? getStatusText(value) : key === 'date_of_birth' ? formatDate(value) : value}
+                  <strong>{key}:</strong>{' '}
+                  {key === 'status'
+                    ? getStatusText(value)
+                    : key === 'date_of_birth'
+                    ? formatDate(value)
+                    : value}
                 </p>
               );
             }
             return null;
           })}
-          <button onClick={() => setSelectedRecord(null)}>Indietro</button>
-        </div>
+          <BackButton onClick={handleBackButtonClick}>Indietro</BackButton>
+        </RecordContainer>
       ) : (
         <>
           {credentialData.length > 0 ? (
-            <table>
-              <thead>
+            <Table>
+              <TableHead>
                 <tr>
                   <th>Data di nascita</th>
                   <th>Cognome</th>
                   <th>Nome</th>
                   <th>Dettagli</th>
                 </tr>
-              </thead>
-              <tbody>
+              </TableHead>
+              <TableBody>
                 {credentialData.map((rowData, index) => (
                   <tr key={index}>
                     <td>{formatDate(rowData.date_of_birth)}</td>
                     <td>{rowData.family_name}</td>
                     <td>{rowData.first_name}</td>
                     <td>
-                      <button onClick={() => handleRecordClick(rowData)}>
+                      <Button onClick={() => handleRecordClick(rowData)} variant="text">
                         Visualizza dettagli
-                      </button>
+                      </Button>
                     </td>
                   </tr>
                 ))}
-              </tbody>
-            </table>
+              </TableBody>
+            </Table>
           ) : (
             <p>Caricamento dati credenziali...</p>
           )}
         </>
       )}
-    </div>
+    </ViewRequestsContainer>
   );
-}
+};
 
 export default ViewRequests;

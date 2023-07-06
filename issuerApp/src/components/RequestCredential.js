@@ -1,78 +1,118 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { Typography, TextField, Button, Box, styled } from '@mui/material';
 
-function RequestCredential() {
-  const [dateofbirth, setDateOfBirth] = useState('');
-  const [familyname, setFamilyName] = useState('');
-  const [firstname, setFirstName] = useState('');
+const RequestContainer = styled('div')({
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  gap: '16px',
+  maxWidth: '300px',
+  margin: '0 auto',
+});
+
+const Title = styled(Typography)({
+  fontWeight: 'bold',
+  fontSize: '24px',
+  marginBottom: '16px',
+  textAlign: 'center',
+});
+
+const RequestCredential = () => {
+  const [dateOfBirth, setDateOfBirth] = useState('');
+  const [familyName, setFamilyName] = useState('');
+  const [firstName, setFirstName] = useState('');
   const [gender, setGender] = useState('');
-  const [nameandfamilynameatbirth, setNameAndFamilyNameAtBirth] = useState('');
-  const [placeofbirth, setPlaceOfBirth] = useState('');
+  const [nameAndFamilyNameAtBirth, setNameAndFamilyNameAtBirth] = useState('');
+  const [placeOfBirth, setPlaceOfBirth] = useState('');
 
   const handleRequest = async (e) => {
     e.preventDefault();
-
     try {
-      const token = sessionStorage.getItem('token').slice(1,-1); // Ottieni il token dal sessionStorage
-      //console.log(token);
+      const token = sessionStorage.getItem('token').slice(1,-1);
       const response = await axios.post('http://localhost:19101/credential/request', {
-        dateofbirth: dateofbirth,
-        familyname: familyname,
-        firstname: firstname,
+        dateOfBirth: dateOfBirth,
+        familyName: familyName,
+        firstName: firstName,
         gender: gender,
-        nameandfamilynameatbirth: nameandfamilynameatbirth,
-        placeofbirth: placeofbirth
+        nameAndFamilyNameAtBirth: nameAndFamilyNameAtBirth,
+        placeOfBirth: placeOfBirth
       }, {
         headers: {
-          'x-access-token': token // Passa il token come header della richiesta
+          'x-access-token': token
         }
       });
 
       // Memorizza le richieste nella lista
+
     } catch (error) {
       console.log(error);
     }
   };
 
   return (
-    <div>
-      <h2>Request Credential</h2>
+    <RequestContainer>
+      <Title variant="h6">Request Credential</Title>
       <form onSubmit={handleRequest}>
-        <label>
-          Date of Birth: 
-          <input type="date" value={dateofbirth} onChange={(e) => setDateOfBirth(e.target.value)} />
-        </label>
-        <br/>
-        <label>
-          Family Name:
-          <input type="text" value={familyname} onChange={(e) => setFamilyName(e.target.value)} />
-        </label>
-        <br/>
-        <label>
-          First name: 
-          <input type="text" value={firstname} onChange={(e) => setFirstName(e.target.value)} />
-        </label>
-        <br/>
-        <label>
-          Gender:
-          <input type="text" value={gender} onChange={(e) => setGender(e.target.value)} />
-        </label>
-        <br/>
-        <label>
-          Name and Family Name at Birth:
-          <input type="text" value={nameandfamilynameatbirth} onChange={(e) => setNameAndFamilyNameAtBirth(e.target.value)} />
-        </label>
-        <br/>
-        <label>
-          Place of Birth: 
-          <input type="text" value={placeofbirth} onChange={(e) => setPlaceOfBirth(e.target.value)} />
-        </label>
-        <br/>
-       
-        <br />
-        <button type="submit">Request Credential</button>
+        <Box display="flex" flexDirection="column" gap="8px">
+          <TextField
+            label="Date of Birth"
+            type="date"
+            value={dateOfBirth}
+            onChange={(e) => setDateOfBirth(e.target.value)}
+            variant="outlined"
+            size="small"
+            InputLabelProps={{
+              shrink: true,
+            }}
+          />
+          <TextField
+            label="Family Name"
+            type="text"
+            value={familyName}
+            onChange={(e) => setFamilyName(e.target.value)}
+            variant="outlined"
+            size="small"
+          />
+          <TextField
+            label="First Name"
+            type="text"
+            value={firstName}
+            onChange={(e) => setFirstName(e.target.value)}
+            variant="outlined"
+            size="small"
+          />
+          <TextField
+            label="Gender"
+            type="text"
+            value={gender}
+            onChange={(e) => setGender(e.target.value)}
+            variant="outlined"
+            size="small"
+          />
+          <TextField
+            label="Name and Family Name at Birth"
+            type="text"
+            value={nameAndFamilyNameAtBirth}
+            onChange={(e) => setNameAndFamilyNameAtBirth(e.target.value)}
+            variant="outlined"
+            size="small"
+          />
+          <TextField
+            label="Place of Birth"
+            type="text"
+            value={placeOfBirth}
+            onChange={(e) => setPlaceOfBirth(e.target.value)}
+            variant="outlined"
+            size="small"
+          />
+        </Box>
+        <Button type="submit" variant="contained" color="primary">
+          Request Credential
+        </Button>
       </form>
-    </div>
+    </RequestContainer>
   );
-}
+};
+
 export default RequestCredential;
