@@ -19,24 +19,24 @@ const Title = styled(Typography)({
 });
 
 const RequestCredential = () => {
-  const [dateOfBirth, setDateOfBirth] = useState('');
-  const [familyName, setFamilyName] = useState('');
-  const [firstName, setFirstName] = useState('');
+  const [dateofbirth, setDateOfBirth] = useState('');
+  const [familyname, setFamilyName] = useState('');
+  const [firstname, setFirstName] = useState('');
   const [gender, setGender] = useState('');
-  const [nameAndFamilyNameAtBirth, setNameAndFamilyNameAtBirth] = useState('');
-  const [placeOfBirth, setPlaceOfBirth] = useState('');
+  const [nameandfamilynameatbirth, setNameAndFamilyNameAtBirth] = useState('');
+  const [placeofbirth, setPlaceOfBirth] = useState('');
 
   const handleRequest = async (e) => {
     e.preventDefault();
     try {
       const token = sessionStorage.getItem('token').slice(1,-1);
       const response = await axios.post('http://localhost:19101/credential/request', {
-        dateOfBirth: dateOfBirth,
-        familyName: familyName,
-        firstName: firstName,
+        dateofbirth: dateofbirth,
+        familyname: familyname,
+        firstname: firstname,
         gender: gender,
-        nameAndFamilyNameAtBirth: nameAndFamilyNameAtBirth,
-        placeOfBirth: placeOfBirth
+        nameandfamilynameatbirth: nameandfamilynameatbirth,
+        placeofbirth: placeofbirth
       }, {
         headers: {
           'x-access-token': token
@@ -58,7 +58,7 @@ const RequestCredential = () => {
           <TextField
             label="Date of Birth"
             type="date"
-            value={dateOfBirth}
+            value={dateofbirth}
             onChange={(e) => setDateOfBirth(e.target.value)}
             variant="outlined"
             size="small"
@@ -69,7 +69,7 @@ const RequestCredential = () => {
           <TextField
             label="Family Name"
             type="text"
-            value={familyName}
+            value={familyname}
             onChange={(e) => setFamilyName(e.target.value)}
             variant="outlined"
             size="small"
@@ -77,7 +77,7 @@ const RequestCredential = () => {
           <TextField
             label="First Name"
             type="text"
-            value={firstName}
+            value={firstname}
             onChange={(e) => setFirstName(e.target.value)}
             variant="outlined"
             size="small"
@@ -93,7 +93,7 @@ const RequestCredential = () => {
           <TextField
             label="Name and Family Name at Birth"
             type="text"
-            value={nameAndFamilyNameAtBirth}
+            value={nameandfamilynameatbirth}
             onChange={(e) => setNameAndFamilyNameAtBirth(e.target.value)}
             variant="outlined"
             size="small"
@@ -101,7 +101,7 @@ const RequestCredential = () => {
           <TextField
             label="Place of Birth"
             type="text"
-            value={placeOfBirth}
+            value={placeofbirth}
             onChange={(e) => setPlaceOfBirth(e.target.value)}
             variant="outlined"
             size="small"
