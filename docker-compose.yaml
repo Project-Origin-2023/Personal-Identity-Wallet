@@ -1,6 +1,20 @@
 version: '3'
 services:
 
+  issuerWaltIdIdp:
+    image: waltid/idpkit
+    ports:
+      - 19051:8080
+    restart: no
+    networks:
+      network:
+        ipv4_address: 10.5.0.7
+    entrypoint: /app/bin/waltid-idpkit run
+    volumes:
+      - './issuerData/waltId/IDP/data/:/app/data'
+      - './issuerData/waltId/IDP/config/:/app/config'
+    
+
   walletWaltIdApiData:
     image: waltid/ssikit
     ports:
