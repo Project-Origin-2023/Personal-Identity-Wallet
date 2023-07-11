@@ -1,6 +1,6 @@
 {
   "externalUrl": "http://localhost:19051",
-  "jsProjectExternalUrl":"http://localhost:19051",
+  "fallbackAuthorizationMode": "SIOP",
   "openClientRegistration": true,
   "claimConfig": {
     "vc_mappings": [

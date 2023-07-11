@@ -1,9 +1,3 @@
 {
-  "nftWallet": {
-    "id": "idpkit-connect-wallet",
-    "url": "/connect-wallet",
-    "presentPath": "",
-    "receivePath" : "",
-    "description": "IDP Kit connect wallet"
-  }
+  "nftWallet": {}
 }
