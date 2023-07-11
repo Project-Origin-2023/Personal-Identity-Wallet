@@ -90,13 +90,11 @@ import RequestCredential from './components/RequestCredential';
 import ViewCredentialRequest from './components/ViewCredentialRequest';
 import Logout from './components/Logout';
 import useToken from './components/useToken';
-//import { darkTheme } from './components/Themes';
 
 function App() {
   const { token, setToken } = useToken();
-
-
-
+  
+  //Routing Pagine
   return (
     <Router>
       <AuthProvider>
@@ -126,7 +124,6 @@ function App() {
     </Router>
   );
 }
-
 
 export default App;
 
