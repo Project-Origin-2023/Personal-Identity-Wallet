@@ -78,7 +78,7 @@ import React from 'react';
 import { AuthProvider } from 'react-auth-kit';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import { AppBar, Toolbar, Typography, Button } from '@mui/material';
-import { ThemeProvider } from '@mui/material/styles';
+//import { ThemeProvider } from '@mui/material/styles';
 
 
 
@@ -90,7 +90,7 @@ import RequestCredential from './components/RequestCredential';
 import ViewCredentialRequest from './components/ViewCredentialRequest';
 import Logout from './components/Logout';
 import useToken from './components/useToken';
-import { darkTheme } from './components/Themes';
+//import { darkTheme } from './components/Themes';
 
 function App() {
   const { token, setToken } = useToken();
@@ -100,7 +100,7 @@ function App() {
   return (
     <Router>
       <AuthProvider>
-      <ThemeProvider theme={darkTheme}> 
+      
           <AppBar position="static">
             <Toolbar>
               <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
@@ -121,7 +121,7 @@ function App() {
             <Route path="/RequestCredential" element={<RequestCredential />} />
             <Route path="/ViewCredentialRequest" element={<ViewCredentialRequest />} />
           </Routes>
-      </ThemeProvider>
+      
       </AuthProvider>
     </Router>
   );
