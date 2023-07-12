@@ -60,8 +60,14 @@ const ViewRequests = () => {
     setSelectedRecord(record);
   };
 
-  const getStatusText = (status) => {
-    return status ? 'Attivo' : 'Inattivo';
+  const getEsitoText = (esito) => {
+    if (esito === 0) {
+      return 'In Revisione';
+    } else if (esito === 1) {
+      return 'Approvata';
+    } else if (esito === 2) {
+      return 'Rifiutata';
+    }
   };
 
   const formatDate = (dateString) => {
@@ -86,8 +92,8 @@ const ViewRequests = () => {
               return (
                 <p key={key}>
                   <strong>{key}:</strong>{' '}
-                  {key === 'status'
-                    ? getStatusText(value)
+                  {key === 'esito'
+                    ? getEsitoText(value)
                     : key === 'date_of_birth'
                     ? formatDate(value)
                     : value}

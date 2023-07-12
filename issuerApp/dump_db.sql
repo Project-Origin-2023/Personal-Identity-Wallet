@@ -33,7 +33,7 @@ CREATE TABLE public.credential_request (
     gender character varying NOT NULL,
     name_and_family_name_at_birth character varying NOT NULL,
     place_of_birth character varying NOT NULL,
-    status boolean
+    esito integer NOT NULL
 );
 
 
@@ -116,9 +116,9 @@ ALTER TABLE ONLY public.registered_users ALTER COLUMN id SET DEFAULT nextval('pu
 -- Data for Name: credential_request; Type: TABLE DATA; Schema: public; Owner: admin
 --
 
-COPY public.credential_request (credential_id, user_id, date_of_birth, family_name, first_name, gender, name_and_family_name_at_birth, place_of_birth, status) FROM stdin;
-1	2	1961-06-06	Avido	Ivo	maschio	Ivo Avido	Abbiategrasso	t
-2	2	2023-07-05	Caio	Tizio	maschio	Tizio Caio	Roma	t
+COPY public.credential_request (credential_id, user_id, date_of_birth, family_name, first_name, gender, name_and_family_name_at_birth, place_of_birth, esito) FROM stdin;
+1	1	1961-06-06	Avido	Ivo	maschio	Ivo Avido	Abbiategrasso	0
+2	2	2023-07-05	Caio	Tizio	maschio	Tizio Caio	Roma	1
 \.
 
 
@@ -129,6 +129,7 @@ COPY public.credential_request (credential_id, user_id, date_of_birth, family_na
 COPY public.registered_users (id, family_name, first_name, email, password) FROM stdin;
 1	Rossi	Mario	mariorossi@gmail.com	mario
 2	Neri	Aldo	aldo61@gmail.com	61
+
 \.
 
 
