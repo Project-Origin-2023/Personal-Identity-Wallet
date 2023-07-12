@@ -72,6 +72,9 @@ export default App;
 */
 
 /////////////////////////////////////////////////////////////77
+//Per Home
+import Blog from './blog/Blog';
+
 
 
 import React from 'react';
@@ -96,33 +99,40 @@ function App() {
   
   //Routing Pagine
   return (
-    <Router>
+    <><Router>
       <AuthProvider>
-      
-          <AppBar position="static">
-            <Toolbar>
-              <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                issuerApp
-              </Typography>
-              <Button color="inherit" component={Link} to="/">Home</Button>
-              <Button color="inherit" component={Link} to="/Register">Registrati</Button>
-              <Button color="inherit" component={Link} to="/Login">Login</Button>
-              <Button color="inherit" component={Link} to="/RequestCredential">Richiesta credenziale</Button>
-              <Button color="inherit" component={Link} to="/ViewCredentialRequest">Visualizzazione richieste</Button>
-              <Button color="inherit"><Logout /></Button>
-            </Toolbar>
-          </AppBar>
-          <Routes>
-            <Route path="/" />
-            <Route path="/Register" element={<Register />} />
-            <Route path="/Login" element={<Login setToken={setToken} />} />
-            <Route path="/RequestCredential" element={<RequestCredential />} />
-            <Route path="/ViewCredentialRequest" element={<ViewCredentialRequest />} />
-          </Routes>
-      
+
+        <AppBar position="static">
+          <Toolbar>
+            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+              issuerApp
+            </Typography>
+            <Button color="inherit" component={Link} to="/">Home</Button>
+            <Button color="inherit" component={Link} to="/Register">Registrati</Button>
+            <Button color="inherit" component={Link} to="/Login">Login</Button>
+            <Button color="inherit" component={Link} to="/RequestCredential">Richiesta credenziale</Button>
+            <Button color="inherit" component={Link} to="/ViewCredentialRequest">Visualizzazione richieste</Button>
+            <Button color="inherit"><Logout /></Button>
+          </Toolbar>
+        </AppBar>
+        <Routes>
+          <Route path="/" element= {<BlogApp/>} />
+          <Route path="/Register" element={<Register />} />
+          <Route path="/Login" element={<Login setToken={setToken} />} />
+          <Route path="/RequestCredential" element={<RequestCredential />} />
+          <Route path="/ViewCredentialRequest" element={<ViewCredentialRequest />} />
+        </Routes>
+
       </AuthProvider>
-    </Router>
+    </Router></>
   );
 }
+
+const BlogApp = () => {
+  return (
+    <Blog />
+  );
+}
+
 
 export default App;
