@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { AppBar, Toolbar, Typography, Button } from '@mui/material';
+import Logout from './Logout';
+
 
 function Navbar() {
   return (
@@ -14,6 +16,7 @@ function Navbar() {
         <Button color="inherit" component={Link} to="/Login">Login</Button>
         <Button color="inherit" component={Link} to="/RequestCredential">Richiesta credenziale</Button>
         <Button color="inherit" component={Link} to="/ViewCredentialRequest">Visualizzazione richieste</Button>
+        <Button color="inherit"><Logout /></Button>
       </Toolbar>
     </AppBar>
   );
