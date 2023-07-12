@@ -81,7 +81,7 @@ import { AppBar, Toolbar, Typography, Button } from '@mui/material';
 //import { ThemeProvider } from '@mui/material/styles';
 
 
-
+//import Navbar from './components/Navbar';
 
 
 import Register from './components/Register';
@@ -107,8 +107,8 @@ function App() {
               <Button color="inherit" component={Link} to="/">Home</Button>
               <Button color="inherit" component={Link} to="/Register">Registrati</Button>
               <Button color="inherit" component={Link} to="/Login">Login</Button>
-              <Button color="inherit" component={Link} to="/RequestCredential">Richiesta di credenziale</Button>
-              <Button color="inherit" component={Link} to="/ViewCredentialRequest">Visualizzazione richieste credenziale</Button>
+              <Button color="inherit" component={Link} to="/RequestCredential">Richiesta credenziale</Button>
+              <Button color="inherit" component={Link} to="/ViewCredentialRequest">Visualizzazione richieste</Button>
               <Button color="inherit"><Logout /></Button>
             </Toolbar>
           </AppBar>
@@ -126,4 +126,3 @@ function App() {
 }
 
 export default App;
-
