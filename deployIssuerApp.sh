@@ -1,4 +1,4 @@
-cd ./issuerApp
+cd ./issuerApi
 npm install 
 node index.js & 
-npm start
+npm start --prefix ../issuerApp
