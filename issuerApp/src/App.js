@@ -7,6 +7,7 @@ import { BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 
 
 import Navbar from './components/Navbar';
+import Home from './components/Home';
 import Register from './components/Register';
 import Login from './components/Login';
 import RequestCredential from './components/RequestCredential';
@@ -22,7 +23,7 @@ function App() {
       <AuthProvider>
         <Navbar/>
         <Routes>
-          <Route path="/"  element={<Register />} />
+          <Route path="/"  element={<Home />} />
           <Route path="/Register" element={<Register />} />
           <Route path="/Login" element={<Login setToken={setToken} />} />
           <Route path="/RequestCredential" element={<RequestCredential />} />
