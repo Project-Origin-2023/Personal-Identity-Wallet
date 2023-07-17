@@ -1,5 +1,4 @@
 #!/bin/bash
-cd ./issuerApp
+cd ../issuerApp
 npm install 
-node index.js & 
 npm start

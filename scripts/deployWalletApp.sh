@@ -1,5 +1,5 @@
 #!/bin/bash
-cd ./walletApp
+cd ../walletApp
 npm install
 npm start
 
