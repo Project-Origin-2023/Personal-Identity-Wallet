@@ -1,19 +1,20 @@
 version: '3'
 services:
 
-  walletWaltIdApiData:
-    image: waltid/ssikit
+  issuerWaltIdIdp:
+    image: waltid/idpkit
     ports:
-      - "19010:7002"
+      - 19051:8080
     restart: no
-    entrypoint: /app/bin/waltid-ssikit serve -b 0.0.0.0
-    volumes:
-      - './waltIdApiData/walletWaltIdApiData:/app/data'
     networks:
       network:
-        ipv4_address: 10.5.0.2
+        ipv4_address: 10.5.0.7
+    entrypoint: /app/bin/waltid-idpkit run
+    volumes:
+      - './issuerData/waltId/IDP/data/:/app/data'
+      - './issuerData/waltId/IDP/config/:/app/config'
 
-  issuerWaltIdApiData:
+  issuerWaltIdSsi:
     image: waltid/ssikit
     ports:
       - "19011:7001"
@@ -21,12 +22,24 @@ services:
     restart: no
     entrypoint: /app/bin/waltid-ssikit serve -b 0.0.0.0
     volumes:
-      - './waltIdApiData/issuerWaltIdApiData:/app/data'
+      - './issuerData/waltId/SSI/data/:/app/data'
     networks:
       network:
         ipv4_address: 10.5.0.3
+    
+  walletWaltIdSsi:
+    image: waltid/ssikit
+    ports:
+      - "19010:7002"
+    restart: no
+    entrypoint: /app/bin/waltid-ssikit serve -b 0.0.0.0
+    volumes:
+      - './walletData/waltId/SSI/data/:/app/data'
+    networks:
+      network:
+        ipv4_address: 10.5.0.2
 
-  verifierWaltIdApiData:
+  verifierWaltIdSsi:
     image: waltid/ssikit
     ports:
       - "19012:7003"
@@ -34,7 +47,7 @@ services:
     restart: "no"
     entrypoint: /app/bin/waltid-ssikit serve -b 0.0.0.0
     volumes:
-      - './waltIdApiData/verifierWaltIdApiData:/app/data'
+      - './verifierData/waltId/SSI/data/:/app/data'
     networks:
       network:
         ipv4_address: 10.5.0.4
@@ -45,7 +58,7 @@ services:
     environment:
       POSTGRES_PASSWORD: admin
       POSTGRES_USER: admin
-      POSTGRES_DB: issuerApp
+      POSTGRES_DB: issuerapp
     networks:
       network:
         ipv4_address: 10.5.0.5
