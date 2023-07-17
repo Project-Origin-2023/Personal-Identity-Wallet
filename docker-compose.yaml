@@ -13,19 +13,6 @@ services:
     volumes:
       - './issuerData/waltId/IDP/data/:/app/data'
       - './issuerData/waltId/IDP/config/:/app/config'
-    
-
-  walletWaltIdSsi:
-    image: waltid/ssikit
-    ports:
-      - "19010:7002"
-    restart: no
-    entrypoint: /app/bin/waltid-ssikit serve -b 0.0.0.0
-    volumes:
-      - './walletData/waltId/SSI/data/:/app/data'
-    networks:
-      network:
-        ipv4_address: 10.5.0.2
 
   issuerWaltIdSsi:
     image: waltid/ssikit
@@ -39,6 +26,18 @@ services:
     networks:
       network:
         ipv4_address: 10.5.0.3
+    
+  walletWaltIdSsi:
+    image: waltid/ssikit
+    ports:
+      - "19010:7002"
+    restart: no
+    entrypoint: /app/bin/waltid-ssikit serve -b 0.0.0.0
+    volumes:
+      - './walletData/waltId/SSI/data/:/app/data'
+    networks:
+      network:
+        ipv4_address: 10.5.0.2
 
   verifierWaltIdSsi:
     image: waltid/ssikit
