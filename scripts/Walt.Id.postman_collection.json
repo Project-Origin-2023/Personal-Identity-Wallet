@@ -6,7 +6,7 @@
 	},
 	"item": [
 		{
-			"name": "Create templates/PID",
+			"name": "Create templates/PID Issuer",
 			"request": {
 				"method": "POST",
 				"header": [
@@ -40,7 +40,7 @@
 			"response": []
 		},
 		{
-			"name": "Create templates/EAA",
+			"name": "Create templates/EAA Issuer",
 			"request": {
 				"method": "POST",
 				"header": [
