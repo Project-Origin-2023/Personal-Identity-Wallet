@@ -1,14 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import useToken from './useToken';
+import PropTypes from 'prop-types';
 import { Typography } from '@mui/material';
 
-const Logout = () => {
-  const { logout } = useToken();
+const Logout = ({ setToken }) => {
 
   const handleLogout = () => {
-    logout();
-    // Aggiungi altre logiche per il logout, come reindirizzamento o pulizia dei dati dell'utente
+    setToken(null);
   };
 
   return (
@@ -16,6 +14,10 @@ const Logout = () => {
       Logout
     </Typography>
   );
+};
+
+Logout.propTypes = {
+  setToken: PropTypes.func.isRequired,
 };
 
 export default Logout;

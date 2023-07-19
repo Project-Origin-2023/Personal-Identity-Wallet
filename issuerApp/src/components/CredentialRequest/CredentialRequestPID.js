@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import PropTypes from 'prop-types';
 import { Typography, TextField, Button, Box, styled } from '@mui/material';
+
 
 const RequestContainer = styled('div')({
   display: 'flex',
@@ -18,7 +20,7 @@ const Title = styled(Typography)({
   textAlign: 'center',
 });
 
-const RequestCredential = () => {
+const CredentialRequestPID = ({token}) => {
   const [dateofbirth, setDateOfBirth] = useState('');
   const [familyname, setFamilyName] = useState('');
   const [firstname, setFirstName] = useState('');
@@ -29,7 +31,6 @@ const RequestCredential = () => {
   const handleRequest = async (e) => {
     e.preventDefault();
     try {
-      const token = sessionStorage.getItem('token').slice(1,-1);
       const response = await axios.post('http://localhost:19101/credential/request', {
         dateofbirth: dateofbirth,
         familyname: familyname,
@@ -37,13 +38,13 @@ const RequestCredential = () => {
         gender: gender,
         nameandfamilynameatbirth: nameandfamilynameatbirth,
         placeofbirth: placeofbirth
-      }, {
+        }, {
         headers: {
           'x-access-token': token
         }
       });
 
-      // Memorizza le richieste nella lista
+      alert(response.data.message);
 
     } catch (error) {
       console.log(error);
@@ -52,8 +53,8 @@ const RequestCredential = () => {
 
   return (
     <RequestContainer>
-      <Title variant="h6">Request Credential</Title>
-      <form onSubmit={handleRequest}>
+      <Title variant="h6">Credential Request PID</Title>
+      <Box component="form" noValidate onSubmit={handleRequest}>
         <Box display="flex" flexDirection="column" gap="8px">
           <TextField
             label="Date of Birth"
@@ -110,9 +111,13 @@ const RequestCredential = () => {
         <Button type="submit" variant="contained" color="primary">
           Request Credential
         </Button>
-      </form>
+      </Box>
     </RequestContainer>
   );
 };
 
-export default RequestCredential;
+CredentialRequestPID.propTypes = {
+  token: PropTypes.string.isRequired,
+};
+
+export default CredentialRequestPID

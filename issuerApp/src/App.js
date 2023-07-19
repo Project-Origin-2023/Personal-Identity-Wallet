@@ -10,8 +10,8 @@ import Navbar from './components/Navbar';
 import Home from './components/Home';
 import Register from './components/Register';
 import Login from './components/Login';
-import RequestCredential from './components/RequestCredential';
-import ViewCredentialRequest from './components/ViewCredentialRequest';
+import CredentialRequest from './components/CredentialRequest';
+import ViewCredentialRequests from './components/ViewCredentialRequests';
 import useToken from './components/useToken';
 
 function App() {
@@ -21,13 +21,13 @@ function App() {
   return (
     <Router>
       <AuthProvider>
-        <Navbar/>
+        <Navbar isLoggedIn={token!==null} setToken={setToken}/>
         <Routes>
           <Route path="/"  element={<Home />} />
           <Route path="/Register" element={<Register />} />
           <Route path="/Login" element={<Login setToken={setToken} />} />
-          <Route path="/RequestCredential" element={<RequestCredential />} />
-          <Route path="/ViewCredentialRequest" element={<ViewCredentialRequest />} />
+          <Route path="/CredentialRequestPID" element={<CredentialRequest type="PID" token={token} />} />
+          <Route path="/ViewCredentialRequests" element={<ViewCredentialRequests type="ALL" token={token}/>} />
         </Routes>
       </AuthProvider>
     </Router>

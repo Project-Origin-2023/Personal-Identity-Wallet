@@ -23,7 +23,7 @@ const Login = ({ setToken }) => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:19101/Login', {
+      const response = await axios.post('http://localhost:19101/login', {
         email: email,
         password: password,
       });
@@ -32,6 +32,7 @@ const Login = ({ setToken }) => {
         setToken(response.data.token);
       }
       alert(response.data.message);
+      window.location.reload(true);
       
     } catch (error) {
       console.log(error);

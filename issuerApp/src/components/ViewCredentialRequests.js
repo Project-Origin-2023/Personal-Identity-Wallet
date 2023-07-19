@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import axios from 'axios';
 import { Typography, Button, styled } from '@mui/material';
 
@@ -39,21 +40,29 @@ const TableBody = styled('tbody')({
   },
 });
 
-const ViewRequests = () => {
+const ViewCredentialRequests = (props) => {
   const [credentialData, setCredentialData] = useState([]);
   const [selectedRecord, setSelectedRecord] = useState(null);
+  const token = props.token;
 
   useEffect(() => {
-    const fetchData = async () => {
+    const dataFetch = async () => {
       try {
-        const response = await axios.post('http://localhost:19101/credential/view_request');
-        setCredentialData(response.data);
+        const response = await axios.get('http://localhost:19101/credential/request', {
+          headers: {
+            'x-access-token': token
+          }
+        });
+  
+        if(response.data.success)
+            setCredentialData(response.data.result);
+  
       } catch (error) {
         console.log(error);
       }
     };
 
-    fetchData();
+    dataFetch();
   }, []);
 
   const handleRecordClick = (record) => {
@@ -140,4 +149,9 @@ const ViewRequests = () => {
   );
 };
 
-export default ViewRequests;
+ViewCredentialRequests.propTypes = {
+  type: PropTypes.string.isRequired,
+  token: PropTypes.string.isRequired,
+};
+
+export default ViewCredentialRequests;
