@@ -1,45 +1,38 @@
+//Per Home
+//import Blog from './blog/Blog';
+
 import React from 'react';
-import { AuthProvider } from 'react-auth-kit'
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { AuthProvider } from 'react-auth-kit';
+import { BrowserRouter as Router, Routes, Route} from 'react-router-dom';
+
+
+import Navbar from './components/Navbar';
+import Home from './components/Home';
 import Register from './components/Register';
-import RequestCredentialForm from './components/RequestCredentialForm';
-import RequestCredential from './components/RequestCredential';
 import Login from './components/Login';
+import CredentialRequest from './components/CredentialRequest';
+import ViewCredentialRequests from './components/ViewCredentialRequests';
+import useToken from './components/useToken';
 
 function App() {
+  const { token, setToken } = useToken();
+  
+  //Routing Pagine
   return (
     <Router>
-      <div>
-        <nav>
-          <ul>
-            <li>
-              <Link to="/">Home</Link>
-            </li>
-            <li>
-              <Link to="/register">Registrati</Link>
-            </li>
-            <li>
-              <Link to="/request">Request Credential</Link>
-            </li>
-            <li>
-              <Link to="/getRequest">get Request Credential</Link>
-            </li>
-            <li>
-              <Link to="/login">Login</Link>
-            </li>
-          </ul>
-        </nav>
-
+      <AuthProvider>
+        <Navbar isLoggedIn={token!==null} setToken={setToken}/>
         <Routes>
-          <Route path="/" />
-          <Route path="/register" element={<Register />} />
-          <Route path="/request" element={<RequestCredentialForm />} />
-          <Route path="/getRequest" element={<RequestCredential />} />
-          <Route path="/login" element={<Login />} />
+          <Route path="/"  element={<Home />} />
+          <Route path="/Register" element={<Register />} />
+          <Route path="/Login" element={<Login setToken={setToken} />} />
+          <Route path="/CredentialRequestPID" element={<CredentialRequest type="PID" token={token} />} />
+          <Route path="/ViewCredentialRequests" element={<ViewCredentialRequests type="ALL" token={token}/>} />
         </Routes>
-      </div>
+      </AuthProvider>
     </Router>
   );
 }
+
 
 export default App;

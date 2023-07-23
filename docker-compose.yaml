@@ -19,6 +19,7 @@ services:
     ports:
       - "19011:7001"
       - "19021:7002"
+      - "19041:7010"
     restart: no
     entrypoint: /app/bin/waltid-ssikit serve -b 0.0.0.0
     volumes:
@@ -30,7 +31,7 @@ services:
   walletWaltIdSsi:
     image: waltid/ssikit
     ports:
-      - "19010:7002"
+      - "19020:7002"
     restart: no
     entrypoint: /app/bin/waltid-ssikit serve -b 0.0.0.0
     volumes:
@@ -42,7 +43,7 @@ services:
   verifierWaltIdSsi:
     image: waltid/ssikit
     ports:
-      - "19012:7003"
+      - "19032:7003"
       - "19022:7002"
     restart: "no"
     entrypoint: /app/bin/waltid-ssikit serve -b 0.0.0.0

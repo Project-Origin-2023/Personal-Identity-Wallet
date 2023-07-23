@@ -1,5 +1,5 @@
 #!/bin/bash
-cd ./verifierApp
+cd ../verifierApp
 npm install
 npm start
 
