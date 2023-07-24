@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import PropTypes from 'prop-types';
-import { Typography, TextField, Button, Box, styled } from '@mui/material';
-
+import { Typography, TextField, Button, Box, styled, Select, MenuItem, InputLabel } from '@mui/material';
 
 const RequestContainer = styled('div')({
   display: 'flex',
@@ -20,7 +19,12 @@ const Title = styled(Typography)({
   textAlign: 'center',
 });
 
-const CredentialRequestPID = ({token}) => {
+const genderOptions = [
+  { label: 'Maschio', value: 'm' },
+  { label: 'Femmina', value: 'f' },
+];
+
+const CredentialRequestPID = ({ token }) => {
   const [dateofbirth, setDateOfBirth] = useState('');
   const [familyname, setFamilyName] = useState('');
   const [firstname, setFirstName] = useState('');
@@ -37,8 +41,8 @@ const CredentialRequestPID = ({token}) => {
         firstname: firstname,
         gender: gender,
         nameandfamilynameatbirth: nameandfamilynameatbirth,
-        placeofbirth: placeofbirth
-        }, {
+        placeofbirth: placeofbirth,
+      }, {
         headers: {
           'x-access-token': token
         }
@@ -83,14 +87,20 @@ const CredentialRequestPID = ({token}) => {
             variant="outlined"
             size="small"
           />
-          <TextField
-            label="Gender"
-            type="text"
+          <InputLabel htmlFor="gender-select">Gender</InputLabel>
+          <Select
+            labelId="gender-select"
             value={gender}
             onChange={(e) => setGender(e.target.value)}
             variant="outlined"
             size="small"
-          />
+          >
+            {genderOptions.map((option) => (
+              <MenuItem key={option.value} value={option.value}>
+                {option.label}
+              </MenuItem>
+            ))}
+          </Select>
           <TextField
             label="Name and Family Name at Birth"
             type="text"
@@ -120,4 +130,4 @@ CredentialRequestPID.propTypes = {
   token: PropTypes.string.isRequired,
 };
 
-export default CredentialRequestPID
+export default CredentialRequestPID;
