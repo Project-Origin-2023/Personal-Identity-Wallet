@@ -1,0 +1,33 @@
+{
+    "assertionMethod" : [
+        "did:key:z6MkqJRxRLvuF3fftKWbBuUKTrfPPthj9fL5BuD821XR6hy8#z6MkqJRxRLvuF3fftKWbBuUKTrfPPthj9fL5BuD821XR6hy8"
+    ],
+    "authentication" : [
+        "did:key:z6MkqJRxRLvuF3fftKWbBuUKTrfPPthj9fL5BuD821XR6hy8#z6MkqJRxRLvuF3fftKWbBuUKTrfPPthj9fL5BuD821XR6hy8"
+    ],
+    "capabilityDelegation" : [
+        "did:key:z6MkqJRxRLvuF3fftKWbBuUKTrfPPthj9fL5BuD821XR6hy8#z6MkqJRxRLvuF3fftKWbBuUKTrfPPthj9fL5BuD821XR6hy8"
+    ],
+    "capabilityInvocation" : [
+        "did:key:z6MkqJRxRLvuF3fftKWbBuUKTrfPPthj9fL5BuD821XR6hy8#z6MkqJRxRLvuF3fftKWbBuUKTrfPPthj9fL5BuD821XR6hy8"
+    ],
+    "@context" : "https://www.w3.org/ns/did/v1",
+    "id" : "did:key:z6MkqJRxRLvuF3fftKWbBuUKTrfPPthj9fL5BuD821XR6hy8",
+    "keyAgreement" : [
+        "did:key:z6MkqJRxRLvuF3fftKWbBuUKTrfPPthj9fL5BuD821XR6hy8#z6LSdUqmQhMFatfeuUYpr4iLGe941U97Pon8UJTkyzUVt4TL"
+    ],
+    "verificationMethod" : [
+        {
+            "controller" : "did:key:z6MkqJRxRLvuF3fftKWbBuUKTrfPPthj9fL5BuD821XR6hy8",
+            "id" : "did:key:z6MkqJRxRLvuF3fftKWbBuUKTrfPPthj9fL5BuD821XR6hy8#z6MkqJRxRLvuF3fftKWbBuUKTrfPPthj9fL5BuD821XR6hy8",
+            "publicKeyBase58" : "BrAuq6gTuWBCmpftWLWUcm7PaKRsjn5iVtJCBjZQBVBk",
+            "type" : "Ed25519VerificationKey2019"
+        },
+        {
+            "controller" : "did:key:z6MkqJRxRLvuF3fftKWbBuUKTrfPPthj9fL5BuD821XR6hy8",
+            "id" : "did:key:z6MkqJRxRLvuF3fftKWbBuUKTrfPPthj9fL5BuD821XR6hy8#z6LSdUqmQhMFatfeuUYpr4iLGe941U97Pon8UJTkyzUVt4TL",
+            "publicKeyBase58" : "2ofbtPYPVRwup6B4KRCNx3vaAKbzhCbybKk5VXpyAgga",
+            "type" : "X25519KeyAgreementKey2019"
+        }
+    ]
+}
