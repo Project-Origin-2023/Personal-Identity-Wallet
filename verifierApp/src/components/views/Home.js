@@ -13,7 +13,7 @@ import { LicenseLabel } from '../comps/LicenseLabel';
 
 const cards = [1, 2, 3, 4, 5, 6];
 
-export function Services() {
+export function Home() {
   return (
     <div>
       <main>

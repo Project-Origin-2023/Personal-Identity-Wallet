@@ -8,7 +8,7 @@ import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-
+import { Link } from 'react-router-dom';
 import { LicenseLabel } from './LicenseLabel';
 
 export function Home() {
@@ -58,7 +58,9 @@ export function Home() {
                   <Typography>Descrizione del servizio PID</Typography>
                 </CardContent>
                 <CardActions>
+                  <Link to="/Login">
                   <Button size="small">Accedi</Button>
+                  </Link>
                 </CardActions>
               </Card>
             </Grid>
@@ -79,7 +81,9 @@ export function Home() {
                   <Typography>Descrizione del servizio EAA</Typography>
                 </CardContent>
                 <CardActions>
+                <Link to="/Login">
                   <Button size="small">Accedi</Button>
+                  </Link>
                 </CardActions>
               </Card>
             </Grid>
