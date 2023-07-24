@@ -69,12 +69,12 @@ const ViewCredentialRequests = (props) => {
     setSelectedRecord(record);
   };
 
-  const getEsitoText = (esito) => {
-    if (esito === 0) {
+  const getStatusText = (status) => {
+    if (status === 0) {
       return 'In Revisione';
-    } else if (esito === 1) {
+    } else if (status === 1) {
       return 'Approvata';
-    } else if (esito === 2) {
+    } else if (status === 2) {
       return 'Rifiutata';
     }
   };
@@ -101,8 +101,8 @@ const ViewCredentialRequests = (props) => {
               return (
                 <p key={key}>
                   <strong>{key}:</strong>{' '}
-                  {key === 'esito'
-                    ? getEsitoText(value)
+                  {key === 'status'
+                    ? getStatusText(value)
                     : key === 'date_of_birth'
                     ? formatDate(value)
                     : value}
