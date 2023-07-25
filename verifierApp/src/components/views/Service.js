@@ -94,12 +94,10 @@ export function Service() {
           color="text.primary"
           gutterBottom
         >
-          Pricing
+          Servizi
         </Typography>
         <Typography variant="h5" align="center" color="text.secondary" component="p">
-          Quickly build an effective pricing table for your potential customers with
-          this layout. It&apos;s built with default MUI components with little
-          customization.
+          Informazioni sui servizi a cui hai accesso.
         </Typography>
       </Container>
       {/* End hero unit */}
