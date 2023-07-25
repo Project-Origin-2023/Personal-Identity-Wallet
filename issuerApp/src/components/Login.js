@@ -30,9 +30,13 @@ const Login = ({ setToken }) => {
 
       if (response.data.success) {
         setToken(response.data.token);
+        alert(response.data.message);
+        window.location.reload(true);
+        window.location.href = '/';
       }
-      alert(response.data.message);
-      window.location.reload(true);
+      else{
+        alert(response.data.message);
+      }
       
     } catch (error) {
       console.log(error);
