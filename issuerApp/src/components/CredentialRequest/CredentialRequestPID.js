@@ -25,7 +25,7 @@ const genderOptions = [
 ];
 
 const CredentialRequestPID = ({ token }) => {
-  const [dateofbirth, setDateOfBirth] = useState({dateofbirth: '1970-01-01'});
+  const [dateofbirth, setDateOfBirth] = useState('1970-01-01');
   const [familyname, setFamilyName] = useState('');
   const [firstname, setFirstName] = useState('');
   const [gender, setGender] = useState('');
