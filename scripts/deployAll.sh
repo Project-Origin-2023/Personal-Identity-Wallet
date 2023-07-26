@@ -1,10 +1,15 @@
 #!/bin/bash
-./buildWaltIdIdpImage.sh #Creo immagine IDP image
-docker-compose up -d & #avvia i container necessari
-killall node #spegne i nodi ancora avviati
-./deployIssuerApp.sh & #avvia issuerApp
-./deployIssuerApi.sh & #avvia issuerApi
+#Build APP
+sh ./buildIssuerApp.sh
+sh ./buildVerifierApp.sh
+sh ./buildPoc_waltid_presentation.sh
 
-./deployVerifierApp.sh & #avvia verifierApp
+#Build IDP Container Docker
+if ! [ -d "waltid-idpkit" ]; then
+    sh ./buildWaltIdIdpImage.sh #Creo immagine IDP image
+fi
 
-./deployWalletApp.sh & #avviawalletapp
+docker-compose down
+docker-compose up -d #avvia i container necessari
+sleep 30
+sh ./restoreDbIssuerApp.sh

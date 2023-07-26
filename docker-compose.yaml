@@ -20,25 +20,74 @@ services:
       - "19011:7001"
       - "19021:7002"
       - "19041:7010"
-    restart: no
+    restart: "no"
     entrypoint: /app/bin/waltid-ssikit serve -b 0.0.0.0
     volumes:
       - './issuerData/waltId/SSI/data/:/app/data'
     networks:
       network:
         ipv4_address: 10.5.0.3
-    
-  walletWaltIdSsi:
-    image: waltid/ssikit
-    ports:
-      - "19020:7002"
-    restart: no
-    entrypoint: /app/bin/waltid-ssikit serve -b 0.0.0.0
-    volumes:
-      - './walletData/waltId/SSI/data/:/app/data'
+
+  dbIssuerApp:
+    image: postgres
+    restart: "no"
+    environment:
+      POSTGRES_PASSWORD: admin
+      POSTGRES_USER: admin
+      POSTGRES_DB: issuerapp
     networks:
       network:
-        ipv4_address: 10.5.0.2
+        ipv4_address: 10.5.0.5
+    ports:
+      - 5432:5432
+
+  issuerApp:
+    image: httpd:2.4
+    ports:
+      - 19001:80
+    restart: "no"
+    volumes:
+      - './issuerApp/build/:/usr/local/apache2/htdocs/'
+      - './httpd.conf:/usr/local/apache2/conf/httpd.conf'
+    networks:
+      network:
+        ipv4_address: 10.5.0.8
+  
+  issuerApi:
+    image: node:latest
+    ports:
+      - 19101:80
+    restart: "no"
+    volumes:
+      - './issuerApi/:/home'
+    entrypoint: /bin/sh -c 'cd home && npm install && node index.js'
+    networks:
+      network:
+        ipv4_address: 10.5.0.9
+
+  verifierApp:
+    image: httpd:2.4
+    ports:
+      - 19002:80
+    restart: "no"
+    volumes:
+      - './verifierApp/build/:/usr/local/apache2/htdocs/'
+      - './httpd.conf:/usr/local/apache2/conf/httpd.conf'
+    networks:
+      network:
+        ipv4_address: 10.5.0.10
+    
+#  walletWaltIdSsi:
+#    image: waltid/ssikit
+#    ports:
+#      - "19020:7002"
+#    restart: no
+#    entrypoint: /app/bin/waltid-ssikit serve -b 0.0.0.0
+#    volumes:
+#      - './walletData/waltId/SSI/data/:/app/data'
+#    networks:
+#      network:
+#        ipv4_address: 10.5.0.2
 
   verifierWaltIdSsi:
     image: waltid/ssikit
@@ -53,18 +102,17 @@ services:
       network:
         ipv4_address: 10.5.0.4
 
-  dbIssuerApp:
-    image: postgres
+  poc_waltid_presentation:
+    image: httpd:2.4
+    ports:
+      - 8081:80
     restart: "no"
-    environment:
-      POSTGRES_PASSWORD: admin
-      POSTGRES_USER: admin
-      POSTGRES_DB: issuerapp
+    volumes:
+      - './poc_waltid_presentation/build/:/usr/local/apache2/htdocs/'
+      - './httpd.conf:/usr/local/apache2/conf/httpd.conf'
     networks:
       network:
-        ipv4_address: 10.5.0.5
-    ports:
-      - 5432:5432
+        ipv4_address: 10.5.0.11
 
   adminer:
     image: adminer
