@@ -1,8 +1,8 @@
-const express = require('../issuerApp/node_modules/express');
-const bodyParser = require('../issuerApp/node_modules/body-parser');
-const { Pool } = require('../issuerApp/node_modules/pg');
-const cors = require('../issuerApp/node_modules/cors');
-const jwt = require("../issuerApp/node_modules/jsonwebtoken");
+const express = require('./node_modules/express');
+const bodyParser = require('./node_modules/body-parser');
+const { Pool } = require('./node_modules/pg');
+const cors = require('./node_modules/cors');
+const jwt = require("./node_modules/jsonwebtoken");
 const jwtKey = "my_secret_key"
 const jwtExpirySeconds = 3000
 
