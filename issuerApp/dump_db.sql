@@ -2,8 +2,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 15.3 (Debian 15.3-1.pgdg110+1)
--- Dumped by pg_dump version 15.3 (Debian 15.3-1.pgdg110+1)
+-- Dumped from database version 15.3 (Debian 15.3-1.pgdg120+1)
+-- Dumped by pg_dump version 15.3 (Debian 15.3-1.pgdg120+1)
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -117,15 +117,6 @@ ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.regist
 --
 
 COPY public.credential_request (id, "user", date_of_birth, family_name, first_name, gender, name_and_family_name_at_birth, place_of_birth, status) FROM stdin;
-34	10	2023-07-04	asd	asd	M	asd	asda	0
-35	10	2023-07-03	sad	asd	M	asd	asd	0
-36	10	2023-07-03						0
-37	10	2023-07-03						0
-38	10	2023-07-03	asd	asd	F	asd	asd	0
-39	10	2023-07-04	asd	asd	M	asd	asda	0
-40	10	2023-07-04	asd	asd	M	asd	asda	0
-41	10	2023-07-10	ads	asd	A	asd	asd	0
-42	10	2023-07-03						0
 \.
 
 
@@ -134,8 +125,7 @@ COPY public.credential_request (id, "user", date_of_birth, family_name, first_na
 --
 
 COPY public.users (id, family_name, first_name, email, password) FROM stdin;
-3	Bob	Cristian	andreibobirica99@gmail.com	123456
-10	Boba	Andrei	admin	admin
+11	admin	admin	admin	admin
 \.
 
 
@@ -143,14 +133,14 @@ COPY public.users (id, family_name, first_name, email, password) FROM stdin;
 -- Name: credential_request_id_seq; Type: SEQUENCE SET; Schema: public; Owner: admin
 --
 
-SELECT pg_catalog.setval('public.credential_request_id_seq', 42, true);
+SELECT pg_catalog.setval('public.credential_request_id_seq', 43, true);
 
 
 --
 -- Name: registered_users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: admin
 --
 
-SELECT pg_catalog.setval('public.registered_users_id_seq', 10, true);
+SELECT pg_catalog.setval('public.registered_users_id_seq', 12, true);
 
 
 --

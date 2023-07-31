@@ -56,7 +56,7 @@ services:
   issuerApi:
     image: node:18-alpine
     ports:
-      - 19101:80
+      - 19101:19101
     restart: "no"
     volumes:
       - './issuerApi/:/home/issuerApi'

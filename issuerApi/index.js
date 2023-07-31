@@ -12,7 +12,7 @@ app.use(bodyParser.json());
 // Configurazione del pool di connessione al database PostgreSQL
 const pool = new Pool({
   user: 'admin',
-  host: 'localhost',
+  host: '10.5.0.5',
   database: 'issuerapp',
   password: 'admin',
   port: 5432,
