@@ -17,43 +17,34 @@ import Container from '@mui/material/Container';
 
 const tiers = [
   {
-    title: 'Free',
-    price: '0',
+    title: 'ISEE standard',
     description: [
-      '10 users included',
-      '2 GB of storage',
-      'Help center access',
-      'Email support',
+      'Per cittadini italiani ed extracomunitari che desiderano ottenere un\'attestazione della propria situazione economica.',
+ 
     ],
-    buttonText: 'Sign up for free',
+    buttonText: 'Ottieni',
     buttonVariant: 'outlined',
   },
   {
-    title: 'Pro',
-    subheader: 'Most popular',
-    price: '15',
+    title: 'ISEE ordinario',
     description: [
-      '20 users included',
-      '10 GB of storage',
-      'Help center access',
-      'Priority email support',
+      'Per cittadini italiani ed extracomunitari che richiedono l\'ISEE per usufruire di agevolazioni fiscali e sussidi.',
+  
     ],
-    buttonText: 'Get started',
-    buttonVariant: 'contained',
+    buttonText: 'Ottieni',
+    buttonVariant: 'outlined',
   },
   {
-    title: 'Enterprise',
-    price: '30',
+    title: 'ISEE universitario',
     description: [
-      '50 users included',
-      '30 GB of storage',
-      'Help center access',
-      'Phone & email support',
+      'Per studenti universitari che hanno bisogno dell\'ISEE per richiedere agevolazioni e borse di studio.',
+
     ],
-    buttonText: 'Contact us',
+    buttonText: 'Ottieni',
     buttonVariant: 'outlined',
   },
 ];
+
 
 const footers = [
   {
@@ -117,7 +108,7 @@ export function Service() {
                   title={tier.title}
                   subheader={tier.subheader}
                   titleTypographyProps={{ align: 'center' }}
-                  action={tier.title === 'Pro' ? <StarIcon /> : null}
+                
                   subheaderTypographyProps={{
                     align: 'center',
                   }}
@@ -137,12 +128,7 @@ export function Service() {
                       mb: 2,
                     }}
                   >
-                    <Typography component="h2" variant="h3" color="text.primary">
-                      ${tier.price}
-                    </Typography>
-                    <Typography variant="h6" color="text.secondary">
-                      /mo
-                    </Typography>
+
                   </Box>
                   <ul>
                     {tier.description.map((line) => (
