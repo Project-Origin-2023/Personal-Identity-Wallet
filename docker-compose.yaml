@@ -60,7 +60,7 @@ services:
     restart: "no"
     volumes:
       - './issuerApi/:/home/issuerApi'
-    entrypoint: /bin/sh -c 'cd home/issuerApi && pwd && ls && rm package-lock.json && npm install && node index.js '
+    entrypoint: /bin/sh -c 'cd home/issuerApi && pwd && ls && npm install && node index.js '
     networks:
       network:
         ipv4_address: 10.5.0.9
