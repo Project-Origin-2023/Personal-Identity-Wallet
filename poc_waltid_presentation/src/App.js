@@ -47,7 +47,6 @@ const View = () => {
   const handleTask1 = async (e) => {
     e.preventDefault();
     try {
-      console.log("hell");
       var data = JSON.stringify({
         "type": [
           "PID"
@@ -242,8 +241,8 @@ const View = () => {
       var data = JSON.stringify({
         "templateId": "PID",
         "config": {
-          "subjectDid": "did:key:z6MkofJxrCRoeQXRxrLzfBdghwpVKr61k6X9QCA27MoCSppv",
-          "issuerDid": "did:key:z6MknRM9LeK3Uw8TsAdxXoQ4mRMRubQnkXAQ1easaSfwMSdZ"
+          "subjectDid": "did:key:z6Mkop71PmZzSu5bKmpXEgyR3JqVUUKEuf75XCYqkBs1dAY9",
+          "issuerDid": "did:key:z6Mkf13khs49qM6getm3KYC458e2Rgzjv1v6FCE9XhdYiShJ"
         },
         "credentialData": {
           "credentialSubject": {
@@ -271,7 +270,7 @@ const View = () => {
               "Phisical"
             ],
             "type": [],
-            "verifier": "did:key:z6Mkw3mw71R2rELspZNshXueEEzbggJ8Ah7vpZGShLg4k18K"
+            "verifier": "did:key:z6Mkf13khs49qM6getm3KYC458e2Rgzjv1v6FCE9XhdYiShJ"
           }
         }
       });
