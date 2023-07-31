@@ -48,7 +48,7 @@ services:
     restart: "no"
     volumes:
       - './issuerApp/build/:/usr/local/apache2/htdocs/'
-      - './httpd.conf:/usr/local/apache2/conf/httpd.conf'
+      - './httpdConfigApache.conf:/usr/local/apache2/conf/httpd.conf'
     networks:
       network:
         ipv4_address: 10.5.0.8
@@ -73,7 +73,7 @@ services:
     restart: "no"
     volumes:
       - './verifierApp/build/:/usr/local/apache2/htdocs/'
-      - './httpd.conf:/usr/local/apache2/conf/httpd.conf'
+      - './httpdConfigApache.conf:/usr/local/apache2/conf/httpd.conf'
     networks:
       network:
         ipv4_address: 10.5.0.10
@@ -110,7 +110,7 @@ services:
     restart: "no"
     volumes:
       - './poc_waltid_presentation/build/:/usr/local/apache2/htdocs/'
-      - './httpd.conf:/usr/local/apache2/conf/httpd.conf'
+      - './httpdConfigApache.conf:/usr/local/apache2/conf/httpd.conf'
     networks:
       network:
         ipv4_address: 10.5.0.11
