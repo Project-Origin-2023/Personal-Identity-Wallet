@@ -377,9 +377,9 @@ const View = () => {
 
       var config = {
         method: 'get',
-        url: 'http://localhost:19051/api/oidc/clients/Iva8jP9Tmb2Qcw5GhYNjH21BeCaiIQ6OSaSVI2Fjdjg',
+        url: 'http://localhost:19051/api/oidc/clients/WuIrbe3jMArpYhr3Tl8nzMko2IHLk2o3YFtuv8ggSLQ',
         headers: { 
-          'Authorization': 'Bearer eyJraWQiOiI5NjE3MzgxODg5NjU0YWFkOGRiMzM5NThkZTY0NGE0MyIsInR5cCI6IkpXVCIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiJJdmE4alA5VG1iMlFjdzVHaFlOakgyMUJlQ2FpSVE2T1NhU1ZJMkZqZGpnIn0.evYoQdPQdkmOVP_dpINB9Kx-g5Yl_VmZkP0WC3W9qllBqaWrZIvb6JgAnBfpXTTOPurfZBGRhyL070L6D_L7aZtlDWlfNzC-oGUHaGJBYa0uVIXjcKcb5fUuXn4_h1NQBkoEuMGhpMSj9My6M-ZHce9Q-PPMOyQNRI7bC9SA7YnxT-X8DGBxr06icXH2X06p0W0fobpWR2bxhinrRlFQ6QTmryqzyUGdkFI47brA_-THA3qw-XrdzwlKM4hx-fFuTsPnSU9_DjdJhvmqAo6m61yj4pWLGngOQrl5pzXeyhNR88AK9Z73sySTX_9qgSVd-WIh9QFsdVo0GWPKbeHIfFHTIGdYCHeVvuqI7K07AhIE3VnnFLc4Pt94CGeHI8i8E-XTCgk85nRwnt41WP7i2s8axizjK9dlzBJF3GUd2Su8KvpHoEFahC4dERuZaHd9Pao2vqn5dZlK-4bu2XqI2wuWgNVVQgizRgZL7e6PpyJ9e8NU7juXNCeItuZIg3v4', 
+          'Authorization': 'Bearer eyJraWQiOiI2YzBlMmZlNzU0Njg0ZWY1ODRmZjgzNDI0NjNlOWI3YiIsInR5cCI6IkpXVCIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiJXdUlyYmUzak1BcnBZaHIzVGw4bnpNa28ySUhMazJvM1lGdHV2OGdnU0xRIn0.B3a6Pjq60rRPnfi0_xdltB1M-oZnu_6UpEIWrL1xhm0XfxC8cp_k-jR6wDfTeo1EJ2KZ-oDfCwpzUEoqpvoDKVzocR9bYSYS92zKincJzr2tkYMIWqmVUHqKZ0pOFWpkVJ9iWQZPoGRtTlq-GvFIZ8SXD53jjItzPsgqNOW-cHeu65uGdESCDZSMOC3LKRs3eCb80kTA2U_8TMBym58MlZpxFukd6MnvIFXORaStcYVz3XBkFhb6sr69dFnADGCAhxI_Dji6RClyPRd_6eVwKpae0Z0VqE7AVG2IQlO34Ck0r44v2D73fMNsjK9szlGUi3PU-MyEWC4rtFtdYP_FLtXI7CClzB1zkc9y-CxCNo-kKUc4RgOqGJnmDBWq9ikjWS622HIUrX1tyegX4TdxJQGuHkKkBioULf9BA32BlcY5WmopisLpm5eA2X_jyfHR49Qyyp-LifiCTqAvPlh6xsbnqpVvE_7xEY-26uC9F1aF8l7uwPlMTnphhzDb8k31', 
           'Content-Type': 'application/json'
         },
         data : data
