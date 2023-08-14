@@ -1,6 +1,6 @@
 {
   "issuerUiUrl": "http://localhost:19000",
-  "issuerApiUrl": "http://issuer:19030/issuer-api/default",
+  "issuerApiUrl": "http://wallet.origin/issuer-api/default",
   "credentialTypes": [ "PID", "EAA" ],
   "wallets": {
     "waltid": {
@@ -19,7 +19,7 @@
     },
     "origin": {
       "id": "origin",
-      "url": "http://issuer:19030",
+      "url": "http://wallet.origin",
       "presentPath": "api/siop/initiatePresentation/",
       "receivePath" : "api/siop/initiateIssuance/",
       "description": "Origin web wallet"

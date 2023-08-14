@@ -1,6 +1,6 @@
 {
   "verifierUiUrl": "http://localhost:19001",
-  "verifierApiUrl": "http://issuer:19030/verifier-api/default",
+  "verifierApiUrl": "http://wallet.origin/verifier-api/default",
   "additionalPolicies": [
   ],
   "wallets": {
@@ -20,7 +20,7 @@
     },
     "origin": {
       "id": "origin",
-      "url": "http://issuer:19030",
+      "url": "http://wallet.origin",
       "presentPath": "api/siop/initiatePresentation/",
       "receivePath" : "api/siop/initiateIssuance/",
       "description": "Origin web wallet"
