@@ -141,6 +141,10 @@ services:
     networks:
       network:
         ipv4_address: 10.5.0.2
+    extra_hosts:
+      - "issuer.origin:10.5.0.10"
+      - "verifier.origin:10.5.0.10"
+      - "wallet.origin:10.5.0.10"
 
   verifierKit:
     image: waltid/walletkit
@@ -159,6 +163,10 @@ services:
     networks:
       network:
         ipv4_address: 10.5.0.3
+    extra_hosts:
+      - "issuer.origin:10.5.0.10"
+      - "verifier.origin:10.5.0.10"
+      - "wallet.origin:10.5.0.10"
 
   walletKit:
     image: waltid/walletkit
@@ -177,10 +185,10 @@ services:
     networks:
       network:
         ipv4_address: 10.5.0.4
-#    extra_hosts:
-#      - "issuer:10.5.0.2"
-#      - "verifier:10.5.0.3"
-#      - "wallet:10.5.0.4"
+    extra_hosts:
+      - "issuer.origin:10.5.0.10"
+      - "verifier.origin:10.5.0.10"
+      - "wallet.origin:10.5.0.10"
 
   nginx:
     image: 'jc21/nginx-proxy-manager:latest'
@@ -192,6 +200,9 @@ services:
     volumes:
       - ./NGINX/data:/data
       - ./NGINX/letsencrypt:/etc/letsencrypt
+    networks:
+      network:
+        ipv4_address: 10.5.0.10
 
 networks:
   network:
