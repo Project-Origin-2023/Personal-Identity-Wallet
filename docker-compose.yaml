@@ -1,82 +1,82 @@
 version: '3'
 services:
 
-  issuerWaltIdIdp:
-    image: waltid/idpkit
-    ports:
-      - 19051:8080
-    restart: no
-    networks:
-      network:
-        ipv4_address: 10.5.0.7
-    entrypoint: /app/bin/waltid-idpkit run
-    volumes:
-      - './issuerData/waltId/IDP/data/:/app/data'
-      - './issuerData/waltId/IDP/config/:/app/config'
+#  issuerWaltIdIdp:
+#    image: waltid/idpkit
+#    ports:
+#      - 19051:8080
+#    restart: no
+#    networks:
+#      network:
+#        ipv4_address: 10.5.0.7
+#    entrypoint: /app/bin/waltid-idpkit run
+#    volumes:
+#      - './issuerData/waltId/IDP/data/:/app/data'
+#      - './issuerData/waltId/IDP/config/:/app/config'
 
-  issuerWaltIdSsi:
-    image: waltid/ssikit
-    ports:
-      - "19011:7001"
-      - "19021:7002"
-      - "19041:7010"
-    restart: "no"
-    entrypoint: /app/bin/waltid-ssikit serve -b 0.0.0.0
-    volumes:
-      - './issuerData/waltId/SSI/data/:/app/data'
-    networks:
-      network:
-        ipv4_address: 10.5.0.3
+#  issuerWaltIdSsi:
+#    image: waltid/ssikit
+#    ports:
+#      - "19011:7001"
+#      - "19021:7002"
+#      - "19041:7010"
+#    restart: "no"
+#    entrypoint: /app/bin/waltid-ssikit serve -b 0.0.0.0
+#    volumes:
+#      - './issuerData/waltId/SSI/data/:/app/data'
+#    networks:
+#      network:
+#        ipv4_address: 10.5.0.3
 
-  dbIssuerApp:
-    image: postgres
-    restart: "no"
-    environment:
-      POSTGRES_PASSWORD: admin
-      POSTGRES_USER: admin
-      POSTGRES_DB: issuerapp
-    networks:
-      network:
-        ipv4_address: 10.5.0.5
-    ports:
-      - 5432:5432
+#  dbIssuerApp:
+#    image: postgres
+#    restart: "no"
+#    environment:
+#      POSTGRES_PASSWORD: admin
+#      POSTGRES_USER: admin
+#      POSTGRES_DB: issuerapp
+#    networks:
+#      network:
+#        ipv4_address: 10.5.0.5
+#    ports:
+#      - 5432:5432
 
-  issuerApp:
-    image: httpd:2.4
-    ports:
-      - 19001:80
-    restart: "no"
-    volumes:
-      - './issuerApp/build/:/usr/local/apache2/htdocs/'
-      - './httpdConfigApache.conf:/usr/local/apache2/conf/httpd.conf'
-    networks:
-      network:
-        ipv4_address: 10.5.0.8
+#  issuerApp:
+#    image: httpd:2.4
+#    ports:
+#      - 19001:80
+#    restart: "no"
+#    volumes:
+#      - './issuerApp/build/:/usr/local/apache2/htdocs/'
+#      - './httpdConfigApache.conf:/usr/local/apache2/conf/httpd.conf'
+#    networks:
+#      network:
+#        ipv4_address: 10.5.0.8
   
-  issuerApi:
-    image: node:18-alpine
-    ports:
-      - 19101:19101
-    restart: "no"
-    volumes:
-      - './issuerApi/:/home/issuerApi'
-    entrypoint: /bin/sh -c 'cd home/issuerApi && pwd && ls && npm install && node index.js '
-    networks:
-      network:
-        ipv4_address: 10.5.0.9
+#  issuerApi:
+#    image: node:18-alpine
+#    ports:
+#      - 19101:19101
+#    restart: "no"
+#    volumes:
+#      - './issuerApi/:/home/issuerApi'
+#    entrypoint: /bin/sh -c 'cd home/issuerApi && pwd && ls && npm install && node index.js '
+#    networks:
+#      network:
+#        ipv4_address: 10.5.0.9
         
 
-  verifierApp:
-    image: httpd:2.4
-    ports:
-      - 19002:80
-    restart: "no"
-    volumes:
-      - './verifierApp/build/:/usr/local/apache2/htdocs/'
-      - './httpdConfigApache.conf:/usr/local/apache2/conf/httpd.conf'
-    networks:
-      network:
-        ipv4_address: 10.5.0.10
+#  verifierApp:
+#    image: httpd:2.4
+#    ports:
+#      - 19002:80
+#    restart: "no"
+#    volumes:
+#      - './verifierApp/build/:/usr/local/apache2/htdocs/'
+#      - './httpdConfigApache.conf:/usr/local/apache2/conf/httpd.conf'
+#    networks:
+#      network:
+#        ipv4_address: 10.5.0.10
     
 #  walletWaltIdSsi:
 #    image: waltid/ssikit
@@ -90,39 +90,108 @@ services:
 #      network:
 #        ipv4_address: 10.5.0.2
 
-  verifierWaltIdSsi:
-    image: waltid/ssikit
+#  verifierWaltIdSsi:
+#    image: waltid/ssikit
+#    ports:
+#      - "19032:7003"
+#      - "19022:7002"
+#    restart: "no"
+#    entrypoint: /app/bin/waltid-ssikit serve -b 0.0.0.0
+#    volumes:
+#      - './verifierData/waltId/SSI/data/:/app/data'
+#    networks:
+#      network:
+#        ipv4_address: 10.5.0.4
+
+#  poc_waltid_presentation:
+#    image: httpd:2.4
+#    ports:
+#      - 8081:80
+#    restart: "no"
+#    volumes:
+#      - './poc_waltid_presentation/build/:/usr/local/apache2/htdocs/'
+#      - './httpdConfigApache.conf:/usr/local/apache2/conf/httpd.conf'
+#    networks:
+#      network:
+#        ipv4_address: 10.5.0.11
+
+#  adminer:
+#    image: adminer
+#    restart: "no"
+#    ports:
+#      - 8080:8080
+#    networks:
+#      network:
+#        ipv4_address: 10.5.0.6
+
+  issuerKit:
+    image: waltid/walletkit
     ports:
-      - "19032:7003"
-      - "19022:7002"
+      - "19010:8080"
     restart: "no"
-    entrypoint: /app/bin/waltid-ssikit serve -b 0.0.0.0
+    command:
+      - run
+    environment:
+      WALTID_DATA_ROOT: ./data-root
+      WALTID_WALLET_BACKEND_BIND_ADDRESS: 0.0.0.0
+      EXTERNAL_HOSTNAME: localhost
     volumes:
-      - './verifierData/waltId/SSI/data/:/app/data'
+      - ./issuerData/waltId/KIT/data-root/:/app/data-root # data store volume incl. config files.
+      - ./issuerData/waltId/KIT/data/:/app/data # data store volume incl. config files.
+    networks:
+      network:
+        ipv4_address: 10.5.0.2
+
+  verifierKit:
+    image: waltid/walletkit
+    ports:
+      - "19020:8080"
+    restart: "no"
+    command:
+      - run
+    environment:
+      WALTID_DATA_ROOT: ./data-root
+      WALTID_WALLET_BACKEND_BIND_ADDRESS: 0.0.0.0
+      EXTERNAL_HOSTNAME: localhost
+    volumes:
+      - ./verifierData/waltId/KIT/data-root/:/app/data-root # data store volume incl. config files.
+      - ./verifierData/waltId/KIT/data/:/app/data # data store volume incl. config files.
+    networks:
+      network:
+        ipv4_address: 10.5.0.3
+
+  walletKit:
+    image: waltid/walletkit
+    ports:
+      - "19030:8080"
+    restart: "no"
+    command:
+      - run
+    environment:
+      WALTID_DATA_ROOT: ./data-root
+      WALTID_WALLET_BACKEND_BIND_ADDRESS: 0.0.0.0
+      EXTERNAL_HOSTNAME: localhost
+    volumes:
+      - ./walletData/waltId/KIT/data-root/:/app/data-root # data store volume incl. config files.
+      - ./walletData/waltId/KIT/data/:/app/data # data store volume incl. config files.
     networks:
       network:
         ipv4_address: 10.5.0.4
+#    extra_hosts:
+#      - "issuer:10.5.0.2"
+#      - "verifier:10.5.0.3"
+#      - "wallet:10.5.0.4"
 
-  poc_waltid_presentation:
-    image: httpd:2.4
+  nginx:
+    image: 'jc21/nginx-proxy-manager:latest'
+    restart: unless-stopped
     ports:
-      - 8081:80
-    restart: "no"
+      - '80:80'
+      - '81:81'
+      - '443:443'
     volumes:
-      - './poc_waltid_presentation/build/:/usr/local/apache2/htdocs/'
-      - './httpdConfigApache.conf:/usr/local/apache2/conf/httpd.conf'
-    networks:
-      network:
-        ipv4_address: 10.5.0.11
-
-  adminer:
-    image: adminer
-    restart: "no"
-    ports:
-      - 8080:8080
-    networks:
-      network:
-        ipv4_address: 10.5.0.6
+      - ./NGINX/data:/data
+      - ./NGINX/letsencrypt:/etc/letsencrypt
 
 networks:
   network:

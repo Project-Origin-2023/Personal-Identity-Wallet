@@ -1,0 +1,21 @@
+{
+  "walletUiUrl": "http://localhost:19000",
+  "walletApiUrl": "http://issuer:19030/api",
+  "issuers": {
+    "origin": {
+      "id": "origin",
+      "url": "http://issuer:19030/issuer-api/default/oidc",
+      "description": "Origin Issuer Portal"
+    },
+    "waltid.test": {
+      "id": "waltid.test",
+      "url": "http://issuer:19010.walt-test.cloud/issuer-api/oidc",
+      "description": "waltid test Issuer Portal"
+    },
+    "waltid": {
+      "id": "walt.id",
+      "url": "http://issuer:19010.walt.id/issuer-api/oidc",
+      "description": "walt.id Issuer Portal"
+    }
+  }
+}

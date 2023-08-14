@@ -1,0 +1,28 @@
+{
+  "issuerUiUrl": "http://localhost:19001",
+  "issuerApiUrl": "http://issuer:19010/issuer-api/default",
+  "credentialTypes": [ "PID", "EAA" ],
+  "wallets": {
+    "waltid": {
+      "id": "waltid",
+      "url": "https://wallet.walt.id",
+      "presentPath": "api/siop/initiatePresentation/",
+      "receivePath" : "api/siop/initiateIssuance/",
+      "description": "walt.id web wallet"
+    },
+    "waltid.test": {
+      "id": "waltid.test",
+      "url": "https://wallet.walt-test.cloud",
+      "presentPath": "api/siop/initiatePresentation/",
+      "receivePath" : "api/siop/initiateIssuance/",
+      "description": "waltid test web wallet"
+    },
+    "origin": {
+      "id": "origin",
+      "url": "http://issuer:19010",
+      "presentPath": "api/siop/initiatePresentation/",
+      "receivePath" : "api/siop/initiateIssuance/",
+      "description": "Origin web wallet"
+    }
+  }
+}
