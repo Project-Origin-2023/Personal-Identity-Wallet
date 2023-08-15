@@ -1,10 +1,10 @@
 {
   "walletUiUrl": "http://localhost:19000",
-  "walletApiUrl": "http://wallet.origin/api",
+  "walletApiUrl": "http://openid.wallet.origin/api",
   "issuers": {
     "origin": {
       "id": "origin",
-      "url": "http://issuer.origin/issuer-api/default/oidc",
+      "url": "http://openid.issuer.origin/issuer-api/default/oidc",
       "description": "Origin Issuer Portal"
     },
     "waltid.test": {

@@ -124,17 +124,15 @@ services:
 #      network:
 #        ipv4_address: 10.5.0.6
 
-  issuerKit:
+  openidIssuerWaltId:
     image: waltid/walletkit
-    ports:
-      - "19010:8080"
     restart: "no"
     command:
       - run
     environment:
       WALTID_DATA_ROOT: ./data-root
       WALTID_WALLET_BACKEND_BIND_ADDRESS: 0.0.0.0
-      EXTERNAL_HOSTNAME: localhost
+      EXTERNAL_HOSTNAME: openid.issuer.origin
     volumes:
       - ./issuerData/waltId/KIT/data-root/:/app/data-root # data store volume incl. config files.
       - ./issuerData/waltId/KIT/data/:/app/data # data store volume incl. config files.
@@ -142,21 +140,19 @@ services:
       network:
         ipv4_address: 10.5.0.2
     extra_hosts:
-      - "issuer.origin:10.5.0.10"
-      - "verifier.origin:10.5.0.10"
-      - "wallet.origin:10.5.0.10"
+      - "openid.issuer.origin:10.5.0.10"
+      - "openid.verifier.origin:10.5.0.10"
+      - "openid.wallet.origin:10.5.0.10"
 
-  verifierKit:
+  openidVerifierWaletId:
     image: waltid/walletkit
-    ports:
-      - "19020:8080"
     restart: "no"
     command:
       - run
     environment:
       WALTID_DATA_ROOT: ./data-root
       WALTID_WALLET_BACKEND_BIND_ADDRESS: 0.0.0.0
-      EXTERNAL_HOSTNAME: localhost
+      EXTERNAL_HOSTNAME: openid.verifier.origin
     volumes:
       - ./verifierData/waltId/KIT/data-root/:/app/data-root # data store volume incl. config files.
       - ./verifierData/waltId/KIT/data/:/app/data # data store volume incl. config files.
@@ -164,21 +160,19 @@ services:
       network:
         ipv4_address: 10.5.0.3
     extra_hosts:
-      - "issuer.origin:10.5.0.10"
-      - "verifier.origin:10.5.0.10"
-      - "wallet.origin:10.5.0.10"
+      - "openid.issuer.origin:10.5.0.10"
+      - "openid.verifier.origin:10.5.0.10"
+      - "openid.wallet.origin:10.5.0.10"
 
-  walletKit:
+  openidWalletWaltId:
     image: waltid/walletkit
-    ports:
-      - "19030:8080"
     restart: "no"
     command:
       - run
     environment:
       WALTID_DATA_ROOT: ./data-root
       WALTID_WALLET_BACKEND_BIND_ADDRESS: 0.0.0.0
-      EXTERNAL_HOSTNAME: localhost
+      EXTERNAL_HOSTNAME: openid.wallet.origin
     volumes:
       - ./walletData/waltId/KIT/data-root/:/app/data-root # data store volume incl. config files.
       - ./walletData/waltId/KIT/data/:/app/data # data store volume incl. config files.
@@ -186,9 +180,9 @@ services:
       network:
         ipv4_address: 10.5.0.4
     extra_hosts:
-      - "issuer.origin:10.5.0.10"
-      - "verifier.origin:10.5.0.10"
-      - "wallet.origin:10.5.0.10"
+      - "openid.issuer.origin:10.5.0.10"
+      - "openid.verifier.origin:10.5.0.10"
+      - "openid.wallet.origin:10.5.0.10"
 
   nginx:
     image: 'jc21/nginx-proxy-manager:latest'
