@@ -124,7 +124,7 @@ services:
 #      network:
 #        ipv4_address: 10.5.0.6
 
-  openidIssuerWaltId:
+  openidIssuer:
     image: waltid/walletkit
     restart: "no"
     command:
@@ -144,7 +144,7 @@ services:
       - "openid.verifier.origin:10.5.0.10"
       - "openid.wallet.origin:10.5.0.10"
 
-  openidVerifierWaletId:
+  openidVerifier:
     image: waltid/walletkit
     restart: "no"
     command:
@@ -164,7 +164,7 @@ services:
       - "openid.verifier.origin:10.5.0.10"
       - "openid.wallet.origin:10.5.0.10"
 
-  openidWalletWaltId:
+  openidWallet:
     image: waltid/walletkit
     restart: "no"
     command:
