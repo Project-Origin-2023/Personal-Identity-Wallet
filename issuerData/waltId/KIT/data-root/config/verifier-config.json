@@ -26,5 +26,5 @@
       "description": "Origin web wallet"
     }
   },
-  "allowedWebhookHosts": [ "http://localhost", "http://issuer:19030.local" ]
+  "allowedWebhookHosts": [ "http://localhost", "http://issuer.origin", "http://openid.issuer.origin" ]
 }

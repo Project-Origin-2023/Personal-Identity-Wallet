@@ -1,5 +1,5 @@
 {
-  "walletUiUrl": "http://localhost:19000",
+  "walletUiUrl": "http://wallet.origin",
   "walletApiUrl": "http://openid.wallet.origin/api",
   "issuers": {
     "origin": {
