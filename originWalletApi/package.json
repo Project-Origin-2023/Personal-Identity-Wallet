@@ -1,7 +1,7 @@
 {
-    "name": "originissuerapi",
+    "name": "originwalletapi",
     "version": "0.0.1",
-    "description": "RESTful API for Origin Issuer",
+    "description": "RESTful API for Origin Wallet",
     "main": "index.js",
     "dependencies": {
         "body-parser": "^1.20.2",
