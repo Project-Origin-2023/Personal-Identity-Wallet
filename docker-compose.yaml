@@ -1,0 +1,187 @@
+version: '3'
+services:
+  originIssuerDB:
+    image: postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_PASSWORD: admin
+      POSTGRES_USER: admin
+      POSTGRES_DB: originIssuer
+    networks:
+      network:
+        ipv4_address: 10.5.0.31
+    
+  originWalletDB:
+    image: postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_PASSWORD: admin
+      POSTGRES_USER: admin
+      POSTGRES_DB: originWallet
+    networks:
+      network:
+        ipv4_address: 10.5.0.33
+
+  originIssuer:
+    image: httpd:2.4
+    restart: unless-stopped
+    volumes:
+      - './originIssuer/build/:/usr/local/apache2/htdocs/'
+      - './config/httpdConfigApache.conf:/usr/local/apache2/conf/httpd.conf'
+    networks:
+      network:
+        ipv4_address: 10.5.0.11
+    extra_hosts:
+      - "openid.issuer.origin:10.5.0.2"
+      - "openid.verifier.origin:10.5.0.2"
+      - "openid.wallet.origin:10.5.0.2"
+      - "api.issuer.origin:10.5.0.2"
+      - "issuer.origin:10.5.0.2"
+      - "verifier.origin:10.5.0.2"
+      - "wallet.origin:10.5.0.2"
+
+  originVerifier:
+    image: httpd:2.4
+    restart: unless-stopped
+    volumes:
+      - './originVerifier/build/:/usr/local/apache2/htdocs/'
+      - './config/httpdConfigApache.conf:/usr/local/apache2/conf/httpd.conf'
+    networks:
+      network:
+        ipv4_address: 10.5.0.12
+    extra_hosts:
+      - "openid.issuer.origin:10.5.0.2"
+      - "openid.verifier.origin:10.5.0.2"
+      - "openid.wallet.origin:10.5.0.2"
+      - "api.issuer.origin:10.5.0.2"
+      - "issuer.origin:10.5.0.2"
+      - "verifier.origin:10.5.0.2"
+      - "wallet.origin:10.5.0.2"
+  
+  originIssuerApi:
+    image: node:18-alpine
+    restart: unless-stopped
+    volumes:
+      - './originIssuerApi/:/home/originIssuerApi'
+    entrypoint: /bin/sh -c 'cd home/originIssuerApi && ls && npm install && node index.js '
+    networks:
+      network:
+        ipv4_address: 10.5.0.41
+    extra_hosts:
+      - "openid.issuer.origin:10.5.0.2"
+      - "openid.verifier.origin:10.5.0.2"
+      - "openid.wallet.origin:10.5.0.2"
+      - "api.issuer.origin:10.5.0.2"
+      - "issuer.origin:10.5.0.2"
+      - "verifier.origin:10.5.0.2"
+      - "wallet.origin:10.5.0.2"
+
+  openidIssuer:
+    image: waltid/walletkit
+    restart: unless-stopped
+    command:
+      - run
+    environment:
+      WALTID_DATA_ROOT: ./data-root
+      WALTID_WALLET_BACKEND_BIND_ADDRESS: 0.0.0.0
+      EXTERNAL_HOSTNAME: openid.issuer.origin
+    volumes:
+      - ./originIssuerData/waltId/KIT/data-root/:/app/data-root # data store volume incl. config files.
+    networks:
+      network:
+        ipv4_address: 10.5.0.21
+    extra_hosts:
+      - "openid.issuer.origin:10.5.0.2"
+      - "openid.verifier.origin:10.5.0.2"
+      - "openid.wallet.origin:10.5.0.2"
+      - "api.issuer.origin:10.5.0.2"
+      - "issuer.origin:10.5.0.2"
+      - "verifier.origin:10.5.0.2"
+      - "wallet.origin:10.5.0.2"
+
+  openidVerifier:
+    image: waltid/walletkit
+    restart: unless-stopped
+    command:
+      - run
+    environment:
+      WALTID_DATA_ROOT: ./data-root
+      WALTID_WALLET_BACKEND_BIND_ADDRESS: 0.0.0.0
+      EXTERNAL_HOSTNAME: openid.verifier.origin
+    volumes:
+      - ./originVerifierData/waltId/KIT/data-root/:/app/data-root # data store volume incl. config files.
+    networks:
+      network:
+        ipv4_address: 10.5.0.22
+    extra_hosts:
+      - "openid.issuer.origin:10.5.0.2"
+      - "openid.verifier.origin:10.5.0.2"
+      - "openid.wallet.origin:10.5.0.2"
+      - "api.issuer.origin:10.5.0.2"
+      - "issuer.origin:10.5.0.2"
+      - "verifier.origin:10.5.0.2"
+      - "wallet.origin:10.5.0.2"
+
+  openidWallet:
+    image: waltid/walletkit
+    restart: unless-stopped
+    command:
+      - run
+    environment:
+      WALTID_DATA_ROOT: ./data-root
+      WALTID_WALLET_BACKEND_BIND_ADDRESS: 0.0.0.0
+      EXTERNAL_HOSTNAME: openid.wallet.origin
+    volumes:
+      - ./originWalletData/waltId/KIT/data-root/:/app/data-root # data store volume incl. config files.
+    networks:
+      network:
+        ipv4_address: 10.5.0.23
+    extra_hosts:
+      - "openid.issuer.origin:10.5.0.2"
+      - "openid.verifier.origin:10.5.0.2"
+      - "openid.wallet.origin:10.5.0.2"
+      - "api.issuer.origin:10.5.0.2"
+      - "issuer.origin:10.5.0.2"
+      - "verifier.origin:10.5.0.2"
+      - "wallet.origin:10.5.0.2"
+
+  adminer:
+    image: adminer
+    restart: unless-stopped
+    ports:
+      - 8080:8080
+    networks:
+      network:
+        ipv4_address: 10.5.0.3
+    extra_hosts:
+      - "openid.issuer.origin:10.5.0.2"
+      - "openid.verifier.origin:10.5.0.2"
+      - "openid.wallet.origin:10.5.0.2"
+      - "api.issuer.origin:10.5.0.2"
+      - "issuer.origin:10.5.0.2"
+      - "verifier.origin:10.5.0.2"
+      - "wallet.origin:10.5.0.2"
+
+  nginx:
+    image: 'jc21/nginx-proxy-manager:latest'
+    restart: unless-stopped
+    ports:
+      - '80:80'
+      - '81:81'
+      - '443:443'
+    volumes:
+      - ./config/nginx/data:/data
+      - ./config/nginx/letsencrypt:/etc/letsencrypt
+    networks:
+      network:
+        ipv4_address: 10.5.0.2
+
+networks:
+  network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.5.0.0/16
+          gateway: 10.5.0.1
+volumes:
+  db_data: {}
