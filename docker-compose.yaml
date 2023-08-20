@@ -26,7 +26,7 @@ services:
     image: httpd:2.4
     restart: unless-stopped
     volumes:
-      - './originIssuer/build/:/usr/local/apache2/htdocs/'
+      - './originIssuer/dist/:/usr/local/apache2/htdocs/'
       - './config/httpdConfigApache.conf:/usr/local/apache2/conf/httpd.conf'
     networks:
       network:
@@ -44,7 +44,7 @@ services:
     image: httpd:2.4
     restart: unless-stopped
     volumes:
-      - './originVerifier/build/:/usr/local/apache2/htdocs/'
+      - './originVerifier/dist/:/usr/local/apache2/htdocs/'
       - './config/httpdConfigApache.conf:/usr/local/apache2/conf/httpd.conf'
     networks:
       network:
