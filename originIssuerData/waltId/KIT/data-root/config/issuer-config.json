@@ -1,0 +1,33 @@
+{
+  "credentialTypes": [
+      "PID",
+      "EAA"
+  ],
+  "issuerApiUrl": "http://openid.issuer.origin/issuer-api/default",
+  "issuerClientName": "Origin Issuer Portal",
+  "issuerDid": "did:key:z6MkrFH9dEcGLwdFjLcVjpFWxyjzdpZ5nsQxjgPRU1v7siF4",
+  "issuerUiUrl": "http://issuer.origin",
+  "wallets": {
+      "waltid": {
+          "description": "walt.id web wallet",
+          "id": "waltid",
+          "presentPath": "api/siop/initiatePresentation/",
+          "receivePath": "api/siop/initiateIssuance/",
+          "url": "https://wallet.walt.id"
+      },
+      "waltid.test": {
+          "description": "waltid test web wallet",
+          "id": "waltid.test",
+          "presentPath": "api/siop/initiatePresentation/",
+          "receivePath": "api/siop/initiateIssuance/",
+          "url": "https://wallet.walt-test.cloud"
+      },
+      "origin": {
+          "description": "Origin web wallet",
+          "id": "origin",
+          "presentPath": "api/siop/initiatePresentation/",
+          "receivePath": "api/siop/initiateIssuance/",
+          "url": "http://openid.wallet.origin"
+      }
+  }
+}

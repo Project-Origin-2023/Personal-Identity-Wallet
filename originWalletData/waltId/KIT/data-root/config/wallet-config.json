@@ -1,0 +1,21 @@
+{
+  "walletUiUrl": "http://wallet.origin",
+  "walletApiUrl": "http://openid.wallet.origin/api",
+  "issuers": {
+    "origin": {
+      "id": "origin",
+      "url": "http://openid.issuer.origin/issuer-api/default/oidc",
+      "description": "Origin Issuer Portal"
+    },
+    "waltid.test": {
+      "id": "waltid.test",
+      "url": "http://issuer.walt-test.cloud/issuer-api/oidc",
+      "description": "waltid test Issuer Portal"
+    },
+    "waltid": {
+      "id": "walt.id",
+      "url": "http://issuer.walt.id/issuer-api/oidc",
+      "description": "walt.id Issuer Portal"
+    }
+  }
+}
