@@ -1,3 +1,4 @@
+#!/bin/bash
 
 # save hosts dump
 FILE=/etc/hostsold

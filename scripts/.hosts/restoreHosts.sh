@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 # restore host
 sudo mv /etc/hostsold /etc/hosts
