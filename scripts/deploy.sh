@@ -1,26 +1,33 @@
 #!/bin/bash
 #Build APP
-sh ./build/buildOriginIssuer.sh
-sh ./build/buildOriginVerifier.sh
+sh ./.build/buildOriginIssuer.sh
+sh ./.build/buildOriginVerifier.sh
 
 #modify Hosts
-sudo sh ./hosts/addHosts.sh
+sudo sh ./.hosts/addHosts.sh
 
 #deploy Container Docker
 docker compose down
 docker compose up -d #avvia i container necessari
 
+
+#restore DBs
+n="healthy"
 #restore originIssuerDB
-while [ "`docker inspect -f {{.State.Health.Status}} personal-identity-wallet-originIssuerDB-1`"!="healthy" ]
+m=`docker inspect -f {{.State.Health.Status}} personal-identity-wallet-originIssuerDB-1`
+until [ $n == $m ]
 do
+    m=`docker inspect -f {{.State.Health.Status}} personal-identity-wallet-originIssuerDB-1`
     sleep 1;
 done;
-sh ./db/restoreOriginIssuerDB.sh
+sh ./.db/restoreOriginIssuerDB.sh
 
 #restore originWalletDB
-while [ "`docker inspect -f {{.State.Health.Status}} personal-identity-wallet-originWalletDB-1`"!="healthy" ] 
+m=`docker inspect -f {{.State.Health.Status}} personal-identity-wallet-originWalletDB-1`
+until [ $n == $m ]
 do
+    m=`docker inspect -f {{.State.Health.Status}} personal-identity-wallet-originWalletDB-1`
     sleep 1;
 done;
-sh ./db/restoreOriginWalletDB.sh
+sh ./.db/restoreOriginWalletDB.sh
 
