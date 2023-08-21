@@ -3,7 +3,7 @@
 # save hosts dump
 FILE=/etc/hostsold
 if test -f "$FILE"; then
-    echo "restore hosts first"
+    echo "Hosts already modified"
     exit 1
 else
     sudo cp /etc/hosts /etc/hostsold
