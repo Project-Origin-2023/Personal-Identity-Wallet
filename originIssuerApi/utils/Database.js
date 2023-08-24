@@ -5,7 +5,9 @@ class Database {
     #connected;
 
     constructor(config) {
-        this.#dbConnect(config);
+        try{
+            this.#dbConnect(config);
+        }catch(e){console.log(e);}
     }
 
     destructor() {
@@ -22,12 +24,18 @@ class Database {
             port: config.port
         });
         //Client Connection
-        this.#client.connect().then(() => {this.#connected = true;})
-        .catch((err) => {this.#connected = false; throw new Error('Error in PG DB Connection"');});
+        this.#client.connect().catch((e) =>{
+            this.#connected = false; 
+        });
+        this.#connected = true; 
     }
 
     checkConnection(){
         return this.#connected;
+    }
+
+    getClient(){
+        return this.#client;
     }
 
     async #dbDisconnect(){
