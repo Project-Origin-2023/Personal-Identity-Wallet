@@ -3,6 +3,8 @@ services:
   originIssuerDB:
     image: postgres
     restart: unless-stopped
+    ports:
+      - '5432:5432'
     environment:
       POSTGRES_PASSWORD: admin
       POSTGRES_USER: admin
@@ -20,6 +22,8 @@ services:
   originWalletDB:
     image: postgres
     restart: unless-stopped
+    ports:
+      - '5433:5432'
     environment:
       POSTGRES_PASSWORD: admin
       POSTGRES_USER: admin

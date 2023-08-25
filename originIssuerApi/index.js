@@ -6,6 +6,16 @@ const { DatabaseStrategy } = require('./utils/DatabaseStrategy')
 const { DataScrapper } = require('./utils/DataScrapper')
 
 
+//Autenticazione crypto
+var crypto = require('crypto');
+var salt = crypto.randomBytes(16).toString('hex'); 
+console.log(salt);
+var hash = crypto.pbkdf2Sync("adminadmin", salt,500, 64, `sha512`).toString(`hex`);
+console.log(hash);
+//check
+var hash2 = crypto.pbkdf2Sync("adminadminNO", salt,500, 64, `sha512`).toString(`hex`);
+console.log((hash2 === hash) ? "hashtrue" : "hashfalse");
+
 const app = express();
 app.use(bodyParser.json());
 
@@ -25,7 +35,8 @@ app.get('/', async (req, res) => {
     }catch(e){
         res.status(500).json({status:"error", error:e, description:"Database connection error"});
     }
-    var data = scrapper.login("nome","pass");
+    var data = await scrapper.getAccountByEmail("andreibobirica99@gmail.com");
+    res.status(200).json(data);
 });
 
 // Avvio del server
