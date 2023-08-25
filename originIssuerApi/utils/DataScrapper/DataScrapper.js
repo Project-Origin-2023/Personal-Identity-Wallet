@@ -36,6 +36,18 @@ class DataScrapper {
         return this.#strategy.getUserById(id);
     }
 
+    async getVCSRequestsMarByUserId(id){
+        return this.#strategy.getVCSRequestsMarByUserId(id);
+    }
+    
+    async getVCSRequestsPidByUserId(id){
+        return this.#strategy.getVCSRequestsPidByUserId(id);
+    }
+    
+    async getVCSRequestVerification(id){
+        return this.#strategy.getVCSRequestVerification(id);
+    }
+
 
 
     

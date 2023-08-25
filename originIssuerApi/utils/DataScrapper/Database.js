@@ -1,4 +1,4 @@
-const { Pool } = require('../node_modules/pg');
+const { Pool } = require('../../node_modules/pg');
 
 class Database {
     #client;

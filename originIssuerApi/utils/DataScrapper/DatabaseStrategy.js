@@ -25,7 +25,7 @@ class DatabaseStrategy extends Database{
         }catch(e){
             return new DataResponse(false,null,"Error querry ainsert account",e);
         }
-        return new DataResponse(treu,null,"Account inserted succssfully",null);
+        return new DataResponse(true,null,"Account inserted succssfully",null);
     }
 
     async getAccountByEmail(email){
@@ -134,6 +134,60 @@ class DatabaseStrategy extends Database{
             return new DataResponse(false,null,"Error querry get user",e);
         }
         return new DataResponse(true,user,"User getted successfully",null);
+    }
+
+    async getVCSRequestsMarByUserId(id){
+        if(!this.checkConnection())
+            return new DataResponse(false,null,"Error in PG DB Connection",null);
+
+        try{
+            var query='SELECT * FROM "vcs_requests" JOIN "vcs_content_marital_status" ON id=vcs_content_marital_status.vcs_request WHERE "applicant"= $1';
+            var values=[id];
+            var result=await this.query(query, values);
+            if(!result)
+                return new DataResponse(false,null,"Error User's vcs requests married status",null);
+            var vcs_requests=result;
+        }catch(e){
+            return new DataResponse(false,null,"Error Querry User's vcs requests married status",e);
+        }
+        return new DataResponse(true,vcs_requests,"User's vcs requests married status getted successfully",null);
+    }
+
+    async getVCSRequestsPidByUserId(id){
+        if(!this.checkConnection())
+            return new DataResponse(false,null,"Error in PG DB Connection",null);
+
+        try{
+            var query='SELECT * FROM "vcs_requests" JOIN "vcs_content_pid" ON id=vcs_content_pid.vcs_request WHERE "applicant"= $1';
+            var values=[id];
+            var result=await this.query(query, values);
+            if(!result)
+                return new DataResponse(false,null,"Error User's vcs requests married status",null);
+            var vcs_requests=result;
+        }catch(e){
+            return new DataResponse(false,null,"Error Querry User's vcs requests married status",e);
+        }
+        return new DataResponse(true,vcs_requests,"User's vcs requests married status getted successfully",null);
+    }
+
+    async getVCSRequestVerification(id){
+        if(!this.checkConnection())
+            return new DataResponse(false,null,"Error in PG DB Connection",null);
+
+        try{
+            var query='SELECT * FROM "vcs_requests" JOIN "vcs_requests_verifications" ON id=vcs_requests_verifications.vcs_request WHERE "id"= $1';
+            var values=[id];
+            var result=await this.query(query, values);
+            if(!result)
+                return new DataResponse(false,null,"Err",null);
+            if(result.rows.length != 1)
+                return new DataResponse(true,{pending:true},"",null);
+
+            var verification=result.rows[0];
+            return new DataResponse(true,verification,"",null);
+        }catch(e){
+            return new DataResponse(false,null,"",e);
+        }
     }
 }
 
