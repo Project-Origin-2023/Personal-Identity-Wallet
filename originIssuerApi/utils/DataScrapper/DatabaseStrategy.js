@@ -1,5 +1,5 @@
 const { Database } = require('./Database');
-const { DataResponse } = require('./DataResponse.js');
+const { DataResponse } = require('../DataResponse.js');
 
 class DatabaseStrategy extends Database{
     constructor() {
@@ -13,7 +13,8 @@ class DatabaseStrategy extends Database{
     }
 
     async insertAccount(email, hashed_pass, salt){
-        if(!this.checkConnection())
+        var check = await this.checkConnection();
+        if(!check)
             return new DataResponse(false,null,"Error in PG DB Connection",null);
 
         try{
@@ -29,7 +30,8 @@ class DatabaseStrategy extends Database{
     }
 
     async getAccountByEmail(email){
-        if(!this.checkConnection())
+        var check = await this.checkConnection();
+        if(!check)
             return new DataResponse(false,null,"Error in PG DB Connection",null);
 
         try{
@@ -48,7 +50,8 @@ class DatabaseStrategy extends Database{
     }
 
     async getAccountById(id){
-        if(!this.checkConnection())
+        var check = await this.checkConnection();
+        if(!check)
             return new DataResponse(false,null,"Error in PG DB Connection",null);
 
         try{
@@ -67,7 +70,8 @@ class DatabaseStrategy extends Database{
     }
 
     async insertSys_admin(accountId,role){
-        if(!this.checkConnection())
+        var check = await this.checkConnection();
+        if(!check)
             return new DataResponse(false,null,"Error in PG DB Connection",null);
 
         try{
@@ -83,7 +87,8 @@ class DatabaseStrategy extends Database{
     }
 
     async insertSys_adminAccount(email, hashed_pass, salt,role){
-        if(!this.checkConnection())
+        var check = await this.checkConnection();
+        if(!check)
             return new DataResponse(false,null,"Error in PG DB Connection",null);
 
         try{
@@ -104,7 +109,8 @@ class DatabaseStrategy extends Database{
     }
 
     async getSys_adminById(id){
-        if(!this.checkConnection())
+        var check = await this.checkConnection();
+        if(!check)
             return new DataResponse(false,null,"Error in PG DB Connection",null);
 
         try{
@@ -123,7 +129,8 @@ class DatabaseStrategy extends Database{
     }
 
     async insertUser(accountId){
-        if(!this.checkConnection())
+        var check = await this.checkConnection();
+        if(!check)
             return new DataResponse(false,null,"Error in PG DB Connection",null);
 
         try{
@@ -139,7 +146,8 @@ class DatabaseStrategy extends Database{
     }
 
     async insertUserAccount(email, hashed_pass, salt){
-        if(!this.checkConnection())
+        var check = await this.checkConnection();
+        if(!check)
             return new DataResponse(false,null,"Error in PG DB Connection",null);
 
         try{
@@ -148,7 +156,7 @@ class DatabaseStrategy extends Database{
             var result=await this.query(query, values);
             if(!result)
                  return new DataResponse(false,null,"Error insert account",null);
-            values=[role];
+            values=[];
             query='INSERT INTO "users" ("account", "created_at") VALUES (currval(\'accounts_id_seq\'), now());';
             result=await this.query(query, values);
             if(!result)
@@ -160,7 +168,8 @@ class DatabaseStrategy extends Database{
     }
 
     async getUserById(id){
-        if(!this.checkConnection())
+        var check = await this.checkConnection();
+        if(!check)
             return new DataResponse(false,null,"Error in PG DB Connection",null);
 
         try{
@@ -179,7 +188,8 @@ class DatabaseStrategy extends Database{
     }
 
     async getVCSRequestsMarByUserId(id){
-        if(!this.checkConnection())
+        var check = await this.checkConnection();
+        if(!check)
             return new DataResponse(false,null,"Error in PG DB Connection",null);
 
         try{
@@ -196,7 +206,8 @@ class DatabaseStrategy extends Database{
     }
 
     async insertVCSRequestMar(applicantId,status,personalIdentifier){
-        if(!this.checkConnection())
+        var check = await this.checkConnection();
+        if(!check)
             return new DataResponse(false,null,"Error in PG DB Connection",null);
 
         try{
@@ -217,7 +228,8 @@ class DatabaseStrategy extends Database{
     }
 
     async getVCSRequestsPidByUserId(id){
-        if(!this.checkConnection())
+        var check = await this.checkConnection();
+        if(!check)
             return new DataResponse(false,null,"Error in PG DB Connection",null);
 
         try{
@@ -234,7 +246,8 @@ class DatabaseStrategy extends Database{
     }
 
     async insertVCSRequestPid(applicantId,currentAddress,dateOfBirth,familyName,firstName,gender,nameAndFamilyNameAtBirth,personalIdentifier){
-        if(!this.checkConnection())
+        var check = await this.checkConnection();
+        if(!check)
             return new DataResponse(false,null,"Error in PG DB Connection",null);
 
         try{
@@ -255,7 +268,8 @@ class DatabaseStrategy extends Database{
     }
 
     async getVCSRequestVerification(id){
-        if(!this.checkConnection())
+        var check = await this.checkConnection();
+        if(!check)
             return new DataResponse(false,null,"Error in PG DB Connection",null);
 
         try{
@@ -275,7 +289,8 @@ class DatabaseStrategy extends Database{
     }
 
     async updateVCSRequestReleased(vcs_requestId,released){
-        if(!this.checkConnection())
+        var check = await this.checkConnection();
+        if(!check)
             return new DataResponse(false,null,"Error in PG DB Connection",null);
 
         try{
@@ -291,7 +306,8 @@ class DatabaseStrategy extends Database{
     }
 
     async updateVCSRequestVerificationStatus(vcs_requestId,status){
-        if(!this.checkConnection())
+        var check = await this.checkConnection();
+        if(!check)
             return new DataResponse(false,null,"Error in PG DB Connection",null);
 
         try{

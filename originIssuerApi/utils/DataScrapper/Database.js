@@ -25,10 +25,15 @@ class Database {
     }
 
     async checkConnection(){
-        var res = await this.#client.query("SELECT 1");
-        if(!res)
-            return false;
-        return true;
+        try{
+            var res = await this.#client.query("SELECT 1");
+            if(!res)
+                return false;
+            return true;
+        }catch(e){
+            console.log("Error Connection DB");
+        }
+        return false;
     }
 
     async #dbDisconnect(){
