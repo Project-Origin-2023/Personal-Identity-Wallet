@@ -1,4 +1,3 @@
-const sanitize = require('../node_modules/sanitize');
 
 class InputChecker {
 
@@ -23,8 +22,10 @@ class InputChecker {
   }
 
   checkOnlyLetters(value) {
-    return this.checkString(value) && /^[A-Za-z]+$/.test(value);
+    const stringWithoutSpaces = value.replace(/\s/g, ''); // Rimuovi gli spazi dalla stringa
+    return this.checkString(value) && /^[A-Za-z]+$/.test(stringWithoutSpaces);
   }
+  
 
   checkGender(value) {
     return value === 'M' || value === 'F';

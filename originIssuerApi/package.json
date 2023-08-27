@@ -12,5 +12,9 @@
         "jsonwebtoken": "^9.0.1",
         "pg": "^8.11.1",
         "sanitize": "^2.1.2"
-    }
+    },
+    "scripts": {
+        "test": "jest"
+      }
+      
 }
