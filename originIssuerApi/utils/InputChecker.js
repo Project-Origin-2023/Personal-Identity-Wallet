@@ -1,46 +1,41 @@
-import sanitize from 'node-sanitize';
+const sanitize = require('../node_modules/sanitize');
 
 class InputChecker {
-  constructor(data) {
-    this.data = data;
-  }
 
-  static async checkInteger(value) {
+  checkInteger(value){
     return Number.isInteger(value);
   }
 
-  static async checkDouble(value) {
+  checkDouble(value) {
     return typeof value === 'number' && !isNaN(value);
   }
 
-  static async checkString(value) {
+  checkString(value) {
     return typeof value === 'string';
   }
 
-  checkName() {
-    const sanitized = sanitize(this.data).trim().escape();
-    return sanitized.length >= 3;
+  checkName(value) {
+    return this.checkString(value) && value.length >= 3;
   }
 
-  checkEmail() {
-    const sanitized = sanitize(this.data).normalizeEmail();
-    return /[^@]+@[^@]+\.[^@]+/.test(sanitized);
+  checkEmail(value) {
+    return this.checkString(value) && /[^@]+@[^@]+\.[^@]+/.test(value);
   }
 
-  checkOnlyLetters() {
-    return /^[A-Za-z]+$/.test(this.data);
+  checkOnlyLetters(value) {
+    return this.checkString(value) && /^[A-Za-z]+$/.test(value);
   }
 
-  checkGender() {
-    return this.data === 'M' || this.data === 'F';
+  checkGender(value) {
+    return value === 'M' || value === 'F';
   }
   // La struttura della password prevede almeno 8 caratteri, con almeno una maiuscola, una minuscola, un numero e un carattere speciale
-  checkPassword() {
-    return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(this.data);
+  checkPassword(value) {
+    return this.checkString(value) && /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(value);
   }
+}
 
-  // Input sanitize per evitare sql injection
-  static async sanitizeData(data) {
-    return sanitize(data).escape();
-  }
+//Export for public uses
+module.exports = {
+  InputChecker:InputChecker
 }

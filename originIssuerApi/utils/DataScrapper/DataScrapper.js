@@ -24,12 +24,20 @@ class DataScrapper {
         return this.#strategy.insertSys_admin(accountId,role);
     }
 
+    async insertSys_adminAccount(email, hashed_pass, salt,role){
+        return this.#strategy.insertSys_adminAccount(email, hashed_pass, salt,role);
+    }
+
     async getSys_adminById(id){
         return this.#strategy.getSys_adminById(id);
     }
 
     async insertUser(accountId){
         return this.#strategy.insertUser(accountId);
+    }
+
+    async insertUserAccount(email, hashed_pass, salt){
+        return this.#strategy.insertUserAccount(email, hashed_pass, salt);
     }
 
     async getUserById(id){
@@ -39,15 +47,30 @@ class DataScrapper {
     async getVCSRequestsMarByUserId(id){
         return this.#strategy.getVCSRequestsMarByUserId(id);
     }
+
+    async insertVCSRequestMar(applicantId,status,personalIdentifier){
+        return this.#strategy.insertVCSRequestMar(applicantId,status,personalIdentifier);
+    }
     
     async getVCSRequestsPidByUserId(id){
         return this.#strategy.getVCSRequestsPidByUserId(id);
+    }
+
+    async insertVCSRequestPid(applicantId,currentAddress,dateOfBirth,familyName,firstName,gender,nameAndFamilyNameAtBirth,personalIdentifier){
+        return this.#strategy.insertVCSRequestPid(applicantId,currentAddress,dateOfBirth,familyName,firstName,gender,nameAndFamilyNameAtBirth,personalIdentifier);
     }
     
     async getVCSRequestVerification(id){
         return this.#strategy.getVCSRequestVerification(id);
     }
 
+    async updateVCSRequestReleased(vcs_requestId,released){
+        return this.#strategy.updateVCSRequestReleased(vcs_requestId,released);
+    }
+
+    async updateVCSRequestVerificationStatus(vcs_requestId,status){
+        return this.#strategy.updateVCSRequestVerificationStatus(vcs_requestId,status);
+    }
 
 
     
