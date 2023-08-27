@@ -35,11 +35,14 @@ class Routing{
         this.#app.post('/auth/login', async (req, res) => {
             const { email, password } = req.body;
             //Verifica dati input
-            //TODO
             // Verifica dati di input (presenza ed esistenza)
-            if (!email || email.trim() === '' || !password || password.trim() === '') {
-                res.status(500).json({ success: false, message: 'Email e/o password mancante' });
-                return;
+            if (!email || email.trim() === '') {
+                res.status(500).json({ success: false, message: 'Email Missing' });
+                res.end();
+            }
+            if( !password || password.trim() === ''){
+                res.status(500).json({ success: false, message: 'Password Missing' });
+                res.end();
             }
             //Verifico nr parametri correttamente
             //TODO
@@ -60,11 +63,14 @@ class Routing{
         this.#app.post('/auth/register', async (req, res) => {
             const { email, password } = req.body;
             //Verifica Dati Input
-            //TODO
             // Verifica dati di input (presenza ed esistenza)
-            if (!email || email.trim() === '' || !password || password.trim() === '') {
-                res.status(500).json({ success: false, message: 'Email e/o password mancante' });
-                return;
+            if (!email || email.trim() === '') {
+                res.status(500).json({ success: false, message: 'Email Missing' });
+                res.end();
+            }
+            if( !password || password.trim() === ''){
+                res.status(500).json({ success: false, message: 'Password Missing' });
+                res.end();
             }
             //Verifico nr parametri correttamente
             //TODO
