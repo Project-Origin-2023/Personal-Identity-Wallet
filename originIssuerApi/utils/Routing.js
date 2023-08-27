@@ -36,6 +36,11 @@ class Routing{
             const { email, password } = req.body;
             //Verifica dati input
             //TODO
+            // Verifica dati di input (presenza ed esistenza)
+            if (!email || email.trim() === '' || !password || password.trim() === '') {
+                res.status(500).json({ success: false, message: 'Email e/o password mancante' });
+                return;
+            }
             //Verifico nr parametri correttamente
             //TODO
 
@@ -56,6 +61,11 @@ class Routing{
             const { email, password } = req.body;
             //Verifica Dati Input
             //TODO
+            // Verifica dati di input (presenza ed esistenza)
+            if (!email || email.trim() === '' || !password || password.trim() === '') {
+                res.status(500).json({ success: false, message: 'Email e/o password mancante' });
+                return;
+            }
             //Verifico nr parametri correttamente
             //TODO
 
