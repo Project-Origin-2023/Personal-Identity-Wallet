@@ -2,6 +2,7 @@ const cors = require('./node_modules/cors');
 const express = require('./node_modules/express');
 const bodyParser = require('./node_modules/body-parser');
 
+const { OpenIdController } = require('./utils/openid/OpenIdController.js')
 
 const { InputChecker } = require('./utils/InputChecker.js')
 var inputChecker = new InputChecker();
@@ -14,8 +15,8 @@ console.log(inputChecker.checkOnlyLetters("sdskh"));
 console.log(inputChecker.checkGender("M"));
 console.log(inputChecker.checkPassword("Blu8976lahleKL@d"));
 
-const { DatabaseStrategy } = require('./utils/DataScrapper/DatabaseStrategy')
-const { DataScrapper } = require('./utils/DataScrapper/DataScrapper.js')
+const { DatabaseStrategy } = require('./utils/dataScrapper/DatabaseStrategy')
+const { DataScrapper } = require('./utils/dataScrapper/DataScrapper.js')
 
 
 //Autenticazione crypto
@@ -47,6 +48,11 @@ app.get('/', async (req, res) => {
     }catch(e){
         res.status(500).json({status:"error", error:e, description:"Database connection error"});
     }
+    var oidc = new OpenIdController();
+    console.log(await oidc.getTemplates());
+    console.log(await oidc.issueCredentialSameDevice('origin',''));
+    console.log(await oidc.issueCredentialSameDevice(''));
+
     //console.log(await scrapper.getAccountByEmail("andreibobirica99@gmail.com"));
     //console.log(await scrapper.insertAccount("email", "hashed_pass", "salt"));
     //console.log(await scrapper.getAccountByEmail("email"));
