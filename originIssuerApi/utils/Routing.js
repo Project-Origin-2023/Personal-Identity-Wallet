@@ -1,19 +1,29 @@
 const { Authentication } = require('./authentication/Authentication.js')
+const { DatabaseStrategy } = require('./dataScrapper/DatabaseStrategy.js')
+const { DataScrapper } = require('./dataScrapper/DataScrapper.js')
 
 class Routing{
     #cors = require('cors');
     #express = require('express');
     #bodyParser = require('body-parser');
     #app;
-    #corsOptions = {
-        origin: 'http://localhost:19001',
-    };
     #auth;
+    #scrapper;
     constructor(){
+        var corsOptions = {
+            origin: 'http://localhost:19001',
+        };
         this.#app = this.#express();
         this.#app.use(this.#bodyParser.json());
-        this.#app.use(this.#cors(this.#corsOptions));
+        this.#app.use(this.#cors(corsOptions));
         this.#auth = new Authentication("Secret",3000);
+        //Data Scrapper
+        this.#scrapper = new DataScrapper();
+        try{
+            this.#scrapper.setStrategy(new DatabaseStrategy());
+        }catch(e){
+            console.log("Error DB Connection")
+        }
     }
 
     listen(port){
@@ -86,6 +96,42 @@ class Routing{
                 res.end();
             }
         });
+
+        //Get VCS Requests Mar
+        this.#app.get('/vcsrequest/marital',this.#auth.decodeToken, async (req, res) => {
+            //Verifico che Non sia un Sys_admin
+            if(req.jwtSysAdmin){
+                res.status(500).json({ success: false, description: 'Sys_Admin Authorization, lgo in with an User Account' });
+                res.end();
+            }
+            //Prendo le vcs request marital status
+            var result = await this.#scrapper.getVCSRequestsMarByUserId(req.jwtAccountId);
+            if(!result.success){
+                res.status(500).json(result);
+                res.end();
+            }
+            //Ritorno i risultati
+            res.status(200).json(result.data);
+            res.end();
+        });  
+        
+        //Get VCS Requests Pid
+        this.#app.get('/vcsrequest/pid',this.#auth.decodeToken, async (req, res) => {
+            //Verifico che Non sia un Sys_admin
+            if(req.jwtSysAdmin){
+                res.status(500).json({ success: false, description: 'Sys_Admin Authorization, lgo in with an User Account' });
+                res.end();
+            }
+            //Prendo le vcs request pid
+            var result = await this.#scrapper.getVCSRequestsPidByUserId(req.jwtAccountId);
+            if(!result.success){
+                res.status(500).json(result);
+                res.end();
+            }
+            //Ritorno i risultati
+            res.status(200).json(result.data);
+            res.end();
+        });  
     }
     
 }

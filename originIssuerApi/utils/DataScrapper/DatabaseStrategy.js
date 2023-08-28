@@ -5,7 +5,7 @@ class DatabaseStrategy extends Database{
     constructor() {
         super({
             user: 'admin',
-            host: 'localhost',
+            host: '10.5.0.31',
             database: 'originissuer',
             password: 'admin',
             port: 5432,
@@ -198,7 +198,7 @@ class DatabaseStrategy extends Database{
             var result=await this.query(query, values);
             if(!result)
                 return new DataResponse(false,null,"Error User's vcs requests married status",null);
-            var vcs_requests=result;
+            var vcs_requests=result.rows;
         }catch(e){
             return new DataResponse(false,null,"Error Querry User's vcs requests married status",e);
         }
@@ -238,7 +238,7 @@ class DatabaseStrategy extends Database{
             var result=await this.query(query, values);
             if(!result)
                 return new DataResponse(false,null,"Error User's vcs requests married status",null);
-            var vcs_requests=result;
+            var vcs_requests=result.rows;
         }catch(e){
             return new DataResponse(false,null,"Error Querry User's vcs requests married status",e);
         }

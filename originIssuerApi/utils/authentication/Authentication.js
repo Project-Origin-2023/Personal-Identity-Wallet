@@ -23,17 +23,17 @@ class Authentication {
     decodeToken = (req, res, next) => {
         let token = req.headers["x-access-token"];
         if (!token)
-          return res.status(403).send(new DataResponse(false,null,"Authorization token not found",null));
+            res.status(403).send(new DataResponse(false,null,"Authorization token not found",null));
       
         this.#jwt.verify(token, this.#jwtKey, (err, decoded) => {
-          if (err)
-            return res.status(401).send(new DataResponse(false,null,"Unauthorized",null));
+            if (err)
+                res.status(401).send(new DataResponse(false,null,"Unauthorized",null));
             req.jwtAccountId = decoded.accountId;
             req.jwtAccountEmail = decoded.email;
             req.jwtSysAdmin = decoded.sysAdmin;
             if(req.jwtSysAdmin)
                 req.jwtRole = decoded.role;
-          next();
+            next();
         });
     };
 
