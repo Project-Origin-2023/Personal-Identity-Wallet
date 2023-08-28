@@ -49,7 +49,7 @@ it('should return 500 with "Password Missing" message if password is missing', a
 
 });
 
-describe('GET /vcsrequest/marital', () => {
+describe('GET /vcsrequests/marital', () => {
     const routing = new Routing();
     routing.configEndpoint();
   

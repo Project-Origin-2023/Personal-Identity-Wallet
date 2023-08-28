@@ -32,14 +32,6 @@ class Routing{
         });
     }
 
-    #addGetEndpoint(uri,fun){
-        this.#app.get(uri, fun);
-    }
-
-    #addPostEndpoint(uri,fun){
-        this.#app.post(uri, fun);
-    }
-
     async configEndpoint(){
         //Auth Login
         this.#app.post('/auth/login', async (req, res) => {
@@ -48,11 +40,11 @@ class Routing{
             // Verifica dati di input (presenza ed esistenza)
             if (!email || email.trim() === '') {
                 res.status(500).json({ success: false, message: 'Email Login Missing' });
-                res.end();
+                res.end();return;
             }
             if( !password || password.trim() === ''){
                 res.status(500).json({ success: false, message: 'Password Login Missing' });
-                res.end();
+                res.end();return;
             }
             //Verifico nr parametri correttamente
             //TODO
@@ -60,12 +52,12 @@ class Routing{
             var response = await this.#auth.login(email,password)
             if(!response.success){
                 res.status(500).json(response);
-                res.end();
+                res.end();return;
             }else{
                 var token = response.data;
                 this.#auth.addTokenCookie(res,token);
                 res.status(200).json(response);
-                res.end();
+                res.end();return;
             }
         });
 
@@ -76,11 +68,11 @@ class Routing{
             // Verifica dati di input (presenza ed esistenza)
             if (!email || email.trim() === '') {
                 res.status(500).json({ success: false, message: 'Email Register Missing' });
-                res.end();
+                res.end();return;
             }
             if( !password || password.trim() === ''){
                 res.status(500).json({ success: false, message: 'Password Register Missing' });
-                res.end();
+                res.end();return;
             }
             //Verifico nr parametri correttamente
             //TODO
@@ -88,55 +80,82 @@ class Routing{
             var response = await this.#auth.register(email,password)
             if(!response.success){
                 res.status(500).json(response);
-                res.end();
+                res.end();return;
             }else{
                 var token = response.data;
                 this.#auth.addTokenCookie(res,token);
                 res.status(200).json(response);
-                res.end();
+                res.end();return;
             }
         });
 
         //Get VCS Requests Mar
-        this.#app.get('/vcsrequest/marital',this.#auth.decodeToken, async (req, res) => {
+        this.#app.get('/vcsrequests/marital',this.#auth.decodeToken, async (req, res) => {
             //Verifico che Non sia un Sys_admin
             if(req.jwtSysAdmin){
                 res.status(500).json({ success: false, description: 'Sys_Admin Authorization, lgo in with an User Account' });
-                res.end();
+                res.end();return;
             }
             //Prendo le vcs request marital status
             var result = await this.#scrapper.getVCSRequestsMarByUserId(req.jwtAccountId);
             if(!result.success){
                 res.status(500).json(result);
-                res.end();
+                res.end();return;
             }
             //Ritorno i risultati
-            res.status(200).json(result.data);
-            res.end();
+            res.status(200).json(result);
+            res.end();return;
         });  
         
         //Get VCS Requests Pid
-        this.#app.get('/vcsrequest/pid',this.#auth.decodeToken, async (req, res) => {
+        this.#app.get('/vcsrequests/pid',this.#auth.decodeToken, async (req, res) => {
             //Verifico che Non sia un Sys_admin
             if(req.jwtSysAdmin){
                 res.status(500).json({ success: false, description: 'Sys_Admin Authorization, lgo in with an User Account' });
-                res.end();
+                res.end();return;
             }
             //Prendo le vcs request pid
             var result = await this.#scrapper.getVCSRequestsPidByUserId(req.jwtAccountId);
             if(!result.success){
                 res.status(500).json(result);
-                res.end();
+                res.end();return;
             }
             //Ritorno i risultati
-            res.status(200).json(result.data);
-            res.end();
-        });  
+            res.status(200).json(result);
+            res.end();return;
+        });
+
+        //Get VCS Requests verification stuatus
+        this.#app.get(['/vcsrequest/status/:id','/vcsrequest/status/'],this.#auth.decodeToken, async (req, res) => {
+            //Verifico che Non sia un Sys_admin
+            if(req.jwtSysAdmin){
+                res.status(500).json({ success: false, description: 'Sys_Admin Authorization, lgo in with an User Account' });
+                res.end();return;
+            }
+
+            const id = req.params.id // This is how you access URL variable
+            // Verifica dati di input (presenza ed esistenza)
+            if (!id || id.trim() === '') {
+                res.status(500).json({ success: false, message: 'vcs request ID Missing' });
+                res.end();return;
+            }
+            
+            //Prendo la vcs request verification
+            var result = await this.#scrapper.getVCSRequestVerification(id);
+            if(!result.success){
+                res.status(500).json(result);
+                res.end();return;
+            }
+            //Ritorno i risultati
+            res.status(200).json(result);
+            res.end();return;
+        });
+
     }
 
     get app() {
         return this.#app;
-      }
+    }
     
 }
 

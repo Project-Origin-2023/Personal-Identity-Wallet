@@ -5,7 +5,7 @@ class DatabaseStrategy extends Database{
     constructor() {
         super({
             user: 'admin',
-            host: '10.5.0.31',
+            host: 'localhost',
             database: 'originissuer',
             password: 'admin',
             port: 5432,
@@ -187,6 +187,27 @@ class DatabaseStrategy extends Database{
         return new DataResponse(true,user,"User getted successfully",null);
     }
 
+    async getVCSRequestById(id){
+        var check = await this.checkConnection();
+        if(!check)
+            return new DataResponse(false,null,"Error in PG DB Connection",null);
+
+        try{
+            var query='SELECT * FROM "vcs_requests" WHERE "id"= $1';
+            var values=[id];
+            var result=await this.query(query, values);
+            if(!result)
+                return new DataResponse(false,null,"Error vcs requests",null);
+            if(result.rows.length != 1)
+                return new DataResponse(false,null,"vcs request not found",null);
+            var vcs_request=result.rows[0];
+        }catch(e){
+            return new DataResponse(false,null,"Error Querry vcs requests ",e);
+        }
+        return new DataResponse(true,vcs_request,"vcs requests getted successfully",null);
+    }
+
+
     async getVCSRequestsMarByUserId(id){
         var check = await this.checkConnection();
         if(!check)
@@ -273,16 +294,22 @@ class DatabaseStrategy extends Database{
             return new DataResponse(false,null,"Error in PG DB Connection",null);
 
         try{
-            var query='SELECT * FROM "vcs_requests" JOIN "vcs_requests_verifications" ON id=vcs_requests_verifications.vcs_request WHERE "id"= $1';
+            //Veirifico esistenza vcs request id
+            var result = await this.getVCSRequestById(id);
+            if(!result.success)
+                return result;
+            //querry get verification
+            var query='SELECT id,released,status FROM "vcs_requests" JOIN "vcs_requests_verifications" ON id=vcs_requests_verifications.vcs_request WHERE "id"= $1';
             var values=[id];
             var result=await this.query(query, values);
             if(!result)
-                return new DataResponse(false,null,"Err",null);
+                return new DataResponse(false,null,"Errore querry get vcs verification",null);
             if(result.rows.length != 1)
-                return new DataResponse(true,{pending:true},"",null);
+                return new DataResponse(true,{id:id,pending:true},"verification get succsessfully",null);
 
             var verification=result.rows[0];
-            return new DataResponse(true,verification,"",null);
+            verification.pending = false;
+            return new DataResponse(true,verification,"Vcs request verification successfully get",null);
         }catch(e){
             return new DataResponse(false,null,"",e);
         }
@@ -321,6 +348,8 @@ class DatabaseStrategy extends Database{
         }
         return new DataResponse(true,null,"vcs request verification status update successfully",null);
     }
+
+
 
 
 
