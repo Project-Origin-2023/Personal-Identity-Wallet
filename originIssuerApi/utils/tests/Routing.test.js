@@ -55,7 +55,7 @@ describe('GET /vcsrequest/marital', () => {
   
     it('should return 200 with data for non-SysAdmin user', async () => {
         const response = await request(routing.app) 
-        .get('vcsrequest/merital');
+        .get('/vcsrequest/marital');
         //sicuramente va mandato qualcosa 
         expect(response.status).toBe(500),
         expect(response.body).toEqual({success: false, description: 'Sys_Admin Authorization, lgo in with an User Account' });
