@@ -47,11 +47,11 @@ class Routing{
             //Verifica dati input
             // Verifica dati di input (presenza ed esistenza)
             if (!email || email.trim() === '') {
-                res.status(500).json({ success: false, message: 'Email Missing' });
+                res.status(500).json({ success: false, message: 'Email Login Missing' });
                 res.end();
             }
             if( !password || password.trim() === ''){
-                res.status(500).json({ success: false, message: 'Password Missing' });
+                res.status(500).json({ success: false, message: 'Password Login Missing' });
                 res.end();
             }
             //Verifico nr parametri correttamente
@@ -75,11 +75,11 @@ class Routing{
             //Verifica Dati Input
             // Verifica dati di input (presenza ed esistenza)
             if (!email || email.trim() === '') {
-                res.status(500).json({ success: false, message: 'Email Missing' });
+                res.status(500).json({ success: false, message: 'Email Register Missing' });
                 res.end();
             }
             if( !password || password.trim() === ''){
-                res.status(500).json({ success: false, message: 'Password Missing' });
+                res.status(500).json({ success: false, message: 'Password Register Missing' });
                 res.end();
             }
             //Verifico nr parametri correttamente
@@ -133,6 +133,10 @@ class Routing{
             res.end();
         });  
     }
+
+    get app() {
+        return this.#app;
+      }
     
 }
 
