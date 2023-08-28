@@ -1,6 +1,6 @@
 const { DataResponse } = require('../DataResponse.js');
-const { DatabaseStrategy } = require('../DataScrapper/DatabaseStrategy.js');
-const { DataScrapper } = require('../DataScrapper/DataScrapper.js')
+const { DatabaseStrategy } = require('../dataScrapper/DatabaseStrategy.js');
+const { DataScrapper } = require('../dataScrapper/DataScrapper.js')
 
 class Authentication {
     #jwt = require("jsonwebtoken");
