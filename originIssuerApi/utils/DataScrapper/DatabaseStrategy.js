@@ -207,7 +207,6 @@ class DatabaseStrategy extends Database{
         return new DataResponse(true,vcs_request,"vcs requests getted successfully",null);
     }
 
-
     async getVCSRequestsMarByUserId(id){
         var check = await this.checkConnection();
         if(!check)
@@ -224,6 +223,26 @@ class DatabaseStrategy extends Database{
             return new DataResponse(false,null,"Error Querry User's vcs requests married status",e);
         }
         return new DataResponse(true,vcs_requests,"User's vcs requests married status getted successfully",null);
+    }
+
+    async getVCSRequestMarById(id){
+        var check = await this.checkConnection();
+        if(!check)
+            return new DataResponse(false,null,"Error in PG DB Connection",null);
+
+        try{
+            var query='SELECT * FROM "vcs_requests" JOIN "vcs_content_marital_status" ON id=vcs_content_marital_status.vcs_request WHERE "id"= $1';
+            var values=[id];
+            var result=await this.query(query, values);
+            if(!result)
+                return new DataResponse(false,null,"Error vcs request married status",null);
+            if(result.rows.length != 1)
+                return new DataResponse(false,null,"Error vcs request Marital not found",null);
+            var vcs_request=result.rows;
+        }catch(e){
+            return new DataResponse(false,null,"Error Querry User's vcs request married status",e);
+        }
+        return new DataResponse(true,vcs_request," vcs request married status getted successfully",null);
     }
 
     async insertVCSRequestMar(applicantId,status,personalIdentifier){
@@ -258,12 +277,32 @@ class DatabaseStrategy extends Database{
             var values=[id];
             var result=await this.query(query, values);
             if(!result)
-                return new DataResponse(false,null,"Error User's vcs requests married status",null);
+                return new DataResponse(false,null,"Error User's vcs requests PID status",null);
             var vcs_requests=result.rows;
         }catch(e){
-            return new DataResponse(false,null,"Error Querry User's vcs requests married status",e);
+            return new DataResponse(false,null,"Error Querry User's vcs requests PID status",e);
         }
-        return new DataResponse(true,vcs_requests,"User's vcs requests married status getted successfully",null);
+        return new DataResponse(true,vcs_requests,"User's vcs requests PID getted successfully",null);
+    }
+
+    async getVCSRequestPidById(id){
+        var check = await this.checkConnection();
+        if(!check)
+            return new DataResponse(false,null,"Error in PG DB Connection",null);
+
+        try{
+            var query='SELECT * FROM "vcs_requests" JOIN "vcs_content_pid" ON id=vcs_content_pid.vcs_request WHERE "id"= $1';
+            var values=[id];
+            var result=await this.query(query, values);
+            if(!result)
+                return new DataResponse(false,null,"Error vcs request PID status",null);
+            if(result.rows.length != 1)
+                return new DataResponse(false,null,"Error vcs request PID not found",null);
+            var vcs_request=result.rows[0];
+        }catch(e){
+            return new DataResponse(false,null,"Error Querry vcs request PID status",e);
+        }
+        return new DataResponse(true,vcs_request,"vcs request PID getted successfully",null);
     }
 
     async insertVCSRequestPid(applicantId,currentAddress,dateOfBirth,familyName,firstName,gender,nameAndFamilyNameAtBirth,personalIdentifier){
@@ -323,7 +362,7 @@ class DatabaseStrategy extends Database{
         try{
             var query='UPDATE "vcs_requests" SET "released" = $2 WHERE "id" = $1';
             var values=[vcs_requestId,released];
-            var result=await this.query(query, values);
+            var result= await this.query(query, values);
             if(!result)
                 return new DataResponse(false,null,"Error Update vcs_request released",null);
         }catch(e){

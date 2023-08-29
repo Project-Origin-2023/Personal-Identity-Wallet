@@ -1,6 +1,8 @@
 const { Authentication } = require('./authentication/Authentication.js')
 const { DatabaseStrategy } = require('./dataScrapper/DatabaseStrategy.js');
 const { DataScrapper } = require('./dataScrapper/DataScrapper.js')
+const { OpenIdController } = require('./openid/OpenIdController.js')
+const { DataResponse } = require('./DataResponse.js');
 
 class Routing{
     #cors = require('cors');
@@ -9,13 +11,16 @@ class Routing{
     #app;
     #auth;
     #scrapper;
+    #oidc;
     constructor(){
+        //Initialize cors ootion with origin parameter
         var corsOptions = {
             origin: 'http://localhost:19001',
         };
         this.#app = this.#express();
         this.#app.use(this.#bodyParser.json());
         this.#app.use(this.#cors(corsOptions));
+        //Authetication
         this.#auth = new Authentication("Secret",3000);
         //Data Scrapper
         this.#scrapper = new DataScrapper();
@@ -24,6 +29,9 @@ class Routing{
         }catch(e){
             console.log("Error DB Connection")
         }
+        //OpenId
+        this.#oidc = new OpenIdController();
+
     }
 
     listen(port){
@@ -150,6 +158,163 @@ class Routing{
             res.status(200).json(result);
             res.end();return;
         });
+
+        //POST VCS Request Pid
+        this.#app.post('/vcsrequests/pid',this.#auth.decodeToken, async (req, res) => {
+            //Verifico che Non sia un Sys_admin
+            if(req.jwtSysAdmin){
+                res.status(500).json({ success: false, description: 'Sys_Admin Authorization, log in with an User Account' });
+                res.end();return;
+            }
+            //applicantId,currentAddress,dateOfBirth,familyName,firstName,gender,nameAndFamilyNameAtBirth,personalIdentifier
+            const { currentAddress,dateOfBirth,familyName,firstName,gender,nameAndFamilyNameAtBirth,personalIdentifier } = req.body;
+            //Verifica dati input
+            // Verifica dati di input (presenza ed esistenza)
+            if (!currentAddress || currentAddress.trim() === '') {
+                res.status(500).json({ success: false, message: 'Email Login Missing' });
+                res.end();return;
+            }
+            if (!dateOfBirth || dateOfBirth.trim() === '') {
+                res.status(500).json({ success: false, message: 'Email Login Missing' });
+                res.end();return;
+            }
+            if (!familyName || familyName.trim() === '') {
+                res.status(500).json({ success: false, message: 'Email Login Missing' });
+                res.end();return;
+            }
+            if (!firstName || firstName.trim() === '') {
+                res.status(500).json({ success: false, message: 'Email Login Missing' });
+                res.end();return;
+            }
+            if (!gender || gender.trim() === '') {
+                res.status(500).json({ success: false, message: 'Email Login Missing' });
+                res.end();return;
+            }
+            if (!nameAndFamilyNameAtBirth || nameAndFamilyNameAtBirth.trim() === '') {
+                res.status(500).json({ success: false, message: 'Email Login Missing' });
+                res.end();return;
+            }
+            if (!personalIdentifier || personalIdentifier.trim() === '') {
+                res.status(500).json({ success: false, message: 'Email Login Missing' });
+                res.end();return;
+            }
+
+            //Prendo le vcs request pid
+            var result = await this.#scrapper.insertVCSRequestPid(req.jwtAccountId,currentAddress,dateOfBirth,familyName,firstName,gender,nameAndFamilyNameAtBirth,personalIdentifier);
+            if(!result.success){
+                res.status(500).json(result);
+                res.end();return;
+            }
+            //Ritorno i risultati
+            res.status(200).json(result);
+            res.end();return;
+        });
+
+        //POST VCS Request Marital
+        this.#app.post('/vcsrequests/marital',this.#auth.decodeToken, async (req, res) => {
+            //Verifico che Non sia un Sys_admin
+            if(req.jwtSysAdmin){
+                res.status(500).json({ success: false, description: 'Sys_Admin Authorization, log in with an User Account' });
+                res.end();return;
+            }
+            //applicantId,status,personalIdentifier
+            const {status,personalIdentifier} = req.body;
+            //Verifica dati input
+            // Verifica dati di input (presenza ed esistenza)
+            if (!status || status.trim() === '') {
+                res.status(500).json({ success: false, message: 'Email Login Missing' });
+                res.end();return;
+            }
+            if (!personalIdentifier || personalIdentifier.trim() === '') {
+                res.status(500).json({ success: false, message: 'Email Login Missing' });
+                res.end();return;
+            }
+
+            //Prendo le vcs request pid
+            var result = await this.#scrapper.insertVCSRequestMar(req.jwtAccountId,status,personalIdentifier);
+            if(!result.success){
+                res.status(500).json(result);
+                res.end();return;
+            }
+            //Ritorno i risultati
+            res.status(200).json(result);
+            res.end();return;
+        });
+
+        //Get VCS Request Release
+        this.#app.get(['/vcsrequest/release/:id','/vcsrequest/release/'],this.#auth.decodeToken, async (req, res) => {
+
+            //Verifico che Non sia un Sys_admin
+            if(req.jwtSysAdmin){
+                res.status(500).json(new DataResponse(false,null,"Sys_Admin Authorization not valid, log in with an User Account",null));
+                res.end();return;
+            }
+
+            var wallet = req.query.wallet;
+            //Verifica dati input
+            // Verifica se presente un wallet, se non presente imposto il wallet di default origin
+            if (!wallet || wallet.trim() === '') {
+                wallet = "origin"
+            }
+
+            const id = req.params.id // This is how you access URL variable
+            // Verifica dati di input (presenza ed esistenza)
+            if (!id || id.trim() === '') {
+                res.status(500).json(new DataResponse(false,null,"vcs request id is missing",null));
+                res.end();return;
+            }
+            
+            //Prendo la vcs request verification
+            var result = await this.#scrapper.getVCSRequestVerification(id);
+            if(!result.success){//caso in cui la vcs request does not exists
+                res.status(500).json(result);
+                res.end();return;
+            }
+            if (result.data.pending){//caso in cui vcs request non è stata ancora esaminata da un sys admin ed è in pending
+                res.status(500).json(new DataResponse(false,null,"vcs request verification in pending",null));
+                res.end();return;
+            } 
+            if (!result.data.status){//caso in cui vcs request è stata esaminata con esito negativo
+                res.status(500).json(new DataResponse(false,null,"vcs request verification status negative",null));
+                res.end();return;
+            } 
+            if (result.data.released){//caso in cui vcs request già stata rilasciata
+                res.status(500).json(new DataResponse(false,null,"vcs request already released",null));
+                res.end();return;
+            }
+            //Post condizioni, vcs request esistente, verificata con esito positivo e non già rilasciata
+
+            // get vcs credential request, if it's not pid is marital
+            var credential;
+            result = await this.#scrapper.getVCSRequestPidById(id);
+            if(result.success){
+                credential = await this.#oidc.createCredential(result.data,"PID");
+            }else{
+                result = await this.#scrapper.getVCSRequestMarById(id);
+                if(result.success){    
+                    credential = await this.#oidc.createCredential(result.data,"EAA");
+                } 
+            }
+        
+            //release vcs request with openid
+            var result = await this.#oidc.issueCredentialSameDevice(wallet,credential);
+            if(!result.success){
+                res.status(500).json(result);
+                res.end();return;
+            }
+
+            //update vcs request realeased in DB
+            var resultUpdate = await this.#scrapper.updateVCSRequestReleased(id,true);
+            if(!resultUpdate.success){
+                res.status(500).json(resultUpdate);
+                res.end();return;
+            }
+            //Ritorno i risultati
+            res.status(200).json(new DataResponse(true,result.data,"Credential Issuing initiated, see data for redirect link to wallet",null));
+            res.end();return;
+        });
+
+
 
     }
 

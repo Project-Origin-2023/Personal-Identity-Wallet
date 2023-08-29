@@ -45,11 +45,15 @@ class DataScrapper {
     }
 
     async getVCSRequestById(id){
-        return this.#strategy.getVCSRequestsById(id);
+        return this.#strategy.getVCSRequestById(id);
     }
 
     async getVCSRequestsMarByUserId(id){
         return this.#strategy.getVCSRequestsMarByUserId(id);
+    }
+
+    async getVCSRequestMarById(id){
+        return this.#strategy.getVCSRequestMarById(id);
     }
 
     async insertVCSRequestMar(applicantId,status,personalIdentifier){
@@ -58,6 +62,10 @@ class DataScrapper {
     
     async getVCSRequestsPidByUserId(id){
         return this.#strategy.getVCSRequestsPidByUserId(id);
+    }
+
+    async getVCSRequestPidById(id){
+        return this.#strategy.getVCSRequestPidById(id);
     }
 
     async insertVCSRequestPid(applicantId,currentAddress,dateOfBirth,familyName,firstName,gender,nameAndFamilyNameAtBirth,personalIdentifier){

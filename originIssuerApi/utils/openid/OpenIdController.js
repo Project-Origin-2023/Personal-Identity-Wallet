@@ -11,8 +11,7 @@ class OpenIdController {
     async #makeRequest(config){
         var res;
         var response = await this.#axios(config);
-        response = response.data;
-        return response;
+        return {success:true,data:response.data};
     }
 
     postTemplate(name,data){
@@ -81,31 +80,17 @@ class OpenIdController {
         return await this.#makeRequest(config);
     }
 
-    issueCredentialSameDevice(wallet,data){
-        //TODO da togliere e ricevere come parametro
-        data = JSON.stringify({
-            "credentials": [
-              {
-                "credentialData": {
-                  "credentialSubject": {
-                    "currentAddress": [
-                      "1 Boulevard de la Liberté, 59800 Lille"
-                    ],
-                    "dateOfBirth": "1993-04-08",
-                    "familyName": "DOE",
-                    "firstName": "Jane",
-                    "gender": "FEMALE",
-                    "id": "did:ebsi:2AEMAqXWKYMu1JHPAgGcga4dxu7ThgfgN95VyJBJGZbSJUtp",
-                    "nameAndFamilyNameAtBirth": "Jane DOE",
-                    "personalIdentifier": "0904008084H",
-                    "placeOfBirth": "LILLE, FRANCE"
-                  }
-                },
-                "type": "VerifiableId"
-              }
-            ]
-          });
+    async getTemplate(name){
+        var config = {
+        method: 'get',
+        url: this.#issuerUri+'/issuer-api/default/config/templates/'+name,
+        headers: { }
+        };
 
+        return await this.#makeRequest(config);
+    }
+
+    async issueCredentialSameDevice(wallet,data){
         var config = {
             method: 'post',
             url: this.#issuerUri+'/issuer-api/default/credentials/issuance/request?isPreAuthorized=true&walletId='+wallet,
@@ -115,11 +100,11 @@ class OpenIdController {
             data : data
         };
 
-        return this.#makeRequest(config);
+        return await this.#makeRequest(config);
     }
 
-    issuerCredentialCrossDevice(data){
-        return this.issueCredentialSameDevice("x-device",data);
+    async issueCredentialCrossDevice(data){
+        return await this.issueCredentialSameDevice("x-device",data);
     }
 
     getConfiguration(){
@@ -135,6 +120,49 @@ class OpenIdController {
         };
         return this.#makeRequest(config)
 
+    }
+
+    async createCredential(data,type){
+        var credential;
+        if(type=="PID"){
+            credential = JSON.stringify({
+                "credentials": [
+                {
+                    "credentialData": {
+                    "credentialSubject": {
+                        "currentAddress": [
+                        data.currentAddress
+                        ],
+                        "dateOfBirth": data.dateOfBirth,
+                        "familyName": data.familyName,
+                        "firstName": data.firstName,
+                        "gender": data.gender,
+                        "id": "did:ebsi:2AEMAqXWKYMu1JHPAgGcga4dxu7ThgfgN95VyJBJGZbSJUtp",
+                        "nameAndFamilyNameAtBirth": "Jane DOE",
+                        "personalIdentifier": data.personalIdentifier,
+                        "placeOfBirth": "data.placeOfBirth"
+                    }
+                    },
+                    "type": "PID"
+                }
+                ]
+            })
+        }else if(type=="EAA"){
+            credential = JSON.stringify({
+                "credentials": [
+                {
+                    "credentialData": {
+                    "credentialSubject": {
+                        "status":data.status,
+                        "personalIdentifier": data.personalIdentifier,
+                    }
+                    },
+                    "type": "EAA"
+                }
+                ]
+            })
+        }
+        return credential;
     }
 }
 
