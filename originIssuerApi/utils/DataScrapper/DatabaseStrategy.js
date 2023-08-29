@@ -22,11 +22,11 @@ class DatabaseStrategy extends Database{
             var values=[email,hashed_pass,salt];
             var result=await this.query(query, values);
             if(!result)
-                 return new DataResponse(false,null,"Error insert account",null);
+                 return new DataResponse(false,null,"Account insertion failed",null);
         }catch(e){
-            return new DataResponse(false,null,"Error querry ainsert account",e);
+            return new DataResponse(false,null,"Error on query for account insertion",e);
         }
-        return new DataResponse(true,null,"Account inserted succssfully",null);
+        return new DataResponse(true,null,"Account inserted successfully",null);
     }
 
     async getAccountByEmail(email){
@@ -41,12 +41,12 @@ class DatabaseStrategy extends Database{
             if(!result)
                 return new DataResponse(false,null,"Error Getting Account",null);
             if(result.rows.length != 1)
-                return new DataResponse(false,null,"Account Does Not existt",null);
+                return new DataResponse(false,null,"Account Does Not exist",null);
             var account=result.rows[0];
         }catch(e){
-            return new DataResponse(false,null,"Error making querry",e);
+            return new DataResponse(false,null,"Query error",e);
         }
-        return new DataResponse(true,account,"account successfully get",null);
+        return new DataResponse(true,account,"Account successfully retrieved",null);
     }
 
     async getAccountById(id){
@@ -61,12 +61,12 @@ class DatabaseStrategy extends Database{
             if(!result)
                 return new DataResponse(false,null,"Error Getting Account",null);
             if(result.rows.length != 1)
-                return new DataResponse(false,null,"Account Does Not existt",null);
+                return new DataResponse(false,null,"Account Does Not exist",null);
             var account=result.rows[0];
         }catch(e){
-            return new DataResponse(false,null,"Error making querry",e);
+            return new DataResponse(false,null,"Query error",e);
         }
-        return new DataResponse(true,account,"account successfully get",null);
+        return new DataResponse(true,account,"Account successfully retrieved",null);
     }
 
     async insertSys_admin(accountId,role){
@@ -79,9 +79,9 @@ class DatabaseStrategy extends Database{
             var values=[accountId,role];
             var result=await this.query(query, values);
             if(!result)
-                 return new DataResponse(false,null,"Errore into sys_admin data insert",null)
+                 return new DataResponse(false,null,"Sys_admin data insertion failed",null)
         }catch(e){
-            return new DataResponse(false,null,"Error Querry insert sys_admin",e);
+            return new DataResponse(false,null,"Sys_admin account insertion failed",e);
         }
         return new DataResponse(true,null,"Sys_admin inserted successfully",null);
     }
@@ -96,14 +96,14 @@ class DatabaseStrategy extends Database{
             var values=[email,hashed_pass,salt];
             var result=await this.query(query, values);
             if(!result)
-                 return new DataResponse(false,null,"Error insert account",null);
+                 return new DataResponse(false,null,"Account insertion failed",null);
             values=[role];
             query='INSERT INTO "sys_admins" ("account", "role") VALUES (currval(\'accounts_id_seq\'),$1);';
             result=await this.query(query, values);
             if(!result)
-                 return new DataResponse(false,null,"Errore into sys_admin data insert",null)
+                 return new DataResponse(false,null,"Sys_admin data insertion failed",null)
         }catch(e){
-            return new DataResponse(false,null,"Error Querry insert sys_admin Account",e);
+            return new DataResponse(false,null,"Sys_admin account insertion failed",e);
         }
         return new DataResponse(true,null,"Sys_admin Account inserted successfully",null);
     }
@@ -118,14 +118,14 @@ class DatabaseStrategy extends Database{
             var values=[id];
             var result=await this.query(query, values);
             if(!result)
-                return new DataResponse(false,null,"Error retrieve Sys Admin",null);
+                return new DataResponse(false,null," Sys Admin retrieval error",null);
             if(result.rows.length != 1)
                 return new DataResponse(false,null,"Sys Admin not found",null);
             var sys_admin=result.rows[0];
         }catch(e){
-            return new DataResponse(false,null,"Error querry get sysadmin",e);
+            return new DataResponse(false,null,"Error retrieving sysadmin",e);
         }
-        return new DataResponse(true,sys_admin,"Sys admin get successffully",null);
+        return new DataResponse(true,sys_admin,"Sys admin successfully retrieved",null);
     }
 
     async insertUser(accountId){
@@ -138,11 +138,11 @@ class DatabaseStrategy extends Database{
             var values=[accountId];
             var result=await this.query(query, values);
             if(!result)
-                 return new DataResponse(false,null,"Error insert user",null);
+                 return new DataResponse(false,null,"User data insertion failed",null);
         }catch(e){
-            return new DataResponse(false,null,"Error querry insert user",e);
+            return new DataResponse(false,null,"User insertion failed",e);
         }
-        return new DataResponse(true,null,"User Iserted successfully",null);
+        return new DataResponse(true,null,"User inserted successfully",null);
     }
 
     async insertUserAccount(email, hashed_pass, salt){
@@ -155,14 +155,14 @@ class DatabaseStrategy extends Database{
             var values=[email,hashed_pass,salt];
             var result=await this.query(query, values);
             if(!result)
-                 return new DataResponse(false,null,"Error insert account",null);
+                 return new DataResponse(false,null,"Account insertion failed",null);
             values=[];
             query='INSERT INTO "users" ("account", "created_at") VALUES (currval(\'accounts_id_seq\'), now());';
             result=await this.query(query, values);
             if(!result)
-                 return new DataResponse(false,null,"Errore into user data insert",null)
+                 return new DataResponse(false,null,"User account data insertion failed",null)
         }catch(e){
-            return new DataResponse(false,null,"Error Querry insert user Account",e);
+            return new DataResponse(false,null,"User account insertion failed",e);
         }
         return new DataResponse(true,null,"User Account inserted successfully",null);
     }
@@ -182,9 +182,9 @@ class DatabaseStrategy extends Database{
                 return new DataResponse(false,null,"User not found",null);
             var user=result.rows[0];
         }catch(e){
-            return new DataResponse(false,null,"Error querry get user",e);
+            return new DataResponse(false,null,"Error retrieving sysadmin",e);
         }
-        return new DataResponse(true,user,"User getted successfully",null);
+        return new DataResponse(true,user,"User retrieved successfully",null);
     }
 
     async getVCSRequestById(id){
@@ -197,14 +197,14 @@ class DatabaseStrategy extends Database{
             var values=[id];
             var result=await this.query(query, values);
             if(!result)
-                return new DataResponse(false,null,"Error vcs requests",null);
+                return new DataResponse(false,null,"Vcs requests error",null);
             if(result.rows.length != 1)
-                return new DataResponse(false,null,"vcs request not found",null);
+                return new DataResponse(false,null,"Vcs request not found",null);
             var vcs_request=result.rows[0];
         }catch(e){
-            return new DataResponse(false,null,"Error Querry vcs requests ",e);
+            return new DataResponse(false,null,"vcs requests query error ",e);
         }
-        return new DataResponse(true,vcs_request,"vcs requests getted successfully",null);
+        return new DataResponse(true,vcs_request,"vcs requests successfully retrieved",null);
     }
 
     async getVCSRequestsMarByUserId(id){
@@ -217,12 +217,12 @@ class DatabaseStrategy extends Database{
             var values=[id];
             var result=await this.query(query, values);
             if(!result)
-                return new DataResponse(false,null,"Error User's vcs requests married status",null);
+                return new DataResponse(false,null,"User's vcs requests married status error",null);
             var vcs_requests=result.rows;
         }catch(e){
-            return new DataResponse(false,null,"Error Querry User's vcs requests married status",e);
+            return new DataResponse(false,null,"User's vcs requests married status query error",e);
         }
-        return new DataResponse(true,vcs_requests,"User's vcs requests married status getted successfully",null);
+        return new DataResponse(true,vcs_requests,"User's vcs requests married status successfully retrieved",null);
     }
 
     async getVCSRequestMarById(id){
@@ -235,14 +235,14 @@ class DatabaseStrategy extends Database{
             var values=[id];
             var result=await this.query(query, values);
             if(!result)
-                return new DataResponse(false,null,"Error vcs request married status",null);
+                return new DataResponse(false,null,"Vcs request married status error",null);
             if(result.rows.length != 1)
-                return new DataResponse(false,null,"Error vcs request Marital not found",null);
+                return new DataResponse(false,null,"Vcs request Marital not found",null);
             var vcs_request=result.rows;
         }catch(e){
-            return new DataResponse(false,null,"Error Querry User's vcs request married status",e);
+            return new DataResponse(false,null,"User's vcs request married status query error",e);
         }
-        return new DataResponse(true,vcs_request," vcs request married status getted successfully",null);
+        return new DataResponse(true,vcs_request," vcs request married status successfully retrieved",null);
     }
 
     async insertVCSRequestMar(applicantId,status,personalIdentifier){
@@ -262,9 +262,9 @@ class DatabaseStrategy extends Database{
             if(!result)
                 return new DataResponse(false,null,"Errore into vcs request marital_status data insert",null)
         }catch(e){
-            return new DataResponse(false,null,"Error querry insert vcs request marital_status",e);
+            return new DataResponse(false,null,"Vcs request marital_status insertion failed",e);
         }
-        return new DataResponse(true,null,"vcs request marital_status Iserted successfully",null);
+        return new DataResponse(true,null,"vcs request marital_status inserted successfully",null);
     }
 
     async getVCSRequestsPidByUserId(id){
@@ -277,12 +277,12 @@ class DatabaseStrategy extends Database{
             var values=[id];
             var result=await this.query(query, values);
             if(!result)
-                return new DataResponse(false,null,"Error User's vcs requests PID status",null);
+                return new DataResponse(false,null,"User's vcs requests PID status error",null);
             var vcs_requests=result.rows;
         }catch(e){
-            return new DataResponse(false,null,"Error Querry User's vcs requests PID status",e);
+            return new DataResponse(false,null,"User's vcs requests PID status query error",e);
         }
-        return new DataResponse(true,vcs_requests,"User's vcs requests PID getted successfully",null);
+        return new DataResponse(true,vcs_requests,"User's vcs requests PID successfully retrieved",null);
     }
 
     async getVCSRequestPidById(id){
@@ -295,14 +295,14 @@ class DatabaseStrategy extends Database{
             var values=[id];
             var result=await this.query(query, values);
             if(!result)
-                return new DataResponse(false,null,"Error vcs request PID status",null);
+                return new DataResponse(false,null,"vcs request PID status Error",null);
             if(result.rows.length != 1)
-                return new DataResponse(false,null,"Error vcs request PID not found",null);
+                return new DataResponse(false,null,"Vcs request PID not found",null);
             var vcs_request=result.rows[0];
         }catch(e){
-            return new DataResponse(false,null,"Error Querry vcs request PID status",e);
+            return new DataResponse(false,null,"Vcs request PID status query error",e);
         }
-        return new DataResponse(true,vcs_request,"vcs request PID getted successfully",null);
+        return new DataResponse(true,vcs_request,"Vcs request PID successfully retrieved",null);
     }
 
     async insertVCSRequestPid(applicantId,currentAddress,dateOfBirth,familyName,firstName,gender,nameAndFamilyNameAtBirth,personalIdentifier){
@@ -320,11 +320,11 @@ class DatabaseStrategy extends Database{
             query='INSERT INTO "vcs_content_pid" ("vcs_request", "currentAddress", "dateOfBirth", "familyName", "firstName", "gender", "nameAndFamilyNameAtBirth", "personalIdentifier") VALUES (currval(\'vcs_requests_id_seq\'),$1,$2,$3,$4,$5,$6,$7)';
             result=await this.query(query, values);
             if(!result)
-                return new DataResponse(false,null,"Errore into vcs request pid data insert",null)
+                return new DataResponse(false,null,"Vcs request pid data insertion error",null)
         }catch(e){
-            return new DataResponse(false,null,"Error querry insert vcs request pid",e);
+            return new DataResponse(false,null,"Vcs request pid insertion failed",e);
         }
-        return new DataResponse(true,null,"vcs request pid Iserted successfully",null);
+        return new DataResponse(true,null,"vcs request pid inserted successfully",null);
     }
 
     async getVCSRequestVerification(id){
@@ -337,18 +337,18 @@ class DatabaseStrategy extends Database{
             var result = await this.getVCSRequestById(id);
             if(!result.success)
                 return result;
-            //querry get verification
+            //query get verification
             var query='SELECT id,released,status FROM "vcs_requests" JOIN "vcs_requests_verifications" ON id=vcs_requests_verifications.vcs_request WHERE "id"= $1';
             var values=[id];
             var result=await this.query(query, values);
             if(!result)
-                return new DataResponse(false,null,"Errore querry get vcs verification",null);
+                return new DataResponse(false,null,"Vcs verification retrieval error",null);
             if(result.rows.length != 1)
-                return new DataResponse(true,{id:id,pending:true},"verification get succsessfully",null);
+                return new DataResponse(true,{id:id,pending:true},"Verification successfully retrieved",null);
 
             var verification=result.rows[0];
             verification.pending = false;
-            return new DataResponse(true,verification,"Vcs request verification successfully get",null);
+            return new DataResponse(true,verification,"Vcs request verification successfully retrieved",null);
         }catch(e){
             return new DataResponse(false,null,"",e);
         }
@@ -364,11 +364,11 @@ class DatabaseStrategy extends Database{
             var values=[vcs_requestId,released];
             var result= await this.query(query, values);
             if(!result)
-                return new DataResponse(false,null,"Error Update vcs_request released",null);
+                return new DataResponse(false,null,"Update vcs_request released error",null);
         }catch(e){
-            return new DataResponse(false,null,"Error querry update released vcs request",e);
+            return new DataResponse(false,null,"update released vcs request query error",e);
         }
-        return new DataResponse(true,null,"vcs request released update successfully",null);
+        return new DataResponse(true,null,"vcs request released successfully updated",null);
     }
 
     async updateVCSRequestVerificationStatus(vcs_requestId,status){
@@ -381,11 +381,11 @@ class DatabaseStrategy extends Database{
             var values=[vcs_requestId,status];
             var result=await this.query(query, values);
             if(!result)
-                return new DataResponse(false,null,"Error Update vcs_request verification status",null);
+                return new DataResponse(false,null,"Update vcs_request verification status error",null);
         }catch(e){
-            return new DataResponse(false,null,"Error querry update status vcs request verification",e);
+            return new DataResponse(false,null,"Update status vcs request verification query error",e);
         }
-        return new DataResponse(true,null,"vcs request verification status update successfully",null);
+        return new DataResponse(true,null,"Vcs request verification status successfully updated",null);
     }
 
 
