@@ -84,6 +84,10 @@ class DataScrapper {
         return this.#strategy.updateVCSRequestVerificationStatus(vcs_requestId,status);
     }
 
+    async getVCSRequestPending(){
+        return this.#strategy.getVCSRequestPending();
+    }
+
 
     
 

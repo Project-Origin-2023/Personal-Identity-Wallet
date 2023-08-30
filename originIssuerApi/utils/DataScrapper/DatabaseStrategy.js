@@ -344,7 +344,7 @@ class DatabaseStrategy extends Database{
             if(!result)
                 return new DataResponse(false,"Vcs verification retrieval error");
             if(result.rows.length != 1)
-                return new DataResponse(true,"Verification successfully retrieved",{id:id,pending:true});
+                return new DataResponse(true,"Verification in pending",{id:id,pending:true});
 
             var verification=result.rows[0];
             verification.pending = false;
@@ -386,6 +386,25 @@ class DatabaseStrategy extends Database{
             return new DataResponse(false,"Update status vcs request verification query error",null,e);
         }
         return new DataResponse(true,"Vcs request verification status successfully updated");
+    }
+
+    async getVCSRequestPending(){
+        var check = await this.checkConnection();
+        if(!check)
+            return new DataResponse(false,"Error in PG DB Connection");
+
+        try{
+            //query get verification
+            var query='SELECT id,applicant,released FROM "vcs_requests" EXCEPT SELECT id,applicant,released FROM "vcs_requests" JOIN "vcs_requests_verifications" ON id=vcs_requests_verifications.vcs_request';
+            var values=[id];
+            var result=await this.query(query, values);
+            if(!result)
+                return new DataResponse(false,"Vcs request in pending retrieval error");
+
+            return new DataResponse(true,"Vcs request in pendintsuccessfully retrieved",result.rows);
+        }catch(e){
+            return new DataResponse(false,"Error getting vcs request in pending",null,e);
+        }
     }
 
 

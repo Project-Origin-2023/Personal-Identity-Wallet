@@ -319,7 +319,36 @@ class Routing{
             res.end();return;
         });
 
+        //Auth get all vcs request in pending
+        this.#app.get('/auth/vcsrequest/pending',this.#auth.decodeToken, async (req, res) => {
+            //Verifico che Non sia un Sys_admin
+            if(!req.jwtSysAdmin){
+                res.status(500).json({ success: false, description: 'Sys_Admin Authorization required, log in with an Sys Admin Account' });
+                res.end();return;
+            }
+            if(req.jwtRole!="verifier"){
+                res.status(500).json({ success: false, description: 'Sys_Admin Verifier Authorization required, check your department for optain permission' });
+                res.end();return;
+            }
 
+            //Prendo le vcs request pid
+            var result = await this.#scrapper.getVCSRequestPending();
+            if(!result.success){
+                res.status(500).json(result);
+                res.end();return;
+            }
+            //Ritorno i risultati
+            res.status(200).json(result);
+            res.end();return;
+        });
+
+        //Auth get vcs request PID
+
+        //Auth get vcs request Marital status
+
+        //Auth make verification of a vcs request
+
+        //Auth See all vcs request approved by Auth account
 
     }
 
