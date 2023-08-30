@@ -84,8 +84,16 @@ class DataScrapper {
         return this.#strategy.updateVCSRequestVerificationStatus(vcs_requestId,status);
     }
 
-    async getVCSRequestPending(){
-        return this.#strategy.getVCSRequestPending();
+    async getVCSRequestsPending(){
+        return this.#strategy.getVCSRequestsPending();
+    }
+
+    async getVCSRequestsNotPending(){
+        return this.#strategy.getVCSRequestsNotPending();
+    }
+
+    async insertVCSRequestVerification(vcs_request,admin_verifier,status){
+        return this.#strategy.insertVCSRequestVerification(vcs_request,admin_verifier,status);
     }
 
 

@@ -114,7 +114,7 @@ class DatabaseStrategy extends Database{
             return new DataResponse(false,"Error in PG DB Connection");
 
         try{
-            var query='SELECT * FROM "sys_admins" WHERE "id"=$1';
+            var query='SELECT * FROM "sys_admins" WHERE "account"=$1';
             var values=[id];
             var result=await this.query(query, values);
             if(!result)
@@ -388,7 +388,7 @@ class DatabaseStrategy extends Database{
         return new DataResponse(true,"Vcs request verification status successfully updated");
     }
 
-    async getVCSRequestPending(){
+    async getVCSRequestsPending(){
         var check = await this.checkConnection();
         if(!check)
             return new DataResponse(false,"Error in PG DB Connection");
@@ -405,6 +405,42 @@ class DatabaseStrategy extends Database{
         }catch(e){
             return new DataResponse(false,"Error getting vcs request in pending",null,e);
         }
+    }
+
+    async getVCSRequestsNotPending(){
+        var check = await this.checkConnection();
+        if(!check)
+            return new DataResponse(false,"Error in PG DB Connection");
+
+        try{
+            //query get verification
+            var query='SELECT id,applicant,released FROM "vcs_requests" JOIN "vcs_requests_verifications" ON id=vcs_requests_verifications.vcs_request';
+            var values=[id];
+            var result=await this.query(query, values);
+            if(!result)
+                return new DataResponse(false,"Vcs request in pending retrieval error");
+
+            return new DataResponse(true,"Vcs request in pendintsuccessfully retrieved",result.rows);
+        }catch(e){
+            return new DataResponse(false,"Error getting vcs request in pending",null,e);
+        }
+    }
+
+    async insertVCSRequestVerification(vcs_request,admin_verifier,status){
+        var check = await this.checkConnection();
+        if(!check)
+            return new DataResponse(false,"Error in PG DB Connection");
+
+        try{
+            var query='INSERT INTO "vcs_requests_verifications" ("vcs_request", "admin_verifier", "status") VALUES ($1, $2, $3);';
+            var values = [vcs_request,admin_verifier,status];
+            var result = await this.query(query, values);
+            if(!result)
+                return new DataResponse(false,"Vcs request verification insertion error")
+        }catch(e){
+            return new DataResponse(false,"Vcs request verification insertion failed",e);
+        }
+        return new DataResponse(true,"vcs request verification inserted successfully");
     }
 
 
