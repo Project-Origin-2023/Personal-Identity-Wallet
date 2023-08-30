@@ -1,14 +1,14 @@
 class DataResponse{
     success;
-    data;
     description;
+    data;
     error;
     
-    constructor(s,d,des,e){
-        this.description = des;
-        this.error = e;
+    constructor(s,des,d,e){
         this.success = s;
+        this.description = des;
         this.data = d;
+        this.error = e;
     }
 }
 

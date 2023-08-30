@@ -68,8 +68,8 @@ class DataScrapper {
         return this.#strategy.getVCSRequestPidById(id);
     }
 
-    async insertVCSRequestPid(applicantId,currentAddress,dateOfBirth,familyName,firstName,gender,nameAndFamilyNameAtBirth,personalIdentifier){
-        return this.#strategy.insertVCSRequestPid(applicantId,currentAddress,dateOfBirth,familyName,firstName,gender,nameAndFamilyNameAtBirth,personalIdentifier);
+    async insertVCSRequestPid(applicantId,currentAddress,dateOfBirth,familyName,firstName,gender,nameAndFamilyNameAtBirth,personalIdentifier,placeOfBirth){
+        return this.#strategy.insertVCSRequestPid(applicantId,currentAddress,dateOfBirth,familyName,firstName,gender,nameAndFamilyNameAtBirth,personalIdentifier,placeOfBirth);
     }
     
     async getVCSRequestVerification(id){

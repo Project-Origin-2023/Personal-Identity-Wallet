@@ -167,7 +167,7 @@ class Routing{
                 res.end();return;
             }
             //applicantId,currentAddress,dateOfBirth,familyName,firstName,gender,nameAndFamilyNameAtBirth,personalIdentifier
-            const { currentAddress,dateOfBirth,familyName,firstName,gender,nameAndFamilyNameAtBirth,personalIdentifier } = req.body;
+            const { currentAddress,dateOfBirth,familyName,firstName,gender,nameAndFamilyNameAtBirth,personalIdentifier,placeOfBirth} = req.body;
             //Verifica dati input
             // Verifica dati di input (presenza ed esistenza)
             if (!currentAddress || currentAddress.trim() === '') {
@@ -200,7 +200,7 @@ class Routing{
             }
 
             //Prendo le vcs request pid
-            var result = await this.#scrapper.insertVCSRequestPid(req.jwtAccountId,currentAddress,dateOfBirth,familyName,firstName,gender,nameAndFamilyNameAtBirth,personalIdentifier);
+            var result = await this.#scrapper.insertVCSRequestPid(req.jwtAccountId,currentAddress,dateOfBirth,familyName,firstName,gender,nameAndFamilyNameAtBirth,personalIdentifier,placeOfBirth);
             if(!result.success){
                 res.status(500).json(result);
                 res.end();return;
@@ -243,10 +243,9 @@ class Routing{
 
         //Get VCS Request Release
         this.#app.get(['/vcsrequest/release/:id','/vcsrequest/release/'],this.#auth.decodeToken, async (req, res) => {
-
             //Verifico che Non sia un Sys_admin
             if(req.jwtSysAdmin){
-                res.status(500).json(new DataResponse(false,null,"Sys_Admin Authorization not valid, log in with an User Account",null));
+                res.status(500).json(new DataResponse(false,"Sys_Admin Authorization not valid, log in with an User Account"));
                 res.end();return;
             }
 
@@ -260,7 +259,7 @@ class Routing{
             const id = req.params.id // This is how you access URL variable
             // Verifica dati di input (presenza ed esistenza)
             if (!id || id.trim() === '') {
-                res.status(500).json(new DataResponse(false,null,"vcs request id is missing",null));
+                res.status(500).json(new DataResponse(false,"vcs request id is missing"));
                 res.end();return;
             }
             
@@ -270,16 +269,21 @@ class Routing{
                 res.status(500).json(result);
                 res.end();return;
             }
+            //Verifico che la richiesta di release della vcs request corrisponda ad una vcs request del utente loggato
             if (result.data.pending){//caso in cui vcs request non è stata ancora esaminata da un sys admin ed è in pending
-                res.status(500).json(new DataResponse(false,null,"vcs request verification in pending",null));
+                res.status(500).json(new DataResponse(false,"vcs request verification in pending"));
                 res.end();return;
             } 
+            if(req.jwtAccountId != result.data.applicant){
+                res.status(500).json(new DataResponse(false,"vcs request is not for the account logged in"));
+                res.end();return;
+            }
             if (!result.data.status){//caso in cui vcs request è stata esaminata con esito negativo
-                res.status(500).json(new DataResponse(false,null,"vcs request verification status negative",null));
+                res.status(500).json(new DataResponse(false,"vcs request verification status negative"));
                 res.end();return;
             } 
             if (result.data.released){//caso in cui vcs request già stata rilasciata
-                res.status(500).json(new DataResponse(false,null,"vcs request already released",null));
+                res.status(500).json(new DataResponse(false,"vcs request already released"));
                 res.end();return;
             }
             //Post condizioni, vcs request esistente, verificata con esito positivo e non già rilasciata
@@ -291,8 +295,9 @@ class Routing{
                 credential = await this.#oidc.createCredential(result.data,"PID");
             }else{
                 result = await this.#scrapper.getVCSRequestMarById(id);
-                if(result.success){    
-                    credential = await this.#oidc.createCredential(result.data,"EAA");
+                if(result.success){  
+                    var dataCredential = {status:result.data[0].status, personalIdentifier:result.data[0].personalIdentifier};
+                    credential = await this.#oidc.createCredential(dataCredential,"EAA");
                 } 
             }
         
@@ -310,7 +315,7 @@ class Routing{
                 res.end();return;
             }
             //Ritorno i risultati
-            res.status(200).json(new DataResponse(true,result.data,"Credential Issuing initiated, see data for redirect link to wallet",null));
+            res.status(200).json(new DataResponse(true,"Credential Issuing initiated, see data for redirect link to wallet",result.data));
             res.end();return;
         });
 

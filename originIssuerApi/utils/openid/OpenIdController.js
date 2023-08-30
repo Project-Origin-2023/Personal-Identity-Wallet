@@ -1,6 +1,7 @@
 class OpenIdController {
     #axios;
     #issuerUri;
+    #crypto = require('crypto');
     
     constructor(){
         
@@ -9,9 +10,12 @@ class OpenIdController {
     }
 
     async #makeRequest(config){
-        var res;
-        var response = await this.#axios(config);
-        return {success:true,data:response.data};
+        try{
+            var response = await this.#axios(config);
+            return {success:true,description:"OIDC Request with success",data:response.data};
+        }catch(e){
+            return {success:false,description:"OIDC Error",data:null,error:e};
+        }
     }
 
     postTemplate(name,data){
@@ -99,7 +103,6 @@ class OpenIdController {
             },
             data : data
         };
-
         return await this.#makeRequest(config);
     }
 
@@ -107,7 +110,7 @@ class OpenIdController {
         return await this.issueCredentialSameDevice("x-device",data);
     }
 
-    getConfiguration(){
+    async getConfiguration(){
         var data = '';
         var config = {
             method: 'get',
@@ -118,51 +121,55 @@ class OpenIdController {
             },
             data : data
         };
-        return this.#makeRequest(config)
+        return await this.#makeRequest(config)
 
     }
 
     async createCredential(data,type){
-        var credential;
-        if(type=="PID"){
-            credential = JSON.stringify({
-                "credentials": [
+        if(type=="PID")
+            return this.#createPID(data);
+        if(type=="EAA")
+            return this.#createEAA(data);
+        return;
+    }
+
+    #createPID(data){
+        return JSON.stringify({
+            "credentials": [
                 {
                     "credentialData": {
                     "credentialSubject": {
                         "currentAddress": [
-                        data.currentAddress
+                            data.currentAddress
                         ],
                         "dateOfBirth": data.dateOfBirth,
                         "familyName": data.familyName,
                         "firstName": data.firstName,
                         "gender": data.gender,
-                        "id": "did:ebsi:2AEMAqXWKYMu1JHPAgGcga4dxu7ThgfgN95VyJBJGZbSJUtp",
-                        "nameAndFamilyNameAtBirth": "Jane DOE",
+                        "id": this.#crypto.randomUUID(),
+                        "nameAndFamilyNameAtBirth": data.nameAndFamilyNameAtBirth,
                         "personalIdentifier": data.personalIdentifier,
-                        "placeOfBirth": "data.placeOfBirth"
-                    }
+                        "placeOfBirth": data.placeOfBirth
+                        }
                     },
                     "type": "PID"
                 }
-                ]
-            })
-        }else if(type=="EAA"){
-            credential = JSON.stringify({
-                "credentials": [
+            ]
+        });
+    }
+
+    #createEAA(data){
+        data.id=this.#crypto.randomUUID();
+        return JSON.stringify({
+            "credentials": [
                 {
                     "credentialData": {
-                    "credentialSubject": {
-                        "status":data.status,
-                        "personalIdentifier": data.personalIdentifier,
-                    }
+                        "credentialSubject": data
                     },
                     "type": "EAA"
                 }
-                ]
-            })
-        }
-        return credential;
+            ]
+        });
     }
 }
 
