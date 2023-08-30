@@ -1,1 +1,49 @@
-{"type":["PID"],"@context":["https://www.w3.org/2018/credentials/v1"],"issuer":"","issuanceDate":"","issued":"","validFrom":"","credentialSchema":{"id":"https://raw.githubusercontent.com/walt-id/waltid-ssikit-vclib/master/src/test/resources/schemas/VerifiableId.json","type":"FullJsonSchemaValidator2021"},"credentialSubject":{"currentAddress":[],"dateOfBirth":"","familyName":"","firstName":"","gender":"","identifier":[],"nameAndFamilyNameAtBirth":"","personalIdentifier":"","placeOfBirth":""},"credentialStatus":{"id":"","type":""},"evidence":[{"documentPresence":[],"evidenceDocument":[],"id":"","subjectPresence":[],"type":[],"verifier":""}]}
+{
+    "type":[
+       "PID"
+    ],
+    "@context":[
+       "https://www.w3.org/2018/credentials/v1"
+    ],
+    "issuer":"",
+    "issuanceDate":"",
+    "issued":"",
+    "validFrom":"",
+    "credentialSchema":{
+       "id":"https://raw.githubusercontent.com/walt-id/waltid-ssikit-vclib/master/src/test/resources/schemas/VerifiableId.json",
+       "type":"FullJsonSchemaValidator2021"
+    },
+    "credentialSubject":{
+       "currentAddress":[
+       ],
+       "dateOfBirth":"",
+       "familyName":"",
+       "firstName":"",
+       "gender":"",
+       "nameAndFamilyNameAtBirth":"",
+       "personalIdentifier":"",
+       "placeOfBirth":""
+    },
+    "credentialStatus":{
+       "id":"statusid",
+       "type":"valid"
+    },
+    "evidence":[
+       {
+          "documentPresence":[
+             "in presence"
+          ],
+          "evidenceDocument":[
+             "identity card"
+          ],
+          "id":"noid",
+          "subjectPresence":[
+             "in presence"
+          ],
+          "type":[
+             "verification"
+          ],
+          "verifier":"same as issuer"
+       }
+    ]
+ }
