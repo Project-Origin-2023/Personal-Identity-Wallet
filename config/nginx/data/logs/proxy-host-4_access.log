@@ -1,0 +1,8 @@
+[28/Aug/2023:00:35:05 +0000] - 200 200 - POST http api.issuer.origin "/auth/register" [Client 10.5.0.1] [Length 301] [Gzip -] [Sent-to 10.5.0.41] "PostmanRuntime/7.29.0" "-"
+[28/Aug/2023:00:35:20 +0000] - 500 500 - POST http api.issuer.origin "/auth/register" [Client 10.5.0.1] [Length 332] [Gzip -] [Sent-to 10.5.0.41] "PostmanRuntime/7.29.0" "-"
+[28/Aug/2023:00:35:47 +0000] - 200 200 - GET http api.issuer.origin "/vcsrequest/marital" [Client 10.5.0.1] [Length 2] [Gzip -] [Sent-to 10.5.0.41] "PostmanRuntime/7.29.0" "-"
+[28/Aug/2023:00:35:50 +0000] - 200 200 - GET http api.issuer.origin "/vcsrequest/marital" [Client 10.5.0.1] [Length 2] [Gzip -] [Sent-to 10.5.0.41] "PostmanRuntime/7.29.0" "-"
+[28/Aug/2023:00:35:51 +0000] - 200 200 - GET http api.issuer.origin "/vcsrequest/marital" [Client 10.5.0.1] [Length 2] [Gzip -] [Sent-to 10.5.0.41] "PostmanRuntime/7.29.0" "-"
+[28/Aug/2023:00:35:52 +0000] - 200 200 - GET http api.issuer.origin "/vcsrequest/marital" [Client 10.5.0.1] [Length 2] [Gzip -] [Sent-to 10.5.0.41] "PostmanRuntime/7.29.0" "-"
+[28/Aug/2023:00:36:00 +0000] - 200 200 - GET http api.issuer.origin "/vcsrequest/marital" [Client 10.5.0.1] [Length 2] [Gzip -] [Sent-to 10.5.0.41] "PostmanRuntime/7.29.0" "-"
+[28/Aug/2023:00:36:35 +0000] - 200 200 - GET http api.issuer.origin "/vcsrequest/marital" [Client 10.5.0.1] [Length 2] [Gzip -] [Sent-to 10.5.0.41] "PostmanRuntime/7.29.0" "-"

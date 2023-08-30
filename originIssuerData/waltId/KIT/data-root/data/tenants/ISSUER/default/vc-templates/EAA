@@ -1,1 +1,30 @@
-{"type":["EAA"],"@context":["https://www.w3.org/2018/credentials/v1"],"issuer":"","issuanceDate":"","issued":"","validFrom":"","expirationDate":"","credentialSchema":{"id":"https://raw.githubusercontent.com/walt-id/waltid-ssikit-vclib/master/src/test/resources/schemas/VerifiableAttestation.json","type":"JsonSchemaValidator2018"},"credentialSubject":{},"evidence":[{"documentPresence":"","evidenceDocument":"","id":"","subjectPresence":"","type":["DocumentVerification"],"verifier":""}]}
+{
+    "type":[
+       "EAA"
+    ],
+    "@context":[
+       "https://www.w3.org/2018/credentials/v1"
+    ],
+    "issuer":"",
+    "issuanceDate":"",
+    "issued":"",
+    "validFrom":"",
+    "expirationDate":"",
+    "credentialSchema":{
+       "id":"https://raw.githubusercontent.com/Project-Origin-2023/Personal-Identity-Wallet/main/config/schemas/EAA.json",
+       "type":"JsonSchemaValidator2018"
+    },
+    "credentialSubject":{},
+    "evidence":[
+       {
+          "documentPresence":"in presence",
+          "evidenceDocument":"documents",
+          "id":"noid",
+          "subjectPresence":"in presence",
+          "type":[
+             "DocumentVerification"
+          ],
+          "verifier":"same as issuer"
+       }
+    ]
+ }
