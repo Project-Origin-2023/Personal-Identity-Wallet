@@ -11,7 +11,7 @@
     "validFrom":"",
     "expirationDate":"",
     "credentialSchema":{
-       "id":"https://raw.githubusercontent.com/walt-id/waltid-ssikit-vclib/master/src/test/resources/schemas/VerifiableAttestation.json",
+       "id":"https://raw.githubusercontent.com/Project-Origin-2023/Personal-Identity-Wallet/main/config/schemas/EAA.json",
        "type":"JsonSchemaValidator2018"
     },
     "credentialSubject":{},

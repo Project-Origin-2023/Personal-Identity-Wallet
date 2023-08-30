@@ -10,7 +10,7 @@
     "issued":"",
     "validFrom":"",
     "credentialSchema":{
-       "id":"https://raw.githubusercontent.com/walt-id/waltid-ssikit-vclib/master/src/test/resources/schemas/VerifiableId.json",
+       "id":"https://raw.githubusercontent.com/Project-Origin-2023/Personal-Identity-Wallet/main/config/schemas/PID.json",
        "type":"FullJsonSchemaValidator2021"
     },
     "credentialSubject":{
