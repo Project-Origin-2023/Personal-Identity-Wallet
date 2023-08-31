@@ -1,23 +1,37 @@
-import {BrowserRouter as Router, Routes, Route} from 'react-router-dom'
-import Home from './home'
-import Login from './Login'
+//Per Home
+//import Blog from './blog/Blog';
 
-import './App.css'
+import { AuthProvider } from 'react-auth-kit';
+import { BrowserRouter as Router, Routes, Route} from 'react-router-dom';
+
+
+import Navbar from './components/Navbar';
+import Home from './components/Home';
+import Register from './components/Register';
+import Login from './components/Login';
+import CredentialRequest from './components/CredentialRequest';
+import ViewCredentialRequests from './components/ViewCredentialRequests';
+import useToken from './components/useToken';
 
 function App() {
-
+  const { token, setToken } = useToken();
+  
+  //Routing Pagine
   return (
-  <Router>
-    <div className="App">
-      <header className="App-header">
+    <Router>
+      <AuthProvider>
+        <Navbar isLoggedIn={token!==null} setToken={setToken}/>
         <Routes>
-          <Route path="/" element={<Home/>}/>
-          <Route path="/Login" element={<Login/>}/>
+          <Route path="/"  element={<Home />} />
+          <Route path="/Register" element={<Register />} />
+          <Route path="/Login" element={<Login setToken={setToken} />} />
+          <Route path="/CredentialRequestPID" element={<CredentialRequest type="PID" token={token} />} />
+          <Route path="/ViewCredentialRequests" element={<ViewCredentialRequests type="ALL" token={token}/>} />
         </Routes>
-      </header>
-    </div>
+      </AuthProvider>
     </Router>
-  )
+  );
 }
 
-export default App
+
+export default App;
