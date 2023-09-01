@@ -62,12 +62,12 @@ class Authentication {
         if(TrueHash != CalculatedHash)
             return new DataResponse(false,"Password is not correct");
         //Verify SysAdmin Permision and create token
-        result = this.#scrapper.getSys_adminById(account.id);
+        result = await this.#scrapper.getSys_adminById(account.id);
         var token;
         if (!result.success)
             token = this.#createToken(account.id,account.email,false,null);
         else
-            token = this.#createToken(account.id,account.email,true,account.role);
+            token = this.#createToken(account.id,account.email,true,result.data.role);
         //return cookie with access token
         return new DataResponse(true,"Auth Login Successfuly Token created",token);
     }
