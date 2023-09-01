@@ -406,7 +406,7 @@ class Routing{
         });
 
         //Admin See all vcs request verified also not in pending
-        this.#app.get('/admin/vcsrequest/notpending',this.#auth.decodeToken, async (req, res) => {
+        this.#app.get('/admin/vcsrequests/notpending',this.#auth.decodeToken, async (req, res) => {
             //Verifico che sia un Sys_admin
             if(!req.jwtSysAdmin){
                 res.status(500).json({ success: false, description: 'Sys_Admin Authorization required, log in with an Sys Admin Account' });
@@ -418,7 +418,7 @@ class Routing{
             }
 
             //Prendo le vcs request pid
-            var result = await this.#scrapper.getVCSRequestNotPending();
+            var result = await this.#scrapper.getVCSRequestsNotPending();
             if(!result.success){
                 res.status(500).json(result);
                 res.end();return;
@@ -429,7 +429,7 @@ class Routing{
         });
 
         //Admin See all vcs request not verified also in pending
-        this.#app.get('/admin/vcsrequest/pending',this.#auth.decodeToken, async (req, res) => {
+        this.#app.get('/admin/vcsrequests/pending',this.#auth.decodeToken, async (req, res) => {
             //Verifico che sia un Sys_admin
             if(!req.jwtSysAdmin){
                 res.status(500).json({ success: false, description: 'Sys_Admin Authorization required, log in with an Sys Admin Account' });
@@ -441,7 +441,7 @@ class Routing{
             }
 
             //Prendo le vcs request pid
-            var result = await this.#scrapper.getVCSRequestPending();
+            var result = await this.#scrapper.getVCSRequestsPending();
             if(!result.success){
                 res.status(500).json(result);
                 res.end();return;

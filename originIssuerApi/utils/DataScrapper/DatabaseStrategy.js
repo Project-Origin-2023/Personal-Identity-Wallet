@@ -396,12 +396,12 @@ class DatabaseStrategy extends Database{
         try{
             //query get verification
             var query='SELECT id,applicant,released FROM "vcs_requests" EXCEPT SELECT id,applicant,released FROM "vcs_requests" JOIN "vcs_requests_verifications" ON id=vcs_requests_verifications.vcs_request';
-            var values=[id];
+            var values=[];
             var result=await this.query(query, values);
             if(!result)
                 return new DataResponse(false,"Vcs request in pending retrieval error");
 
-            return new DataResponse(true,"Vcs request in pendintsuccessfully retrieved",result.rows);
+            return new DataResponse(true,"Vcs request in pending successfully retrieved",result.rows);
         }catch(e){
             return new DataResponse(false,"Error getting vcs request in pending",null,e);
         }
@@ -415,7 +415,7 @@ class DatabaseStrategy extends Database{
         try{
             //query get verification
             var query='SELECT id,applicant,released FROM "vcs_requests" JOIN "vcs_requests_verifications" ON id=vcs_requests_verifications.vcs_request';
-            var values=[id];
+            var values=[];
             var result=await this.query(query, values);
             if(!result)
                 return new DataResponse(false,"Vcs request in pending retrieval error");
