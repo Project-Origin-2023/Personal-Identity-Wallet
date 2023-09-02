@@ -3,6 +3,7 @@ const { DatabaseStrategy } = require('./dataScrapper/DatabaseStrategy.js');
 const { DataScrapper } = require('./dataScrapper/DataScrapper.js')
 const { OpenIdController } = require('./openid/OpenIdController.js')
 const { DataResponse } = require('./DataResponse.js');
+const { InputChecker } = require('./InputChecker.js');
 
 class Routing{
     #cors = require('cors');
@@ -12,6 +13,7 @@ class Routing{
     #auth;
     #scrapper;
     #oidc;
+    #inputChecker;
     constructor(){
         //Initialize cors ootion with origin parameter
         var corsOptions = {
@@ -31,6 +33,8 @@ class Routing{
         }
         //OpenId
         this.#oidc = new OpenIdController();
+        //Input Checker
+        this.#inputChecker = new InputChecker();
 
     }
 
@@ -54,6 +58,15 @@ class Routing{
                 res.status(500).json({ success: false, message: 'password Login Missing' });
                 res.end();return;
             }
+            if(!this.#inputChecker.checkEmail(email)){
+                res.status(500).json({ success: false, message: 'email Login not valid' });
+                res.end();return;
+            }
+            if(!this.#inputChecker.checkPassword(password)){
+                res.status(500).json({ success: false, message: 'password Login not valid' });
+                res.end();return;
+            }
+
             //Verifico nr parametri correttamente
             //TODO
 
@@ -80,6 +93,14 @@ class Routing{
             }
             if( !password || password.trim() === ''){
                 res.status(500).json({ success: false, message: 'password Register Missing' });
+                res.end();return;
+            }
+            if(!this.#inputChecker.checkEmail(email)){
+                res.status(500).json({ success: false, message: 'email Register not valid' });
+                res.end();return;
+            }
+            if(!this.#inputChecker.checkPassword(password)){
+                res.status(500).json({ success: false, message: 'password Register not valid' });
                 res.end();return;
             }
             //Verifico nr parametri correttamente
@@ -198,7 +219,23 @@ class Routing{
                 res.status(500).json({ success: false, message: 'Email Login Missing' });
                 res.end();return;
             }
-
+            if(!this.#inputChecker.checkString(currentAddress)){
+                res.status(500).json({ success: false, message: 'currentAddress not valid' });
+                res.end();return;
+            }
+            if(!this.#inputChecker.checkString(dateOfBirth)){
+                res.status(500).json({ success: false, message: 'dateOfBirth not valid' });
+                res.end();return;
+            }
+            if(!this.#inputChecker.checkString(familyName)){
+                res.status(500).json({ success: false, message: 'familyName not valid' });
+                res.end();return;
+            }
+            if(!this.#inputChecker.checkString(firstName)){
+                res.status(500).json({ success: false, message: 'firstName not valid' });
+                res.end();return;
+            }
+            
             //Prendo le vcs request pid
             var result = await this.#scrapper.insertVCSRequestPid(req.jwtAccountId,currentAddress,dateOfBirth,familyName,firstName,gender,nameAndFamilyNameAtBirth,personalIdentifier,placeOfBirth);
             if(!result.success){
@@ -227,6 +264,14 @@ class Routing{
             }
             if (!personalIdentifier || personalIdentifier.trim() === '') {
                 res.status(500).json({ success: false, message: 'personalIdentifier Missing' });
+                res.end();return;
+            }
+            if(!this.#inputChecker.checkBoolean(status)){
+                res.status(500).json({ success: false, message: 'status not valid' });
+                res.end();return;
+            }
+            if(!this.#inputChecker.checkString(personalIdentifier)){
+                res.status(500).json({ success: false, message: 'personalIdentifier not valid' });
                 res.end();return;
             }
 

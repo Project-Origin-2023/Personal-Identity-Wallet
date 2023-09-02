@@ -1,5 +1,9 @@
 
 class InputChecker {
+  
+  checkBoolean(value) {
+    return typeof value === 'boolean';
+  }
 
   checkInteger(value){
     return Number.isInteger(value);
