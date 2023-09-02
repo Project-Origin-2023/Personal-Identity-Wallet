@@ -292,11 +292,11 @@ class Routing{
             var credential;
             result = await this.#scrapper.getVCSRequestPidById(id);
             if(result.success){
-                credential = await this.#oidc.createCredential(result.data,"PID");
+                credential = await this.#oidc.createCredential(result.data.vcs_request,"PID");
             }else{
                 result = await this.#scrapper.getVCSRequestMarById(id);
                 if(result.success){  
-                    var dataCredential = {status:result.data[0].status, personalIdentifier:result.data[0].personalIdentifier};
+                    var dataCredential = {status:result.data.vcs_request.status, personalIdentifier:result.data.vcs_request.personalIdentifier};
                     credential = await this.#oidc.createCredential(dataCredential,"EAA");
                 } 
             }
@@ -361,7 +361,7 @@ class Routing{
             }
             //Se è un Sys Admin, ha i permessi di ottenere in ogni caso la vcs request, se è un user deve essere la propria vcs request
             if(!req.jwtSysAdmin){
-                if(result.data.applicant != jwtAccountId){
+                if(result.data.vcs_request.applicant != jwtAccountId){
                     res.status(500).json(new DataResponse(false,"vcs request is not own by account logged in"));
                     res.end();return;
                 }

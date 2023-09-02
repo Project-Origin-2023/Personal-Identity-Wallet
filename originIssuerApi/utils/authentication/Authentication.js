@@ -55,7 +55,7 @@ class Authentication {
         if (!result.success)
             return result;
         //save account
-        var account = result.data;
+        var account = result.data.account;
         //Compare Hash passwords
         var TrueHash = account.hashed_pass;
         var CalculatedHash = this.#crypto.pbkdf2Sync(password, account.salt,500, 64, `sha512`).toString(`hex`);
@@ -67,7 +67,7 @@ class Authentication {
         if (!result.success)
             token = this.#createToken(account.id,account.email,false,null);
         else
-            token = this.#createToken(account.id,account.email,true,result.data.role);
+            token = this.#createToken(account.id,account.email,true,result.data.sys_admin.role);
         //return cookie with access token
         return new DataResponse(true,"Auth Login Successfuly Token created",token);
     }

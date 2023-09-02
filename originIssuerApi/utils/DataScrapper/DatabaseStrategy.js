@@ -46,7 +46,7 @@ class DatabaseStrategy extends Database{
         }catch(e){
             return new DataResponse(false,"Query error",e);
         }
-        return new DataResponse(true,"Account successfully retrieved",account);
+        return new DataResponse(true,"Account successfully retrieved",{account:account});
     }
 
     async getAccountById(id){
@@ -125,7 +125,7 @@ class DatabaseStrategy extends Database{
         }catch(e){
             return new DataResponse(false,"Error retrieving sysadmin",null,e);
         }
-        return new DataResponse(true,"Sys admin successfully retrieved",sys_admin);
+        return new DataResponse(true,"Sys admin successfully retrieved",{sys_admin:sys_admin});
     }
 
     async insertUser(accountId){
@@ -184,7 +184,7 @@ class DatabaseStrategy extends Database{
         }catch(e){
             return new DataResponse(false,"Error retrieving sysadmin",null,e);
         }
-        return new DataResponse(true,"User retrieved successfully",user);
+        return new DataResponse(true,"User retrieved successfully",{user:user});
     }
 
     async getVCSRequestById(id){
@@ -204,7 +204,7 @@ class DatabaseStrategy extends Database{
         }catch(e){
             return new DataResponse(false,"vcs requests query error ",null,e);
         }
-        return new DataResponse(true,"vcs requests successfully retrieved",vcs_request);
+        return new DataResponse(true,"vcs requests successfully retrieved",{vcs_request:vcs_request});
     }
 
     async getVCSRequestsMarByUserId(id){
@@ -222,7 +222,7 @@ class DatabaseStrategy extends Database{
         }catch(e){
             return new DataResponse(false,"User's vcs requests married status query error",null,e);
         }
-        return new DataResponse(true,"User's vcs requests married status successfully retrieved",vcs_requests);
+        return new DataResponse(true,"User's vcs requests married status successfully retrieved",{vcs_requests:vcs_requests});
     }
 
     async getVCSRequestMarById(id){
@@ -238,11 +238,11 @@ class DatabaseStrategy extends Database{
                 return new DataResponse(false,"Vcs request married status error");
             if(result.rows.length != 1)
                 return new DataResponse(false,"Vcs request Marital not found");
-            var vcs_request=result.rows;
+            var vcs_request=result.rows[0];
         }catch(e){
             return new DataResponse(false,"User's vcs request married status query error",null,e);
         }
-        return new DataResponse(true," vcs request married status successfully retrieved",vcs_request);
+        return new DataResponse(true," vcs request married status successfully retrieved",{vcs_request:vcs_request});
     }
 
     async insertVCSRequestMar(applicantId,status,personalIdentifier){
@@ -282,7 +282,7 @@ class DatabaseStrategy extends Database{
         }catch(e){
             return new DataResponse(false,"User's vcs requests PID status query error",null,e);
         }
-        return new DataResponse(true,"User's vcs requests PID successfully retrieved",vcs_requests);
+        return new DataResponse(true,"User's vcs requests PID successfully retrieved",{vcs_requests:vcs_requests});
     }
 
     async getVCSRequestPidById(id){
@@ -302,7 +302,7 @@ class DatabaseStrategy extends Database{
         }catch(e){
             return new DataResponse(false,"Vcs request PID status query error",null,e);
         }
-        return new DataResponse(true,"Vcs request PID successfully retrieved",vcs_request);
+        return new DataResponse(true,"Vcs request PID successfully retrieved",{vcs_request:vcs_request});
     }
 
     async insertVCSRequestPid(applicantId,currentAddress,dateOfBirth,familyName,firstName,gender,nameAndFamilyNameAtBirth,personalIdentifier,placeOfBirth){
@@ -344,11 +344,11 @@ class DatabaseStrategy extends Database{
             if(!result)
                 return new DataResponse(false,"Vcs verification retrieval error");
             if(result.rows.length != 1)
-                return new DataResponse(true,"Verification in pending",{id:id,pending:true});
+                return new DataResponse(true,"Verification in pending",{verification:{id:id,pending:true}});
 
             var verification=result.rows[0];
             verification.pending = false;
-            return new DataResponse(true,"Vcs request verification successfully retrieved",verification);
+            return new DataResponse(true,"Vcs request verification successfully retrieved",{verification:verification});
         }catch(e){
             return new DataResponse(false,"Error getting vcs request verification",null,e);
         }
@@ -401,7 +401,7 @@ class DatabaseStrategy extends Database{
             if(!result)
                 return new DataResponse(false,"Vcs request in pending retrieval error");
 
-            return new DataResponse(true,"Vcs request in pending successfully retrieved",result.rows);
+            return new DataResponse(true,"Vcs request in pending successfully retrieved",{vcs_requests_pending:result.rows});
         }catch(e){
             return new DataResponse(false,"Error getting vcs request in pending",null,e);
         }
@@ -420,7 +420,7 @@ class DatabaseStrategy extends Database{
             if(!result)
                 return new DataResponse(false,"Vcs request in pending retrieval error");
 
-            return new DataResponse(true,"Vcs request in pendintsuccessfully retrieved",result.rows);
+            return new DataResponse(true,"Vcs request in pendintsuccessfully retrieved",{vcs_requests_notpending:result.rows});
         }catch(e){
             return new DataResponse(false,"Error getting vcs request in pending",null,e);
         }
