@@ -47,11 +47,11 @@ class Routing{
             //Verifica dati input
             // Verifica dati di input (presenza ed esistenza)
             if (!email || email.trim() === '') {
-                res.status(500).json({ success: false, message: 'Email Login Missing' });
+                res.status(500).json({ success: false, message: 'email Login Missing' });
                 res.end();return;
             }
             if( !password || password.trim() === ''){
-                res.status(500).json({ success: false, message: 'Password Login Missing' });
+                res.status(500).json({ success: false, message: 'password Login Missing' });
                 res.end();return;
             }
             //Verifico nr parametri correttamente
@@ -75,11 +75,11 @@ class Routing{
             //Verifica Dati Input
             // Verifica dati di input (presenza ed esistenza)
             if (!email || email.trim() === '') {
-                res.status(500).json({ success: false, message: 'Email Register Missing' });
+                res.status(500).json({ success: false, message: 'email Register Missing' });
                 res.end();return;
             }
             if( !password || password.trim() === ''){
-                res.status(500).json({ success: false, message: 'Password Register Missing' });
+                res.status(500).json({ success: false, message: 'password Register Missing' });
                 res.end();return;
             }
             //Verifico nr parametri correttamente
@@ -133,11 +133,11 @@ class Routing{
             res.end();return;
         });
 
-        //Get VCS Requests verification stuatus
+        //Get VCS Request verification stuatus
         this.#app.get(['/vcsrequest/status/:id','/vcsrequest/status/'],this.#auth.decodeToken, async (req, res) => {
             //Verifico che Non sia un Sys_admin
             if(req.jwtSysAdmin){
-                res.status(500).json({ success: false, description: 'Sys_Admin Authorization, lgo in with an User Account' });
+                res.status(500).json({ success: false, description: 'Sys_Admin Authorization, log in with an User Account' });
                 res.end();return;
             }
 
@@ -160,7 +160,7 @@ class Routing{
         });
 
         //POST VCS Request Pid
-        this.#app.post('/vcsrequests/pid',this.#auth.decodeToken, async (req, res) => {
+        this.#app.post('/vcsrequest/pid',this.#auth.decodeToken, async (req, res) => {
             //Verifico che Non sia un Sys_admin
             if(req.jwtSysAdmin){
                 res.status(500).json({ success: false, description: 'Sys_Admin Authorization, log in with an User Account' });
@@ -211,7 +211,7 @@ class Routing{
         });
 
         //POST VCS Request Marital
-        this.#app.post('/vcsrequests/marital',this.#auth.decodeToken, async (req, res) => {
+        this.#app.post('/vcsrequest/marital',this.#auth.decodeToken, async (req, res) => {
             //Verifico che Non sia un Sys_admin
             if(req.jwtSysAdmin){
                 res.status(500).json({ success: false, description: 'Sys_Admin Authorization, log in with an User Account' });
@@ -222,11 +222,11 @@ class Routing{
             //Verifica dati input
             // Verifica dati di input (presenza ed esistenza)
             if (!status || status.trim() === '') {
-                res.status(500).json({ success: false, message: 'Email Login Missing' });
+                res.status(500).json({ success: false, message: 'status Missing' });
                 res.end();return;
             }
             if (!personalIdentifier || personalIdentifier.trim() === '') {
-                res.status(500).json({ success: false, message: 'Email Login Missing' });
+                res.status(500).json({ success: false, message: 'personalIdentifier Missing' });
                 res.end();return;
             }
 
@@ -292,11 +292,11 @@ class Routing{
             var credential;
             result = await this.#scrapper.getVCSRequestPidById(id);
             if(result.success){
-                credential = await this.#oidc.createCredential(result.data,"PID");
+                credential = await this.#oidc.createCredential(result.data.vcs_request,"PID");
             }else{
                 result = await this.#scrapper.getVCSRequestMarById(id);
                 if(result.success){  
-                    var dataCredential = {status:result.data[0].status, personalIdentifier:result.data[0].personalIdentifier};
+                    var dataCredential = {status:result.data.vcs_request.status, personalIdentifier:result.data.vcs_request.personalIdentifier};
                     credential = await this.#oidc.createCredential(dataCredential,"EAA");
                 } 
             }
@@ -319,7 +319,137 @@ class Routing{
             res.end();return;
         });
 
+        //Admin all or user's get vcs request PID
+        this.#app.get(['/vcsrequest/pid/:id','/vcsrequest/pid/','/admin/vcsrequest/pid/:id','/admin/vcsrequest/pid/'],this.#auth.decodeToken, async (req, res) => {
+            const id = req.params.id // This is how you access URL variable
+            // Verifica dati di input (presenza ed esistenza)
+            if (!id || id.trim() === '') {
+                res.status(500).json(new DataResponse(false,"vcs request id is missing"));
+                res.end();return;
+            }
+            //Prendo le vcs request marital status
+            var result = await this.#scrapper.getVCSRequestPidById(id);
+            if(!result.success){
+                res.status(500).json(result);
+                res.end();return;
+            }
+            //Se è un Sys Admin, ha i permessi di ottenere in ogni caso la vcs request, se è un user deve essere la propria vcs request
+            if(!req.jwtSysAdmin){
+                if(result.data.applicant != jwtAccountId){
+                    res.status(500).json(new DataResponse(false,"vcs request is not own by account logged in"));
+                    res.end();return;
+                }
+            }
+            //Ritorno i risultati
+            res.status(200).json(result);
+            res.end();return;
+        }); 
 
+        //Admin all or user's get vcs request Marital status
+        this.#app.get(['/vcsrequest/marital/:id','/vcsrequest/marital/','/admin/vcsrequest/marital/:id','/admin/vcsrequest/marital/'],this.#auth.decodeToken, async (req, res) => {
+            const id = req.params.id // This is how you access URL variable
+            // Verifica dati di input (presenza ed esistenza)
+            if (!id || id.trim() === '') {
+                res.status(500).json(new DataResponse(false,"vcs request id is missing"));
+                res.end();return;
+            }
+            //Prendo le vcs request marital status
+            var result = await this.#scrapper.getVCSRequestMarById(id);
+            if(!result.success){
+                res.status(500).json(result);
+                res.end();return;
+            }
+            //Se è un Sys Admin, ha i permessi di ottenere in ogni caso la vcs request, se è un user deve essere la propria vcs request
+            if(!req.jwtSysAdmin){
+                if(result.data.vcs_request.applicant != jwtAccountId){
+                    res.status(500).json(new DataResponse(false,"vcs request is not own by account logged in"));
+                    res.end();return;
+                }
+            }
+            //Ritorno i risultati
+            res.status(200).json(result);
+            res.end();return;
+        }); 
+
+        //Admin make verification of a vcs request
+        this.#app.post('/admin/vcsrequest/verify',this.#auth.decodeToken, async (req, res) => {
+            //Verifico che sia un Sys_admin
+            if(!req.jwtSysAdmin){
+                res.status(500).json({ success: false, description: 'Sys_Admin Authorization required' });
+                res.end();return;
+            }
+            if(req.jwtRole!="verifier"){
+                res.status(500).json({ success: false, description: 'Sys_Admin Verifier Authorization required, check your department for optain permission' });
+                res.end();return;
+            }
+            //applicantId,status,personalIdentifier
+            const {vcsrequestId, status} = req.body;
+            //Verifica dati input
+            // Verifica dati di input (presenza ed esistenza)
+            if (!vcsrequestId || vcsrequestId.trim() === '') {
+                res.status(500).json({ success: false, message: 'vcsrequestId Missing' });
+                res.end();return;
+            }
+            if (!status || status.trim() === '') {
+                res.status(500).json({ success: false, message: 'status Missing' });
+                res.end();return;
+            }
+            //Insert vcs request verification
+            var result = await this.#scrapper.insertVCSRequestVerification(vcsrequestId,req.jwtAccountId,status);
+            if(!result.success){
+                res.status(500).json(result);
+                res.end();return;
+            }
+            //Ritorno i risultati
+            res.status(200).json(result);
+            res.end();return;
+        });
+
+        //Admin See all vcs request verified also not in pending
+        this.#app.get('/admin/vcsrequests/notpending',this.#auth.decodeToken, async (req, res) => {
+            //Verifico che sia un Sys_admin
+            if(!req.jwtSysAdmin){
+                res.status(500).json({ success: false, description: 'Sys_Admin Authorization required, log in with an Sys Admin Account' });
+                res.end();return;
+            }
+            if(req.jwtRole!="verifier"){
+                res.status(500).json({ success: false, description: 'Sys_Admin Verifier Authorization required, check your department for optain permission' });
+                res.end();return;
+            }
+
+            //Prendo le vcs request pid
+            var result = await this.#scrapper.getVCSRequestsNotPending();
+            if(!result.success){
+                res.status(500).json(result);
+                res.end();return;
+            }
+            //Ritorno i risultati
+            res.status(200).json(result);
+            res.end();return;
+        });
+
+        //Admin See all vcs request not verified also in pending
+        this.#app.get('/admin/vcsrequests/pending',this.#auth.decodeToken, async (req, res) => {
+            //Verifico che sia un Sys_admin
+            if(!req.jwtSysAdmin){
+                res.status(500).json({ success: false, description: 'Sys_Admin Authorization required, log in with an Sys Admin Account' });
+                res.end();return;
+            }
+            if(req.jwtRole!="verifier"){
+                res.status(500).json({ success: false, description: 'Sys_Admin Verifier Authorization required, check your department for optain permission' });
+                res.end();return;
+            }
+
+            //Prendo le vcs request pid
+            var result = await this.#scrapper.getVCSRequestsPending();
+            if(!result.success){
+                res.status(500).json(result);
+                res.end();return;
+            }
+            //Ritorno i risultati
+            res.status(200).json(result);
+            res.end();return;
+        });
 
     }
 
