@@ -51,19 +51,19 @@ class Routing{
             //Verifica dati input
             // Verifica dati di input (presenza ed esistenza)
             if (!email || email.trim() === '') {
-                res.status(500).json({ success: false, message: 'email Login Missing' });
+                res.status(500).json(new DataResponse(false,"email Login Missing"));
                 res.end();return;
             }
             if( !password || password.trim() === ''){
-                res.status(500).json({ success: false, message: 'password Login Missing' });
+                res.status(500).json(new DataResponse(false,"password Login Missing"));
                 res.end();return;
             }
             if(!this.#inputChecker.checkEmail(email)){
-                res.status(500).json({ success: false, message: 'email Login not valid' });
+                res.status(500).json(new DataResponse(false,"email Login not valid"));
                 res.end();return;
             }
             if(!this.#inputChecker.checkPassword(password)){
-                res.status(500).json({ success: false, message: 'password Login not valid' });
+                res.status(500).json(new DataResponse(false,"password Login not valid"));
                 res.end();return;
             }
 
@@ -88,19 +88,19 @@ class Routing{
             //Verifica Dati Input
             // Verifica dati di input (presenza ed esistenza)
             if (!email || email.trim() === '') {
-                res.status(500).json({ success: false, message: 'email Register Missing' });
+                res.status(500).json(new DataResponse(false,"email Register Missing"));
                 res.end();return;
             }
             if( !password || password.trim() === ''){
-                res.status(500).json({ success: false, message: 'password Register Missing' });
+                res.status(500).json(new DataResponse(false,"password Register Missing"));
                 res.end();return;
             }
             if(!this.#inputChecker.checkEmail(email)){
-                res.status(500).json({ success: false, message: 'email Register not valid' });
+                res.status(500).json(new DataResponse(false,"email Register not valid"));
                 res.end();return;
             }
             if(!this.#inputChecker.checkPassword(password)){
-                res.status(500).json({ success: false, message: 'password Register not valid' });
+                res.status(500).json(new DataResponse(false,"password Register not valid"));
                 res.end();return;
             }
             //Verifico nr parametri correttamente
