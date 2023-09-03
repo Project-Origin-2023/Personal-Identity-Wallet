@@ -45,6 +45,18 @@ class Routing{
     }
 
     async configEndpoint(){
+        
+        /**
+         * Endpoint for User Login.
+         * 
+         * @param {Object} req - The HTTP request object.
+         * @param {Object} res - The HTTP response object.
+         * @param {string} req.body.email - User's email address for login.
+         * @param {string} req.body.password - User's password for login.
+         * @returns {Object} An object containing the result of the login attempt. 
+         *                   If successful, it includes a token and a success message.
+         *                   If unsuccessful, it includes an error message.
+         */
         //Auth Login
         this.#app.post('/auth/login', async (req, res) => {
             const { email, password } = req.body;
@@ -82,6 +94,17 @@ class Routing{
             }
         });
 
+        /**
+         * Endpoint for User Registration.
+         * 
+         * @param {Object} req - The HTTP request object.
+         * @param {Object} res - The HTTP response object.
+         * @param {string} req.body.email - User's email address for registration.
+         * @param {string} req.body.password - User's password for registration.
+         * @returns {Object} An object containing the result of the registration attempt. 
+         *                   If successful, it includes a token and a success message.
+         *                   If unsuccessful, it includes an error message.
+         */
         //Auth Register
         this.#app.post('/auth/register', async (req, res) => {
             const { email, password } = req.body;
@@ -118,7 +141,16 @@ class Routing{
             }
         });
 
-        //Get VCS Requests Mar
+        /**
+         * Get VCS (Verification of Marital Status) Requests for User.
+         *
+         * @param {Object} req - The HTTP request object with a decoded JWT token.
+         * @param {Object} res - The HTTP response object.
+         * @returns {Object} An object containing the result of the VCS requests retrieval.
+         *                   If successful, it includes marital status requests for the user.
+         *                   If unsuccessful, it includes an error message.
+         */
+        //Get VCS Requests Marital
         this.#app.get('/vcsrequests/marital',this.#auth.decodeToken, async (req, res) => {
             //Verifico che Non sia un Sys_admin
             if(req.jwtSysAdmin){
@@ -136,6 +168,15 @@ class Routing{
             res.end();return;
         });  
         
+        /**
+         * Get VCS (Verification of Personal Identification) Requests for User.
+         *
+         * @param {Object} req - The HTTP request object with a decoded JWT token.
+         * @param {Object} res - The HTTP response object.
+         * @returns {Object} An object containing the result of the VCS requests retrieval.
+         *                   If successful, it includes personal identification requests for the user.
+         *                   If unsuccessful, it includes an error message.
+         */
         //Get VCS Requests Pid
         this.#app.get('/vcsrequests/pid',this.#auth.decodeToken, async (req, res) => {
             //Verifico che Non sia un Sys_admin
@@ -154,6 +195,16 @@ class Routing{
             res.end();return;
         });
 
+        /**
+         * Get VCS (Verification of Request Verification Status) Request Status.
+         *
+         * @param {Object} req - The HTTP request object with a decoded JWT token.
+         * @param {Object} res - The HTTP response object.
+         * @param {string} req.params.id - The ID of the VCS request whose status is to be retrieved.
+         * @returns {Object} An object containing the result of the VCS request status retrieval.
+         *                   If successful, it includes the verification status of the request.
+         *                   If unsuccessful or if the request ID is missing, it includes an error message.
+         */
         //Get VCS Request verification stuatus
         this.#app.get(['/vcsrequest/status/:id','/vcsrequest/status/'],this.#auth.decodeToken, async (req, res) => {
             //Verifico che Non sia un Sys_admin
@@ -184,6 +235,23 @@ class Routing{
             res.end();return;
         });
 
+        /**
+         * POST a VCS (Verification of Personal Identification) Request.
+         *
+         * @param {Object} req - The HTTP request object with a decoded JWT token.
+         * @param {Object} res - The HTTP response object.
+         * @param {string} req.body.currentAddress - The current address of the applicant.
+         * @param {string} req.body.dateOfBirth - The date of birth of the applicant.
+         * @param {string} req.body.familyName - The family name of the applicant.
+         * @param {string} req.body.firstName - The first name of the applicant.
+         * @param {string} req.body.gender - The gender of the applicant.
+         * @param {string} req.body.nameAndFamilyNameAtBirth - The name and family name at birth of the applicant.
+         * @param {string} req.body.personalIdentifier - The personal identifier of the applicant.
+         * @param {string} req.body.placeOfBirth - The place of birth of the applicant.
+         * @returns {Object} An object containing the result of the VCS request insertion.
+         *                   If successful, it includes a success message.
+         *                   If unsuccessful or if any required input is missing or not valid, it includes an error message.
+         */
         //POST VCS Request Pid
         this.#app.post('/vcsrequest/pid',this.#auth.decodeToken, async (req, res) => {
             //Verifico che Non sia un Sys_admin
@@ -257,6 +325,17 @@ class Routing{
             res.end();return;
         });
 
+        /**
+         * POST a VCS (Verification of Marital Status) Request.
+         *
+         * @param {Object} req - The HTTP request object with a decoded JWT token.
+         * @param {Object} res - The HTTP response object.
+         * @param {boolean} req.body.status - The marital status to be verified.
+         * @param {string} req.body.personalIdentifier - The personal identifier of the applicant.
+         * @returns {Object} An object containing the result of the VCS request insertion.
+         *                   If successful, it includes a success message.
+         *                   If unsuccessful or if any required input is missing or not valid, it includes an error message.
+         */
         //POST VCS Request Marital
         this.#app.post('/vcsrequest/marital',this.#auth.decodeToken, async (req, res) => {
             //Verifico che Non sia un Sys_admin
@@ -296,6 +375,17 @@ class Routing{
             res.end();return;
         });
 
+        /**
+         * Get VCS (Verification of Credential Status) Request Release.
+         *
+         * @param {Object} req - The HTTP request object with a decoded JWT token.
+         * @param {Object} res - The HTTP response object.
+         * @param {string} [req.query.wallet=origin] - The wallet to use for releasing the VCS request credential.
+         * @param {string} req.params.id - The ID of the VCS request whose credential is to be released.
+         * @returns {Object} An object containing the result of the VCS request credential release process.
+         *                   If successful, it includes a success message and the credential issuance data.
+         *                   If unsuccessful or if the request ID is missing, it includes an error message.
+         */
         //Get VCS Request Release
         this.#app.get(['/vcsrequest/release/:id','/vcsrequest/release/'],this.#auth.decodeToken, async (req, res) => {
             //Verifico che Non sia un Sys_admin
@@ -378,6 +468,16 @@ class Routing{
             res.end();return;
         });
 
+        /**
+         * Get a VCS (Verification of Personal Identification) Request by ID.
+         *
+         * @param {Object} req - The HTTP request object with a decoded JWT token.
+         * @param {Object} res - The HTTP response object.
+         * @param {string} req.params.id - The ID of the VCS request to retrieve.
+         * @returns {Object} An object containing the result of the VCS request retrieval.
+         *                   If successful, it includes the VCS request details.
+         *                   If unsuccessful, it includes an error message.
+         */
         //Admin all or user's get vcs request PID
         this.#app.get(['/vcsrequest/pid/:id','/vcsrequest/pid/','/admin/vcsrequest/pid/:id','/admin/vcsrequest/pid/'],this.#auth.decodeToken, async (req, res) => {
             const id = req.params.id // This is how you access URL variable
@@ -408,6 +508,16 @@ class Routing{
             res.end();return;
         }); 
 
+        /**
+         * Get a VCS (Verification of Marital Status) Request by ID.
+         *
+         * @param {Object} req - The HTTP request object with a decoded JWT token.
+         * @param {Object} res - The HTTP response object.
+         * @param {string} req.params.id - The ID of the VCS request to retrieve.
+         * @returns {Object} An object containing the result of the VCS request retrieval.
+         *                   If successful, it includes the VCS request details.
+         *                   If unsuccessful, it includes an error message.
+         */
         //Admin all or user's get vcs request Marital status
         this.#app.get(['/vcsrequest/marital/:id','/vcsrequest/marital/','/admin/vcsrequest/marital/:id','/admin/vcsrequest/marital/'],this.#auth.decodeToken, async (req, res) => {
             const id = req.params.id // This is how you access URL variable
@@ -438,6 +548,17 @@ class Routing{
             res.end();return;
         }); 
 
+        /**
+         * Admin Verify a VCS (Verification of Credential Status) Request.
+         *
+         * @param {Object} req - The HTTP request object with a decoded JWT token.
+         * @param {Object} res - The HTTP response object.
+         * @param {string} req.body.vcsrequestId - The ID of the VCS request to be verified.
+         * @param {boolean} req.body.status - The verification status (true or false).
+         * @returns {Object} An object containing the result of the VCS request verification process.
+         *                   If successful, it includes a success message.
+         *                   If unsuccessful or if any required input is missing or not valid, it includes an error message.
+         */
         //Admin make verification of a vcs request
         this.#app.post('/admin/vcsrequest/verify',this.#auth.decodeToken, async (req, res) => {
             //Verifico che sia un Sys_admin
@@ -480,6 +601,15 @@ class Routing{
             res.end();return;
         });
 
+        /**
+         * Admin Get All VCS (Verification of Credential Status) Requests that are not in pending state.
+         *
+         * @param {Object} req - The HTTP request object with a decoded JWT token.
+         * @param {Object} res - The HTTP response object.
+         * @returns {Object} An object containing the result of retrieving VCS requests that are not in pending state.
+         *                   If successful, it includes a list of VCS requests.
+         *                   If unsuccessful or if the requester is not a Sys_Admin with the "verifier" role, it includes an error message.
+         */
         //Admin See all vcs request verified also not in pending
         this.#app.get('/admin/vcsrequests/notpending',this.#auth.decodeToken, async (req, res) => {
             //Verifico che sia un Sys_admin
@@ -503,6 +633,15 @@ class Routing{
             res.end();return;
         });
 
+        /**
+         * Admin Get All VCS (Verification of Credential Status) Requests that are in pending state or not verified.
+         *
+         * @param {Object} req - The HTTP request object with a decoded JWT token.
+         * @param {Object} res - The HTTP response object.
+         * @returns {Object} An object containing the result of retrieving VCS requests that are in pending state or not verified.
+         *                   If successful, it includes a list of VCS requests.
+         *                   If unsuccessful or if the requester is not a Sys_Admin with the "verifier" role, it includes an error message.
+         */
         //Admin See all vcs request not verified also in pending
         this.#app.get('/admin/vcsrequests/pending',this.#auth.decodeToken, async (req, res) => {
             //Verifico che sia un Sys_admin
