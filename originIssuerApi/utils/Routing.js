@@ -122,7 +122,7 @@ class Routing{
         this.#app.get('/vcsrequests/marital',this.#auth.decodeToken, async (req, res) => {
             //Verifico che Non sia un Sys_admin
             if(req.jwtSysAdmin){
-                res.status(500).json({ success: false, description: 'Sys_Admin Authorization, lgo in with an User Account' });
+                res.status(500).json(new DataResponse(false,"Sys_Admin Authorization, log in with an User Account"));
                 res.end();return;
             }
             //Prendo le vcs request marital status
@@ -140,7 +140,7 @@ class Routing{
         this.#app.get('/vcsrequests/pid',this.#auth.decodeToken, async (req, res) => {
             //Verifico che Non sia un Sys_admin
             if(req.jwtSysAdmin){
-                res.status(500).json({ success: false, description: 'Sys_Admin Authorization, lgo in with an User Account' });
+                res.status(500).json(new DataResponse(false,"Sys_Admin Authorization, log in with an User Account"));
                 res.end();return;
             }
             //Prendo le vcs request pid
@@ -158,14 +158,18 @@ class Routing{
         this.#app.get(['/vcsrequest/status/:id','/vcsrequest/status/'],this.#auth.decodeToken, async (req, res) => {
             //Verifico che Non sia un Sys_admin
             if(req.jwtSysAdmin){
-                res.status(500).json({ success: false, description: 'Sys_Admin Authorization, log in with an User Account' });
+                res.status(500).json;
                 res.end();return;
             }
 
             const id = req.params.id // This is how you access URL variable
             // Verifica dati di input (presenza ed esistenza)
             if (!id || id.trim() === '') {
-                res.status(500).json({ success: false, message: 'vcs request ID Missing' });
+                res.status(500).json(new DataResponse(false,"vcs request id is missing"));
+                res.end();return;
+            }
+            if(!this.#inputChecker.checkInteger(id)){
+                res.status(500).json(new DataResponse(false,"vcs request id not valid"));
                 res.end();return;
             }
             
@@ -184,7 +188,7 @@ class Routing{
         this.#app.post('/vcsrequest/pid',this.#auth.decodeToken, async (req, res) => {
             //Verifico che Non sia un Sys_admin
             if(req.jwtSysAdmin){
-                res.status(500).json({ success: false, description: 'Sys_Admin Authorization, log in with an User Account' });
+                res.status(500).json(new DataResponse(false,"Sys_Admin Authorization, log in with an User Account"));
                 res.end();return;
             }
             //applicantId,currentAddress,dateOfBirth,familyName,firstName,gender,nameAndFamilyNameAtBirth,personalIdentifier
@@ -192,50 +196,56 @@ class Routing{
             //Verifica dati input
             // Verifica dati di input (presenza ed esistenza)
             if (!currentAddress || currentAddress.trim() === '') {
-                res.status(500).json({ success: false, message: 'Email Login Missing' });
+                res.status(500).json(new DataResponse(false,"currentAddress input Missing"));
                 res.end();return;
             }
             if (!dateOfBirth || dateOfBirth.trim() === '') {
-                res.status(500).json({ success: false, message: 'Email Login Missing' });
+                res.status(500).json(new DataResponse(false,"dateOfBirth input Missing"));
                 res.end();return;
             }
             if (!familyName || familyName.trim() === '') {
-                res.status(500).json({ success: false, message: 'Email Login Missing' });
+                res.status(500).json(new DataResponse(false,"familyName input Missing"));
                 res.end();return;
             }
             if (!firstName || firstName.trim() === '') {
-                res.status(500).json({ success: false, message: 'Email Login Missing' });
+                res.status(500).json(new DataResponse(false,"firstName input Missing"));
                 res.end();return;
             }
             if (!gender || gender.trim() === '') {
-                res.status(500).json({ success: false, message: 'Email Login Missing' });
+                res.status(500).json(new DataResponse(false,"gender input Missing"));
                 res.end();return;
             }
             if (!nameAndFamilyNameAtBirth || nameAndFamilyNameAtBirth.trim() === '') {
-                res.status(500).json({ success: false, message: 'Email Login Missing' });
+                res.status(500).json(new DataResponse(false,"nameAndFamilyNameAtBirth input Missing"));
                 res.end();return;
             }
             if (!personalIdentifier || personalIdentifier.trim() === '') {
-                res.status(500).json({ success: false, message: 'Email Login Missing' });
+                res.status(500).json(new DataResponse(false,"personalIdentifier input Missing"));
                 res.end();return;
             }
+            if (!placeOfBirth || placeOfBirth.trim() === '') {
+                res.status(500).json(new DataResponse(false,"placeOfBirth input Missing"));
+                res.end();return;
+            }
+            //Verifico nr parametri correttamente
             if(!this.#inputChecker.checkString(currentAddress)){
-                res.status(500).json({ success: false, message: 'currentAddress not valid' });
+                res.status(500).json(new DataResponse(false,"currentAddress not valid"));
                 res.end();return;
             }
             if(!this.#inputChecker.checkString(dateOfBirth)){
-                res.status(500).json({ success: false, message: 'dateOfBirth not valid' });
+                res.status(500).json(new DataResponse(false,"dateOfBirth not valid"));
                 res.end();return;
             }
             if(!this.#inputChecker.checkString(familyName)){
-                res.status(500).json({ success: false, message: 'familyName not valid' });
+                res.status(500).json(new DataResponse(false,"familyName not valid"));
                 res.end();return;
             }
             if(!this.#inputChecker.checkString(firstName)){
-                res.status(500).json({ success: false, message: 'firstName not valid' });
+                res.status(500).json(new DataResponse(false,"firstName not valid"));
                 res.end();return;
             }
             
+
             //Prendo le vcs request pid
             var result = await this.#scrapper.insertVCSRequestPid(req.jwtAccountId,currentAddress,dateOfBirth,familyName,firstName,gender,nameAndFamilyNameAtBirth,personalIdentifier,placeOfBirth);
             if(!result.success){
@@ -307,6 +317,10 @@ class Routing{
                 res.status(500).json(new DataResponse(false,"vcs request id is missing"));
                 res.end();return;
             }
+            if(!this.#inputChecker.checkInteger(id)){
+                res.status(500).json(new DataResponse(false,"vcs request id not valid"));
+                res.end();return;
+            }
             
             //Prendo la vcs request verification
             var result = await this.#scrapper.getVCSRequestVerification(id);
@@ -372,6 +386,10 @@ class Routing{
                 res.status(500).json(new DataResponse(false,"vcs request id is missing"));
                 res.end();return;
             }
+            if(!this.#inputChecker.checkInteger(id)){
+                res.status(500).json(new DataResponse(false,"vcs request id not valid"));
+                res.end();return;
+            }
             //Prendo le vcs request marital status
             var result = await this.#scrapper.getVCSRequestPidById(id);
             if(!result.success){
@@ -398,6 +416,10 @@ class Routing{
                 res.status(500).json(new DataResponse(false,"vcs request id is missing"));
                 res.end();return;
             }
+            if(!this.#inputChecker.checkInteger(id)){
+                res.status(500).json(new DataResponse(false,"vcs request id not valid"));
+                res.end();return;
+            }
             //Prendo le vcs request marital status
             var result = await this.#scrapper.getVCSRequestMarById(id);
             if(!result.success){
@@ -420,11 +442,11 @@ class Routing{
         this.#app.post('/admin/vcsrequest/verify',this.#auth.decodeToken, async (req, res) => {
             //Verifico che sia un Sys_admin
             if(!req.jwtSysAdmin){
-                res.status(500).json({ success: false, description: 'Sys_Admin Authorization required' });
+                res.status(500).json(new DataResponse(false,"Sys_Admin Authorization required, log in with an Sys Admin Account"))
                 res.end();return;
             }
             if(req.jwtRole!="verifier"){
-                res.status(500).json({ success: false, description: 'Sys_Admin Verifier Authorization required, check your department for optain permission' });
+                res.status(500).json(new DataResponse(false,"Sys_Admin Verifier Authorization required, check your department for optain permission"));
                 res.end();return;
             }
             //applicantId,status,personalIdentifier
@@ -437,6 +459,14 @@ class Routing{
             }
             if (!status || status.trim() === '') {
                 res.status(500).json({ success: false, message: 'status Missing' });
+                res.end();return;
+            }
+            if(!this.#inputChecker.checkInteger(vcsrequestId)){
+                res.status(500).json({ success: false, message: 'vcsrequestId not valid' });
+                res.end();return;
+            }
+            if(!this.#inputChecker.checkBoolean(status)){
+                res.status(500).json({ success: false, message: 'status not valid' });
                 res.end();return;
             }
             //Insert vcs request verification
