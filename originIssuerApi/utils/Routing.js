@@ -302,7 +302,7 @@ class Routing{
                 res.status(500).json(new DataResponse(false,"currentAddress not valid"));
                 res.end();return;
             }
-            if(!this.#inputChecker.checkString(dateOfBirth)){
+            if(!this.#inputChecker.checkDate(dateOfBirth)){
                 res.status(500).json(new DataResponse(false,"dateOfBirth not valid"));
                 res.end();return;
             }
@@ -426,6 +426,10 @@ class Routing{
             // Verifica se presente un wallet, se non presente imposto il wallet di default origin
             if (!wallet || wallet.trim() === '') {
                 wallet = "origin"
+            }
+            if(!this.#inputChecker.checkString(wallet)){
+                res.status(500).json(new DataResponse(false,"wallet not valid"));
+                res.end();return;
             }
 
             const id = req.params.id // This is how you access URL variable
