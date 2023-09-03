@@ -26,9 +26,12 @@ class InputChecker {
   }
 
   checkOnlyLetters(value) {
-    //const stringWithoutSpaces = value.replace(/\s/g, ''); // Rimuovi gli spazi dalla stringa
-    return this.checkString(value) && /^[A-Za-z]+$;//test(stringWithoutSpaces);
-  } 
+    // Rimuovi tutti i caratteri tranne le lettere e gli spazi vuoti
+    const stringWithoutSpecialChars = value.replace(/[^A-Za-z\s]/g, '');
+  
+    // Verifica se la stringa contiene solo lettere e spazi vuoti
+    return /^[A-Za-z\s]+$/.test(stringWithoutSpecialChars);
+  }
   
 
   checkGender(value) {

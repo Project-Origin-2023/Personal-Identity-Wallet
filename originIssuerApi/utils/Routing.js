@@ -70,6 +70,7 @@ class Routing{
                 res.status(500).json(new DataResponse(false,"password Login Missing"));
                 res.end();return;
             }
+            //Verifico nr parametri correttamente
             if(!this.#inputChecker.checkEmail(email)){
                 res.status(500).json(new DataResponse(false,"email Login not valid"));
                 res.end();return;
@@ -118,6 +119,7 @@ class Routing{
                 res.status(500).json(new DataResponse(false,"password Register Missing"));
                 res.end();return;
             }
+            //Verifico nr parametri correttamente
             if(!this.#inputChecker.checkEmail(email)){
                 res.status(500).json(new DataResponse(false,"email Register not valid"));
                 res.end();return;
@@ -304,16 +306,32 @@ class Routing{
                 res.status(500).json(new DataResponse(false,"dateOfBirth not valid"));
                 res.end();return;
             }
-            if(!this.#inputChecker.checkString(familyName)){
+            if(!this.#inputChecker.checkName(familyName)){
                 res.status(500).json(new DataResponse(false,"familyName not valid"));
                 res.end();return;
             }
-            if(!this.#inputChecker.checkString(firstName)){
+            if(!this.#inputChecker.checkName(firstName)){
                 res.status(500).json(new DataResponse(false,"firstName not valid"));
                 res.end();return;
             }
-            
 
+            if(!this.#inputChecker.checkGender(gender)){
+                res.status(500).json(new DataResponse(false,"gender not valid"));  
+                res.end();return;
+            }
+            if(!this.#inputChecker.checkName(nameAndFamilyNameAtBirth)){
+                res.status(500).json(new DataResponse(false,"nameAndFamilyNameAtBirth not valid"));
+                res.end();return;
+            }
+            if(!this.#inputChecker.checkString(personalIdentifier)){
+                res.status(500).json(new DataResponse(false,"personalIdentifier not valid"));
+                res.end();return;
+            }
+            if(!this.#inputChecker.checkString(placeOfBirth)){
+                res.status(500).json(new DataResponse(false,"placeOfBirth not valid"));
+                res.end();return;
+            }
+            
             //Prendo le vcs request pid
             var result = await this.#scrapper.insertVCSRequestPid(req.jwtAccountId,currentAddress,dateOfBirth,familyName,firstName,gender,nameAndFamilyNameAtBirth,personalIdentifier,placeOfBirth);
             if(!result.success){
@@ -348,19 +366,28 @@ class Routing{
             //Verifica dati input
             // Verifica dati di input (presenza ed esistenza)
             if (!status || status.trim() === '') {
-                res.status(500).json({ success: false, message: 'status Missing' });
+                res.status(500).json(new DataResponse(false,"status Missing"));
                 res.end();return;
             }
             if (!personalIdentifier || personalIdentifier.trim() === '') {
-                res.status(500).json({ success: false, message: 'personalIdentifier Missing' });
+                res.status(500).json(new DataResponse(false,"personalIdentifier Missing"));
                 res.end();return;
             }
             if(!this.#inputChecker.checkBoolean(status)){
-                res.status(500).json({ success: false, message: 'status not valid' });
+                res.status(500).json(new DataResponse(false,"status not valid"));
                 res.end();return;
             }
             if(!this.#inputChecker.checkString(personalIdentifier)){
-                res.status(500).json({ success: false, message: 'personalIdentifier not valid' });
+                res.status(500).json(new DataResponse(false,"personalIdentifier not valid"));
+                res.end();return;
+            }
+            //Verifico nr parametri correttamente
+            if(!this.#inputChecker.checkString(personalIdentifier)){
+                res.status(500).json(new DataResponse(false,"personalIdentifier not valid"));
+                res.end();return;
+            }
+            if(!this.#inputChecker.checkBoolean(status)){
+                res.status(500).json(new DataResponse(false,"status not valid"));
                 res.end();return;
             }
 
@@ -407,6 +434,7 @@ class Routing{
                 res.status(500).json(new DataResponse(false,"vcs request id is missing"));
                 res.end();return;
             }
+            //Verifico nr parametri correttamente
             if(!this.#inputChecker.checkInteger(id)){
                 res.status(500).json(new DataResponse(false,"vcs request id not valid"));
                 res.end();return;
@@ -486,6 +514,7 @@ class Routing{
                 res.status(500).json(new DataResponse(false,"vcs request id is missing"));
                 res.end();return;
             }
+            //Verifico nr parametri correttamente
             if(!this.#inputChecker.checkInteger(id)){
                 res.status(500).json(new DataResponse(false,"vcs request id not valid"));
                 res.end();return;
@@ -526,6 +555,7 @@ class Routing{
                 res.status(500).json(new DataResponse(false,"vcs request id is missing"));
                 res.end();return;
             }
+            //Verifico nr parametri correttamente
             if(!this.#inputChecker.checkInteger(id)){
                 res.status(500).json(new DataResponse(false,"vcs request id not valid"));
                 res.end();return;
@@ -582,6 +612,7 @@ class Routing{
                 res.status(500).json({ success: false, message: 'status Missing' });
                 res.end();return;
             }
+            //Verifico nr parametri correttamente
             if(!this.#inputChecker.checkInteger(vcsrequestId)){
                 res.status(500).json({ success: false, message: 'vcsrequestId not valid' });
                 res.end();return;
@@ -614,11 +645,11 @@ class Routing{
         this.#app.get('/admin/vcsrequests/notpending',this.#auth.decodeToken, async (req, res) => {
             //Verifico che sia un Sys_admin
             if(!req.jwtSysAdmin){
-                res.status(500).json({ success: false, description: 'Sys_Admin Authorization required, log in with an Sys Admin Account' });
+                res.status(500).json(new DataResponse(false,"Sys_Admin Authorization required, log in with an Sys Admin Account"));
                 res.end();return;
             }
             if(req.jwtRole!="verifier"){
-                res.status(500).json({ success: false, description: 'Sys_Admin Verifier Authorization required, check your department for optain permission' });
+                res.status(500).json(new DataResponse(false,"Sys_Admin Verifier Authorization required, check your department for optain permission"));
                 res.end();return;
             }
 
@@ -646,11 +677,11 @@ class Routing{
         this.#app.get('/admin/vcsrequests/pending',this.#auth.decodeToken, async (req, res) => {
             //Verifico che sia un Sys_admin
             if(!req.jwtSysAdmin){
-                res.status(500).json({ success: false, description: 'Sys_Admin Authorization required, log in with an Sys Admin Account' });
+                res.status(500).json(new DataResponse(false,"Sys_Admin Authorization required, log in with an Sys Admin Account"));
                 res.end();return;
             }
             if(req.jwtRole!="verifier"){
-                res.status(500).json({ success: false, description: 'Sys_Admin Verifier Authorization required, check your department for optain permission' });
+                res.status(500).json(new DataResponse(false,"Sys_Admin Verifier Authorization required, check your department for optain permission"));
                 res.end();return;
             }
 
