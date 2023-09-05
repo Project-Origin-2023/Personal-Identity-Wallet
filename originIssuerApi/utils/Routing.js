@@ -366,28 +366,21 @@ class Routing{
             //Verifica dati input
             // Verifica dati di input (presenza ed esistenza)
             if (!status || status.trim() === '') {
-                res.status(500).json(new DataResponse(false,"status Missing"));
+                res.status(500).json(new DataResponse(false,"maritalstatus Missing"));
                 res.end();return;
             }
             if (!personalIdentifier || personalIdentifier.trim() === '') {
                 res.status(500).json(new DataResponse(false,"personalIdentifier Missing"));
                 res.end();return;
             }
-            if(!this.#inputChecker.checkBoolean(status)){
-                res.status(500).json(new DataResponse(false,"status not valid"));
-                res.end();return;
-            }
-            if(!this.#inputChecker.checkString(personalIdentifier)){
-                res.status(500).json(new DataResponse(false,"personalIdentifier not valid"));
-                res.end();return;
-            }
+            
             //Verifico nr parametri correttamente
             if(!this.#inputChecker.checkString(personalIdentifier)){
                 res.status(500).json(new DataResponse(false,"personalIdentifier not valid"));
                 res.end();return;
             }
-            if(!this.#inputChecker.checkBoolean(status)){
-                res.status(500).json(new DataResponse(false,"status not valid"));
+            if(!this.#inputChecker.checkMaritalStatus(status)){
+                res.status(500).json(new DataResponse(false,"maritalstatus not valid"));
                 res.end();return;
             }
 
