@@ -1,5 +1,5 @@
+import React, { useState } from 'react';
 import axios from 'axios';
-import { useState } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -11,17 +11,16 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import PropTypes from 'prop-types'; // Importa PropTypes
 
-function RegisterView() { // Aggiungi handleRegister alle props
+
+export default function Register() {
+
   const [familyName, setFamilyName] = useState('');
   const [firstName, setFirstName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const defaultTheme = createTheme();
-
-  const handleSubmit = async (e) => { // Rinomina handleRegister a handleSubmit
+  const handleRegister = async (e) => {
     e.preventDefault();
     try {
       const response = await axios.post('http://localhost:19101/register', {
@@ -38,6 +37,8 @@ function RegisterView() { // Aggiungi handleRegister alle props
       console.error(error);
     }
   };
+
+  const defaultTheme = createTheme();
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -57,7 +58,7 @@ function RegisterView() { // Aggiungi handleRegister alle props
           <Typography component="h1" variant="h5">
             Registrazione Nuovo Utente
           </Typography>
-          <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+          <Box component="form" noValidate onSubmit={handleRegister} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
@@ -127,9 +128,3 @@ function RegisterView() { // Aggiungi handleRegister alle props
     </ThemeProvider>
   );
 }
-
-RegisterView.propTypes = {
-  handleRegister: PropTypes.func.isRequired, // Definisci handleRegister come PropTypes
-};
-
-export default RegisterView;

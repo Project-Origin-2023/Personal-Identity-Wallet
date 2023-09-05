@@ -1,46 +1,35 @@
 import { useState } from 'react';
-import axios from 'axios';
-import LoginModel from '../model/login_model'; // Assicurati che il tuo percorso sia corretto
-import LoginView from '../view/login_view'; // Assicurati che il tuo percorso sia corretto
-import PropTypes from 'prop-types';
+import LoginViewModel from '../viewmodel/login_viewmodel'; // Assumi che LoginViewModel sia stato importato correttamente
+import LoginView from '../view/login_view';
 
 const LoginController = ({ setToken }) => {
-  const [model] = useState(new LoginModel());
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const viewModel = new LoginViewModel();
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    try {
-      const response = await axios.post('http://api.issuer.origin/auth/login', {
-        email: model.getEmail(),
-        password: model.getPassword(),
-      });
+    const response = await viewModel.login(email, password);
 
-      if (response.data.success) {
-        setToken(response.data.token);
-        alert(response.data.message);
-        window.location.reload(true);
-        window.location.href = '/';
-      } else {
-        alert(response.data.message);
-      }
-    } catch (error) {
-      console.log(error);
+    if (response.success) {
+      setToken(response.token);
+      alert(response.message);
+      window.location.reload(true);
+      window.location.href = '/';
+    } else {
+      alert(response.message);
     }
   };
 
   return (
     <LoginView
-      email={model.getEmail()}
-      password={model.getPassword()}
-      setEmail={model.setEmail.bind(model)}
-      setPassword={model.setPassword.bind(model)}
+      email={email}
+      password={password}
+      setEmail={setEmail}
+      setPassword={setPassword}
       handleLogin={handleLogin}
     />
   );
-};
-
-LoginController.propTypes = {
-  setToken: PropTypes.func.isRequired,
 };
 
 export default LoginController;
