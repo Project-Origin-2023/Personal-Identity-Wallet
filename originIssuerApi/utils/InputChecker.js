@@ -58,7 +58,7 @@ class InputChecker {
   }
   
   checkMaritalStatus(value) {
-    return value === 'canceled' || value === 'married' || value === 'divorced' || value === 'widowed' || value === 'separated' || value === 'other' || value === 'cohabitant';
+    return value === 'canceled' || value === 'married' || value === 'divorced' || value === 'widower' || value === 'separate' || value === 'other' || value === 'cohabitant';
   }
   checkGender(value) {
     return value === 'M' || value === 'F';
