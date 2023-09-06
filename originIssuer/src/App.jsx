@@ -9,8 +9,10 @@ import Navbar from './components/Navbar';
 import Home from './components/Home';
 import RegisterController from './controller/register_controller'
 import LoginController from './controller/login_controller';
-import CredentialRequest from './components/CredentialRequest';
+//import CredentialRequest from './components/CredentialRequest';
 import ViewCredentialRequestsController from './controller/credentialRequest_controller';
+import ViewCredentialRequests from './components/ViewCredentialRequests';
+import CredentialRequestPIDController from './controller/request_pid_controller';
 import useToken from './components/useToken';
 
 function App() {
@@ -25,8 +27,9 @@ function App() {
           <Route path="/"  element={<Home />} />
           <Route path="/Register" element={<RegisterController />} />
           <Route path="/Login" element={<LoginController setToken={setToken} />} />
-          <Route path="/CredentialRequestPID" element={<CredentialRequest type="PID" token={token} />} />
           <Route path="/ViewCredentialRequests" element={<ViewCredentialRequestsController type="ALL" token={token}/>} />
+          <Route path="/CredentialRequestPID" element={<CredentialRequestPIDController type="PID" setToken={setToken} />} />
+          <Route path="/ViewCredentialRequests" element={<ViewCredentialRequests type="ALL" token={token}/>} />
         </Routes>
       </AuthProvider>
     </Router>
