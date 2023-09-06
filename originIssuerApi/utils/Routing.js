@@ -63,26 +63,24 @@ class Routing{
             //Verifica dati input
             // Verifica dati di input (presenza ed esistenza)
             if (!email || email.trim() === '') {
-                res.status(500).json(new DataResponse(false,"email Login Missing"));
+                res.status(500).json(new DataResponse(false,"email Missing"));
                 res.end();return;
             }
             if( !password || password.trim() === ''){
-                res.status(500).json(new DataResponse(false,"password Login Missing"));
+                res.status(500).json(new DataResponse(false,"password Missing"));
                 res.end();return;
             }
             //Verifico nr parametri correttamente
             if(!this.#inputChecker.checkEmail(email)){
-                res.status(500).json(new DataResponse(false,"email Login not valid"));
+                res.status(500).json(new DataResponse(false,"email format not valid"));
                 res.end();return;
             }
             if(!this.#inputChecker.checkPassword(password)){
-                res.status(500).json(new DataResponse(false,"password Login not valid"));
+                res.status(500).json(new DataResponse(false,"password format not valid"));
                 res.end();return;
             }
 
-            //Verifico nr parametri correttamente
-            //TODO
-
+            //Effettuo Richieste
             var response = await this.#auth.login(email,password)
             if(!response.success){
                 res.status(500).json(response);
@@ -112,20 +110,20 @@ class Routing{
             //Verifica Dati Input
             // Verifica dati di input (presenza ed esistenza)
             if (!email || email.trim() === '') {
-                res.status(500).json(new DataResponse(false,"email Register Missing"));
+                res.status(500).json(new DataResponse(false,"email Missing"));
                 res.end();return;
             }
             if( !password || password.trim() === ''){
-                res.status(500).json(new DataResponse(false,"password Register Missing"));
+                res.status(500).json(new DataResponse(false,"password Missing"));
                 res.end();return;
             }
             //Verifico nr parametri correttamente
             if(!this.#inputChecker.checkEmail(email)){
-                res.status(500).json(new DataResponse(false,"email Register not valid"));
+                res.status(500).json(new DataResponse(false,"email format not valid"));
                 res.end();return;
             }
             if(!this.#inputChecker.checkPassword(password)){
-                res.status(500).json(new DataResponse(false,"password Register not valid"));
+                res.status(500).json(new DataResponse(false,"password format not valid"));
                 res.end();return;
             }
             //Verifico nr parametri correttamente
@@ -218,11 +216,11 @@ class Routing{
             const id = req.params.id // This is how you access URL variable
             // Verifica dati di input (presenza ed esistenza)
             if (!id || id.trim() === '') {
-                res.status(500).json(new DataResponse(false,"vcs request id is missing"));
+                res.status(500).json(new DataResponse(false,"id Missing"));
                 res.end();return;
             }
             if(!this.#inputChecker.checkInteger(id)){
-                res.status(500).json(new DataResponse(false,"vcs request id not valid"));
+                res.status(500).json(new DataResponse(false,"id format not valid"));
                 res.end();return;
             }
             
@@ -266,69 +264,69 @@ class Routing{
             //Verifica dati input
             // Verifica dati di input (presenza ed esistenza)
             if (!currentAddress || currentAddress.trim() === '') {
-                res.status(500).json(new DataResponse(false,"currentAddress input Missing"));
+                res.status(500).json(new DataResponse(false,"currentAddress Missing"));
                 res.end();return;
             }
             if (!dateOfBirth || dateOfBirth.trim() === '') {
-                res.status(500).json(new DataResponse(false,"dateOfBirth input Missing"));
+                res.status(500).json(new DataResponse(false,"dateOfBirth Missing"));
                 res.end();return;
             }
             if (!familyName || familyName.trim() === '') {
-                res.status(500).json(new DataResponse(false,"familyName input Missing"));
+                res.status(500).json(new DataResponse(false,"familyName Missing"));
                 res.end();return;
             }
             if (!firstName || firstName.trim() === '') {
-                res.status(500).json(new DataResponse(false,"firstName input Missing"));
+                res.status(500).json(new DataResponse(false,"firstName Missing"));
                 res.end();return;
             }
             if (!gender || gender.trim() === '') {
-                res.status(500).json(new DataResponse(false,"gender input Missing"));
+                res.status(500).json(new DataResponse(false,"gender Missing"));
                 res.end();return;
             }
             if (!nameAndFamilyNameAtBirth || nameAndFamilyNameAtBirth.trim() === '') {
-                res.status(500).json(new DataResponse(false,"nameAndFamilyNameAtBirth input Missing"));
+                res.status(500).json(new DataResponse(false,"nameAndFamilyNameAtBirth Missing"));
                 res.end();return;
             }
             if (!personalIdentifier || personalIdentifier.trim() === '') {
-                res.status(500).json(new DataResponse(false,"personalIdentifier input Missing"));
+                res.status(500).json(new DataResponse(false,"personalIdentifier Missing"));
                 res.end();return;
             }
             if (!placeOfBirth || placeOfBirth.trim() === '') {
-                res.status(500).json(new DataResponse(false,"placeOfBirth input Missing"));
+                res.status(500).json(new DataResponse(false,"placeOfBirth Missing"));
                 res.end();return;
             }
             //Verifico nr parametri correttamente
             if(!this.#inputChecker.checkString(currentAddress)){
-                res.status(500).json(new DataResponse(false,"currentAddress not valid"));
+                res.status(500).json(new DataResponse(false,"currentAddress format not valid"));
                 res.end();return;
             }
             if(!this.#inputChecker.checkDate(dateOfBirth)){
-                res.status(500).json(new DataResponse(false,"dateOfBirth not valid"));
+                res.status(500).json(new DataResponse(false,"dateOfBirth format not valid"));
                 res.end();return;
             }
             if(!this.#inputChecker.checkName(familyName)){
-                res.status(500).json(new DataResponse(false,"familyName not valid"));
+                res.status(500).json(new DataResponse(false,"familyName format not valid"));
                 res.end();return;
             }
             if(!this.#inputChecker.checkName(firstName)){
-                res.status(500).json(new DataResponse(false,"firstName not valid"));
+                res.status(500).json(new DataResponse(false,"firstName format not valid"));
                 res.end();return;
             }
 
             if(!this.#inputChecker.checkGender(gender)){
-                res.status(500).json(new DataResponse(false,"gender not valid"));  
+                res.status(500).json(new DataResponse(false,"gender format not valid"));  
                 res.end();return;
             }
             if(!this.#inputChecker.checkName(nameAndFamilyNameAtBirth)){
-                res.status(500).json(new DataResponse(false,"nameAndFamilyNameAtBirth not valid"));
+                res.status(500).json(new DataResponse(false,"nameAndFamilyNameAtBirth format not valid"));
                 res.end();return;
             }
             if(!this.#inputChecker.checkString(personalIdentifier)){
-                res.status(500).json(new DataResponse(false,"personalIdentifier not valid"));
+                res.status(500).json(new DataResponse(false,"personalIdentifier format not valid"));
                 res.end();return;
             }
             if(!this.#inputChecker.checkString(placeOfBirth)){
-                res.status(500).json(new DataResponse(false,"placeOfBirth not valid"));
+                res.status(500).json(new DataResponse(false,"placeOfBirth format not valid"));
                 res.end();return;
             }
             
@@ -376,11 +374,11 @@ class Routing{
             
             //Verifico nr parametri correttamente
             if(!this.#inputChecker.checkString(personalIdentifier)){
-                res.status(500).json(new DataResponse(false,"personalIdentifier not valid"));
+                res.status(500).json(new DataResponse(false,"personalIdentifier format not valid"));
                 res.end();return;
             }
             if(!this.#inputChecker.checkMaritalStatus(status)){
-                res.status(500).json(new DataResponse(false,"maritalstatus not valid"));
+                res.status(500).json(new DataResponse(false,"maritalstatus format not valid"));
                 res.end();return;
             }
 
@@ -421,19 +419,19 @@ class Routing{
                 wallet = "origin"
             }
             if(!this.#inputChecker.checkString(wallet)){
-                res.status(500).json(new DataResponse(false,"wallet not valid"));
+                res.status(500).json(new DataResponse(false,"wallet format not valid"));
                 res.end();return;
             }
 
             const id = req.params.id // This is how you access URL variable
             // Verifica dati di input (presenza ed esistenza)
             if (!id || id.trim() === '') {
-                res.status(500).json(new DataResponse(false,"vcs request id is missing"));
+                res.status(500).json(new DataResponse(false,"id Missing"));
                 res.end();return;
             }
             //Verifico nr parametri correttamente
             if(!this.#inputChecker.checkInteger(id)){
-                res.status(500).json(new DataResponse(false,"vcs request id not valid"));
+                res.status(500).json(new DataResponse(false,"id format not valid"));
                 res.end();return;
             }
             
@@ -508,12 +506,12 @@ class Routing{
             const id = req.params.id // This is how you access URL variable
             // Verifica dati di input (presenza ed esistenza)
             if (!id || id.trim() === '') {
-                res.status(500).json(new DataResponse(false,"vcs request id is missing"));
+                res.status(500).json(new DataResponse(false,"id Missing"));
                 res.end();return;
             }
             //Verifico nr parametri correttamente
             if(!this.#inputChecker.checkInteger(id)){
-                res.status(500).json(new DataResponse(false,"vcs request id not valid"));
+                res.status(500).json(new DataResponse(false,"id format not valid"));
                 res.end();return;
             }
             //Prendo le vcs request marital status
@@ -549,12 +547,12 @@ class Routing{
             const id = req.params.id // This is how you access URL variable
             // Verifica dati di input (presenza ed esistenza)
             if (!id || id.trim() === '') {
-                res.status(500).json(new DataResponse(false,"vcs request id is missing"));
+                res.status(500).json(new DataResponse(false,"id Missing"));
                 res.end();return;
             }
             //Verifico nr parametri correttamente
             if(!this.#inputChecker.checkInteger(id)){
-                res.status(500).json(new DataResponse(false,"vcs request id not valid"));
+                res.status(500).json(new DataResponse(false,"id format not valid"));
                 res.end();return;
             }
             //Prendo le vcs request marital status
@@ -611,11 +609,11 @@ class Routing{
             }
             //Verifico nr parametri correttamente
             if(!this.#inputChecker.checkInteger(vcsrequestId)){
-                res.status(500).json({ success: false, message: 'vcsrequestId not valid' });
+                res.status(500).json({ success: false, message: 'vcsrequestId format not valid' });
                 res.end();return;
             }
             if(!this.#inputChecker.checkBoolean(status)){
-                res.status(500).json({ success: false, message: 'status not valid' });
+                res.status(500).json({ success: false, message: 'status format not valid' });
                 res.end();return;
             }
             //Insert vcs request verification
