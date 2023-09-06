@@ -15,7 +15,7 @@ const LoginController = ({ setToken }) => {
       setToken(response.token);
       alert(response.message);
       window.location.reload(true);
-      window.location.href = '/';
+      window.location.href = '/home'; //prova di reindirezzamento
     } else {
       alert(response.message);
     }

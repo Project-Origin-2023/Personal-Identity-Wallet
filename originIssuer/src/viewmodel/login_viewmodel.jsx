@@ -20,12 +20,9 @@ class LoginViewModel {
   
       
     } catch (error) {
-      console.error(error);
-      console.log("errore", email, password)
-      return {
-        success: false,
-        message: 'Errore durante il tentativo di accesso.',
-      };
+      console.error(error); //prova 
+      console.log("errore", email, password) //prova
+      return error;
     }
   }
 }
