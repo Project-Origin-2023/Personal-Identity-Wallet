@@ -1,9 +1,9 @@
 import  { useState } from 'react';
-import VCSRequestViewModel from '../viewmodel/request_pid_viewmodel'; // Assumi che VCSRequestViewModel sia stato importato correttamente
-import CredentialRequestPIDView from '../view/request_pid_view';
+import VCSRequestViewModel from '../viewmodel/request_marital_viewmodel'; // Assumi che VCSRequestViewModel sia stato importato correttamente
+import CredentialRequestMaritalView from '../view/request_marital_view';
 
-const CredentialRequestPIDController = () => {
-  const [pidData, setPIDData] = useState({
+const CredentialRequestMaritalController = () => {
+  const [maritalData, setMaritalData] = useState({ //da sistemare
     vcs_request: 0,
     currentAddress: '',
     dateOfBirth: '',
@@ -22,7 +22,7 @@ const CredentialRequestPIDController = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const response = await viewModel.requestVCS(pidData, jwtToken);
+    const response = await viewModel.requestVCS(maritalData, jwtToken);
 
     if (response.success) {
       alert(response.message);
@@ -33,13 +33,13 @@ const CredentialRequestPIDController = () => {
   };
 
   return (
-    <CredentialRequestPIDView
-      pidData={pidData}
-      setPIDData={setPIDData}
+    <CredentialRequestMaritalView
+      maritalData={maritalData}
+      setMaritalData={setMaritalData}
       jwtToken={jwtToken}
       handleSubmit={handleSubmit}
     />
   );
 };
 
-export default CredentialRequestPIDController;
+export default CredentialRequestMaritalController;
