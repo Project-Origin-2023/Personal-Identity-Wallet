@@ -13,6 +13,7 @@ import LoginController from './controller/login_controller';
 import ViewCredentialRequestsController from './controller/credentialRequest_controller';
 import ViewCredentialRequests from './components/ViewCredentialRequests';
 import CredentialRequestPIDController from './controller/request_pid_controller';
+import CredentialReleaseController from './controller/credentialRelease_controller';
 import useToken from './components/useToken';
 
 function App() {
@@ -30,6 +31,7 @@ function App() {
           <Route path="/ViewCredentialRequests" element={<ViewCredentialRequestsController type="ALL" token={token}/>} />
           <Route path="/CredentialRequestPID" element={<CredentialRequestPIDController type="PID" setToken={setToken} />} />
           <Route path="/ViewCredentialRequests" element={<ViewCredentialRequests type="ALL" token={token}/>} />
+          <Route path="/CredentialRelease" element={<CredentialReleaseController token={token}/>} />
         </Routes>
       </AuthProvider>
     </Router>
