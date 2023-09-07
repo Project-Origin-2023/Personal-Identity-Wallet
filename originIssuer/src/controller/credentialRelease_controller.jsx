@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import CredentialReleaseView from '../components/CredentialReleaseView';
-import CredentialReleaseViewModel from '../viewmodel/CredentialReleaseViewModel'; // Assumi che il ViewModel sia stato importato correttamente
+import { useState, useEffect } from 'react';
+import CredentialReleaseView from '../view/credentialRelease_view';
+import CredentialReleaseViewModel from '../viewmodel/credentialRelease_viewmodel'; // Assumi che il ViewModel sia stato importato correttamente
 
 const CredentialReleaseController = () => {
   const [credentialData, setCredentialData] = useState({

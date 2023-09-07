@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import ViewCredentialRequestsViewModel from '../viewmodel/credentialRequest_viewmodel';
-import ViewCredentialRequestsView from '../view/credentialRequest_view';
+import credentialPendingViewModel from '../viewmodel/credentialPending_viewmodel';
+import credentialPendingView from '../view/credentialPending_view';
 
-const ViewCredentialRequestsController = ({ token }) => {
-  const viewModel = new ViewCredentialRequestsViewModel();
+const credentialPendingController = ({ token }) => {
+  const viewModel = new credentialPendingViewModel();
   const [credentialData, setCredentialData] = useState([]);
   const [selectedRecord, setSelectedRecord] = useState(null);
 
@@ -26,7 +26,7 @@ const ViewCredentialRequestsController = ({ token }) => {
   };
 
   return (
-    <ViewCredentialRequestsView
+    <credentialPendingView
       credentialData={credentialData}
       selectedRecord={selectedRecord}
       handleRecordClick={handleRecordClick}
@@ -35,8 +35,8 @@ const ViewCredentialRequestsController = ({ token }) => {
   );
 };
 
-ViewCredentialRequestsController.propTypes = {
+credentialPendingController.propTypes = {
   token: PropTypes.string.isRequired,
 };
 
-export default ViewCredentialRequestsController;
+export default credentialPendingController;
