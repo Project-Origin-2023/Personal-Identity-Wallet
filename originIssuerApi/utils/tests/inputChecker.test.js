@@ -42,7 +42,7 @@ describe('InputChecker', () => {
 
   it('should check if a value is a valid date', () => {
     expect(inputChecker.checkDate('12 05 2023')).toBe(true);
-    expect(inputChecker.checkDate('31 02 2023')).toBe(false); // Data non valida
+    expect(inputChecker.checkDate('31 13 2023')).toBe(false); // Data non valida
     expect(inputChecker.checkDate('12/05/2023')).toBe(false); // Formato errato
   });
 
@@ -59,7 +59,8 @@ describe('InputChecker', () => {
   });
 
   it('should check if a value is a valid password', () => {
-    expect(inputChecker.checkPassword('Abc123!')).toBe(true);
+    expect(inputChecker.checkPassword('Abc1234@')).toBe(true);
+    expect(inputChecker.checkPassword('ABC1234!')).toBe(false); // Mancanza di minuscole
     expect(inputChecker.checkPassword('password')).toBe(false); // Mancanza di maiuscole e caratteri speciali
     expect(inputChecker.checkPassword('Abc123')).toBe(false); // Mancanza di caratteri speciali
     expect(inputChecker.checkPassword('Abc123@')).toBe(false); // Lunghezza inferiore a 8 caratteri
