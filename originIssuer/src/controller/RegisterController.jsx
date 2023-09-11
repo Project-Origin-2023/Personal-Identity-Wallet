@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import RegisterViewModel from '../viewmodel/register_viewmodel'; // Assumi che LoginViewModel sia stato importato correttamente
-import RegisterView from '../view/register_view.jsx';
+import RegisterViewModel from '../viewmodel/RegisterViewModel'; // Assumi che LoginViewModel sia stato importato correttamente
+import RegisterView from '../view/RegisterView';
 
 
 const RegisterController = ({ setToken }) => {
@@ -15,7 +15,7 @@ const RegisterController = ({ setToken }) => {
       if (response.success) {
         setToken(response.data.token);
         window.location.reload(true);
-        window.location.href = '/home'; //prova di reindirezzamento
+        window.location.href = '/'; //prova di reindirezzamento
       }
     };
   

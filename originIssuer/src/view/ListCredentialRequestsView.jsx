@@ -41,7 +41,7 @@ const TableBody = styled('tbody')({
 });
 
 
-const ViewCredentialRequestsView = ({ vcs_requestsPID, vcs_requestsMarital}) => {
+const ListCredentialRequestsView = ({ vcs_requestsPID, vcs_requestsMarital}) => {
  return(
   <ViewRequestsContainer>
     <Title variant="h6">Visualizzazione Richieste Verifiable Credentials PID</Title>
@@ -64,7 +64,7 @@ const ViewCredentialRequestsView = ({ vcs_requestsPID, vcs_requestsMarital}) => 
               <td>
               <Grid container justifyContent="flex-end">
                 <Grid item>
-                  <Button color="inherit" component={Link} to={'/ViewCredentialRequestPID?id=' + rowData.id}>Dettaglio</Button>
+                  <Button color="inherit" component={Link} to={'/DetailsCredentialRequestPID?id=' + rowData.id}>Dettaglio</Button>
                 </Grid>
               </Grid>
               </td>
@@ -95,7 +95,7 @@ const ViewCredentialRequestsView = ({ vcs_requestsPID, vcs_requestsMarital}) => 
               <td>
               <Grid container justifyContent="flex-end">
                 <Grid item>
-                  <Button color="inherit" component={Link} to={'/ViewCredentialRequestMarital?id=' + rowData.id}>Dettaglio</Button>
+                  <Button color="inherit" component={Link} to={'/DetailCredentialRequestMarital?id=' + rowData.id}>Dettaglio</Button>
                 </Grid>
               </Grid>
               </td>
@@ -110,9 +110,9 @@ const ViewCredentialRequestsView = ({ vcs_requestsPID, vcs_requestsMarital}) => 
   );
 };
 
-ViewCredentialRequestsView.propTypes = {
+ListCredentialRequestsView.propTypes = {
   vcs_requestsPID: PropTypes.array.isRequired,
   vcs_requestsMarital: PropTypes.array.isRequired,
 };
 
-export default ViewCredentialRequestsView;
+export default ListCredentialRequestsView;

@@ -7,14 +7,12 @@ import { BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 
 import Navbar from './components/Navbar';
 import Home from './components/Home';
-import RegisterController from './controller/register_controller'
-import LoginController from './controller/login_controller';
-//import CredentialRequest from './components/CredentialRequest';
-import ViewCredentialRequestsController from './controller/credentialRequest_controller';
-import ViewCredentialRequests from './components/ViewCredentialRequests';
-import CredentialRequestPIDController from './controller/request_pid_controller';
-import CredentialRequestMaritalController from './controller/request_marital_controller';
-import CredentialReleaseController from './controller/credentialRelease_controller';
+import RegisterController from './controller/RegisterController'
+import LoginController from './controller/LoginController';
+import ListCredentialRequestsController from './controller/ListCredentialRequestsController';
+import CredentialRequestPIDController from './controller/CredentialRequestPIDController';
+import CredentialRequestMaritalController from './controller/CredentialRequestPIDController';
+import DetailCredentialRequestPIDController from './controller/DetailCredentialRequestPIDController'
 import useToken from './components/useToken';
 
 function App() {
@@ -31,8 +29,8 @@ function App() {
           <Route path="/Login" element={<LoginController setToken={setToken} />} />
           <Route path="/CredentialRequestPID" element={<CredentialRequestPIDController token={token} />} />
           <Route path="/CredentialRequestMarital" element={<CredentialRequestMaritalController token={token} />} />
-          <Route path="/ViewCredentialRequests" element={<ViewCredentialRequestsController token={token}/>} />
-          <Route path="/CredentialRelease" element={<CredentialReleaseController token={token}/>} />
+          <Route path="/ListCredentialRequests" element={<ListCredentialRequestsController token={token}/>} />
+          <Route path="/DetailsCredentialRequestPID" element={<DetailCredentialRequestPIDController token={token}/>} />
         </Routes>
       </AuthProvider>
     </Router>

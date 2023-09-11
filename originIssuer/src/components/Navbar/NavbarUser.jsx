@@ -15,7 +15,7 @@ function NavbarUser({ setToken }) {
         <Button color="inherit" component={Link} to="/">Home</Button>
         <Button color="inherit" component={Link} to="/CredentialRequestPID">Richiesta VC PID</Button>
         <Button color="inherit" component={Link} to="/CredentialRequestMarital">Richiesta VC Marital Status</Button>
-        <Button color="inherit" component={Link} to="/ViewCredentialRequests">Visualizzazione richieste</Button>
+        <Button color="inherit" component={Link} to="/ListCredentialRequests">Lista Richieste VC</Button>
         <Button color="inherit"><Logout setToken={setToken} /></Button>
       </Toolbar>
     </AppBar>

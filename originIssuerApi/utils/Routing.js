@@ -17,7 +17,7 @@ class Routing{
     constructor(){
         //Initialize cors ootion with origin parameter
         var corsOptions = {
-            origin: 'http://localhost:5001',
+            origin: ['http://localhost:5001','http://localhost:5001/'],
         };
         this.#app = this.#express();
         this.#app.use(this.#bodyParser.json());
@@ -503,14 +503,14 @@ class Routing{
          */
         //Admin all or user's get vcs request PID
         this.#app.get(['/vcsrequest/pid/:id','/vcsrequest/pid/','/admin/vcsrequest/pid/:id','/admin/vcsrequest/pid/'],this.#auth.decodeToken, async (req, res) => {
-            const id = req.params.id // This is how you access URL variable
+            const id = req.params.id; // This is how you access URL variable
             // Verifica dati di input (presenza ed esistenza)
             if (!id || id.trim() === '') {
                 res.status(500).json(new DataResponse(false,"id Missing"));
                 res.end();return;
             }
             //Verifico nr parametri correttamente
-            if(!this.#inputChecker.checkInteger(id)){
+            if(!(this.#inputChecker.checkInteger(id))){
                 res.status(500).json(new DataResponse(false,"id format not valid"));
                 res.end();return;
             }
@@ -522,7 +522,7 @@ class Routing{
             }
             //Se è un Sys Admin, ha i permessi di ottenere in ogni caso la vcs request, se è un user deve essere la propria vcs request
             if(!req.jwtSysAdmin){
-                if(result.data.applicant != jwtAccountId){
+                if(result.data.vcs_request.applicant != req.jwtAccountId){
                     res.status(500).json(new DataResponse(false,"vcs request is not own by account logged in"));
                     res.end();return;
                 }

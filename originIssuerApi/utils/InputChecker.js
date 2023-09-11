@@ -6,6 +6,7 @@ class InputChecker {
   }
 
   checkInteger(value){
+    value = parseInt(value)
     return Number.isInteger(value);
   }
 
