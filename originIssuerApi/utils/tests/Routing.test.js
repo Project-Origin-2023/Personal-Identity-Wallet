@@ -140,6 +140,18 @@ describe('simulate a registration flow and a complete user experience', () => {
     expect(response.body.success).toBe(false);
     expect(response.body.description).toBe('Authorization token not found');
     });
+    //request marital status
+    it('should create a VCS request marital', async () => {
+      const response = await request(routing.app)
+      .post('/vcsrequest/marital')
+      .set('x-access-token', token)
+      .send({
+        status: 'married', // married, divorced, single
+      personalIdentifier: '123456789' //
+      });
+      expect(response.status).toBe(200);
+      expect(response.body.success).toBe(true);
+    });
 });
 
 
