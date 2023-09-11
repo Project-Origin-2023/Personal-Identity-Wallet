@@ -31,10 +31,11 @@ export function Home() {
               color="text.primary"
               gutterBottom
             >
-              Servizi
+              Servizi VC Offerti
             </Typography>
             <Typography variant="h5" align="center" color="text.secondary" paragraph>
-              Breve descrizione dei servizi offerti
+              Origin Issuer è una piattaforma di issuing di Verifiable Credential.
+              Attraverso questa piattaforma si possono generare credenziali di tipo PID oppure Marital Status.
             </Typography>
           </Container>
         </Box>
@@ -53,13 +54,13 @@ export function Home() {
                 />
                 <CardContent sx={{ flexGrow: 1 }}>
                   <Typography gutterBottom variant="h5" component="h2">
-                    Richiedi il tuo PID
+                    Richiedi il tuo VC PID
                   </Typography>
-                  <Typography>Descrizione del servizio PID</Typography>
+                  <Typography>Richiedi un Verifiable Credential di tipo Personal Identifier</Typography>
                 </CardContent>
                 <CardActions>
-                  <Link to="/Login">
-                  <Button size="small">Accedi</Button>
+                  <Link to="/CredentialRequestPID">
+                  <Button size="small">Richiedi</Button>
                   </Link>
                 </CardActions>
               </Card>
@@ -76,13 +77,13 @@ export function Home() {
                 />
                 <CardContent sx={{ flexGrow: 1 }}>
                   <Typography gutterBottom variant="h5" component="h2">
-                    Richiedi la tua EAA
+                    Richiedi il tuo VC Marital Status
                   </Typography>
-                  <Typography>Descrizione del servizio EAA</Typography>
+                  <Typography>Richiedi un Verifiable Credential di tipo Marital Status</Typography>
                 </CardContent>
                 <CardActions>
-                <Link to="/Login">
-                  <Button size="small">Accedi</Button>
+                <Link to="/CredentialRequestMarital">
+                  <Button size="small">Richiedi</Button>
                   </Link>
                 </CardActions>
               </Card>
