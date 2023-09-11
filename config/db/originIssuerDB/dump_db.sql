@@ -126,7 +126,8 @@ CREATE TABLE public.vcs_content_pid (
     "firstName" character varying NOT NULL,
     gender public.gender NOT NULL,
     "nameAndFamilyNameAtBirth" character varying NOT NULL,
-    "personalIdentifier" character varying NOT NULL
+    "personalIdentifier" character varying NOT NULL,
+    "placeOfBirth" character varying NOT NULL
 );
 
 
@@ -209,7 +210,7 @@ COPY public.vcs_content_marital_status (vcs_request, status, "personalIdentifier
 -- Data for Name: vcs_content_pid; Type: TABLE DATA; Schema: public; Owner: admin
 --
 
-COPY public.vcs_content_pid (vcs_request, "currentAddress", "dateOfBirth", "familyName", "firstName", gender, "nameAndFamilyNameAtBirth", "personalIdentifier") FROM stdin;
+COPY public.vcs_content_pid (vcs_request, "currentAddress", "dateOfBirth", "familyName", "firstName", gender, "nameAndFamilyNameAtBirth", "personalIdentifier", "placeOfBirth") FROM stdin;
 \.
 
 
