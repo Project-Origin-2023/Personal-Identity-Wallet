@@ -7,26 +7,39 @@ import DetailCredentialRequestPIDView from '../view/DetailCredentialRequestPIDVi
 const DetailCredentialRequestPIDController = ({ token }) => {
     const [searchParams] = useSearchParams()
     const [pidData, setPIDData] = useState({
-        currentAddress: '',
-        dateOfBirth: '',
-        familyName: '',
-        firstName: '',
-        gender: '',
-        identifier: '',
-        nameAndFamilyNameAtBirth: '',
-        personalIdentifier: '',
-        placeOfBirth: '',
+      currentAddress: '',
+      dateOfBirth: '',
+      familyName: '',
+      firstName: '',
+      gender: '',
+      identifier: '',
+      nameAndFamilyNameAtBirth: '',
+      personalIdentifier: '',
+      placeOfBirth: '',
+    });
+    const [vcStatus, setvcStatus] = useState({
+      id: '',
+      pending: '',
+      status: 'false'
     });
     const id = searchParams.get('id');
     const viewModel = new DetailCredentialRequestPIDViewModel();
 
     useEffect(() => {
         const fetchData = async () => {
-            const response = await viewModel.getVC(id, token);            
+            //VC Data
+            let response = await viewModel.getVC(id, token);            
             if(!response.success)
                 return alert(response.description);
             else
                 setPIDData(response.data.vcs_request);
+            //VC Verification Status
+            response = await viewModel.getVCStatus(id, token);
+            if(!response.success)
+                return alert(response.description);
+            else
+                setvcStatus(response.data.verification);
+
         };
         fetchData();
     }, [token]);
@@ -39,6 +52,7 @@ const DetailCredentialRequestPIDController = ({ token }) => {
   return (
     <DetailCredentialRequestPIDView
       pidData={pidData}
+      vcStatus={vcStatus}
       handleRelease={handleRelease}
     />
   );

@@ -14,8 +14,9 @@ import Container from '@mui/material/Container';
 import PropTypes from 'prop-types';
 import { InputLabel } from '@mui/material';
 
-const DetailCredentialRequestPIDView = ({pidData,handleRelease}) => {
+const DetailCredentialRequestPIDView = ({pidData,vcStatus, handleRelease}) => {
   console.log(pidData)
+  console.log(vcStatus)
   return (
     <Container component="main" maxWidth="xs">
     <p>{pidData.currentAddress}</p>
@@ -25,12 +26,14 @@ const DetailCredentialRequestPIDView = ({pidData,handleRelease}) => {
     <p>{pidData.gender}</p>
     <p>{pidData.nameAndFamilyNameAtBirth}</p>
     <p>{pidData.placeOfBirth}</p>
+    <p>{vcStatus.pending}</p>
     </Container>
   );
 };
 
 DetailCredentialRequestPIDView.propTypes = {
   pidData: PropTypes.object.isRequired,
+  vcStatus: PropTypes.object.isRequired,
   handleRelease: PropTypes.func.isRequired,
 };
 
