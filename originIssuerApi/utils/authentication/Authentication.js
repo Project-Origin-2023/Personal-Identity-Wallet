@@ -68,8 +68,8 @@ class Authentication {
             token = this.#createToken(account.id,account.email,false,null);
         else
             token = this.#createToken(account.id,account.email,true,result.data.sys_admin.role);
-        //return cookie with access token
-        return new DataResponse(true,"Auth Login Successfuly Token created",{token:token});
+        //return cookie with access token and isAdmin Permission
+        return new DataResponse(true,"Auth Login Successfuly Token created",{token:token,isAdmin:result.success});
     }
 
     async register(email,password){

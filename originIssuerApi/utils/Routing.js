@@ -142,21 +142,6 @@ class Routing{
         });
 
         /**
-         * Endpoint for Verification Account Sys Admin.
-         * **/
-        //Auth Account Sys Admin
-        this.#app.get('/auth/account_sys_admin', this.#auth.decodeToken, async (req, res) => {
-            //Verifico che Non sia un Sys_admin
-            if(!req.jwtSysAdmin){
-                res.status(200).json(new DataResponse(true,"Sys_Admin Authorization not found, account is a user normal one",{account_sys_admin:false}));
-                res.end();return;
-            }else{
-                res.status(200).json(new DataResponse(true,"Sys_Admin Authorization found, the account is Sys_admin",{account_sys_admin:true}));
-                res.end();return;
-            }
-        });
-
-        /**
          * Get VCS (Verification of Marital Status) Requests for User.
          *
          * @param {Object} req - The HTTP request object with a decoded JWT token.

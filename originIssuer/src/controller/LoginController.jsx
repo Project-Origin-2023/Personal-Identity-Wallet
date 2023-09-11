@@ -2,7 +2,7 @@ import { useState } from 'react';
 import LoginViewModel from '../viewmodel/LoginViewModel'; 
 import LoginView from '../view/LoginView';
 
-const LoginController = ({ setToken }) => {
+const LoginController = ({ setToken , setIsAdmin}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const viewModel = new LoginViewModel();
@@ -12,14 +12,12 @@ const LoginController = ({ setToken }) => {
     const response = await viewModel.login(email, password);
     alert(response.description);
     if (response.success) {
+      //verify account sys admin
+      setIsAdmin(response.data.isAdmin);
       //set token
       setToken(response.data.token);
       window.location.reload(true);
-      window.location.href = '/';
-      //verify account sys admin
-      const responseAdmin = await viewModel.verifyAccountSysAdmin();
-      console.log(responseAdmin.account_sys_admin);
-      alert(responseAdmin.account_sys_admin)
+      window.location.href = '/'
     }
   };
 
