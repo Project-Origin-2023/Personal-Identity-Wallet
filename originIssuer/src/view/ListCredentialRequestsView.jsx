@@ -41,7 +41,7 @@ const TableBody = styled('tbody')({
 });
 
 
-const ViewCredentialRequestsView = ({ vcs_requestsPID, vcs_requestsMarital}) => {
+const ListCredentialRequestsView = ({ vcs_requestsPID, vcs_requestsMarital}) => {
  return(
   <ViewRequestsContainer>
     <Title variant="h6">Visualizzazione Richieste Verifiable Credentials PID</Title>
@@ -110,9 +110,9 @@ const ViewCredentialRequestsView = ({ vcs_requestsPID, vcs_requestsMarital}) => 
   );
 };
 
-ViewCredentialRequestsView.propTypes = {
+ListCredentialRequestsView.propTypes = {
   vcs_requestsPID: PropTypes.array.isRequired,
   vcs_requestsMarital: PropTypes.array.isRequired,
 };
 
-export default ViewCredentialRequestsView;
+export default ListCredentialRequestsView;

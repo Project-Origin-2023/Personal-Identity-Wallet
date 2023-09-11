@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-class ViewCredentialRequestsViewModel {
+class ListCredentialRequestsViewModel {
   async fetchDataPID(token) {
     try {
       const response = await axios.get('http://localhost:3000/vcsrequests/pid', {
@@ -28,4 +28,4 @@ class ViewCredentialRequestsViewModel {
   }
 }
 
-export default ViewCredentialRequestsViewModel;
+export default ListCredentialRequestsViewModel;

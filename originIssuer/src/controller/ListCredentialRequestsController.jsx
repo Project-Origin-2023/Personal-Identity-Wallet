@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import ViewCredentialRequestsViewModel from '../viewmodel/credentialRequest_viewmodel';
-import ViewCredentialRequestsView from '../view/credentialRequest_view';
+import ListCredentialRequestsViewModel from '../viewmodel/ListCredentialRequestsViewModel';
+import ListCredentialRequestsView from '../view/ListCredentialRequestsView';
 
-const ViewCredentialRequestsController = ({ token }) => {
-  const viewModel = new ViewCredentialRequestsViewModel();
+const ListCredentialRequestsController = ({ token }) => {
+  const viewModel = new ListCredentialRequestsViewModel();
   const [vcs_requestsPID, setvcs_requestsPID] = useState([]);
   const [vcs_requestsMarital, setvcs_requestsMarital] = useState([]);
 
@@ -24,15 +24,15 @@ const ViewCredentialRequestsController = ({ token }) => {
 
 
   return (
-    <ViewCredentialRequestsView
+    <ListCredentialRequestsView
       vcs_requestsPID={vcs_requestsPID}
       vcs_requestsMarital={vcs_requestsMarital}
     />
   );
 };
 
-ViewCredentialRequestsController.propTypes = {
+ListCredentialRequestsController.propTypes = {
   token: PropTypes.string.isRequired,
 };
 
-export default ViewCredentialRequestsController;
+export default ListCredentialRequestsController;

@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import LoginViewModel from '../viewmodel/login_viewmodel'; // Assumi che LoginViewModel sia stato importato correttamente
-import LoginView from '../view/login_view';
+import LoginViewModel from '../viewmodel/LoginViewModel'; 
+import LoginView from '../view/LoginView';
 
 const LoginController = ({ setToken }) => {
   const [email, setEmail] = useState('');
@@ -15,7 +15,7 @@ const LoginController = ({ setToken }) => {
     if (response.success) {
       setToken(response.data.token);
       window.location.reload(true);
-      window.location.href = '/home'; //prova di reindirezzamento
+      window.location.href = '/';
     }
   };
 
