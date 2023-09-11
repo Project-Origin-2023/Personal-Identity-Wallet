@@ -132,7 +132,6 @@ const CredentialRequestPIDView = ({
 CredentialRequestPIDView.propTypes = {
   pidData: PropTypes.object.isRequired,
   setPIDData: PropTypes.func.isRequired,
-  jwtToken: PropTypes.string.isRequired,
   handleSubmit: PropTypes.func.isRequired,
 };
 

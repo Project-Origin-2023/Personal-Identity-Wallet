@@ -1,21 +1,29 @@
 import axios from 'axios';
 
 class ViewCredentialRequestsViewModel {
-  async fetchData(token) {
+  async fetchDataPID(token) {
     try {
-      const response = await axios.get('http://', {
+      const response = await axios.get('http://localhost:3000/vcsrequests/pid', {
         headers: {
-          'x-access-token': token,
+          "x-access-token": token,
         },
       });
-
-      if (response.data.success) {
-        return response.data.result;
-      }
-      return [];
+      return response.data;
     } catch (error) {
-      console.log(error);
-      return error;
+      return error.response.data;
+    }
+  }
+
+  async fetchDataMarital(token) {
+    try {
+      const response = await axios.get('http://localhost:3000/vcsrequests/marital', {
+        headers: {
+          "x-access-token": token,
+        },
+      });
+      return response.data;
+    } catch (error) {
+      return error.response.data;
     }
   }
 }

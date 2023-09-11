@@ -78,7 +78,6 @@ const CredentialRequestMaritalView = ({
 CredentialRequestMaritalView.propTypes = {
   maritalData: PropTypes.object.isRequired,
   setMaritalData: PropTypes.func.isRequired,
-  jwtToken: PropTypes.string.isRequired,
   handleSubmit: PropTypes.func.isRequired,
 };
 

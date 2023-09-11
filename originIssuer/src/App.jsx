@@ -31,7 +31,7 @@ function App() {
           <Route path="/Login" element={<LoginController setToken={setToken} />} />
           <Route path="/CredentialRequestPID" element={<CredentialRequestPIDController token={token} />} />
           <Route path="/CredentialRequestMarital" element={<CredentialRequestMaritalController token={token} />} />
-          <Route path="/ViewCredentialRequests" element={<ViewCredentialRequestsController type="ALL" token={token}/>} />
+          <Route path="/ViewCredentialRequests" element={<ViewCredentialRequestsController token={token}/>} />
           <Route path="/CredentialRelease" element={<CredentialReleaseController token={token}/>} />
         </Routes>
       </AuthProvider>
