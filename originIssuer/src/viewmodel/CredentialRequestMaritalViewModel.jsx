@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-class VCSRequestViewModel {
+class CredentialRequestMaritalViewModel {
   constructor() {
     
     this.apiUrl = 'http://localhost:3000/vcsrequest/marital'; 
@@ -20,4 +20,4 @@ class VCSRequestViewModel {
   }
 }
 
-export default VCSRequestViewModel;
+export default CredentialRequestMaritalViewModel;

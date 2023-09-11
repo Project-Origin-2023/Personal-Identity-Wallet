@@ -1,6 +1,6 @@
 import  { useState } from 'react';
-import VCSRequestViewModel from '../viewmodel/request_pid_viewmodel'; // Assumi che VCSRequestViewModel sia stato importato correttamente
-import CredentialRequestPIDView from '../view/request_pid_view';
+import CredentialRequestPIDViewModel from '../viewmodel/CredentialRequestPIDViewModel'; // Assumi che VCSRequestViewModel sia stato importato correttamente
+import CredentialRequestPIDView from '../view/CredentialRequestPIDView';
 
 const CredentialRequestPIDController = ({ token }) => {
   const [pidData, setPIDData] = useState({
@@ -15,7 +15,7 @@ const CredentialRequestPIDController = ({ token }) => {
     placeOfBirth: '',
   });
 
-  const viewModel = new VCSRequestViewModel();
+  const viewModel = new CredentialRequestPIDViewModel();
 
   const handleSubmit = async (e) => {
     e.preventDefault();

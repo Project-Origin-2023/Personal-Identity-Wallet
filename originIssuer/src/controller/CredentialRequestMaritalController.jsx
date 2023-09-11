@@ -1,6 +1,6 @@
 import  { useState } from 'react';
-import VCSRequestViewModel from '../viewmodel/request_marital_viewmodel'; // Assumi che VCSRequestViewModel sia stato importato correttamente
-import CredentialRequestMaritalView from '../view/request_marital_view';
+import CredentialRequestMaritalViewModel from '../viewmodel/CredentialRequestMaritalViewModel'; // Assumi che VCSRequestViewModel sia stato importato correttamente
+import CredentialRequestMaritalView from '../view/CredentialRequestMaritalView';
 
 const CredentialRequestMaritalController = ({ token }) => {
   const [maritalData, setMaritalData] = useState({ //da sistemare
@@ -8,7 +8,7 @@ const CredentialRequestMaritalController = ({ token }) => {
     personalIdentifier: '',
   });
 
-  const viewModel = new VCSRequestViewModel();
+  const viewModel = new CredentialRequestMaritalViewModel();
 
   const handleSubmit = async (e) => {
     e.preventDefault();

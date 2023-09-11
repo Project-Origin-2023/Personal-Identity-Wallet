@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-class VCSRequestViewModel {
+class CredentialRequestPIDViewModel {
   constructor() {
     
     this.apiUrl = 'http://localhost:3000/vcsrequest/PID'; 
@@ -20,4 +20,4 @@ class VCSRequestViewModel {
   }
 }
 
-export default VCSRequestViewModel;
+export default CredentialRequestPIDViewModel;
