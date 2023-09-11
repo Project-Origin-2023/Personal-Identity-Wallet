@@ -12,6 +12,7 @@ import LoginController from './controller/LoginController';
 import ListCredentialRequestsController from './controller/ListCredentialRequestsController';
 import CredentialRequestPIDController from './controller/CredentialRequestPIDController';
 import CredentialRequestMaritalController from './controller/CredentialRequestPIDController';
+import DetailCredentialRequestPIDController from './controller/DetailCredentialRequestPIDController'
 import useToken from './components/useToken';
 
 function App() {
@@ -28,7 +29,8 @@ function App() {
           <Route path="/Login" element={<LoginController setToken={setToken} />} />
           <Route path="/CredentialRequestPID" element={<CredentialRequestPIDController token={token} />} />
           <Route path="/CredentialRequestMarital" element={<CredentialRequestMaritalController token={token} />} />
-          <Route path="/ViewCredentialRequests" element={<ListCredentialRequestsController token={token}/>} />
+          <Route path="/ListCredentialRequests" element={<ListCredentialRequestsController token={token}/>} />
+          <Route path="/DetailsCredentialRequestPID" element={<DetailCredentialRequestPIDController token={token}/>} />
         </Routes>
       </AuthProvider>
     </Router>

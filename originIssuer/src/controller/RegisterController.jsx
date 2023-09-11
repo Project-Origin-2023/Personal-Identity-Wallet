@@ -15,7 +15,7 @@ const RegisterController = ({ setToken }) => {
       if (response.success) {
         setToken(response.data.token);
         window.location.reload(true);
-        window.location.href = '/home'; //prova di reindirezzamento
+        window.location.href = '/'; //prova di reindirezzamento
       }
     };
   

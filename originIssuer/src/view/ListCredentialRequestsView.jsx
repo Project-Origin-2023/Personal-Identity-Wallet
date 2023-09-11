@@ -64,7 +64,7 @@ const ListCredentialRequestsView = ({ vcs_requestsPID, vcs_requestsMarital}) => 
               <td>
               <Grid container justifyContent="flex-end">
                 <Grid item>
-                  <Button color="inherit" component={Link} to={'/ViewCredentialRequestPID?id=' + rowData.id}>Dettaglio</Button>
+                  <Button color="inherit" component={Link} to={'/DetailsCredentialRequestPID?id=' + rowData.id}>Dettaglio</Button>
                 </Grid>
               </Grid>
               </td>
@@ -95,7 +95,7 @@ const ListCredentialRequestsView = ({ vcs_requestsPID, vcs_requestsMarital}) => 
               <td>
               <Grid container justifyContent="flex-end">
                 <Grid item>
-                  <Button color="inherit" component={Link} to={'/ViewCredentialRequestMarital?id=' + rowData.id}>Dettaglio</Button>
+                  <Button color="inherit" component={Link} to={'/DetailCredentialRequestMarital?id=' + rowData.id}>Dettaglio</Button>
                 </Grid>
               </Grid>
               </td>
