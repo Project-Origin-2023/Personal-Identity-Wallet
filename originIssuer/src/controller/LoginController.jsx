@@ -11,11 +11,15 @@ const LoginController = ({ setToken }) => {
     e.preventDefault();
     const response = await viewModel.login(email, password);
     alert(response.description);
-    console.log(response)
     if (response.success) {
+      //set token
       setToken(response.data.token);
       window.location.reload(true);
       window.location.href = '/';
+      //verify account sys admin
+      const responseAdmin = await viewModel.verifyAccountSysAdmin();
+      console.log(responseAdmin.account_sys_admin);
+      alert(responseAdmin.account_sys_admin)
     }
   };
 

@@ -18,6 +18,16 @@ class LoginViewModel {
       return error.response.data;
     }
   }
+
+  async verifyAccountSysAdmin(){
+    try {
+      const response = await axios.get(`${this.apiUrl}/account_sys_admin`);
+      console.log(response)
+      return response.data;
+    } catch (error) {
+      return error.response.data;
+    }
+  }
 }
 
 export default LoginViewModel;
