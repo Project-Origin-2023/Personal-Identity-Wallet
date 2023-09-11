@@ -563,7 +563,7 @@ class Routing{
             }
             //Se è un Sys Admin, ha i permessi di ottenere in ogni caso la vcs request, se è un user deve essere la propria vcs request
             if(!req.jwtSysAdmin){
-                if(result.data.vcs_request.applicant != jwtAccountId){
+                if(result.data.vcs_request.applicant != req.jwtAccountId){
                     res.status(500).json(new DataResponse(false,"vcs request is not own by account logged in"));
                     res.end();return;
                 }

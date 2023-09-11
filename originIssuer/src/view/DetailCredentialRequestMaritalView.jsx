@@ -14,22 +14,17 @@ import Container from '@mui/material/Container';
 import PropTypes from 'prop-types';
 import { InputLabel } from '@mui/material';
 
-const DetailCredentialRequestPIDView = ({pidData,vcStatus, handleRelease}) => {
-  console.log(pidData)
+const DetailCredentialRequestMaritalView = ({marData,vcStatus, handleRelease}) => {
+  console.log(marData)
   console.log(vcStatus)
   return (
     <Container component="main" maxWidth="xs">
-      <p>{pidData.currentAddress}</p>
-      <p>{pidData.dateOfBirth}</p>
-      <p>{pidData.familyName}</p>
-      <p>{pidData.firstName}</p>
-      <p>{pidData.gender}</p>
-      <p>{pidData.nameAndFamilyNameAtBirth}</p>
-      <p>{pidData.placeOfBirth}</p>
-      <p>{pidData.released}</p>
+      <p>{marData.status}</p>
+      <p>{marData.personalIdentifier}</p>
+      <p>{marData.released}</p>
       <p>{vcStatus.pending}</p>
       <p>{vcStatus.status ? vcStatus.status : "In revisione"}</p>
-      <Button disabled={vcStatus.pending || pidData.released || !vcStatus.status}
+      <Button disabled={vcStatus.pending || marData.released || !vcStatus.status}
       onClick={handleRelease} fullWidth variant="contained">
         Rilascia Credenziale
       </Button>
@@ -37,10 +32,10 @@ const DetailCredentialRequestPIDView = ({pidData,vcStatus, handleRelease}) => {
   );
 };
 
-DetailCredentialRequestPIDView.propTypes = {
-  pidData: PropTypes.object.isRequired,
+DetailCredentialRequestMaritalView.propTypes = {
+  marData: PropTypes.object.isRequired,
   vcStatus: PropTypes.object.isRequired,
   handleRelease: PropTypes.func.isRequired,
 };
 
-export default DetailCredentialRequestPIDView;
+export default DetailCredentialRequestMaritalView;

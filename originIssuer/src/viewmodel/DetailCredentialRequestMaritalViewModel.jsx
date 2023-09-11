@@ -1,9 +1,9 @@
 import axios from 'axios';
 
-class DetailCredentialRequestPIDViewModel {
+class DetailCredentialRequestMaritalViewModel {
   async getVC(id, jwtToken) {
     try {
-      const response = await axios.get('http://localhost:3000/vcsrequest/pid/'+id , {
+      const response = await axios.get('http://localhost:3000/vcsrequest/marital/'+id , {
         headers: {
           "x-access-token": `${jwtToken}`,
         },
@@ -41,4 +41,4 @@ class DetailCredentialRequestPIDViewModel {
   }
 }
 
-export default DetailCredentialRequestPIDViewModel;
+export default DetailCredentialRequestMaritalViewModel;

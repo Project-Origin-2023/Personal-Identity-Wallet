@@ -1,21 +1,14 @@
 import  { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom'
 
-import DetailCredentialRequestPIDViewModel from '../viewmodel/DetailCredentialRequestPIDViewModel';
-import DetailCredentialRequestPIDView from '../view/DetailCredentialRequestPIDView';
+import DetailCredentialRequestMaritalViewModel from '../viewmodel/DetailCredentialRequestMaritalViewModel';
+import DetailCredentialRequestMaritalView from '../view/DetailCredentialRequestMaritalView';
 
-const DetailCredentialRequestPIDController = ({ token }) => {
+const DetailCredentialRequestMaritalController = ({ token }) => {
     const [searchParams] = useSearchParams()
-    const [pidData, setPIDData] = useState({
-      currentAddress: '',
-      dateOfBirth: '',
-      familyName: '',
-      firstName: '',
-      gender: '',
-      identifier: '',
-      nameAndFamilyNameAtBirth: '',
-      personalIdentifier: '',
-      placeOfBirth: '',
+    const [marData, setMARData] = useState({
+      state: '',
+      personalIdentifier: ''
     });
     const [vcStatus, setvcStatus] = useState({
       id: '',
@@ -23,7 +16,7 @@ const DetailCredentialRequestPIDController = ({ token }) => {
       status: 'false'
     });
     const id = searchParams.get('id');
-    const viewModel = new DetailCredentialRequestPIDViewModel();
+    const viewModel = new DetailCredentialRequestMaritalViewModel();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -32,7 +25,7 @@ const DetailCredentialRequestPIDController = ({ token }) => {
             if(!response.success)
                 return alert(response.description);
             else
-                setPIDData(response.data.vcs_request);
+                setMARData(response.data.vcs_request);
             //VC Verification Status
             response = await viewModel.getVCStatus(id, token);
             if(!response.success)
@@ -57,12 +50,12 @@ const DetailCredentialRequestPIDController = ({ token }) => {
 
 
   return (
-    <DetailCredentialRequestPIDView
-      pidData={pidData}
+    <DetailCredentialRequestMaritalView
+      marData={marData}
       vcStatus={vcStatus}
       handleRelease={handleRelease}
     />
   );
 };
 
-export default DetailCredentialRequestPIDController;
+export default DetailCredentialRequestMaritalController;
