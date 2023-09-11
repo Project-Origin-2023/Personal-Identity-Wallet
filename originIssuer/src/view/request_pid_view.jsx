@@ -3,6 +3,8 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
@@ -10,6 +12,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import PropTypes from 'prop-types';
+import { InputLabel } from '@mui/material';
 
 const CredentialRequestPIDView = ({
   pidData,
@@ -69,15 +72,20 @@ const CredentialRequestPIDView = ({
             value={pidData.nameAndFamilyNameAtBirth}
             onChange={handleInputChange}
           />
-          <TextField
+          <InputLabel id="gender-label">Gender</InputLabel>
+          <Select
             required
             fullWidth
             id="gender"
-            label="Gender"
+            labelId="Gender-label"
+            //label="Gender" non viene renderizzata a schermo
             name="gender"
             value={pidData.gender}
             onChange={handleInputChange}
-          />
+            >
+            <MenuItem value="M">M</MenuItem>
+            <MenuItem value="F">F</MenuItem>
+          </Select>
           <TextField
             required
             fullWidth
