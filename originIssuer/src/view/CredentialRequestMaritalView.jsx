@@ -1,5 +1,6 @@
 import  { useState } from 'react';
 import Avatar from '@mui/material/Avatar';
+import {InputLabel, MenuItem, Select } from '@mui/material';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
@@ -42,15 +43,24 @@ const CredentialRequestMaritalView = ({
           Richiesta Verifiable Credential Marital Status
         </Typography>
         <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
-          <TextField
-            required
-            fullWidth
-            id="status"
-            label="Status"
-            name="status"
-            value={maritalData.status}
-            onChange={handleInputChange}
-          />
+        <InputLabel>Status</InputLabel>
+      <Select
+        required
+        fullWidth
+        id="status"
+        label="Status"
+        name="status"
+        value={maritalData.status}
+        onChange={handleInputChange}
+      >
+        <MenuItem value="canceled">canceled</MenuItem>
+        <MenuItem value="married">married</MenuItem>
+        <MenuItem value="divorced">divorced</MenuItem>
+        <MenuItem value="widower">widower</MenuItem>
+        <MenuItem value="separate">separate</MenuItem>
+        <MenuItem value="other">other</MenuItem>
+        <MenuItem value="cohabitant">cohabitant</MenuItem>
+      </Select>
           <TextField
             required
             fullWidth

@@ -11,7 +11,7 @@ import RegisterController from './controller/RegisterController'
 import LoginController from './controller/LoginController';
 import ListCredentialRequestsController from './controller/ListCredentialRequestsController';
 import CredentialRequestPIDController from './controller/CredentialRequestPIDController';
-import CredentialRequestMaritalController from './controller/CredentialRequestPIDController';
+import CredentialRequestMaritalController from './controller/CredentialRequestMaritalController';
 import DetailCredentialRequestPIDController from './controller/DetailCredentialRequestPIDController'
 import useToken from './components/useToken';
 
