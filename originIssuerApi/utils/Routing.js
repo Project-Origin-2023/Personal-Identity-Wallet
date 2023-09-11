@@ -17,7 +17,7 @@ class Routing{
     constructor(){
         //Initialize cors ootion with origin parameter
         var corsOptions = {
-            origin: 'http://localhost:19001',
+            origin: 'http://localhost:5001',
         };
         this.#app = this.#express();
         this.#app.use(this.#bodyParser.json());

@@ -13,6 +13,7 @@ import LoginController from './controller/login_controller';
 import ViewCredentialRequestsController from './controller/credentialRequest_controller';
 import ViewCredentialRequests from './components/ViewCredentialRequests';
 import CredentialRequestPIDController from './controller/request_pid_controller';
+import CredentialRequestMaritalController from './controller/request_marital_controller';
 import CredentialReleaseController from './controller/credentialRelease_controller';
 import useToken from './components/useToken';
 
@@ -26,11 +27,11 @@ function App() {
         <Navbar isLoggedIn={token!==null} setToken={setToken}/>
         <Routes>
           <Route path="/"  element={<Home />} />
-          <Route path="/Register" element={<RegisterController />} />
+          <Route path="/Register" element={<RegisterController setToken={setToken}/>} />
           <Route path="/Login" element={<LoginController setToken={setToken} />} />
+          <Route path="/CredentialRequestPID" element={<CredentialRequestPIDController token={token} />} />
+          <Route path="/CredentialRequestMarital" element={<CredentialRequestMaritalController token={token} />} />
           <Route path="/ViewCredentialRequests" element={<ViewCredentialRequestsController type="ALL" token={token}/>} />
-          <Route path="/CredentialRequestPID" element={<CredentialRequestPIDController type="PID" setToken={setToken} />} />
-          <Route path="/ViewCredentialRequests" element={<ViewCredentialRequests type="ALL" token={token}/>} />
           <Route path="/CredentialRelease" element={<CredentialReleaseController token={token}/>} />
         </Routes>
       </AuthProvider>

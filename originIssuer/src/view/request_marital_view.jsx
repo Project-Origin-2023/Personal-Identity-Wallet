@@ -14,7 +14,6 @@ import PropTypes from 'prop-types';
 const CredentialRequestMaritalView = ({
   maritalData,
   setMaritalData,
-  jwtToken,
   handleSubmit
 }) => {
   const handleInputChange = (event) => {
@@ -40,34 +39,25 @@ const CredentialRequestMaritalView = ({
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Richiesta VCS Marital
+          Richiesta Verifiable Credential Marital Status
         </Typography>
         <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
           <TextField
             required
             fullWidth
-            id="vcs_request"
-            label="VCS Request"
-            name="vcs_request"
-            value={maritalData.vcs_request}
+            id="status"
+            label="Status"
+            name="status"
+            value={maritalData.status}
             onChange={handleInputChange}
           />
           <TextField
             required
             fullWidth
-            id="currentAddress"
-            label="Current Address"
-            name="currentAddress"
-            value={maritalData.currentAddress}
-            onChange={handleInputChange}
-          />
-          <TextField
-            required
-            fullWidth
-            id="dateOfBirth"
-            label="Date of Birth"
-            name="dateOfBirth"
-            value={maritalData.dateOfBirth}
+            id="personalIdentifier"
+            label="Personal Identifier"
+            name="personalIdentifier"
+            value={maritalData.personalIdentifier}
             onChange={handleInputChange}
           />
           {/* Aggiungi altri campi per i dati PID */}
@@ -79,13 +69,6 @@ const CredentialRequestMaritalView = ({
           >
             Invia Richiesta
           </Button>
-          <Grid container justifyContent="flex-end">
-            <Grid item>
-              <Link href="/Login" variant="body2">
-                Torna al Login
-              </Link>
-            </Grid>
-          </Grid>
         </Box>
       </Box>
     </Container>

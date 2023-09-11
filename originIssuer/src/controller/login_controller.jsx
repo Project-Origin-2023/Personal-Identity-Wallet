@@ -10,14 +10,12 @@ const LoginController = ({ setToken }) => {
   const handleLogin = async (e) => {
     e.preventDefault();
     const response = await viewModel.login(email, password);
-
+    alert(response.description);
+    console.log(response)
     if (response.success) {
-      setToken(response.token);
-      alert(response.message);
+      setToken(response.data.token);
       window.location.reload(true);
       window.location.href = '/home'; //prova di reindirezzamento
-    } else {
-      alert(response.message);
     }
   };
 

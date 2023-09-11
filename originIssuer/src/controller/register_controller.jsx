@@ -11,14 +11,11 @@ const RegisterController = ({ setToken }) => {
     const handleRegister = async (e) => {
       e.preventDefault();
       const response = await viewModel.register(email, password);
-  
+      alert(response.description);
       if (response.success) {
-        setToken(response.token);
-        alert(response.message);
+        setToken(response.data.token);
         window.location.reload(true);
         window.location.href = '/home'; //prova di reindirezzamento
-      } else {
-        alert(response.message);
       }
     };
   
@@ -28,7 +25,7 @@ const RegisterController = ({ setToken }) => {
         password={password}
         setEmail={setEmail}
         setPassword={setPassword}
-        handleLogin={handleRegister}
+        handleRegister={handleRegister}
       />
     );
   };

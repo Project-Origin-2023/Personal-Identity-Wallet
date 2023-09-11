@@ -14,7 +14,6 @@ import PropTypes from 'prop-types';
 const CredentialRequestPIDView = ({
   pidData,
   setPIDData,
-  jwtToken,
   handleSubmit
 }) => {
   const handleInputChange = (event) => {
@@ -40,16 +39,61 @@ const CredentialRequestPIDView = ({
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Richiesta VCS PID
+          Richiesta Verifiable Credential PID (Personal Identifier)
         </Typography>
         <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+        <TextField
+            required
+            fullWidth
+            id="familyName"
+            label="Family Name"
+            name="familyName"
+            value={pidData.familyName}
+            onChange={handleInputChange}
+          />
           <TextField
             required
             fullWidth
-            id="vcs_request"
-            label="VCS Request"
-            name="vcs_request"
-            value={pidData.vcs_request}
+            id="firstName"
+            label="First Name"
+            name="firstName"
+            value={pidData.firstName}
+            onChange={handleInputChange}
+          />
+          <TextField
+            required
+            fullWidth
+            id="nameAndFamilyNameAtBirth"
+            label="Name And Family Name At Birth"
+            name="nameAndFamilyNameAtBirth"
+            value={pidData.nameAndFamilyNameAtBirth}
+            onChange={handleInputChange}
+          />
+          <TextField
+            required
+            fullWidth
+            id="gender"
+            label="Gender"
+            name="gender"
+            value={pidData.gender}
+            onChange={handleInputChange}
+          />
+          <TextField
+            required
+            fullWidth
+            id="personalIdentifier"
+            label="Personal Identifier"
+            name="personalIdentifier"
+            value={pidData.personalIdentifier}
+            onChange={handleInputChange}
+          />
+          <TextField
+            required
+            fullWidth
+            id="placeOfBirth"
+            label="Place Of Birth"
+            name="placeOfBirth"
+            value={pidData.placeOfBirth}
             onChange={handleInputChange}
           />
           <TextField
@@ -79,13 +123,6 @@ const CredentialRequestPIDView = ({
           >
             Invia Richiesta
           </Button>
-          <Grid container justifyContent="flex-end">
-            <Grid item>
-              <Link href="/Login" variant="body2">
-                Torna al Login
-              </Link>
-            </Grid>
-          </Grid>
         </Box>
       </Box>
     </Container>
