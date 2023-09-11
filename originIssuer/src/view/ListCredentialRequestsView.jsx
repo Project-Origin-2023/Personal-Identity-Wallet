@@ -31,7 +31,7 @@ const Table = styled('table')({
 });
 
 const TableHead = styled('thead')({
-  backgroundColor: 'black',
+  backgroundColor: 'lightgray',
 });
 
 const TableBody = styled('tbody')({
