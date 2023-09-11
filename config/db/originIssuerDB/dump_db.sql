@@ -126,7 +126,8 @@ CREATE TABLE public.vcs_content_pid (
     "firstName" character varying NOT NULL,
     gender public.gender NOT NULL,
     "nameAndFamilyNameAtBirth" character varying NOT NULL,
-    "personalIdentifier" character varying NOT NULL
+    "personalIdentifier" character varying NOT NULL,
+    "placeOfBirth" character varying NOT NULL
 );
 
 
@@ -177,8 +178,7 @@ ALTER TABLE public.vcs_requests_verifications OWNER TO admin;
 --
 
 COPY public.accounts (id, email, hashed_pass, salt) FROM stdin;
-24	utente	031bed32dceb7a9192c36da2b3954b210292b18b8e6bf81f328ab336cf4411bc4b3ea055bb6d54a6b029ca079fa83dc7c3a7bf469cabd5fcd1c04167ce5820e6	2b6cb0262e0af242b6f6965d7323ac84
-26	utentesys	e575f962c980f70cf29e7622e10dde5c330e5dcfd034bc016f84075b242b5e45082242295a0bf79efcbc2d5758e81e8df46da43d878b14fa1fc3732ff970c4af	3e00c03b03f781932c881670481ace21
+26	admin23@gmail.com	3d70867ca1cf9c2a0bf572ae969a58bc26c4843d48fea461edda0eb98e3dc0808e78f8ef8f0a6c77f5ded43f52e4deda2879e3ee1f9c93cd906f848e62452ab1	df6352acd33cd1873674ca299646abb5
 \.
 
 
@@ -187,7 +187,6 @@ COPY public.accounts (id, email, hashed_pass, salt) FROM stdin;
 --
 
 COPY public.sys_admins (account, role) FROM stdin;
-26	verifier
 \.
 
 
@@ -196,7 +195,6 @@ COPY public.sys_admins (account, role) FROM stdin;
 --
 
 COPY public.users (account, created_at) FROM stdin;
-24	2023-08-29 11:32:52.993165
 \.
 
 
@@ -205,16 +203,6 @@ COPY public.users (account, created_at) FROM stdin;
 --
 
 COPY public.vcs_content_marital_status (vcs_request, status, "personalIdentifier") FROM stdin;
-23	divorced	asd
-24	divorced	asd
-25	divorced	asd
-26	divorced	asd
-27	divorced	asd
-28	divorced	asd
-29	divorced	asd
-30	divorced	asd
-31	divorced	asd
-32	divorced	asd
 \.
 
 
@@ -222,13 +210,7 @@ COPY public.vcs_content_marital_status (vcs_request, status, "personalIdentifier
 -- Data for Name: vcs_content_pid; Type: TABLE DATA; Schema: public; Owner: admin
 --
 
-COPY public.vcs_content_pid (vcs_request, "currentAddress", "dateOfBirth", "familyName", "firstName", gender, "nameAndFamilyNameAtBirth", "personalIdentifier") FROM stdin;
-16	asd	asd	asd	asd	M	asd	asd
-17	asd	asd	asd	asd	M	asd	asd
-18	asd	asd	asd	asd	M	asd	asd
-19	asd	asd	asd	asd	M	asd	asd
-20	asd	asd	asd	asd	M	asd	asd
-21	asd	asd	asd	asd	M	asd	asd
+COPY public.vcs_content_pid (vcs_request, "currentAddress", "dateOfBirth", "familyName", "firstName", gender, "nameAndFamilyNameAtBirth", "personalIdentifier", "placeOfBirth") FROM stdin;
 \.
 
 
@@ -237,23 +219,6 @@ COPY public.vcs_content_pid (vcs_request, "currentAddress", "dateOfBirth", "fami
 --
 
 COPY public.vcs_requests (id, applicant, released) FROM stdin;
-17	24	f
-18	24	f
-19	24	f
-20	24	f
-21	24	f
-22	24	f
-23	24	f
-24	24	f
-25	24	f
-26	24	f
-27	24	f
-28	24	f
-29	24	f
-30	24	f
-31	24	f
-32	24	f
-16	24	t
 \.
 
 
@@ -262,7 +227,6 @@ COPY public.vcs_requests (id, applicant, released) FROM stdin;
 --
 
 COPY public.vcs_requests_verifications (vcs_request, admin_verifier, status) FROM stdin;
-16	26	t
 \.
 
 
@@ -270,14 +234,14 @@ COPY public.vcs_requests_verifications (vcs_request, admin_verifier, status) FRO
 -- Name: accounts_id_seq; Type: SEQUENCE SET; Schema: public; Owner: admin
 --
 
-SELECT pg_catalog.setval('public.accounts_id_seq', 23, true);
+SELECT pg_catalog.setval('public.accounts_id_seq', 26, true);
 
 
 --
 -- Name: vcs_requests_id_seq; Type: SEQUENCE SET; Schema: public; Owner: admin
 --
 
-SELECT pg_catalog.setval('public.vcs_requests_id_seq', 15, true);
+SELECT pg_catalog.setval('public.vcs_requests_id_seq', 49, true);
 
 
 --

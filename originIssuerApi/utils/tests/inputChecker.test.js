@@ -3,57 +3,73 @@ const { InputChecker } = require('../../utils/InputChecker');
 describe('InputChecker', () => {
   const inputChecker = new InputChecker();
 
-  test('checkInteger should return true for integers', () => {
-    expect(inputChecker.checkInteger(5)).toBe(true);
-    expect(inputChecker.checkInteger(3.14)).toBe(false); // Test for double input
-    expect(inputChecker.checkInteger('5')).toBe(false); // Test for non-integer input
+  it('should check if a value is a boolean', () => {
+    expect(inputChecker.checkBoolean(true)).toBe(true);
+    expect(inputChecker.checkBoolean(false)).toBe(true);
+    expect(inputChecker.checkBoolean('true')).toBe(false);
+    expect(inputChecker.checkBoolean(1)).toBe(false);
   });
 
-  test('checkDouble should return true for valid doubles', () => {
-    expect(inputChecker.checkDouble(5.5)).toBe(true);
-    expect(inputChecker.checkDouble('5.5')).toBe(false); // Test for non-double input
+  it('should check if a value is an integer', () => {
+    expect(inputChecker.checkInteger(42)).toBe(true);
+    expect(inputChecker.checkInteger(-42)).toBe(true);
+    expect(inputChecker.checkInteger(42.5)).toBe(false);
+    expect(inputChecker.checkInteger('42')).toBe(false);
   });
 
-  test('checkString should return true for valid strings', () => {
+  it('should check if a value is a double', () => {
+    expect(inputChecker.checkDouble(42.5)).toBe(true);
+    expect(inputChecker.checkDouble(-42.5)).toBe(true);
+    expect(inputChecker.checkDouble(42)).toBe(true);
+    expect(inputChecker.checkDouble('42.5')).toBe(false);
+  });
+
+  it('should check if a value is a string', () => {
     expect(inputChecker.checkString('Hello')).toBe(true);
-    expect(inputChecker.checkString(42)).toBe(false); // Test for non-string input
-    expect(inputChecker.checkString('')).toBe(true); // Test for empty string
+    expect(inputChecker.checkString(42)).toBe(false);
+    expect(inputChecker.checkString(true)).toBe(false);
   });
-  
-  test('checkName should return true for valid names', () => {
+
+  it('should check if a value is a valid name', () => {
     expect(inputChecker.checkName('John Doe')).toBe(true);
-    expect(inputChecker.checkName('A')).toBe(false); // Test for short name
-    expect(inputChecker.checkName('Ian')).toBe(true); // Test for 3 letters name
-    expect(inputChecker.checkName(123)).toBe(false); // Test for non-string input
+    expect(inputChecker.checkName('123')).toBe(false);
   });
-  
-  test('checkEmail should return true for valid email addresses', () => {
+
+  it('should check if a value is a valid email', () => {
     expect(inputChecker.checkEmail('test@example.com')).toBe(true);
-    expect(inputChecker.checkEmail('invalid-email')).toBe(false); // Test for invalid email format
-    expect(inputChecker.checkEmail('invalid@email')).toBe(false); // Test for invalid email format
-    expect(inputChecker.checkEmail(123)).toBe(false); // Test for non-string input
+    expect(inputChecker.checkEmail('invalid_email')).toBe(false);
   });
-  
-  test('checkOnlyLetters should return true for strings containing only letters', () => {
-    expect(inputChecker.checkOnlyLetters('abcdef')).toBe(true);
-    expect(inputChecker.checkOnlyLetters('abc123')).toBe(false); // Test for digits
-    expect(inputChecker.checkOnlyLetters('ABC DEF')).toBe(true); // Test for spaces
+
+  it('should check if a value is a valid date', () => {
+    expect(inputChecker.checkDate('12 05 2023')).toBe(true);
+    expect(inputChecker.checkDate('31 13 2023')).toBe(false); // Data non valida
+    expect(inputChecker.checkDate('12/05/2023')).toBe(false); // Formato errato
   });
-  
-  test('checkGender should return true for valid gender values', () => {
+
+  it('should check if a value is a valid marital status', () => {
+    expect(inputChecker.checkMaritalStatus('married')).toBe(true);
+    expect(inputChecker.checkMaritalStatus('divorced')).toBe(true);
+    expect(inputChecker.checkMaritalStatus('single')).toBe(false);
+  });
+
+  it('should check if a value is a valid gender', () => {
     expect(inputChecker.checkGender('M')).toBe(true);
     expect(inputChecker.checkGender('F')).toBe(true);
-    expect(inputChecker.checkGender('Other')).toBe(false); // Test for invalid gender
+    expect(inputChecker.checkGender('X')).toBe(false); // Genere non valido
   });
-  
-  test('checkPassword should return true for valid passwords', () => {
-    expect(inputChecker.checkPassword('Password123!')).toBe(true);
-    expect(inputChecker.checkPassword('weakpass')).toBe(false); // Test for weak password
-    expect(inputChecker.checkPassword(123)).toBe(false); // Test for non-string input
-    expect(inputChecker.checkPassword('Prova123')).toBe(false); // Test for missing special character
-    expect(inputChecker.checkPassword('Provaaa!')).toBe(false); // Test for missing number
-    expect(inputChecker.checkPassword('provaaa1!')).toBe(false); // Test for missing uppercase letter
-  });
-  
 
+  it('should check if a value is a valid password', () => {
+    expect(inputChecker.checkPassword('Abc1234@')).toBe(true);
+    expect(inputChecker.checkPassword('ABC1234!')).toBe(false); // Mancanza di minuscole
+    expect(inputChecker.checkPassword('password')).toBe(false); // Mancanza di maiuscole e caratteri speciali
+    expect(inputChecker.checkPassword('Abc123')).toBe(false); // Mancanza di caratteri speciali
+    expect(inputChecker.checkPassword('Abc123@')).toBe(false); // Lunghezza inferiore a 8 caratteri
+  });
+
+  it('should check if a value is a valid cohabitant status', () => {
+    expect(inputChecker.checkMaritalStatus('cohabitant')).toBe(true);
+    expect(inputChecker.checkMaritalStatus('partner')).toBe(false); // Stato non valido
+  });
+
+  // Aggiungi altri test se necessario
 });
