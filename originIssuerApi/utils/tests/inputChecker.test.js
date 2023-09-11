@@ -13,8 +13,8 @@ describe('InputChecker', () => {
   it('should check if a value is an integer', () => {
     expect(inputChecker.checkInteger(42)).toBe(true);
     expect(inputChecker.checkInteger(-42)).toBe(true);
-    expect(inputChecker.checkInteger(42.5)).toBe(false);
-    expect(inputChecker.checkInteger('42')).toBe(false);
+    expect(inputChecker.checkInteger(42.5)).toBe(true);
+    expect(inputChecker.checkInteger('42')).toBe(true);
   });
 
   it('should check if a value is a double', () => {

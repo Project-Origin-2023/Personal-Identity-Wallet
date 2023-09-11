@@ -1,5 +1,3 @@
-import React, { useState } from 'react';
-import axios from 'axios';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -10,38 +8,10 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import PropTypes from 'prop-types';
 
-
-export default function Register() {
-
-  const [familyName, setFamilyName] = useState('');
-  const [firstName, setFirstName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-
-  const handleRegister = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await axios.post('http://localhost:19101/register', {
-        familyName: familyName,
-        firstName: firstName,
-        email: email,
-        password: password,
-      });
-
-      if (response.data.success) {
-        alert(response.data.message);
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const defaultTheme = createTheme();
-
+const RegisterView = ({ email, password, setEmail, setPassword, handleRegister }) => {
   return (
-    <ThemeProvider theme={defaultTheme}>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box
@@ -60,35 +30,13 @@ export default function Register() {
           </Typography>
           <Box component="form" noValidate onSubmit={handleRegister} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  autoComplete="Nome"
-                  name="firstName"
-                  required
-                  fullWidth
-                  id="firstName"
-                  label="Nome"
-                  onChange={(e) => setFirstName(e.target.value)}
-                  autoFocus
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  required
-                  fullWidth
-                  id="lastName"
-                  label="Cognome"
-                  onChange={(e) => setFamilyName(e.target.value)}
-                  name="lastName"
-                  autoComplete="Cognome"
-                />
-              </Grid>
               <Grid item xs={12}>
                 <TextField
                   required
                   fullWidth
                   id="email"
                   label="Email Address"
+                  value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   name="email"
                   autoComplete="email"
@@ -102,6 +50,7 @@ export default function Register() {
                   label="Password"
                   type="password"
                   id="password"
+                  value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   autoComplete="nuova password"
                 />
@@ -125,6 +74,14 @@ export default function Register() {
           </Box>
         </Box>
       </Container>
-    </ThemeProvider>
   );
 }
+RegisterView.propTypes = {
+    email: PropTypes.string.isRequired,
+    password: PropTypes.string.isRequired,
+    setEmail: PropTypes.func.isRequired,
+    setPassword: PropTypes.func.isRequired,
+    handleRegister: PropTypes.func.isRequired,
+  };
+  
+  export default RegisterView;
