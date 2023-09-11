@@ -311,6 +311,7 @@ class DatabaseStrategy extends Database{
             return new DataResponse(false,"Error in PG DB Connection");
 
         try{
+            await this.query('BEGIN');
             var query='INSERT INTO "vcs_requests" ("applicant") VALUES ($1);';
             var values=[applicantId];
             var result=await this.query(query, values);
@@ -321,7 +322,9 @@ class DatabaseStrategy extends Database{
             result=await this.query(query, values);
             if(!result)
                 return new DataResponse(false,"Vcs request pid data insertion error")
+            await this.query('COMMIT');
         }catch(e){
+            await this.query('ROLLBACK');
             return new DataResponse(false,"Vcs request pid insertion failed",e);
         }
         return new DataResponse(true,"vcs request pid inserted successfully");
