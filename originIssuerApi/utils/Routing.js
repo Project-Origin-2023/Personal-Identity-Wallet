@@ -364,7 +364,7 @@ class Routing{
             //Verifica dati input
             // Verifica dati di input (presenza ed esistenza)
             if (!status || status.trim() === '') {
-                res.status(500).json(new DataResponse(false,"maritalstatus Missing"));
+                res.status(500).json(new DataResponse(false,"status Missing"));
                 res.end();return;
             }
             if (!personalIdentifier || personalIdentifier.trim() === '') {
