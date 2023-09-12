@@ -10,7 +10,7 @@ export default function useToken() {
 
   const getIsAdmin = () => {
     const isAdminString = sessionStorage.getItem('isAdmin');
-    return Boolean(isAdminString);
+    return JSON.parse(isAdminString);
   };
 
   const [token, setToken] = useState(getToken());

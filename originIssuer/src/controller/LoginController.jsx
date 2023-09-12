@@ -13,7 +13,7 @@ const LoginController = ({ setToken , setIsAdmin}) => {
     alert(response.description);
     if (response.success) {
       //verify account sys admin
-      setIsAdmin(response.data.isAdmin);
+      setIsAdmin(Boolean(response.data.isAdmin));
       //set token
       setToken(response.data.token);
       window.location.reload(true);
