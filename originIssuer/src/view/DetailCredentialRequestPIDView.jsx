@@ -1,46 +1,79 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import Select from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
-import Link from '@mui/material/Link';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
+import Grid from '@mui/material/Grid';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import Typography from '@mui/material/Typography';
 import PropTypes from 'prop-types';
-import { InputLabel } from '@mui/material';
 
-const DetailCredentialRequestPIDView = ({pidData,vcStatus, handleRelease}) => {
-  console.log(pidData)
-  console.log(vcStatus)
+const DetailCredentialRequestPIDView = ({ pidData, vcStatus, handleRelease }) => {
   return (
     <Container component="main" maxWidth="xs">
-      <p>{pidData.currentAddress}</p>
-      <p>{pidData.dateOfBirth}</p>
-      <p>{pidData.familyName}</p>
-      <p>{pidData.firstName}</p>
-      <p>{pidData.gender}</p>
-      <p>{pidData.nameAndFamilyNameAtBirth}</p>
-      <p>{pidData.placeOfBirth}</p>
-      <p>{pidData.released}</p>
-      <p>{vcStatus.pending}</p>
-      <p>{vcStatus.status ? vcStatus.status : "In revisione"}</p>
-      <Button disabled={vcStatus.pending || pidData.released || !vcStatus.status}
-      onClick={handleRelease} fullWidth variant="contained">
-        Rilascia Credenziale
-      </Button>
+      <Grid container spacing={2}>
+        <Grid item xs={12}>
+          <Avatar>
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography variant="h5">Credenziale Utente</Typography>
+        </Grid>
+        <Grid item xs={12}>
+          <Card>
+            <CardContent>
+              <Typography variant="h6">Dettagli utente:</Typography>
+              <Typography variant="body1">
+                <strong>Nome:</strong> {pidData.firstName}
+              </Typography>
+              <Typography variant="body1">
+                <strong>Cognome:</strong> {pidData.familyName}
+              </Typography>
+              <Typography variant="body1">
+                <strong>Data di nascita:</strong> {pidData.dateOfBirth}
+              </Typography>
+              <Typography variant="body1">
+                <strong>Luogo di nascita:</strong> {pidData.placeOfBirth}
+              </Typography>
+              <Typography variant="body1">
+                <strong>Indirizzo attuale:</strong> {pidData.currentAddress}
+              </Typography>
+              <Typography variant="body1">
+                <strong>Sesso:</strong> {pidData.gender}
+              </Typography>
+              <Typography variant="body1">
+                <strong>Nome e cognome alla nascita:</strong> {pidData.nameAndFamilyNameAtBirth}
+              </Typography>
+            </CardContent>
+          </Card>
+        </Grid>
+        <Grid item xs={12}>
+          <Typography variant="h6">Stato Credenziale:</Typography>
+          <Typography variant="body1">
+            <strong>Stato:</strong> {vcStatus.status ? vcStatus.status : "In revisione"}
+          </Typography>
+          <Typography variant="body1">
+            <strong>Pending:</strong> {vcStatus.pending ? 'Sì' : 'No'}
+          </Typography>
+        </Grid>
+        <Grid item xs={12}>
+          <Button
+            disabled={vcStatus.pending || pidData.released || !vcStatus.status}
+            onClick={handleRelease}
+            fullWidth
+            variant="contained"
+            color="primary"
+          >
+            Rilascia Credenziale
+          </Button>
+        </Grid>
+      </Grid>
     </Container>
   );
 };
-
 DetailCredentialRequestPIDView.propTypes = {
   pidData: PropTypes.object.isRequired,
   vcStatus: PropTypes.object.isRequired,
   handleRelease: PropTypes.func.isRequired,
 };
-
 export default DetailCredentialRequestPIDView;
