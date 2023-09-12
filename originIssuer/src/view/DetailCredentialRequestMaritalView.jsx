@@ -8,6 +8,8 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import PropTypes from 'prop-types';
+import CheckSharpIcon from '@mui/icons-material/CheckSharp';
+import HighlightOffSharpIcon from '@mui/icons-material/HighlightOffSharp';
 
 const DetailCredentialRequestMaritalView = ({ marData, vcStatus, handleRelease }) => {
   return (
@@ -17,12 +19,12 @@ const DetailCredentialRequestMaritalView = ({ marData, vcStatus, handleRelease }
           <Avatar>
             <LockOutlinedIcon />
           </Avatar>
-          <Typography variant="h5">Marital Status</Typography>
+          <Typography variant="h5">Credenziale Marital Status</Typography>
         </Grid>
         <Grid item xs={12}>
           <Card>
             <CardContent>
-              <Typography variant="h6">Dettagli utente:</Typography>
+              <Typography variant="h6">Dettagli Marital Status:</Typography>
               <Typography variant="body1">
                 <strong>Stato:</strong> {marData.status}
               </Typography>
@@ -30,7 +32,7 @@ const DetailCredentialRequestMaritalView = ({ marData, vcStatus, handleRelease }
                 <strong>Identificatore personale:</strong> {marData.personalIdentifier}
               </Typography>
               <Typography variant="body1">
-                <strong>Rilasciato:</strong> {marData.released}
+                <strong>Rilasciato:</strong> {marData.released ? (<CheckSharpIcon></CheckSharpIcon>) : (<HighlightOffSharpIcon></HighlightOffSharpIcon>)}
               </Typography>
             </CardContent>
           </Card>
@@ -38,10 +40,7 @@ const DetailCredentialRequestMaritalView = ({ marData, vcStatus, handleRelease }
         <Grid item xs={12}>
           <Typography variant="h6">Stato Credenziale:</Typography>
           <Typography variant="body1">
-            <strong>Stato:</strong> {vcStatus.status ? vcStatus.status : "In revisione"}
-          </Typography>
-          <Typography variant="body1">
-            <strong>Pending:</strong> {vcStatus.pending ? 'Sì' : 'No'}
+            <strong>Stato:</strong> {vcStatus.pending ? "In Revisione": vcStatus.status ? "Approvata" : "Non Approvata"}
           </Typography>
         </Grid>
         <Grid item xs={12}>

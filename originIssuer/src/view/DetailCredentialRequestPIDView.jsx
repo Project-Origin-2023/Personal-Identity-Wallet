@@ -8,6 +8,8 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import PropTypes from 'prop-types';
+import CheckSharpIcon from '@mui/icons-material/CheckSharp';
+import HighlightOffSharpIcon from '@mui/icons-material/HighlightOffSharp';
 
 const DetailCredentialRequestPIDView = ({ pidData, vcStatus, handleRelease }) => {
   return (
@@ -17,12 +19,12 @@ const DetailCredentialRequestPIDView = ({ pidData, vcStatus, handleRelease }) =>
           <Avatar>
             <LockOutlinedIcon />
           </Avatar>
-          <Typography variant="h5">Credenziale Utente</Typography>
+          <Typography variant="h5">Credenziale PID</Typography>
         </Grid>
         <Grid item xs={12}>
           <Card>
             <CardContent>
-              <Typography variant="h6">Dettagli utente:</Typography>
+              <Typography variant="h6">Dettagli Personal Identifier:</Typography>
               <Typography variant="body1">
                 <strong>Nome:</strong> {pidData.firstName}
               </Typography>
@@ -44,16 +46,16 @@ const DetailCredentialRequestPIDView = ({ pidData, vcStatus, handleRelease }) =>
               <Typography variant="body1">
                 <strong>Nome e cognome alla nascita:</strong> {pidData.nameAndFamilyNameAtBirth}
               </Typography>
+              <Typography variant="body1">
+                <strong>Rilasciato:</strong> {pidData.released ? (<CheckSharpIcon></CheckSharpIcon>) : (<HighlightOffSharpIcon></HighlightOffSharpIcon>)}
+              </Typography>
             </CardContent>
           </Card>
         </Grid>
         <Grid item xs={12}>
           <Typography variant="h6">Stato Credenziale:</Typography>
           <Typography variant="body1">
-            <strong>Stato:</strong> {vcStatus.status ? vcStatus.status : "In revisione"}
-          </Typography>
-          <Typography variant="body1">
-            <strong>Pending:</strong> {vcStatus.pending ? 'Sì' : 'No'}
+            <strong>Stato:</strong> {vcStatus.pending ? "In Revisione": vcStatus.status ? "Approvata" : "Non Approvata"}
           </Typography>
         </Grid>
         <Grid item xs={12}>
