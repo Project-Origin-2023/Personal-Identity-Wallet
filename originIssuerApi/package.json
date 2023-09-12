@@ -1,6 +1,6 @@
 {
     "name": "originissuerapi",
-    "version": "0.0.1",
+    "version": "1.0.0",
     "description": "RESTful API for Origin Issuer",
     "main": "index.js",
     "dependencies": {
