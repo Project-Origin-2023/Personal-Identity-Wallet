@@ -86,7 +86,7 @@ class Routing{
                 res.status(500).json(response);
                 res.end();return;
             }else{
-                var token = response.data;
+                var token = response.data.token;
                 this.#auth.addTokenCookie(res,token);
                 res.status(200).json(response);
                 res.end();return;
