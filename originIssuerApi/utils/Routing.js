@@ -603,7 +603,7 @@ class Routing{
                 res.status(500).json({ success: false, message: 'vcsrequestId Missing' });
                 res.end();return;
             }
-            if (!status || status.trim() === '') {
+            if (!status) {
                 res.status(500).json({ success: false, message: 'status Missing' });
                 res.end();return;
             }
