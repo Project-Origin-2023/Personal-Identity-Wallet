@@ -32,31 +32,16 @@ class InputChecker {
   }
 
   checkDate(value) {
-    // Definisci un'espressione regolare per il formato "dd mm aaaa"
-    const datePattern = /^(\d{2})\s(\d{2})\s(\d{4})$/;
-
+    // Definisci un'espressione regolare per il formato "gg mm aaaa" con trattino, slash o spazio come separatori
+    const datePattern = /^(\d{4})[-/ ](\d{2})[-/ ](\d{2})$/;
+  
     // Verifica se il valore corrisponde al pattern
     const matches = value.match(datePattern);
-
-    if (!matches) {
-      return false; // Il formato non corrisponde
-    }
-
-    const day = parseInt(matches[1], 10);
-    const month = parseInt(matches[2], 10);
-    const year = parseInt(matches[3], 10);
-
-    // Verifica se il giorno, il mese e l'anno sono validi
-    if (
-      day >= 1 && day <= 31 &&
-      month >= 1 && month <= 12 &&
-      year >= 1000 && year <= 9999
-    ) {
-      return true; // La stringa è una data valida.
-    } else {
-      return false; // La stringa NON è una data valida.
-    }
+  
+    return matches;
+  
   }
+  
   
   checkMaritalStatus(value) {
     return value === 'canceled' || value === 'married' || value === 'divorced' || value === 'widower' || value === 'separate' || value === 'other' || value === 'cohabitant';

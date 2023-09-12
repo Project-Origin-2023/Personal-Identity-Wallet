@@ -442,19 +442,19 @@ class Routing{
                 res.end();return;
             }
             //Verifico che la richiesta di release della vcs request corrisponda ad una vcs request del utente loggato
-            if (result.data.pending){//caso in cui vcs request non è stata ancora esaminata da un sys admin ed è in pending
+            if (result.data.verification.pending){//caso in cui vcs request non è stata ancora esaminata da un sys admin ed è in pending
                 res.status(500).json(new DataResponse(false,"vcs request verification in pending"));
                 res.end();return;
             } 
-            if(req.jwtAccountId != result.data.applicant){
+            if(req.jwtAccountId != result.data.verification.applicant){
                 res.status(500).json(new DataResponse(false,"vcs request is not for the account logged in"));
                 res.end();return;
             }
-            if (!result.data.status){//caso in cui vcs request è stata esaminata con esito negativo
+            if (!result.data.verification.status){//caso in cui vcs request è stata esaminata con esito negativo
                 res.status(500).json(new DataResponse(false,"vcs request verification status negative"));
                 res.end();return;
             } 
-            if (result.data.released){//caso in cui vcs request già stata rilasciata
+            if (result.data.verification.released){//caso in cui vcs request già stata rilasciata
                 res.status(500).json(new DataResponse(false,"vcs request already released"));
                 res.end();return;
             }
@@ -487,7 +487,7 @@ class Routing{
                 res.end();return;
             }
             //Ritorno i risultati
-            res.status(200).json(new DataResponse(true,"Credential Issuing initiated, see data for redirect link to wallet",result.data));
+            res.status(200).json(new DataResponse(true,"Credential Issuing initiated, see data for redirect link to wallet",{redirectWalletUri:result.data}));
             res.end();return;
         });
 
@@ -603,7 +603,7 @@ class Routing{
                 res.status(500).json({ success: false, message: 'vcsrequestId Missing' });
                 res.end();return;
             }
-            if (!status || status.trim() === '') {
+            if (!status) {
                 res.status(500).json({ success: false, message: 'status Missing' });
                 res.end();return;
             }

@@ -8,10 +8,8 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import PropTypes from 'prop-types';
-import CheckSharpIcon from '@mui/icons-material/CheckSharp';
-import HighlightOffSharpIcon from '@mui/icons-material/HighlightOffSharp';
 
-const DetailCredentialRequestPIDView = ({ pidData, vcStatus, handleRelease }) => {
+const AdminVerifyCredentialRequestPidView = ({ pidData, handleVerify }) => {
   return (
     <Container component="main" maxWidth="xs">
       <Grid container spacing={2}>
@@ -19,7 +17,7 @@ const DetailCredentialRequestPIDView = ({ pidData, vcStatus, handleRelease }) =>
           <Avatar>
             <LockOutlinedIcon />
           </Avatar>
-          <Typography variant="h5">Credenziale PID</Typography>
+          <Typography variant="h5">Verifica Credenziale PID</Typography>
         </Grid>
         <Grid item xs={12}>
           <Card>
@@ -44,38 +42,30 @@ const DetailCredentialRequestPIDView = ({ pidData, vcStatus, handleRelease }) =>
                 <strong>Sesso:</strong> {pidData.gender}
               </Typography>
               <Typography variant="body1">
-                <strong>Nome e cognome alla nascita:</strong> {pidData.nameAndFamilyNameAtBirth}
-              </Typography>
-              <Typography variant="body1">
-                <strong>Rilasciato:</strong> {pidData.released ? (<CheckSharpIcon></CheckSharpIcon>) : (<HighlightOffSharpIcon></HighlightOffSharpIcon>)}
+                <strong>Nome e cognome alla nascita:</strong>{' '}
+                {pidData.nameAndFamilyNameAtBirth}
               </Typography>
             </CardContent>
           </Card>
         </Grid>
         <Grid item xs={12}>
-          <Typography variant="h6">Stato Credenziale:</Typography>
-          <Typography variant="body1">
-            <strong>Stato:</strong> {vcStatus.pending ? "In Revisione": vcStatus.status ? "Approvata" : "Non Approvata"}
-          </Typography>
-        </Grid>
-        <Grid item xs={12}>
           <Button
-            disabled={vcStatus.pending || pidData.released || !vcStatus.status}
-            onClick={handleRelease}
+            onClick={handleVerify}
             fullWidth
             variant="contained"
             color="primary"
           >
-            Rilascia Credenziale
+            Verifica
           </Button>
         </Grid>
       </Grid>
     </Container>
   );
 };
-DetailCredentialRequestPIDView.propTypes = {
+
+AdminVerifyCredentialRequestPidView.propTypes = {
   pidData: PropTypes.object.isRequired,
-  vcStatus: PropTypes.object.isRequired,
-  handleRelease: PropTypes.func.isRequired,
+  handleVerify: PropTypes.func.isRequired,
 };
-export default DetailCredentialRequestPIDView;
+
+export default AdminVerifyCredentialRequestPidView;

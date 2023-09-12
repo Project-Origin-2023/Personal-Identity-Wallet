@@ -11,10 +11,10 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Container from '@mui/material/Container';
+import CheckSharpIcon from '@mui/icons-material/CheckSharp';
+import HighlightOffSharpIcon from '@mui/icons-material/HighlightOffSharp';
 
-
-
-const ListCredentialRequestsView = ({ vcs_requestsPID, vcs_requestsMarital}) => {
+const AdminListCredentialRequestsView = ({ vcs_requestsPending, vcs_requestsNoPending}) => {
  return(
   <Container maxWidth="lg">
     <Typography
@@ -22,29 +22,29 @@ const ListCredentialRequestsView = ({ vcs_requestsPID, vcs_requestsMarital}) => 
       variant="h5"
       color="black"
       noWrap
-    >Visualizzazione Richieste Verifiable Credentials PID</Typography>
-    {vcs_requestsPID.length > 0 ? (
+    >Visualizzazione Richieste Verifiable in Pending (Da Revisionare)</Typography>
+    {vcs_requestsPending.length > 0 ? (
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
           <TableHead>
             <TableRow>
               <TableCell>id</TableCell>
-              <TableCell align="right">familyName</TableCell>
-              <TableCell align="right">firstName</TableCell>
-              <TableCell align="right">Dettagli</TableCell>
+              <TableCell align="right">applicant</TableCell>
+              <TableCell align="right">released</TableCell>
+              <TableCell align="right">Verify</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {vcs_requestsPID.map((row, index) => (
+            {vcs_requestsPending.map((row, index) => (
               <TableRow
                 key={row.name}
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
               >
                 <TableCell>{row.id}</TableCell>
-                <TableCell align="right">{row.familyName}</TableCell>
-                <TableCell align="right">{row.firstName}</TableCell>
+                <TableCell align="right">{row.applicant}</TableCell>
+                <TableCell align="right">{row.released ? (<CheckSharpIcon></CheckSharpIcon>) : (<HighlightOffSharpIcon></HighlightOffSharpIcon>)}</TableCell>
                 <TableCell align="right">
-                  <Button color="inherit" component={Link} to={'/DetailCredentialRequestPID?id=' + row.id}>Dettaglio</Button>
+                  <Button color="inherit" component={Link} to={'/AdminVerifyCredentialRequest?id=' + row.id}>Verify</Button>
                 </TableCell>
               </TableRow>
             ))}
@@ -59,30 +59,26 @@ const ListCredentialRequestsView = ({ vcs_requestsPID, vcs_requestsMarital}) => 
       variant="h5"
       color="black"
       noWrap
-    >Visualizzazione Richieste Verifiable Credentials Marital Status</Typography>
-    {vcs_requestsMarital.length > 0 ? (
+    >Visualizzazione Richieste Verifiable Credentials Not Pending (Revisionate)</Typography>
+    {vcs_requestsNoPending.length > 0 ? (
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
           <TableHead>
             <TableRow>
               <TableCell>id</TableCell>
-              <TableCell align="right">personalIdentifier</TableCell>
-              <TableCell align="right">status</TableCell>
-              <TableCell align="right">Dettagli</TableCell>
+              <TableCell align="right">applicant</TableCell>
+              <TableCell align="right">released</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {vcs_requestsMarital.map((row, index) => (
+            {vcs_requestsNoPending.map((row, index) => (
               <TableRow
                 key={row.name}
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
               >
                 <TableCell>{row.id}</TableCell>
-                <TableCell align="right">{row.personalIdentifier}</TableCell>
-                <TableCell align="right">{row.status}</TableCell>
-                <TableCell align="right">
-                  <Button color="inherit" component={Link} to={'/DetailCredentialRequestMarital?id=' + row.id}>Dettaglio</Button>
-                </TableCell>
+                <TableCell align="right">{row.applicant}</TableCell>
+                <TableCell align="right">{row.released ? (<CheckSharpIcon></CheckSharpIcon>) : (<HighlightOffSharpIcon></HighlightOffSharpIcon>)}</TableCell>
               </TableRow>
             ))}
           </TableBody>
@@ -95,9 +91,9 @@ const ListCredentialRequestsView = ({ vcs_requestsPID, vcs_requestsMarital}) => 
   );
 };
 
-ListCredentialRequestsView.propTypes = {
-  vcs_requestsPID: PropTypes.array.isRequired,
-  vcs_requestsMarital: PropTypes.array.isRequired,
+AdminListCredentialRequestsView.propTypes = {
+  vcs_requestsPending: PropTypes.array.isRequired,
+  vcs_requestsNoPending: PropTypes.array.isRequired,
 };
 
-export default ListCredentialRequestsView;
+export default AdminListCredentialRequestsView;

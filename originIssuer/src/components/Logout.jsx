@@ -18,8 +18,4 @@ const Logout = ({ setToken }) => {
   );
 };
 
-Logout.propTypes = {
-  setToken: PropTypes.func.isRequired,
-};
-
 export default Logout;

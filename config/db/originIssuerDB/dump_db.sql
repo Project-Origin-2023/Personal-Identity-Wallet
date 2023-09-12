@@ -121,7 +121,7 @@ ALTER TABLE public.vcs_content_marital_status OWNER TO admin;
 CREATE TABLE public.vcs_content_pid (
     vcs_request integer NOT NULL,
     "currentAddress" character varying NOT NULL,
-    "dateOfBirth" character varying NOT NULL,
+    "dateOfBirth" date NOT NULL,
     "familyName" character varying NOT NULL,
     "firstName" character varying NOT NULL,
     gender public.gender NOT NULL,
@@ -178,7 +178,7 @@ ALTER TABLE public.vcs_requests_verifications OWNER TO admin;
 --
 
 COPY public.accounts (id, email, hashed_pass, salt) FROM stdin;
-26	admin23@gmail.com	3d70867ca1cf9c2a0bf572ae969a58bc26c4843d48fea461edda0eb98e3dc0808e78f8ef8f0a6c77f5ded43f52e4deda2879e3ee1f9c93cd906f848e62452ab1	df6352acd33cd1873674ca299646abb5
+41	andreibobirica99@gmail.com	1a9d0e276b131de912a9b7a1a8edeb3735cd32c425314fcb21752217990d34a19b420131ad164c9602774357c8dbf25aa41a551788d3a7ea97494fa25a929d17	ba6ce660f64705e89157f23aaecbe4df
 \.
 
 
@@ -187,6 +187,7 @@ COPY public.accounts (id, email, hashed_pass, salt) FROM stdin;
 --
 
 COPY public.sys_admins (account, role) FROM stdin;
+41	verifier
 \.
 
 
@@ -234,14 +235,14 @@ COPY public.vcs_requests_verifications (vcs_request, admin_verifier, status) FRO
 -- Name: accounts_id_seq; Type: SEQUENCE SET; Schema: public; Owner: admin
 --
 
-SELECT pg_catalog.setval('public.accounts_id_seq', 26, true);
+SELECT pg_catalog.setval('public.accounts_id_seq', 46, true);
 
 
 --
 -- Name: vcs_requests_id_seq; Type: SEQUENCE SET; Schema: public; Owner: admin
 --
 
-SELECT pg_catalog.setval('public.vcs_requests_id_seq', 49, true);
+SELECT pg_catalog.setval('public.vcs_requests_id_seq', 88, true);
 
 
 --

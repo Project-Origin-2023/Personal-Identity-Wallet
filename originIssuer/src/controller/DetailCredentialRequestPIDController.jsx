@@ -44,14 +44,13 @@ const DetailCredentialRequestPIDController = ({ token }) => {
         fetchData();
     }, [token]);
 
-    const handleRelease = () => {
-        const response = viewModel.reeleaseVC(id,token)
+    const handleRelease = async () => {
+        const response = await viewModel.reeleaseVC(id,token)
         console.log(response);
         if(!response.success)
             return alert(response.description);
         else{
-          //TODO
-          //REINDIRIZZA AL LINK DEL
+          window.location.href = response.data.redirectWalletUri;
         }
     };
 

@@ -31,8 +31,5 @@ const ListCredentialRequestsController = ({ token }) => {
   );
 };
 
-ListCredentialRequestsController.propTypes = {
-  token: PropTypes.string.isRequired,
-};
 
 export default ListCredentialRequestsController;

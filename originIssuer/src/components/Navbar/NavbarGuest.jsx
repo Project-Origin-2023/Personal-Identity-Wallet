@@ -8,7 +8,7 @@ function NavbarGuest() {
     <AppBar position="static">
       <Toolbar>
         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-          issuerApp
+          Origin Issuer
         </Typography>
         <Button color="inherit" component={Link} to="/">Home</Button>
         <Button color="inherit" component={Link} to="/Register">Registrati</Button>
