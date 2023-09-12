@@ -2,111 +2,96 @@ import PropTypes from 'prop-types';
 import { Typography, Button, styled } from '@mui/material';
 import { Link } from 'react-router-dom';
 import Grid from '@mui/material/Grid';
+import * as React from 'react';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
+import Container from '@mui/material/Container';
 
-const ViewRequestsContainer = styled('div')({
-  textAlign: 'center',
-});
-
-const Title = styled(Typography)({
-  fontWeight: 'bold',
-  fontSize: '24px',
-  marginBottom: '16px',
-});
-
-const RecordContainer = styled('div')({
-  marginBottom: '16px',
-});
-
-const BackButton = styled(Button)({
-  backgroundColor: 'transparent',
-  border: 'none',
-  textDecoration: 'underline',
-  cursor: 'pointer',
-});
-
-const Table = styled('table')({
-  margin: '0 auto',
-  borderCollapse: 'collapse',
-  width: '100%',
-});
-
-const TableHead = styled('thead')({
-  backgroundColor: 'lightgray',
-});
-
-const TableBody = styled('tbody')({
-  '& tr:nth-child(even)': {
-    backgroundColor: 'black',
-  },
-});
 
 
 const ListCredentialRequestsView = ({ vcs_requestsPID, vcs_requestsMarital}) => {
  return(
-  <ViewRequestsContainer>
-    <Title variant="h6">Visualizzazione Richieste Verifiable Credentials PID</Title>
+  <Container maxWidth="lg">
+    <Typography
+      component="h1"
+      variant="h5"
+      color="black"
+      noWrap
+    >Visualizzazione Richieste Verifiable Credentials PID</Typography>
     {vcs_requestsPID.length > 0 ? (
-      <Table>
-        <TableHead>
-          <tr>
-            <th>ID</th>
-            <th>familyName</th>
-            <th>firstName</th>
-            <th>Dettagli</th>
-          </tr>
-        </TableHead>
-        <TableBody>
-          {vcs_requestsPID.map((rowData, index) => (
-            <tr key={index}>
-              <td>{rowData.id}</td>
-              <td>{rowData.familyName}</td>
-              <td>{rowData.firstName}</td>
-              <td>
-              <Grid container justifyContent="flex-end">
-                <Grid item>
-                  <Button color="inherit" component={Link} to={'/DetailCredentialRequestPID?id=' + rowData.id}>Dettaglio</Button>
-                </Grid>
-              </Grid>
-              </td>
-            </tr>
-          ))}
-        </TableBody>
-      </Table>
+      <TableContainer component={Paper}>
+        <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
+          <TableHead>
+            <TableRow>
+              <TableCell>id</TableCell>
+              <TableCell align="right">familyName</TableCell>
+              <TableCell align="right">firstName</TableCell>
+              <TableCell align="right">Dettagli</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {vcs_requestsPID.map((row, index) => (
+              <TableRow
+                key={row.name}
+                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+              >
+                <TableCell>{row.id}</TableCell>
+                <TableCell align="right">{row.familyName}</TableCell>
+                <TableCell align="right">{row.firstName}</TableCell>
+                <TableCell align="right">
+                  <Button color="inherit" component={Link} to={'/DetailCredentialRequestPID?id=' + row.id}>Dettaglio</Button>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
     ):(
       <p>Caricamento dati credenziali...</p>
     )}
-    <Title variant="h6">Visualizzazione Richieste Verifiable Credentials Marital Status</Title>
+    <Typography
+      component="h1"
+      variant="h5"
+      color="black"
+      noWrap
+    >Visualizzazione Richieste Verifiable Credentials Marital Status</Typography>
     {vcs_requestsMarital.length > 0 ? (
-      <Table>
-        <TableHead>
-          <tr>
-            <th>ID</th>
-            <th>personalIdentifier</th>
-            <th>status</th>
-            <th>Dettagli</th>
-          </tr>
-        </TableHead>
-        <TableBody>
-          {vcs_requestsMarital.map((rowData, index) => (
-            <tr key={index}>
-              <td>{rowData.id}</td>
-              <td>{rowData.personalIdentifier}</td>
-              <td>{rowData.status}</td>
-              <td>
-              <Grid container justifyContent="flex-end">
-                <Grid item>
-                  <Button color="inherit" component={Link} to={'/DetailCredentialRequestMarital?id=' + rowData.id}>Dettaglio</Button>
-                </Grid>
-              </Grid>
-              </td>
-            </tr>
-          ))}
-        </TableBody>
-      </Table>
+      <TableContainer component={Paper}>
+        <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
+          <TableHead>
+            <TableRow>
+              <TableCell>id</TableCell>
+              <TableCell align="right">personalIdentifier</TableCell>
+              <TableCell align="right">status</TableCell>
+              <TableCell align="right">Dettagli</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {vcs_requestsMarital.map((row, index) => (
+              <TableRow
+                key={row.name}
+                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+              >
+                <TableCell>{row.id}</TableCell>
+                <TableCell align="right">{row.personalIdentifier}</TableCell>
+                <TableCell align="right">{row.status}</TableCell>
+                <TableCell align="right">
+                  <Button color="inherit" component={Link} to={'/DetailCredentialRequestMarital?id=' + row.id}>Dettaglio</Button>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
     ):(
       <p>Caricamento dati credenziali...</p>
     )}
-  </ViewRequestsContainer>
+  </Container>
   );
 };
 
