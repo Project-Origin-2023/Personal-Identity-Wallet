@@ -15,14 +15,7 @@ import PropTypes from 'prop-types';
 import { InputLabel } from '@mui/material';
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers'; // Importa DatePicker da @mui/x-date-pickers
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'; // Importa AdapterDateFns da @mui/x-date-pickers
-import DateFnsUtils from '@date-io/date-fns'; // Importa DateFnsUtils per il formato della data
 
-function formatDate(date) {
-  const dd = String(date.getDate()).padStart(2, '0');
-  const mm = String(date.getMonth() + 1).padStart(2, '0');
-  const yyyy = date.getFullYear();
-  return `${dd}-${mm}-${yyyy}`;
-}
 
 const CredentialRequestPIDView = ({
   pidData,
@@ -37,13 +30,10 @@ const CredentialRequestPIDView = ({
     });
   };
 
-  const handleDateChange = (newDate) => {
-    const formattedDate = formatDate(newDate);
-    setPIDData({
-      ...pidData,
-      dateOfBirth: formattedDate
-    });
-  };
+  const setDateOfBirth = (date) =>{
+    pidData.dateOfBirth = date;
+    setPIDData(pidData);
+  }
 
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
@@ -138,8 +128,8 @@ const CredentialRequestPIDView = ({
               id="dateOfBirth"
               label="Date of Birth"
               name="dateOfBirth"
-              value={new Date(pidData.dateOfBirth)} // Converti la data in oggetto Date
-              onChange={handleDateChange}
+              value={pidData.dateOfBirth}
+              onChange={(newValue) => setDateOfBirth(newValue)}
             />
             {/* Aggiungi altri campi per i dati PID */}
             <Button
