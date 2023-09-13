@@ -110,7 +110,7 @@ class OpenIdController {
         return await this.#makeRequest(config);
     }
 
-    async deleteCredential(sessionID,id,token){
+    async deleteCredential(id,token){
         let config = {
             method: 'delete',
             maxBodyLength: Infinity,

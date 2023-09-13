@@ -1,14 +1,10 @@
 import axios from 'axios';
+import ViewModel from './ViewModel';
 
-class CredentialRequestPIDViewModel {
-  constructor() {
-    
-    this.apiUrl = 'http://localhost:3000/vcsrequest/PID'; 
-  }
-
+class CredentialRequestPIDViewModel extends ViewModel{
   async requestVCS(pidData, jwtToken) {
     try {
-      const response = await axios.post(this.apiUrl, pidData, {
+      const response = await axios.post(this.apiUrl+'/vcsrequest/PID', pidData, {
         headers: {
           "x-access-token": `${jwtToken}`,
         },

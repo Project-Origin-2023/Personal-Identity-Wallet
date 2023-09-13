@@ -164,6 +164,222 @@ class Routing{
             }
         });
 
+        this.#app.get('/ci/info/sessionid',this.#auth.decodeToken,this.#auth.decodeTokenOIDC, async (req, res) => {
+            const { sessionId } = req.query;
+            // Verifica dati di input (presenza ed esistenza)
+            if (!sessionId || sessionId.trim() === '') {
+                res.status(500).json(new DataResponse(false,"sessionId Missing"));
+                res.end();return;
+            }
+            //Verifico nr parametri correttamente
+            if(!this.#inputChecker.checkString(sessionId)){
+                res.status(500).json(new DataResponse(false,"sessionId format not valid"));
+                res.end();return;
+            }
+            let response = await this.#oidc.getInfoSessionId(sessionId,req.jwtTokenOIDC);
+            if(!response.success){
+                res.status(500).json(response);
+                res.end();return;
+            }
+            res.status(200).json(response);
+            res.end();return;
+        });
+
+        this.#app.post('/ci/continue',this.#auth.decodeToken,this.#auth.decodeTokenOIDC, async (req, res) => {
+            const { sessionId } = req.query;
+            // Verifica dati di input (presenza ed esistenza)
+            if (!sessionId || sessionId.trim() === '') {
+                res.status(500).json(new DataResponse(false,"sessionId Missing"));
+                res.end();return;
+            }
+            //Verifico nr parametri correttamente
+            if(!this.#inputChecker.checkString(sessionId)){
+                res.status(500).json(new DataResponse(false,"sessionId format not valid"));
+                res.end();return;
+            }
+
+            let response = await this.#oidc.continueIssuing(req.jwtDid,sessionId,req.jwtTokenOIDC);
+            if(!response.success){
+                res.status(500).json(response);
+                res.end();return;
+            }
+            res.status(200).json(response);
+            res.end();return;
+        });
+
+        this.#app.get('/credentials',this.#auth.decodeToken,this.#auth.decodeTokenOIDC, async (req, res) => {
+            let response = await this.#oidc.getCredentialList(req.jwtTokenOIDC);
+            if(!response.success){
+                res.status(500).json(response);
+                res.end();return;
+            }
+            res.status(200).json(response);
+            res.end();return;
+        });
+
+        this.#app.get('/ci/info/issuance',this.#auth.decodeToken,this.#auth.decodeTokenOIDC, async (req, res) => {
+            const { sessionId } = req.query;
+            // Verifica dati di input (presenza ed esistenza)
+            if (!sessionId || sessionId.trim() === '') {
+                res.status(500).json(new DataResponse(false,"sessionId Missing"));
+                res.end();return;
+            }
+            //Verifico nr parametri correttamente
+            if(!this.#inputChecker.checkString(sessionId)){
+                res.status(500).json(new DataResponse(false,"sessionId format not valid"));
+                res.end();return;
+            }
+
+            let response = await this.#oidc.getIssuanceInfo(sessionId,req.jwtTokenOIDC);
+            if(!response.success){
+                res.status(500).json(response);
+                res.end();return;
+            }
+            res.status(200).json(response);
+            res.end();return;
+        });
+
+        this.#app.delete('/credential/:id',this.#auth.decodeToken,this.#auth.decodeTokenOIDC, async (req, res) => {
+            const { id } = req.params;
+            // Verifica dati di input (presenza ed esistenza)
+            if (!id || id.trim() === '') {
+                res.status(500).json(new DataResponse(false,"id Missing"));
+                res.end();return;
+            }
+            //Verifico nr parametri correttamente
+            if(!this.#inputChecker.checkString(id)){
+                res.status(500).json(new DataResponse(false,"id format not valid"));
+                res.end();return;
+            }
+
+            let response = await this.#oidc.deleteCredential(id,req.jwtTokenOIDC);
+            if(!response.success){
+                res.status(500).json(response);
+                res.end();return;
+            }
+            res.status(200).json(response);
+            res.end();return;
+        });
+
+        this.#app.post('/ci/continuexdevice',this.#auth.decodeToken,this.#auth.decodeTokenOIDC, async (req, res) => {
+            //uri
+            const {uri} = req.body;
+            //Verifica dati input
+            // Verifica dati di input (presenza ed esistenza)
+            if (!uri || uri.trim() === '') {
+                res.status(500).json(new DataResponse(false,"uri Missing"));
+                res.end();return;
+            }
+            
+            //Verifico nr parametri correttamente
+            if(!this.#inputChecker.checkString(uri)){
+                res.status(500).json(new DataResponse(false,"uri format not valid"));
+                res.end();return;
+            }
+
+            //continue issuing
+            var result = await this.#oidc.continueIssuingXDevice(uri,req.jwtTokenOIDC)
+            if(!result.success){
+                res.status(500).json(result);
+                res.end();return;
+            }
+            //Ritorno i risultati
+            res.status(200).json(result);
+            res.end();return;
+        });
+
+        this.#app.post('/vp/start',this.#auth.decodeToken,this.#auth.decodeTokenOIDC, async (req, res) => {
+            //uri
+            const {uri} = req.body;
+            //Verifica dati input
+            // Verifica dati di input (presenza ed esistenza)
+            if (!uri || uri.trim() === '') {
+                res.status(500).json(new DataResponse(false,"uri Missing"));
+                res.end();return;
+            }
+            
+            //Verifico nr parametri correttamente
+            if(!this.#inputChecker.checkString(uri)){
+                res.status(500).json(new DataResponse(false,"uri format not valid"));
+                res.end();return;
+            }
+
+            //start presentation
+            var result = await this.#oidc.startPresentation(uri,req.jwtTokenOIDC)
+            if(!result.success){
+                res.status(500).json(result);
+                res.end();return;
+            }
+            //Ritorno i risultati
+            res.status(200).json(result);
+            res.end();return;
+        });
+
+        this.#app.get('/vp/continue',this.#auth.decodeToken,this.#auth.decodeTokenOIDC, async (req, res) => {
+            const { sessionId } = req.query;
+            // Verifica dati di input (presenza ed esistenza)
+            if (!sessionId || sessionId.trim() === '') {
+                res.status(500).json(new DataResponse(false,"sessionId Missing"));
+                res.end();return;
+            }
+            //Verifico nr parametri correttamente
+            if(!this.#inputChecker.checkString(sessionId)){
+                res.status(500).json(new DataResponse(false,"sessionId format not valid"));
+                res.end();return;
+            }
+
+            let response = await this.#oidc.continuePresentation(sessionId,req.jwtDid,req.jwtTokenOIDC);
+            if(!response.success){
+                res.status(500).json(response);
+                res.end();return;
+            }
+            res.status(200).json(response);
+            res.end();return;
+        });
+
+        this.#app.post('/vp/fulfill',this.#auth.decodeToken,this.#auth.decodeTokenOIDC, async (req, res) => {
+            const { sessionId } = req.query;
+            // Verifica dati di input (presenza ed esistenza)
+            if (!sessionId || sessionId.trim() === '') {
+                res.status(500).json(new DataResponse(false,"sessionId Missing"));
+                res.end();return;
+            }
+            //Verifico nr parametri correttamente
+            if(!this.#inputChecker.checkString(sessionId)){
+                res.status(500).json(new DataResponse(false,"sessionId format not valid"));
+                res.end();return;
+            }
+            
+            //uri
+            const {claims} = req.body;
+            //Verifica dati input
+            // Verifica dati di input (presenza ed esistenza)
+            if (!claims || claims.trim() === '') {
+                res.status(500).json(new DataResponse(false,"claims Missing"));
+                res.end();return;
+            }
+            
+            //Verifico nr parametri correttamente
+            if(!this.#inputChecker.checkString(uri)){
+                res.status(500).json(new DataResponse(false,"claims format not valid"));
+                res.end();return;
+            }
+
+            //start presentation
+            var result = await this.#oidc.fulfillPresentation(claims,sessionId,req.jwtTokenOIDC)
+            if(!result.success){
+                res.status(500).json(result);
+                res.end();return;
+            }
+            //Ritorno i risultati
+            res.status(200).json(result);
+            res.end();return;
+        });
+
+        
+
+        
+
         
     }
 

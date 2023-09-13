@@ -1,9 +1,10 @@
 import axios from 'axios';
+import ViewModel from './ViewModel';
 
-class DetailCredentialRequestPIDViewModel {
+class DetailCredentialRequestPIDViewModel extends ViewModel{
   async getVC(id, jwtToken) {
     try {
-      const response = await axios.get('http://localhost:3000/vcsrequest/pid/'+id , {
+      const response = await axios.get(this.apiUrl+'/vcsrequest/pid/'+id , {
         headers: {
           "x-access-token": `${jwtToken}`,
         },
@@ -16,7 +17,7 @@ class DetailCredentialRequestPIDViewModel {
 
   async getVCStatus(id, jwtToken){
     try {
-      const response = await axios.get('http://localhost:3000/vcsrequest/status/'+id , {
+      const response = await axios.get(this.apiUrl+'/vcsrequest/status/'+id , {
         headers: {
           "x-access-token": `${jwtToken}`,
         },
@@ -29,7 +30,7 @@ class DetailCredentialRequestPIDViewModel {
 
   async reeleaseVC(id, jwtToken){
     try {
-      const response = await axios.get('http://localhost:3000/vcsrequest/release/'+id , {
+      const response = await axios.get(this.apiUrl+'/vcsrequest/release/'+id , {
         headers: {
           "x-access-token": `${jwtToken}`,
         },

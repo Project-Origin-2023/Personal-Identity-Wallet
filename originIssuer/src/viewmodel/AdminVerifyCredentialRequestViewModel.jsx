@@ -1,9 +1,10 @@
 import axios from 'axios';
+import ViewModel from './ViewModel';
 
-class AdminVerifyCredentialRequestViewModel {
+class AdminVerifyCredentialRequestViewModel extends ViewModel{
   async getVCPid(id, jwtToken) {
     try {
-      const response = await axios.get('http://localhost:3000/vcsrequest/pid/'+id , {
+      const response = await axios.get(this.apiUrl+'/vcsrequest/pid/'+id , {
         headers: {
           "x-access-token": `${jwtToken}`,
         },
@@ -16,7 +17,7 @@ class AdminVerifyCredentialRequestViewModel {
 
   async getVCMarital(id, jwtToken) {
     try {
-      const response = await axios.get('http://localhost:3000/vcsrequest/marital/'+id , {
+      const response = await axios.get(this.apiUrl+'/vcsrequest/marital/'+id , {
         headers: {
           "x-access-token": `${jwtToken}`,
         },
@@ -29,7 +30,7 @@ class AdminVerifyCredentialRequestViewModel {
 
   async verifyVC(id, status, jwtToken){
     try {
-      const response = await axios.post('http://localhost:3000/admin/vcsrequest/verify' ,
+      const response = await axios.post(this.apiUrl+'/admin/vcsrequest/verify' ,
       {vcsrequestId:id, status:status},{
         headers: {
           "x-access-token": `${jwtToken}`,

@@ -1,9 +1,10 @@
 import axios from 'axios';
+import ViewModel from './ViewModel';
 
-class AdminListCredentialRequestsViewModel {
+class AdminListCredentialRequestsViewModel extends ViewModel{
   async fetchDataPending(token) {
     try {
-      const response = await axios.get('http://localhost:3000/admin/vcsrequests/pending', {
+      const response = await axios.get(this.apiUrl+'/admin/vcsrequests/pending', {
         headers: {
           "x-access-token": token,
         },
@@ -16,7 +17,7 @@ class AdminListCredentialRequestsViewModel {
 
   async fetchDataNoPending(token) {
     try {
-      const response = await axios.get('http://localhost:3000/admin/vcsrequests/notpending', {
+      const response = await axios.get(this.apiUrl+'/admin/vcsrequests/notpending', {
         headers: {
           "x-access-token": token,
         },
