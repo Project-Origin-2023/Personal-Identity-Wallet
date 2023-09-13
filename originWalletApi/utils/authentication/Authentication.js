@@ -30,15 +30,19 @@ class Authentication {
                 res.status(401).send(new DataResponse(false,"Unauthorized"));
             req.jwtAccountId = decoded.accountId;
             req.jwtAccountEmail = decoded.email;
-            req.jwtSysAdmin = decoded.sysAdmin;
-            if(req.jwtSysAdmin)
-                req.jwtRole = decoded.role;
+            req.jwtDid = decoded.did;
             next();
         });
     };
 
-    #createToken(accountId,email,sysAdmin,role){
-        const token = this.#jwt.sign({accountId,email,sysAdmin,role}, this.#jwtKey, {
+    decodeTokenOIDC = (req, res, next) => {
+        let tokenOIDC = req.headers["x-access-token-oidc"];
+        req.jwtTokenOIDC = tokenOIDC;
+        next();
+    };
+
+    #createToken(accountId,email,did){
+        const token = this.#jwt.sign({accountId,email,did}, this.#jwtKey, {
             algorithm: "HS256",
             expiresIn: this.#jwtExpirySeconds,
         })
@@ -66,7 +70,7 @@ class Authentication {
         if(TrueHash != CalculatedHash)
             return new DataResponse(false,"Password is not correct");
         //Verify SysAdmin Permision and create token
-        let token = this.#createToken(account.id,account.email,false,null);
+        let token = this.#createToken(account.id,account.email,account.did);
         //return cookie with access token and isAdmin Permission
         return new DataResponse(true,"Auth Login Successfuly Token created",{token:token});
     }

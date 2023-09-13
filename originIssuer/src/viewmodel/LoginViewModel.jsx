@@ -1,14 +1,10 @@
 import axios from 'axios';
+import ViewModel from './ViewModel';
 
-class LoginViewModel {
-  constructor() {
-    // Configura l'URL del tuo backend per l'autenticazione
-    this.apiUrl = 'http://localhost:3000/auth';
-  }
-
+class LoginViewModel extends ViewModel{
   async login(email, password) {
     try {
-      const response = await axios.post(`${this.apiUrl}/login`, {
+      const response = await axios.post(`${this.apiUrl}/auth/login`, {
         email: email,
         password: password,
       });
