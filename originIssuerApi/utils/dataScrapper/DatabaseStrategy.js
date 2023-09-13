@@ -5,7 +5,7 @@ class DatabaseStrategy extends Database{
     constructor() {
         super({
             user: 'admin',
-            host: 'localhost',
+            host: '10.5.0.31',
             database: 'originissuer',
             password: 'admin',
             port: 5432,

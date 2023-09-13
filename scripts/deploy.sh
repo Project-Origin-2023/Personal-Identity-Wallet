@@ -15,17 +15,16 @@ docker compose up -d #avvia i container necessari
 n="healthy"
 #restore originIssuerDB
 m=`docker inspect -f {{.State.Health.Status}} personal-identity-wallet-originIssuerDB-1`
-until [ $n == $m ]
-do
+
+while [ "$m" != "$n" ]; do
     m=`docker inspect -f {{.State.Health.Status}} personal-identity-wallet-originIssuerDB-1`
-    sleep 1;
-done;
+    sleep 1
+done
 sh ./.db/restoreOriginIssuerDB.sh
 
 #restore originWalletDB
 m=`docker inspect -f {{.State.Health.Status}} personal-identity-wallet-originWalletDB-1`
-until [ $n == $m ]
-do
+while [ "$m" != "$n" ]; do
     m=`docker inspect -f {{.State.Health.Status}} personal-identity-wallet-originWalletDB-1`
     sleep 1;
 done;

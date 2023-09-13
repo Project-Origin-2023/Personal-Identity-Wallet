@@ -1,9 +1,10 @@
 import axios from 'axios';
+import ViewModel from './ViewModel';
 
-class ListCredentialRequestsViewModel {
+class ListCredentialRequestsViewModel extends ViewModel{
   async fetchDataPID(token) {
     try {
-      const response = await axios.get('http://localhost:3000/vcsrequests/pid', {
+      const response = await axios.get(this.apiUrl+'/vcsrequests/pid', {
         headers: {
           "x-access-token": token,
         },
@@ -16,7 +17,7 @@ class ListCredentialRequestsViewModel {
 
   async fetchDataMarital(token) {
     try {
-      const response = await axios.get('http://localhost:3000/vcsrequests/marital', {
+      const response = await axios.get(this.apiUrl+'/vcsrequests/marital', {
         headers: {
           "x-access-token": token,
         },

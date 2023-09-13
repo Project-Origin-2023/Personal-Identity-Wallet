@@ -1,14 +1,10 @@
 import axios from 'axios';
+import ViewModel from './ViewModel';
 
-class CredentialRequestMaritalViewModel {
-  constructor() {
-    
-    this.apiUrl = 'http://localhost:3000/vcsrequest/marital'; 
-  }
-
+class CredentialRequestMaritalViewModel extends ViewModel{
   async requestVCS(maritalData, jwtToken) { 
     try {
-      const response = await axios.post(this.apiUrl, maritalData, {
+      const response = await axios.post(this.apiUrl+'/vcsrequest/marital', maritalData, {
         headers: {
           "x-access-token": `${jwtToken}`
         },
