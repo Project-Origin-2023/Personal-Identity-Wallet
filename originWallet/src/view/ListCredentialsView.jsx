@@ -42,7 +42,7 @@ const ListCredentialsView = ({ credentials }) => {
               >
                 <TableCell>{row.id}</TableCell>
                 <TableCell align="right">{row.type.join('-')}</TableCell>
-                <TableCell align="right">{new Date(row.issuanceDate).toDateString()}</TableCell>
+                <TableCell align="right">{new Date(row.issuanceDate).toUTCString()}</TableCell>
                 <TableCell align="right">
                   <Button color="inherit" component={Link} to={'/DetailCredential'} state={{credential:row}}>Dettaglio</Button>
                 </TableCell>

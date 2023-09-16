@@ -13,28 +13,39 @@ import HighlightOffSharpIcon from '@mui/icons-material/HighlightOffSharp';
 
 const DetailCredentialView = ({ credential, handleDelete }) => {
   return (
-    <Container component="main" maxWidth="sm">
+    <Container component="main" maxWidth="md">
       <Grid container spacing={2}>
         <Grid item xs={12}>
-          <Avatar>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography variant="h5">Credenziale</Typography>
+            <Typography variant="h6">Dettagli Verifiable Credential:</Typography>
         </Grid>
         <Grid item xs={12}>
           <Card>
             <CardContent>
-              <Typography variant="h6">Dettagli </Typography>
+              {Object.keys(credential.credentialSubject).map((key)=>{
+                return (<Typography variant="body1">
+                <strong>{key}</strong> {credential.credentialSubject[key]}
+                </Typography>)
+              })}
             </CardContent>
           </Card>
         </Grid>
-        <Grid item xs={12}>
+        <Grid item xs={6}>
           <Typography variant="h6">Stato Credenziale:</Typography>
           <Typography variant="body1">
-            <strong>Stato:</strong> {}
+            <strong>issuanceDate:</strong> {new Date(credential.issuanceDate).toUTCString()}
           </Typography>
+          <Typography variant="body1">
+            <strong>issued:</strong> {new Date(credential.issued).toUTCString()}
+          </Typography>
+          <Typography variant="body1">
+            <strong>validFrom:</strong> {new Date(credential.validFrom).toUTCString()}
+          </Typography>
+          <Typography variant="body1">
+            <strong>validFrom:</strong> {new Date(credential.expirationDate).toUTCString()}
+          </Typography>
+          
         </Grid>
-        <Grid item xs={12}>
+        <Grid item xs={6}>
           <Button
             onClick={handleDelete}
             fullWidth
