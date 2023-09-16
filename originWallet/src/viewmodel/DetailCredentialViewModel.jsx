@@ -3,9 +3,9 @@ import ViewModel from './ViewModel';
 
 class DetailCredentialViewModel extends ViewModel{
 
-  async getVCStatus(id, jwtToken){
+  async deleteVC(id, jwtToken){
     try {
-      const response = await axios.get(this.apiUrl+'/vcsrequest/status/'+id , {
+      const response = await axios.delete(this.apiUrl+'/credential/'+id , {
         headers: {
           "x-access-token": `${jwtToken}`,
         },

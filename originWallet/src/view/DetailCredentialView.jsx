@@ -41,7 +41,7 @@ const DetailCredentialView = ({ credential, handleDelete }) => {
             <strong>validFrom:</strong> {new Date(credential.validFrom).toUTCString()}
           </Typography>
           <Typography variant="body1">
-            <strong>validFrom:</strong> {new Date(credential.expirationDate).toUTCString()}
+            <strong>Expiration Date:</strong> {new Date(credential.expirationDate).toUTCString()}
           </Typography>
           
         </Grid>

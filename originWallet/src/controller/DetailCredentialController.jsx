@@ -8,7 +8,9 @@ import DetailCredentialView from '../view/DetailCredentialView';
 const DetailCredentialController = ({token, setToken}) => {
     const location = useLocation()
     const { credential } = location.state
-    
+    //if location.state == null 
+    // TODO redirect to list
+
     //Creazione ViewModel
     const viewModel = new DetailCredentialViewModel();
     
@@ -19,7 +21,8 @@ const DetailCredentialController = ({token, setToken}) => {
           setToken(response.data.token)
 
         //Eliminazione Credenziale
-        response = await viewModel.reeleaseVC(id,token)
+        let id = credential.id;
+        response = await viewModel.deleteVC(id,token)
         if(!response.success)
             return alert(response.description);
         else{
