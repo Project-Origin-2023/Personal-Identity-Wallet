@@ -1,24 +1,15 @@
 import  { useEffect, useState } from 'react';
-<<<<<<< HEAD
-import { useLocation, useNavigate } from 'react-router-dom'
 import { Navigate } from 'react-router-dom'
 import { useLocation, useNavigate } from 'react-router-dom'
 
-=======
-import { useLocation } from 'react-router-dom'
-import { Navigate } from 'react-router-dom'
->>>>>>> originwallet
 
 import DetailCredentialViewModel from '../viewmodel/DetailCredentialViewModel';
 import DetailCredentialView from '../view/DetailCredentialView';
 
 const DetailCredentialController = ({token, setToken}) => {
     const location = useLocation()
-<<<<<<< HEAD
     //Reindirizzamento
     let navigate = useNavigate();
-=======
->>>>>>> originwallet
     if (location.state === undefined || location.state === null)
       return <Navigate to='/ListCredentials' />
         
@@ -40,11 +31,7 @@ const DetailCredentialController = ({token, setToken}) => {
         if(!response.success)
             return alert(response.description);
         else{
-<<<<<<< HEAD
             navigate('/ListCredentials');
-=======
-            return <Navigate to='/ListCredentials' />
->>>>>>> originwallet
         }
     };
 
