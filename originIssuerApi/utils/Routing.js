@@ -23,7 +23,7 @@ class Routing{
         this.#app.use(this.#bodyParser.json());
         this.#app.use(this.#cors(corsOptions));
         //Authetication
-        this.#auth = new Authentication("Secret",3000);
+        this.#auth = new Authentication("Secret",30000);
         //Data Scrapper
         this.#scrapper = new DataScrapper();
         try{
@@ -70,7 +70,7 @@ class Routing{
                 res.status(500).json(new DataResponse(false,"password Missing"));
                 res.end();return;
             }
-            //Verifico nr parametri correttamente
+            //Verifico parametri correttamente
             if(!this.#inputChecker.checkEmail(email)){
                 res.status(500).json(new DataResponse(false,"email format not valid"));
                 res.end();return;
@@ -117,7 +117,7 @@ class Routing{
                 res.status(500).json(new DataResponse(false,"password Missing"));
                 res.end();return;
             }
-            //Verifico nr parametri correttamente
+            //Verifico parametri correttamente
             if(!this.#inputChecker.checkEmail(email)){
                 res.status(500).json(new DataResponse(false,"email format not valid"));
                 res.end();return;
@@ -126,8 +126,7 @@ class Routing{
                 res.status(500).json(new DataResponse(false,"password format not valid"));
                 res.end();return;
             }
-            //Verifico nr parametri correttamente
-            //TODO
+            //Verifico parametri correttamente
 
             var response = await this.#auth.register(email,password)
             if(!response.success){
@@ -295,7 +294,7 @@ class Routing{
                 res.status(500).json(new DataResponse(false,"placeOfBirth Missing"));
                 res.end();return;
             }
-            //Verifico nr parametri correttamente
+            //Verifico parametri correttamente
             if(!this.#inputChecker.checkString(currentAddress)){
                 res.status(500).json(new DataResponse(false,"currentAddress format not valid"));
                 res.end();return;
@@ -372,7 +371,7 @@ class Routing{
                 res.end();return;
             }
             
-            //Verifico nr parametri correttamente
+            //Verifico parametri correttamente
             if(!this.#inputChecker.checkString(personalIdentifier)){
                 res.status(500).json(new DataResponse(false,"personalIdentifier format not valid"));
                 res.end();return;
@@ -429,7 +428,7 @@ class Routing{
                 res.status(500).json(new DataResponse(false,"id Missing"));
                 res.end();return;
             }
-            //Verifico nr parametri correttamente
+            //Verifico parametri correttamente
             if(!this.#inputChecker.checkInteger(id)){
                 res.status(500).json(new DataResponse(false,"id format not valid"));
                 res.end();return;
@@ -509,7 +508,7 @@ class Routing{
                 res.status(500).json(new DataResponse(false,"id Missing"));
                 res.end();return;
             }
-            //Verifico nr parametri correttamente
+            //Verifico parametri correttamente
             if(!(this.#inputChecker.checkInteger(id))){
                 res.status(500).json(new DataResponse(false,"id format not valid"));
                 res.end();return;
@@ -550,7 +549,7 @@ class Routing{
                 res.status(500).json(new DataResponse(false,"id Missing"));
                 res.end();return;
             }
-            //Verifico nr parametri correttamente
+            //Verifico parametri correttamente
             if(!this.#inputChecker.checkInteger(id)){
                 res.status(500).json(new DataResponse(false,"id format not valid"));
                 res.end();return;
@@ -607,7 +606,7 @@ class Routing{
                 res.status(500).json({ success: false, message: 'status Missing' });
                 res.end();return;
             }
-            //Verifico nr parametri correttamente
+            //Verifico parametri correttamente
             if(!this.#inputChecker.checkInteger(vcsrequestId)){
                 res.status(500).json({ success: false, message: 'vcsrequestId format not valid' });
                 res.end();return;
