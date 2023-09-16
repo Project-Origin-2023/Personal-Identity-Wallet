@@ -1,11 +1,15 @@
 import  { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom'
-import { useLocation } from 'react-router-dom'
+import { Navigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
+
 
 import InitiateIssuanceViewModel from '../viewmodel/InitiateIssuanceViewModel';
 import InitiateIssuanceView from '../view/InitiateIssuanceView';
 
 const InitiateIssuanceController = ({token, setToken}) => {
+    //Reindirizzamento
+    let navigate = useNavigate();
     //parametro query sessionId
     const [searchParams] = useSearchParams();
     const sessionId = searchParams.get('sessionId');
@@ -45,7 +49,7 @@ const InitiateIssuanceController = ({token, setToken}) => {
       if(!response.success)
           return alert(response.description);
       else{
-        //TODO Redirect to LIST Credential
+        navigate('/ListCredentials');      
       }
   };
 

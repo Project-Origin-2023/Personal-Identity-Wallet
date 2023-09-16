@@ -1,15 +1,20 @@
 import  { useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router-dom'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
+import { Navigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
+
 
 import DetailCredentialViewModel from '../viewmodel/DetailCredentialViewModel';
 import DetailCredentialView from '../view/DetailCredentialView';
 
 const DetailCredentialController = ({token, setToken}) => {
     const location = useLocation()
+    //Reindirizzamento
+    let navigate = useNavigate();
+    if (location.state === undefined || location.state === null)
+      return <Navigate to='/ListCredentials' />
+        
     const { credential } = location.state
-    //if location.state == null 
-    // TODO redirect to list
 
     //Creazione ViewModel
     const viewModel = new DetailCredentialViewModel();
@@ -23,10 +28,11 @@ const DetailCredentialController = ({token, setToken}) => {
         //Eliminazione Credenziale
         let id = credential.id;
         response = await viewModel.deleteVC(id,token)
+        console.log(response)
         if(!response.success)
             return alert(response.description);
         else{
-          //TODO Redirect to LIST Credential
+            navigate('/ListCredentials');
         }
     };
 
