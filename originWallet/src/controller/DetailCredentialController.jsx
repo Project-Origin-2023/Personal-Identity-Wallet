@@ -19,7 +19,8 @@ const DetailCredentialController = ({token, setToken}) => {
           setToken(response.data.token)
 
         //Eliminazione Credenziale
-        response = await viewModel.reeleaseVC(id,token)
+        let id = credential.id;
+        response = await viewModel.deleteVC(id,token)
         if(!response.success)
             return alert(response.description);
         else{
