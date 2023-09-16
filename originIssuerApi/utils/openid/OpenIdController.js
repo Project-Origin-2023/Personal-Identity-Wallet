@@ -19,7 +19,7 @@ class OpenIdController {
     }
 
     postTemplate(name,data){
-        //TODO da togliere e ricevere come parametro
+        /*
         data = JSON.stringify({
         "type": [
             "PID"
@@ -61,7 +61,7 @@ class OpenIdController {
             }
         ]
         });
-
+        */
         var config = {
         method: 'post',
         url: this.#issuerUri+'/issuer-api/default/config/templates/'+name,

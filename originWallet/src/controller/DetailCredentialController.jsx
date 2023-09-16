@@ -1,15 +1,16 @@
 import  { useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router-dom'
 import { useLocation } from 'react-router-dom'
+import { Navigate } from 'react-router-dom'
 
 import DetailCredentialViewModel from '../viewmodel/DetailCredentialViewModel';
 import DetailCredentialView from '../view/DetailCredentialView';
 
 const DetailCredentialController = ({token, setToken}) => {
     const location = useLocation()
+    if (location.state === undefined || location.state === null)
+      return <Navigate to='/ListCredentials' />
+        
     const { credential } = location.state
-    //if location.state == null 
-    // TODO redirect to list
 
     //Creazione ViewModel
     const viewModel = new DetailCredentialViewModel();
@@ -26,7 +27,7 @@ const DetailCredentialController = ({token, setToken}) => {
         if(!response.success)
             return alert(response.description);
         else{
-          //TODO Redirect to LIST Credential
+            return <Navigate to='/ListCredentials' />
         }
     };
 

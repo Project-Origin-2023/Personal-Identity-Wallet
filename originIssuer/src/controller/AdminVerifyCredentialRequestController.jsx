@@ -1,5 +1,6 @@
 import  { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom'
+import { Navigate } from 'react-router-dom'
 
 import AdminVerifyCredentialRequestViewModel from '../viewmodel/AdminVerifyCredentialRequestViewModel';
 import AdminVerifyCredentialRequestPidView from '../view/AdminVerifyCredentialRequestPidView';
@@ -52,8 +53,7 @@ const AdminVerifyCredentialRequestController = ({ token }) => {
         if(!response.success)
             return alert(response.description);
         else{
-          //TODO
-          //REINDIRIZZA AL LINK DEL
+            return <Navigate to='/AdminListCredentialRequests' />
         }
     };
   
