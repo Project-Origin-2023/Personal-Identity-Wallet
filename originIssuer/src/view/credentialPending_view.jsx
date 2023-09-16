@@ -107,7 +107,7 @@ const credentialPendingView = ({ credentialData, selectedRecord, handleRecordCli
             </TableBody>
           </Table>
         ) : (
-          <p>Caricamento dati credenziali...</p>
+          <p>Ancora nessun dato da mostrare ...</p>
         )}
       </>
     )}

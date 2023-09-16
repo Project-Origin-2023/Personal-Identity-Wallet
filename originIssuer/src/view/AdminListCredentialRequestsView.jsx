@@ -52,7 +52,7 @@ const AdminListCredentialRequestsView = ({ vcs_requestsPending, vcs_requestsNoPe
         </Table>
       </TableContainer>
     ):(
-      <p>Caricamento dati credenziali...</p>
+      <p>Ancora nessun dato da mostrare ...</p>
     )}
     <Typography
       component="h1"
@@ -85,7 +85,7 @@ const AdminListCredentialRequestsView = ({ vcs_requestsPending, vcs_requestsNoPe
         </Table>
       </TableContainer>
     ):(
-      <p>Caricamento dati credenziali...</p>
+      <p>Ancora nessun dato da mostrare ...</p>
     )}
   </Container>
   );
