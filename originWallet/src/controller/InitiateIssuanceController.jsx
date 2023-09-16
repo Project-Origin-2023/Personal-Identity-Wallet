@@ -1,7 +1,10 @@
 import  { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom'
 import { Navigate } from 'react-router-dom'
+<<<<<<< HEAD
 import { useLocation, useNavigate } from 'react-router-dom'
+=======
+>>>>>>> originwallet
 
 
 import InitiateIssuanceViewModel from '../viewmodel/InitiateIssuanceViewModel';
@@ -49,7 +52,11 @@ const InitiateIssuanceController = ({token, setToken}) => {
       if(!response.success)
           return alert(response.description);
       else{
+<<<<<<< HEAD
         navigate('/ListCredentials');      
+=======
+        return <Navigate to='/ListCredentials' />
+>>>>>>> originwallet
       }
   };
 

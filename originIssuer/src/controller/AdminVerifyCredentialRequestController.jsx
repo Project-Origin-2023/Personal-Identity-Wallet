@@ -1,6 +1,9 @@
 import  { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom'
+<<<<<<< HEAD
 import { useLocation, useNavigate } from 'react-router-dom'
+=======
+>>>>>>> originwallet
 import { Navigate } from 'react-router-dom'
 
 import AdminVerifyCredentialRequestViewModel from '../viewmodel/AdminVerifyCredentialRequestViewModel';
@@ -56,7 +59,11 @@ const AdminVerifyCredentialRequestController = ({ token }) => {
         if(!response.success)
             return alert(response.description);
         else{
+<<<<<<< HEAD
             navigate('/AdminListCredentialRequests');
+=======
+            return <Navigate to='/AdminListCredentialRequests' />
+>>>>>>> originwallet
         }
     };
   
