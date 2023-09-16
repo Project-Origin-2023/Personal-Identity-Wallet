@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import ListCredentialsViewModel from '../viewmodel/ListCredentialsViewModel';
 import ListCredentialsView from '../view/ListCredentialsView';
+import BackdropView from '../view/BackdropView';
 
 const ListCredentialsController = ({ token , setToken}) => {
   const viewModel = new ListCredentialsViewModel();
@@ -24,9 +25,15 @@ const ListCredentialsController = ({ token , setToken}) => {
 
 
   return (
-    <ListCredentialsView
+    <div>
+    { credentials.length > 0 ? (
+      <ListCredentialsView
       credentials={credentials}
-    />
+      />
+    ):(
+      <BackdropView/>
+    )}
+    </div>
   );
 };
 
