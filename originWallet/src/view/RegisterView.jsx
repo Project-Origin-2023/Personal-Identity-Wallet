@@ -2,7 +2,7 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import Link from '@mui/material/Link';
+import { Link } from "react-router-dom";
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
@@ -66,8 +66,8 @@ const RegisterView = ({ email, password, setEmail, setPassword, handleRegister }
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link href="/Login" variant="body2">
-                  Already have an account? Sign in
+                <Link to="/Login" variant="body2">
+                <button>Already have an account? Sign in</button>
                 </Link>
               </Grid>
             </Grid>
