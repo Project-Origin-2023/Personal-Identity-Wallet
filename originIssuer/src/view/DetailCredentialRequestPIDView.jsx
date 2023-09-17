@@ -20,27 +20,24 @@ import Dialog from '@mui/material/Dialog';
 import PersonIcon from '@mui/icons-material/Person';
 import AddIcon from '@mui/icons-material/Add';
 import { blue } from '@mui/material/colors';
+import CardMedia from '@mui/material/CardMedia';
 
-const DetailCredentialRequestPIDView = ({ wallets, openidIssuanceURI, pidData, vcStatus, handleRelease }) => {
-  const [openWalletList, setOpenWalletList] = useState();
-  
-  const handleOpenWalletList = () => {
-    setOpenWalletList(true)
-  };
-
-  const handleCloseWalletList = () => {
-    setOpenWalletList(false)
-  }
-
-  const handleWalletListItemClick = (wallet) => {
-    handleRelease(wallet);
-  };
+const DetailCredentialRequestPIDView = ({pidData,vcStatus,handleRelease,handleOpenWalletList,handleCloseWalletList,openWalletList,openidIssuanceURIQR,wallets}) => {  
   
   return (
     <div>
     <Dialog onClose={handleCloseWalletList} open={openWalletList}>
       <DialogTitle>Selezionare un Wallet <br/> oppure usa il QR Code</DialogTitle>
-      <List sx={{ pt: 0 }}>
+      <List>
+        <ListItem disableGutters>
+        <Card>
+        <CardMedia
+            component="img"
+            alt="OIDC Issuance QR Code Not Found"
+            image={openidIssuanceURIQR}
+          />
+        </Card>
+        </ListItem>
         {wallets.map((wallet) => (
           <ListItem disableGutters key={wallet}>
             <ListItemButton onClick={() => handleRelease(wallet)}>
@@ -102,7 +99,7 @@ const DetailCredentialRequestPIDView = ({ wallets, openidIssuanceURI, pidData, v
         </Grid>
         <Grid item xs={12}>
           <Button
-            //disabled={vcStatus.pending || pidData.released || !vcStatus.status}
+            disabled={vcStatus.pending || pidData.released || !vcStatus.status}
             onClick={handleOpenWalletList}
             fullWidth
             variant="contained"

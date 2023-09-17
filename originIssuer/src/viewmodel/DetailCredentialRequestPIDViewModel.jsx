@@ -28,9 +28,22 @@ class DetailCredentialRequestPIDViewModel extends ViewModel{
     }
   }
 
-  async reeleaseVC(id,wallet, jwtToken){
+  async releaseVC(id,wallet, jwtToken){
     try {
       const response = await axios.get(this.apiUrl+'/vcsrequest/release/'+id+'?wallet='+wallet , {
+        headers: {
+          "x-access-token": `${jwtToken}`,
+        },
+      });
+      return response.data;
+    } catch (error) {
+      return error.response.data;
+    }
+  }
+
+  async releaseVCCrossDevice(id, jwtToken){
+    try {
+      const response = await axios.get(this.apiUrl+'/vcsrequest/releasecrossdevice/'+id, {
         headers: {
           "x-access-token": `${jwtToken}`,
         },
