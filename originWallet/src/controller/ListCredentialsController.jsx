@@ -3,20 +3,21 @@ import { useLocation } from 'react-router-dom'
 import ListCredentialsViewModel from '../viewmodel/ListCredentialsViewModel';
 import ListCredentialsView from '../view/ListCredentialsView';
 import BackdropView from '../view/BackdropView';
+import { useNavigate } from 'react-router-dom'
 
-const ListCredentialsController = ({ token , setToken}) => {
+
+const ListCredentialsController = ({ token , setToken, state }) => {
+  //Reindirizzamento
+  let navigate = useNavigate();
   const viewModel = new ListCredentialsViewModel();
   const [credentials, setCredentials] = useState([]);
 
-  //State from previous pages
-  const location = useLocation();
-  let state = {pending:false,type:null,message:null}
-  if (typeof location.state !== 'undefined' && location.state !== null)
-    state = useLocation().state;
-  
-
   useEffect(() => {
     const fetchData = async () => {
+      //Redirect to Login if not present the Token
+      if(typeof token=== "undefined" || token===null || token==="") {
+        return navigate('/Login');      
+      }
       //Aggioranamento token
       let response = await viewModel.refreshAuth(token)
       if(response.success)

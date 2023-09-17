@@ -69,6 +69,7 @@ ALTER TABLE ONLY public.accounts ALTER COLUMN id SET DEFAULT nextval('public.acc
 --
 
 COPY public.accounts (id, email, did, hashed_pass, salt) FROM stdin;
+22	admin@admin.com	did:key:z6MktRwJzcTwg4eTxH3hqjLwTeaYTLBskRAB43nMGBNwa5K2	25a46b9a33252beb1e6b4e485bb8b4677a8ee5b50ee21467e05239c85db232820de8288f4cb803bfba92494945767029688072502083d9864d200e97def9a635	f4fa1b3e4b09ad233319bcec90147418
 \.
 
 
@@ -76,7 +77,15 @@ COPY public.accounts (id, email, did, hashed_pass, salt) FROM stdin;
 -- Name: accounts_id_seq; Type: SEQUENCE SET; Schema: public; Owner: admin
 --
 
-SELECT pg_catalog.setval('public.accounts_id_seq', 1, false);
+SELECT pg_catalog.setval('public.accounts_id_seq', 25, true);
+
+
+--
+-- Name: accounts accounts_email_key; Type: CONSTRAINT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.accounts
+    ADD CONSTRAINT accounts_email_key UNIQUE (email);
 
 
 --

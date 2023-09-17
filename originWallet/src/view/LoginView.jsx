@@ -87,7 +87,7 @@ const LoginView = ({ email, password, setEmail, setPassword, handleLogin }) => {
               <Grid container>
                 <Grid item>
                   <Link to="/Register" variant="body2">
-                    {"Don't have an account? Register"}
+                    Don't have an account? Register
                   </Link>
                 </Grid>
               </Grid>
