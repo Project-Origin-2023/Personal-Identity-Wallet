@@ -22,6 +22,11 @@ const InitiateIssuanceController = ({token, setToken}) => {
     
     useEffect(() => {
       const fetchData = async () => {
+        //Redirect to Login if not present the Token
+        if(typeof token=== "undefined" || token===null || token==="") {
+          return navigate('/Login',{state:{pending:true,type:'ci',sessionId:sessionId}});      
+        }
+
         //Aggioranamento token
         let response = await viewModel.refreshAuth(token)
         if(response.success)
