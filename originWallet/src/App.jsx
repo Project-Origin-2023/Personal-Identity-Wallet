@@ -13,11 +13,14 @@ import LoginController from './controller/LoginController';
 import ListCredentialsController from './controller/ListCredentialsController';
 import DetailCredentialController from './controller/DetailCredentialController'
 import InitiateIssuanceController from './controller/InitiateIssuanceController';
+import StartIssuerInitiatedIssuanceController from './controller/StartIssuerInitiatedIssuanceController';
 import useToken from './components/useToken';
+import PageState from './components/PageState';
 
 function App() {
-  const { token, setToken , isAdmin, setIsAdmin} = useToken();
+  const { token, setToken } = useToken();
 
+  const state = new PageState()
   
   const darkTheme = createTheme({
     palette: {
@@ -30,14 +33,15 @@ function App() {
     <ThemeProvider theme={darkTheme}>
       <Router>
         <AuthProvider>
-          <Navbar isAdmin={isAdmin} isLoggedIn={token!==null} setIsAdmin={setIsAdmin} setToken={setToken}/>
+          <Navbar isLoggedIn={token!==null} setToken={setToken} state={state}/>
           <Routes>
             <Route path="/"  element={<Home />} />
-            <Route path="/Register" element={<RegisterController setToken={setToken}/>} />
-            <Route path="/Login" element={<LoginController setToken={setToken} setIsAdmin={setIsAdmin}/>} />
-            <Route path="/ListCredentials" element={<ListCredentialsController token={token} setToken={setToken}/>} />
-            <Route path="/DetailCredential" element={<DetailCredentialController token={token} setToken={setToken}/>} />
-            <Route path="/InitiateIssuance" element={<InitiateIssuanceController token={token} setToken={setToken}/>} />
+            <Route path="/Register" element={<RegisterController setToken={setToken} state={state}/>} />
+            <Route path="/Login" element={<LoginController setToken={setToken} state={state}/>} />
+            <Route path="/ListCredentials" element={<ListCredentialsController token={token} setToken={setToken} state={state} />} />
+            <Route path="/DetailCredential" element={<DetailCredentialController token={token} setToken={setToken} state={state} />} />
+            <Route path="/InitiateIssuance" element={<InitiateIssuanceController token={token} setToken={setToken} state={state} />} />
+            <Route path="/StartIssuerInitiatedIssuance" element={<StartIssuerInitiatedIssuanceController token={token} setToken={setToken} state={state} />} />
           </Routes>
         </AuthProvider>
       </Router>

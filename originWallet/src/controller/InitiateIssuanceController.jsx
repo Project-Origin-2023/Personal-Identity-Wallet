@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom'
 import InitiateIssuanceViewModel from '../viewmodel/InitiateIssuanceViewModel';
 import InitiateIssuanceView from '../view/InitiateIssuanceView';
 
-const InitiateIssuanceController = ({token, setToken}) => {
+const InitiateIssuanceController = ({token, setToken, state}) => {
     //Reindirizzamento
     let navigate = useNavigate();
     //parametro query sessionId
@@ -22,9 +22,14 @@ const InitiateIssuanceController = ({token, setToken}) => {
     
     useEffect(() => {
       const fetchData = async () => {
-        //Redirect to Login if not present the Token
+        //Set State of this Page and Redirect To Login
         if(typeof token=== "undefined" || token===null || token==="") {
-          return navigate('/Login',{state:{pending:true,type:'ci',sessionId:sessionId}});      
+          state.setState({pending:true,type:'ci',data:{sessionId:sessionId}})
+          return navigate('/Login');      
+        }
+        //Restore default state
+        if(state.getPending()){
+          state.restoreDefaultState();
         }
 
         //Aggioranamento token

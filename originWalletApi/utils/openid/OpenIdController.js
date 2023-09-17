@@ -13,7 +13,9 @@ class OpenIdController {
             var response = await this.#axios(config);
             return {success:true,description:"OIDC Request with success",data:response.data};
         }catch(e){
-            if(typeof e.response.data !== 'undefined')
+            if(typeof e.response.data.message !== 'undefined')
+                return {success:false,description:e.response.data.message,data:null,error:e};
+            else if(typeof e.response.data !== 'undefined')
                 return {success:false,description:e.response.data,data:null,error:e};
             else
                 return {success:false,description:'General Open ID Connect Error, try Again',data:null,error:e};
