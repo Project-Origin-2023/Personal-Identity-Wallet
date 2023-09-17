@@ -1,9 +1,6 @@
 import  { useState } from 'react';
 import { Navigate } from 'react-router-dom'
-<<<<<<< HEAD
 import { useLocation, useNavigate } from 'react-router-dom'
-=======
->>>>>>> originwallet
 
 import CredentialRequestMaritalViewModel from '../viewmodel/CredentialRequestMaritalViewModel'; // Assumi che VCSRequestViewModel sia stato importato correttamente
 import CredentialRequestMaritalView from '../view/CredentialRequestMaritalView';
@@ -23,11 +20,7 @@ const CredentialRequestMaritalController = ({ token }) => {
     const response = await viewModel.requestVCS(maritalData,token);
     alert(response.description)
     if (response.success) {
-<<<<<<< HEAD
       navigate('/ListCredentialRequests');      
-=======
-      return <Navigate to='/ListCredentialRequests' />
->>>>>>> originwallet
     }
   };
 

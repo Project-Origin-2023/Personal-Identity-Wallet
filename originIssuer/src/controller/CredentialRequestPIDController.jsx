@@ -1,9 +1,6 @@
 import  { useState } from 'react';
 import { Navigate } from 'react-router-dom'
-<<<<<<< HEAD
 import { useLocation, useNavigate } from 'react-router-dom'
-=======
->>>>>>> originwallet
 
 import CredentialRequestPIDViewModel from '../viewmodel/CredentialRequestPIDViewModel'; // Assumi che VCSRequestViewModel sia stato importato correttamente
 import CredentialRequestPIDView from '../view/CredentialRequestPIDView';
@@ -40,11 +37,7 @@ const CredentialRequestPIDController = ({ token }) => {
     const response = await viewModel.requestVCS(pidData, token);
     alert(response.description)
     if (response.success) {
-<<<<<<< HEAD
       navigate('/ListCredentialRequests');      
-=======
-      return <Navigate to='/ListCredentialRequests' />
->>>>>>> originwallet
     }
   };
 
