@@ -4,16 +4,9 @@ import ListCredentialsViewModel from '../viewmodel/ListCredentialsViewModel';
 import ListCredentialsView from '../view/ListCredentialsView';
 import BackdropView from '../view/BackdropView';
 
-const ListCredentialsController = ({ token , setToken}) => {
+const ListCredentialsController = ({ token , setToken }) => {
   const viewModel = new ListCredentialsViewModel();
   const [credentials, setCredentials] = useState([]);
-
-  //State from previous pages
-  const location = useLocation();
-  let state = {pending:false,type:null,message:null}
-  if (typeof location.state !== 'undefined' && location.state !== null)
-    state = useLocation().state;
-  
 
   useEffect(() => {
     const fetchData = async () => {

@@ -67,7 +67,7 @@ const RegisterView = ({ email, password, setEmail, setPassword, handleRegister }
             <Grid container justifyContent="flex-end">
               <Grid item>
                 <Link to="/Login" variant="body2">
-                <button>Already have an account? Sign in</button>
+                Already have an account? Sign in
                 </Link>
               </Grid>
             </Grid>
