@@ -53,23 +53,23 @@ const DetailCredentialRequestPIDController = ({ token }) => {
         }
     };
 
-  const [openWalletList, setOpenWalletList] = useState();
-  const [openidIssuanceURIQR , setOpenidIssuanceURIQR ] = useState();
-  
-  const handleOpenWalletList = async () => {
-    //Generate QR Code
-    let result = await viewModel.releaseVCCrossDevice(id,token)
-    let encodedOpenidIssuanceURI = '';
-    if(result.success)
-      encodedOpenidIssuanceURI = encodeURIComponent(result.data.redirectWalletUri);
-    setOpenidIssuanceURIQR(viewModel.getApiUrl()+'/qr?uri='+encodedOpenidIssuanceURI);
-    //Show List
-    setOpenWalletList(true)
-  };
+    const [openWalletList, setOpenWalletList] = useState();
+    const [openidIssuanceURIQR , setOpenidIssuanceURIQR ] = useState();
+    
+    const handleOpenWalletList = async () => {
+      //Generate QR Code
+      let result = await viewModel.releaseVCCrossDevice(id,token)
+      let encodedOpenidIssuanceURI = '';
+      if(result.success)
+        encodedOpenidIssuanceURI = encodeURIComponent(result.data.redirectWalletUri);
+      setOpenidIssuanceURIQR(viewModel.getApiUrl()+'/qr?uri='+encodedOpenidIssuanceURI);
+      //Show List
+      setOpenWalletList(true)
+    };
 
-  const handleCloseWalletList = () => {
-    setOpenWalletList(false)
-  }
+    const handleCloseWalletList = () => {
+      setOpenWalletList(false)
+    }
 
     return (
     <DetailCredentialRequestPIDView

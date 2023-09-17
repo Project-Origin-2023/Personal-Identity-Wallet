@@ -4,6 +4,7 @@ import { useSearchParams } from 'react-router-dom'
 import DetailCredentialRequestMaritalViewModel from '../viewmodel/DetailCredentialRequestMaritalViewModel';
 import DetailCredentialRequestMaritalView from '../view/DetailCredentialRequestMaritalView';
 
+
 const DetailCredentialRequestMaritalController = ({ token }) => {
     const [searchParams] = useSearchParams()
     const [marData, setMARData] = useState({
@@ -38,7 +39,7 @@ const DetailCredentialRequestMaritalController = ({ token }) => {
     }, [token]);
 
     const handleRelease = async () => {
-        const response = await viewModel.reeleaseVC(id,token)
+        const response = await viewModel.releaseVC(id,token)
         if(!response.success)
             return alert(response.description);
         else{
@@ -46,12 +47,35 @@ const DetailCredentialRequestMaritalController = ({ token }) => {
         }
     };
 
+    const [openWalletList, setOpenWalletList] = useState();
+    const [openidIssuanceURIQR , setOpenidIssuanceURIQR ] = useState();
+    
+    const handleOpenWalletList = async () => {
+      //Generate QR Code
+      let result = await viewModel.releaseVCCrossDevice(id,token)
+      let encodedOpenidIssuanceURI = '';
+      if(result.success)
+        encodedOpenidIssuanceURI = encodeURIComponent(result.data.redirectWalletUri);
+      setOpenidIssuanceURIQR(viewModel.getApiUrl()+'/qr?uri='+encodedOpenidIssuanceURI);
+      //Show List
+      setOpenWalletList(true)
+    };
+
+    const handleCloseWalletList = () => {
+      setOpenWalletList(false)
+    }
+
 
   return (
     <DetailCredentialRequestMaritalView
       marData={marData}
       vcStatus={vcStatus}
       handleRelease={handleRelease}
+      handleOpenWalletList={handleOpenWalletList}
+      handleCloseWalletList={handleCloseWalletList}
+      openWalletList={openWalletList}
+      openidIssuanceURIQR={openidIssuanceURIQR}
+      wallets={['origin','waltid','waltiddemo']}
     />
   );
 };
