@@ -441,19 +441,19 @@ class Routing{
             }
             //Verifico che la richiesta di release della vcs request corrisponda ad una vcs request del utente loggato
             if (result.data.verification.pending){//caso in cui vcs request non è stata ancora esaminata da un sys admin ed è in pending
-                res.status(500).json(new DataResponse(false,"vcs request verification in pending"));
+                res.status(500).json(new DataResponse(false,"credential request verification in pending"));
                 res.end();return;
             } 
             if(req.jwtAccountId != result.data.verification.applicant){
-                res.status(500).json(new DataResponse(false,"vcs request is not for the account logged in"));
+                res.status(500).json(new DataResponse(false,"credential request is not for the account logged in"));
                 res.end();return;
             }
             if (!result.data.verification.status){//caso in cui vcs request è stata esaminata con esito negativo
-                res.status(500).json(new DataResponse(false,"vcs request verification status negative"));
+                res.status(500).json(new DataResponse(false,"credential  request verification status negative"));
                 res.end();return;
             } 
             if (result.data.verification.released){//caso in cui vcs request già stata rilasciata
-                res.status(500).json(new DataResponse(false,"vcs request already released"));
+                res.status(500).json(new DataResponse(false,"vcredential  request already released"));
                 res.end();return;
             }
             //Post condizioni, vcs request esistente, verificata con esito positivo e non già rilasciata
@@ -521,7 +521,7 @@ class Routing{
             //Se è un Sys Admin, ha i permessi di ottenere in ogni caso la vcs request, se è un user deve essere la propria vcs request
             if(!req.jwtSysAdmin){
                 if(result.data.vcs_request.applicant != req.jwtAccountId){
-                    res.status(500).json(new DataResponse(false,"vcs request is not own by account logged in"));
+                    res.status(500).json(new DataResponse(false,"credential request is not own by account logged in"));
                     res.end();return;
                 }
             }
@@ -562,7 +562,7 @@ class Routing{
             //Se è un Sys Admin, ha i permessi di ottenere in ogni caso la vcs request, se è un user deve essere la propria vcs request
             if(!req.jwtSysAdmin){
                 if(result.data.vcs_request.applicant != req.jwtAccountId){
-                    res.status(500).json(new DataResponse(false,"vcs request is not own by account logged in"));
+                    res.status(500).json(new DataResponse(false,"credential request is not own by account logged in"));
                     res.end();return;
                 }
             }
@@ -598,7 +598,7 @@ class Routing{
             //Verifica dati input
             // Verifica dati di input (presenza ed esistenza)
             if (!vcsrequestId || vcsrequestId.trim() === '') {
-                res.status(500).json({ success: false, message: 'vcsrequestId Missing' });
+                res.status(500).json({ success: false, message: 'credential request Missing' });
                 res.end();return;
             }
             if (!status) {
@@ -607,7 +607,7 @@ class Routing{
             }
             //Verifico parametri correttamente
             if(!this.#inputChecker.checkInteger(vcsrequestId)){
-                res.status(500).json({ success: false, message: 'vcsrequestId format not valid' });
+                res.status(500).json({ success: false, message: 'credential request format not valid' });
                 res.end();return;
             }
             if(!this.#inputChecker.checkBoolean(status)){
@@ -642,7 +642,7 @@ class Routing{
                 res.end();return;
             }
             if(req.jwtRole!="verifier"){
-                res.status(500).json(new DataResponse(false,"Sys_Admin Verifier Authorization required, check your department for optain permission"));
+                res.status(500).json(new DataResponse(false,"Sys_Admin Verifier Authorization required, check your department to obtain permission"));
                 res.end();return;
             }
 
@@ -674,7 +674,7 @@ class Routing{
                 res.end();return;
             }
             if(req.jwtRole!="verifier"){
-                res.status(500).json(new DataResponse(false,"Sys_Admin Verifier Authorization required, check your department for optain permission"));
+                res.status(500).json(new DataResponse(false,"Sys_Admin Verifier Authorization required, check your department to obtain permission"));
                 res.end();return;
             }
 
