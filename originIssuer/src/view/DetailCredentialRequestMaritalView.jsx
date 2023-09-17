@@ -23,10 +23,13 @@ import { blue } from '@mui/material/colors';
 import CardMedia from '@mui/material/CardMedia';
 
 
-const DetailCredentialRequestMaritalView = ({marData,vcStatus,handleRelease,handleOpenWalletList,handleCloseWalletList,openWalletList,openidIssuanceURIQR,wallets}) => {
+const DetailCredentialRequestMaritalView = ({marData,vcStatus,handleRelease,handleOpenWalletList,handleCloseWalletList,openWalletList,openidIssuanceURI,openidIssuanceURIQR,wallets}) => {
   return (
     <div>
-    <Dialog onClose={handleCloseWalletList} open={openWalletList}>
+    <Dialog onClose={handleCloseWalletList} open={openWalletList}
+    style={{
+      width: '25%'
+    }}>
       <DialogTitle>Selezionare un Wallet <br/> oppure usa il QR Code</DialogTitle>
       <List>
         <ListItem disableGutters>
@@ -36,6 +39,11 @@ const DetailCredentialRequestMaritalView = ({marData,vcStatus,handleRelease,hand
             alt="OIDC Issuance QR Code Not Found"
             image={openidIssuanceURIQR}
           />
+        <CardContent>
+        <Typography noWrap sx={{fontSize: '0.5rem'}}>
+            {openidIssuanceURI} 
+        </Typography>
+        </CardContent>
         </Card>
         </ListItem>
         {wallets.map((wallet) => (

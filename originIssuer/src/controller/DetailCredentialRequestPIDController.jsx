@@ -27,6 +27,11 @@ const DetailCredentialRequestPIDController = ({ token }) => {
     const id = searchParams.get('id');
     const viewModel = new DetailCredentialRequestPIDViewModel();
 
+    const [openWalletList, setOpenWalletList] = useState();
+    const [openidIssuanceURIQR , setOpenidIssuanceURIQR ] = useState();
+    const [openidIssuanceURI , setOpenidIssuanceURI ] = useState();
+    const [walletList, setWalletList] = useState([]);
+
     useEffect(() => {
         const fetchData = async () => {
             //Redirect to Login if not present the Token
@@ -71,17 +76,14 @@ const DetailCredentialRequestPIDController = ({ token }) => {
         }
     };
 
-    const [openWalletList, setOpenWalletList] = useState();
-    const [openidIssuanceURIQR , setOpenidIssuanceURIQR ] = useState();
-    const [walletList, setWalletList] = useState([]);
-
     const handleOpenWalletList = async () => {
       //Generate QR Code
       let result = await viewModel.releaseVCCrossDevice(id,token)
-      let encodedOpenidIssuanceURI = '';
-      if(result.success)
-        encodedOpenidIssuanceURI = encodeURIComponent(result.data.redirectWalletUri);
-      setOpenidIssuanceURIQR(viewModel.getApiUrl()+'/qr?uri='+encodedOpenidIssuanceURI);
+      if(result.success){
+        let uri = result.data.redirectWalletUri;
+        setOpenidIssuanceURI(uri)
+        setOpenidIssuanceURIQR(viewModel.getApiUrl()+'/qr?uri='+encodeURIComponent(uri));
+      }
       //Show List
       setOpenWalletList(true)
     };
@@ -98,6 +100,7 @@ const DetailCredentialRequestPIDController = ({ token }) => {
       handleOpenWalletList={handleOpenWalletList}
       handleCloseWalletList={handleCloseWalletList}
       openWalletList={openWalletList}
+      openidIssuanceURI={openidIssuanceURI}
       openidIssuanceURIQR={openidIssuanceURIQR}
       wallets={walletList}
     />
