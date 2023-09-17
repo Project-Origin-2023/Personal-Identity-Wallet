@@ -1,4 +1,4 @@
-import  { useState } from 'react';
+import  { useEffect, useState } from 'react';
 import { Navigate } from 'react-router-dom'
 import { useLocation, useNavigate } from 'react-router-dom'
 
@@ -23,6 +23,16 @@ const CredentialRequestMaritalController = ({ token }) => {
       navigate('/ListCredentialRequests');      
     }
   };
+
+  useEffect(() => {
+      const fetchData = async () => {
+        //Redirect to Login if not present the Token
+        if(typeof token=== "undefined" || token===null || token==="") {
+          return navigate('/Login');      
+        }
+      }
+      fetchData();
+  }, [token]);
 
   return (
     <CredentialRequestMaritalView

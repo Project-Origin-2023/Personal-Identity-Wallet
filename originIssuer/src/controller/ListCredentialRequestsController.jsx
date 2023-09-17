@@ -1,15 +1,21 @@
 import { useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom'
 import PropTypes from 'prop-types';
 import ListCredentialRequestsViewModel from '../viewmodel/ListCredentialRequestsViewModel';
 import ListCredentialRequestsView from '../view/ListCredentialRequestsView';
 
 const ListCredentialRequestsController = ({ token }) => {
+  let navigate = useNavigate();
   const viewModel = new ListCredentialRequestsViewModel();
   const [vcs_requestsPID, setvcs_requestsPID] = useState([]);
   const [vcs_requestsMarital, setvcs_requestsMarital] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
+      //Redirect to Login if not present the Token
+      if(typeof token=== "undefined" || token===null || token==="") {
+        return navigate('/Login');      
+      }
       const responsePID = await viewModel.fetchDataPID(token);
       if(!responsePID.success)
         return alert(responsePID.description);

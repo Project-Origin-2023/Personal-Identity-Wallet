@@ -7,10 +7,9 @@ import {
   Paper,
   Avatar,
   CssBaseline,
-  Link,
   Grid,
 } from '@mui/material';
-
+import { Link } from "react-router-dom";
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { LicenseLabel } from '../components/LicenseLabel';
 
@@ -96,8 +95,8 @@ const LoginView = ({ email, password, setEmail, setPassword, handleLogin }) => {
               </Button>
               <Grid container>
                 <Grid item>
-                  <Link href="/Register" variant="body2">
-                    {"Don't have an account? Register"}
+                  <Link to="/Register" variant="body2">
+                    Don't have an account? Register
                   </Link>
                 </Grid>
               </Grid>

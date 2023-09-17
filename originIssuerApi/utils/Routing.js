@@ -4,6 +4,7 @@ const { DataScrapper } = require('./dataScrapper/DataScrapper.js')
 const { OpenIdController } = require('./openid/OpenIdController.js')
 const { DataResponse } = require('./DataResponse.js');
 const { InputChecker } = require('./InputChecker.js');
+const { QRCodeGenerator } = require('./QRCodeGenerator')
 
 class Routing{
     #cors = require('cors');
@@ -14,6 +15,7 @@ class Routing{
     #scrapper;
     #oidc;
     #inputChecker;
+    #qrcodegenerator;
     constructor(){
         //Initialize cors ootion with origin parameter
         var corsOptions = {
@@ -35,6 +37,8 @@ class Routing{
         this.#oidc = new OpenIdController();
         //Input Checker
         this.#inputChecker = new InputChecker();
+        //QR COde Generator
+        this.#qrcodegenerator = new QRCodeGenerator();
 
     }
 
@@ -45,6 +49,25 @@ class Routing{
     }
 
     async configEndpoint(){
+
+        this.#app.get(['/qr/','/qr'], async (req, res) => {
+            //Verifico che Non sia un Sys_admin
+            if(req.jwtSysAdmin){
+                res.status(500).json(new DataResponse(false,"Sys_Admin Authorization, log in with an User Account"));
+                res.end();return;
+            }
+            const {uri} = req.query// This is how you access URL variable
+            // Verifica dati di input (presenza ed esistenza)
+            if (!uri || uri.trim() === '') {
+                res.status(500).json(new DataResponse(false,"uri Missing"));
+                res.end();return;
+            }
+            if(!this.#inputChecker.checkString(uri)){
+                res.status(500).json(new DataResponse(false,"uri format not valid"));
+                res.end();return;
+            }
+            await this.#qrcodegenerator.pipeGenerateQR(uri,res);
+        });
         
         /**
          * Endpoint for User Login.
@@ -441,19 +464,19 @@ class Routing{
             }
             //Verifico che la richiesta di release della vcs request corrisponda ad una vcs request del utente loggato
             if (result.data.verification.pending){//caso in cui vcs request non è stata ancora esaminata da un sys admin ed è in pending
-                res.status(500).json(new DataResponse(false,"vcs request verification in pending"));
+                res.status(500).json(new DataResponse(false,"credential request verification in pending"));
                 res.end();return;
             } 
             if(req.jwtAccountId != result.data.verification.applicant){
-                res.status(500).json(new DataResponse(false,"vcs request is not for the account logged in"));
+                res.status(500).json(new DataResponse(false,"credential request is not for the account logged in"));
                 res.end();return;
             }
             if (!result.data.verification.status){//caso in cui vcs request è stata esaminata con esito negativo
-                res.status(500).json(new DataResponse(false,"vcs request verification status negative"));
+                res.status(500).json(new DataResponse(false,"credential  request verification status negative"));
                 res.end();return;
             } 
             if (result.data.verification.released){//caso in cui vcs request già stata rilasciata
-                res.status(500).json(new DataResponse(false,"vcs request already released"));
+                res.status(500).json(new DataResponse(false,"vcredential  request already released"));
                 res.end();return;
             }
             //Post condizioni, vcs request esistente, verificata con esito positivo e non già rilasciata
@@ -484,6 +507,95 @@ class Routing{
                 res.status(500).json(resultUpdate);
                 res.end();return;
             }
+            //Ritorno i risultati
+            res.status(200).json(new DataResponse(true,"Credential Issuing initiated, see data for redirect link to wallet",{redirectWalletUri:result.data}));
+            res.end();return;
+        });
+
+
+        /**
+         * Get VCS (Verification of Credential Status) Request Release.
+         *
+         * @param {Object} req - The HTTP request object with a decoded JWT token.
+         * @param {Object} res - The HTTP response object.
+         * @param {string} [req.query.wallet=origin] - The wallet to use for releasing the VCS request credential.
+         * @param {string} req.params.id - The ID of the VCS request whose credential is to be released.
+         * @returns {Object} An object containing the result of the VCS request credential release process.
+         *                   If successful, it includes a success message and the credential issuance data.
+         *                   If unsuccessful or if the request ID is missing, it includes an error message.
+         */
+        //Get VCS Request Release Cross Device
+        this.#app.get(['/vcsrequest/releasecrossdevice/:id','/vcsrequest/releasecrossdevice/'],this.#auth.decodeToken, async (req, res) => {
+            //Verifico che Non sia un Sys_admin
+            if(req.jwtSysAdmin){
+                res.status(500).json(new DataResponse(false,"Sys_Admin Authorization not valid, log in with an User Account"));
+                res.end();return;
+            }
+
+            const id = req.params.id // This is how you access URL variable
+            // Verifica dati di input (presenza ed esistenza)
+            if (!id || id.trim() === '') {
+                res.status(500).json(new DataResponse(false,"id Missing"));
+                res.end();return;
+            }
+            //Verifico parametri correttamente
+            if(!this.#inputChecker.checkInteger(id)){
+                res.status(500).json(new DataResponse(false,"id format not valid"));
+                res.end();return;
+            }
+            
+            //Prendo la vcs request verification
+            var result = await this.#scrapper.getVCSRequestVerification(id);
+            if(!result.success){//caso in cui la vcs request does not exists
+                res.status(500).json(result);
+                res.end();return;
+            }
+            //Verifico che la richiesta di release della vcs request corrisponda ad una vcs request del utente loggato
+            if (result.data.verification.pending){//caso in cui vcs request non è stata ancora esaminata da un sys admin ed è in pending
+                res.status(500).json(new DataResponse(false,"credential request verification in pending"));
+                res.end();return;
+            } 
+            if(req.jwtAccountId != result.data.verification.applicant){
+                res.status(500).json(new DataResponse(false,"credential request is not for the account logged in"));
+                res.end();return;
+            }
+            if (!result.data.verification.status){//caso in cui vcs request è stata esaminata con esito negativo
+                res.status(500).json(new DataResponse(false,"credential  request verification status negative"));
+                res.end();return;
+            } 
+            if (result.data.verification.released){//caso in cui vcs request già stata rilasciata
+                res.status(500).json(new DataResponse(false,"vcredential  request already released"));
+                res.end();return;
+            }
+            //Post condizioni, vcs request esistente, verificata con esito positivo e non già rilasciata
+
+            // get vcs credential request, if it's not pid is marital
+            var credential;
+            result = await this.#scrapper.getVCSRequestPidById(id);
+            if(result.success){
+                credential = await this.#oidc.createCredential(result.data.vcs_request,"PID");
+            }else{
+                result = await this.#scrapper.getVCSRequestMarById(id);
+                if(result.success){  
+                    var dataCredential = {status:result.data.vcs_request.status, personalIdentifier:result.data.vcs_request.personalIdentifier};
+                    credential = await this.#oidc.createCredential(dataCredential,"EAA");
+                } 
+            }
+        
+            //release vcs request with openid
+            var result = await this.#oidc.issueCredentialCrossDevice(credential);
+            if(!result.success){
+                res.status(500).json(result);
+                res.end();return;
+            }
+            //Per una cross realease option bisognerebbe fare un controllo su quando la credenziale viene effettivamente rilasciata
+            //Questo controllo non viene effettuato, ma si dovrebbe fare
+            //update vcs request realeased in DB
+            //var resultUpdate = await this.#scrapper.updateVCSRequestReleased(id,true);
+            //if(!resultUpdate.success){
+            //    res.status(500).json(resultUpdate);
+            //    res.end();return;
+            //}
             //Ritorno i risultati
             res.status(200).json(new DataResponse(true,"Credential Issuing initiated, see data for redirect link to wallet",{redirectWalletUri:result.data}));
             res.end();return;
@@ -521,7 +633,7 @@ class Routing{
             //Se è un Sys Admin, ha i permessi di ottenere in ogni caso la vcs request, se è un user deve essere la propria vcs request
             if(!req.jwtSysAdmin){
                 if(result.data.vcs_request.applicant != req.jwtAccountId){
-                    res.status(500).json(new DataResponse(false,"vcs request is not own by account logged in"));
+                    res.status(500).json(new DataResponse(false,"credential request is not own by account logged in"));
                     res.end();return;
                 }
             }
@@ -562,7 +674,7 @@ class Routing{
             //Se è un Sys Admin, ha i permessi di ottenere in ogni caso la vcs request, se è un user deve essere la propria vcs request
             if(!req.jwtSysAdmin){
                 if(result.data.vcs_request.applicant != req.jwtAccountId){
-                    res.status(500).json(new DataResponse(false,"vcs request is not own by account logged in"));
+                    res.status(500).json(new DataResponse(false,"credential request is not own by account logged in"));
                     res.end();return;
                 }
             }
@@ -598,7 +710,7 @@ class Routing{
             //Verifica dati input
             // Verifica dati di input (presenza ed esistenza)
             if (!vcsrequestId || vcsrequestId.trim() === '') {
-                res.status(500).json({ success: false, message: 'vcsrequestId Missing' });
+                res.status(500).json({ success: false, message: 'credential request Missing' });
                 res.end();return;
             }
             if (!status) {
@@ -607,7 +719,7 @@ class Routing{
             }
             //Verifico parametri correttamente
             if(!this.#inputChecker.checkInteger(vcsrequestId)){
-                res.status(500).json({ success: false, message: 'vcsrequestId format not valid' });
+                res.status(500).json({ success: false, message: 'credential request format not valid' });
                 res.end();return;
             }
             if(!this.#inputChecker.checkBoolean(status)){
@@ -642,7 +754,7 @@ class Routing{
                 res.end();return;
             }
             if(req.jwtRole!="verifier"){
-                res.status(500).json(new DataResponse(false,"Sys_Admin Verifier Authorization required, check your department for optain permission"));
+                res.status(500).json(new DataResponse(false,"Sys_Admin Verifier Authorization required, check your department to obtain permission"));
                 res.end();return;
             }
 
@@ -674,7 +786,7 @@ class Routing{
                 res.end();return;
             }
             if(req.jwtRole!="verifier"){
-                res.status(500).json(new DataResponse(false,"Sys_Admin Verifier Authorization required, check your department for optain permission"));
+                res.status(500).json(new DataResponse(false,"Sys_Admin Verifier Authorization required, check your department to obtain permission"));
                 res.end();return;
             }
 
@@ -686,6 +798,24 @@ class Routing{
             }
             //Ritorno i risultati
             res.status(200).json(result);
+            res.end();return;
+        });
+
+        this.#app.get('/ci/info/wallets',this.#auth.decodeToken, async (req, res) => {
+            //Verifico che Non sia un Sys_admin
+            if(req.jwtSysAdmin){
+                res.status(500).json(new DataResponse(false,"Sys_Admin Authorization not valid, log in with an User Account"));
+                res.end();return;
+            }
+
+            //Prendo le vcs request pid
+            var result = await this.#oidc.getConfiguration();
+            if(!result.success){
+                res.status(500).json(result);
+                res.end();return;
+            }
+            //Ritorno i risultati
+            res.status(200).json(new DataResponse(true,"wallet list getted succesfully",result.data.wallets));
             res.end();return;
         });
 

@@ -33,6 +33,11 @@ const AdminVerifyCredentialRequestController = ({ token }) => {
 
     useEffect(() => {
         const fetchData = async () => {
+            //Redirect to Login if not present the Token
+            if(typeof token=== "undefined" || token===null || token==="") {
+              return navigate('/Login');      
+            }
+
             //VC Data PID
             let response = await viewModel.getVCPid(id, token);            
             if(response.success){
