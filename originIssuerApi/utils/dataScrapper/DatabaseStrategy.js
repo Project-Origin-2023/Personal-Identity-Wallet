@@ -5,7 +5,7 @@ class DatabaseStrategy extends Database{
     constructor() {
         super({
             user: 'admin',
-            host: '10.5.0.31',
+            host: 'localhost',
             database: 'originissuer',
             password: 'admin',
             port: 5432,
@@ -398,7 +398,7 @@ class DatabaseStrategy extends Database{
 
         try{
             //query get verification
-            var query='SELECT id,applicant,released FROM "vcs_requests" EXCEPT SELECT id,applicant,released FROM "vcs_requests" JOIN "vcs_requests_verifications" ON id=vcs_requests_verifications.vcs_request';
+            var query='SELECT res.id, email AS applicant,released FROM (SELECT vcs_requests.id,applicant,released FROM "vcs_requests" EXCEPT SELECT vcs_requests.id,applicant,released FROM "vcs_requests" JOIN "vcs_requests_verifications" ON id=vcs_requests_verifications.vcs_request) AS res JOIN "accounts" ON applicant = accounts.id';
             var values=[];
             var result=await this.query(query, values);
             if(!result)
@@ -417,7 +417,7 @@ class DatabaseStrategy extends Database{
 
         try{
             //query get verification
-            var query='SELECT id,applicant,released FROM "vcs_requests" JOIN "vcs_requests_verifications" ON id=vcs_requests_verifications.vcs_request';
+            var query='SELECT vcs_requests.id,email AS applicant,released, status FROM "vcs_requests" JOIN "vcs_requests_verifications" ON id=vcs_requests_verifications.vcs_request JOIN "accounts" ON applicant = accounts.id';
             var values=[];
             var result=await this.query(query, values);
             if(!result)

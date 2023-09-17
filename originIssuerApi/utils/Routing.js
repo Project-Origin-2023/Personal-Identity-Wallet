@@ -126,7 +126,6 @@ class Routing{
                 res.status(500).json(new DataResponse(false,"password format not valid"));
                 res.end();return;
             }
-            //Verifico parametri correttamente
 
             var response = await this.#auth.register(email,password)
             if(!response.success){

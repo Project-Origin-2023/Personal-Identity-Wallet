@@ -15,15 +15,15 @@ class Routing{
     #oidc;
     #inputChecker;
     constructor(){
-        //Initialize cors ootion with origin parameter
+        //Initialize cors option with origin parameter
         var corsOptions = {
-            origin: ['http://localhost:5001','http://localhost:5001/'],
+            origin: ['http://localhost:5003','http://localhost:5003/','http://wallet.origin','http://wallet.origin/'],
         };
         this.#app = this.#express();
         this.#app.use(this.#bodyParser.json());
         this.#app.use(this.#cors(corsOptions));
         //Authetication
-        this.#auth = new Authentication("Secret",10000);
+        this.#auth = new Authentication("Secret",30000);
         //Data Scrapper
         this.#scrapper = new DataScrapper();
         try{
@@ -46,6 +46,41 @@ class Routing{
 
     async configEndpoint(){
         
+        /**
+         * Endpoint for User Login.
+         * 
+         * @param {Object} req - The HTTP request object.
+         * @param {Object} res - The HTTP response object.
+         * @param {string} req.body.email - User's email address for login.
+         * @param {string} req.body.password - User's password for login.
+         * @returns {Object} An object containing the result of the login attempt. 
+         *                   If successful, it includes a token and a success message.
+         *                   If unsuccessful, it includes an error message.
+         */
+        //Auth Login
+        this.#app.get('/auth/refresh',this.#auth.decodeToken, async (req, res) => {
+            //Get parametri da token attuale
+            let email = req.jwtAccountEmail;
+            let oldtokenOIDC = req.jwtTokenOIDC;
+            //refresh token OIDC
+            let response = await this.#oidc.refreshAuth(email,oldtokenOIDC);
+            if(!response.success){
+                res.status(500).json(response);
+                res.end();return;
+            }
+            var tokenOIDC = response.data.token;
+
+            //Effettuo Richiesta refresh
+            response = await this.#auth.refreshAuth(email,tokenOIDC)
+            if(response.success){
+                res.status(200).json(response);
+                res.end();return;
+            }
+            res.status(500).json(response);
+            res.end();return;
+         
+        });
+
         /**
          * Endpoint for User Login.
          * 
@@ -89,17 +124,14 @@ class Routing{
             var tokenOIDC = response.data.token;
 
             //Effettuo Richieste
-            response = await this.#auth.login(email,password)
-            if(!response.success){
-                res.status(500).json(response);
-                res.end();return;
-            }else{
-                var token = response.data.token;
-                this.#auth.addTokenCookie(res,token);
-                this.#auth.addTokenOIDCCookie(res,tokenOIDC);
-                res.status(200).json(new DataResponse(true,"Login successfully and tokens retrived",{token:token,tokenOIDC:tokenOIDC}));
+            response = await this.#auth.login(email,password,tokenOIDC)
+            if(response.success){
+                res.status(200).json(response);
                 res.end();return;
             }
+            res.status(500).json(response);
+            res.end();return;
+         
         });
 
         /**
@@ -151,41 +183,16 @@ class Routing{
             };
             var did=response.data[0];
             //Effettuo richieste inserimento account
-            response = await this.#auth.register(email,password,did)
-            if(!response.success){
-                res.status(500).json(response);
-                res.end();return;
-            }else{
-                var token = response.data.token;
-                this.#auth.addTokenCookie(res,token);
-                this.#auth.addTokenOIDCCookie(res,tokenOIDC);
+            response = await this.#auth.register(email,password,did,tokenOIDC)
+            if(response.success){
                 res.status(200).json(response);
                 res.end();return;
             }
-        });
-
-        this.#app.get('/ci/info/sessionid',this.#auth.decodeToken,this.#auth.decodeTokenOIDC, async (req, res) => {
-            const { sessionId } = req.query;
-            // Verifica dati di input (presenza ed esistenza)
-            if (!sessionId || sessionId.trim() === '') {
-                res.status(500).json(new DataResponse(false,"sessionId Missing"));
-                res.end();return;
-            }
-            //Verifico parametri correttamente
-            if(!this.#inputChecker.checkString(sessionId)){
-                res.status(500).json(new DataResponse(false,"sessionId format not valid"));
-                res.end();return;
-            }
-            let response = await this.#oidc.getInfoSessionId(sessionId,req.jwtTokenOIDC);
-            if(!response.success){
-                res.status(500).json(response);
-                res.end();return;
-            }
-            res.status(200).json(response);
+            res.status(500).json(response);
             res.end();return;
         });
 
-        this.#app.post('/ci/continue',this.#auth.decodeToken,this.#auth.decodeTokenOIDC, async (req, res) => {
+        this.#app.get('/ci/continue',this.#auth.decodeToken, async (req, res) => {
             const { sessionId } = req.query;
             // Verifica dati di input (presenza ed esistenza)
             if (!sessionId || sessionId.trim() === '') {
@@ -198,7 +205,7 @@ class Routing{
                 res.end();return;
             }
 
-            let response = await this.#oidc.continueIssuing(req.jwtDid,sessionId,req.jwtTokenOIDC);
+            let response = await this.#oidc.continueIssuing(req.jwtAccountDid,sessionId,req.jwtTokenOIDC);
             if(!response.success){
                 res.status(500).json(response);
                 res.end();return;
@@ -207,7 +214,7 @@ class Routing{
             res.end();return;
         });
 
-        this.#app.get('/credentials',this.#auth.decodeToken,this.#auth.decodeTokenOIDC, async (req, res) => {
+        this.#app.get('/credentials',this.#auth.decodeToken, async (req, res) => {
             let response = await this.#oidc.getCredentialList(req.jwtTokenOIDC);
             if(!response.success){
                 res.status(500).json(response);
@@ -217,7 +224,7 @@ class Routing{
             res.end();return;
         });
 
-        this.#app.get('/ci/info/issuance',this.#auth.decodeToken,this.#auth.decodeTokenOIDC, async (req, res) => {
+        this.#app.get('/ci/info/issuance',this.#auth.decodeToken, async (req, res) => {
             const { sessionId } = req.query;
             // Verifica dati di input (presenza ed esistenza)
             if (!sessionId || sessionId.trim() === '') {
@@ -239,7 +246,7 @@ class Routing{
             res.end();return;
         });
 
-        this.#app.delete('/credential/:id',this.#auth.decodeToken,this.#auth.decodeTokenOIDC, async (req, res) => {
+        this.#app.delete('/credential/:id',this.#auth.decodeToken, async (req, res) => {
             const { id } = req.params;
             // Verifica dati di input (presenza ed esistenza)
             if (!id || id.trim() === '') {
@@ -261,7 +268,7 @@ class Routing{
             res.end();return;
         });
 
-        this.#app.post('/ci/continuexdevice',this.#auth.decodeToken,this.#auth.decodeTokenOIDC, async (req, res) => {
+        this.#app.post('/ci/continuexdevice',this.#auth.decodeToken, async (req, res) => {
             //uri
             const {uri} = req.body;
             //Verifica dati input
@@ -288,7 +295,7 @@ class Routing{
             res.end();return;
         });
 
-        this.#app.post('/vp/start',this.#auth.decodeToken,this.#auth.decodeTokenOIDC, async (req, res) => {
+        this.#app.post('/vp/start',this.#auth.decodeToken, async (req, res) => {
             //uri
             const {uri} = req.body;
             //Verifica dati input
@@ -315,7 +322,7 @@ class Routing{
             res.end();return;
         });
 
-        this.#app.get('/vp/continue',this.#auth.decodeToken,this.#auth.decodeTokenOIDC, async (req, res) => {
+        this.#app.get('/vp/continue',this.#auth.decodeToken, async (req, res) => {
             const { sessionId } = req.query;
             // Verifica dati di input (presenza ed esistenza)
             if (!sessionId || sessionId.trim() === '') {
@@ -328,7 +335,7 @@ class Routing{
                 res.end();return;
             }
 
-            let response = await this.#oidc.continuePresentation(sessionId,req.jwtDid,req.jwtTokenOIDC);
+            let response = await this.#oidc.continuePresentation(sessionId,req.jwtAccountDid,req.jwtTokenOIDC);
             if(!response.success){
                 res.status(500).json(response);
                 res.end();return;
@@ -337,7 +344,7 @@ class Routing{
             res.end();return;
         });
 
-        this.#app.post('/vp/fulfill',this.#auth.decodeToken,this.#auth.decodeTokenOIDC, async (req, res) => {
+        this.#app.post('/vp/fulfill',this.#auth.decodeToken, async (req, res) => {
             const { sessionId } = req.query;
             // Verifica dati di input (presenza ed esistenza)
             if (!sessionId || sessionId.trim() === '') {
