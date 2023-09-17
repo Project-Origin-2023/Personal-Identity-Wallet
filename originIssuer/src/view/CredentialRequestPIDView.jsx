@@ -62,6 +62,7 @@ const CredentialRequestPIDView = ({
             name="familyName"
             value={pidData.familyName}
             onChange={handleInputChange}
+            sx={{ mb: 2 }}
           />
           <TextField
             required
@@ -71,6 +72,7 @@ const CredentialRequestPIDView = ({
             name="firstName"
             value={pidData.firstName}
             onChange={handleInputChange}
+            sx={{ mb: 2 }}
           />
           <TextField
             required
@@ -80,6 +82,7 @@ const CredentialRequestPIDView = ({
             name="nameAndFamilyNameAtBirth"
             value={pidData.nameAndFamilyNameAtBirth}
             onChange={handleInputChange}
+            sx={{ mb: 2 }}
           />
           <InputLabel id="gender-label">Gender</InputLabel>
           <Select
@@ -91,6 +94,7 @@ const CredentialRequestPIDView = ({
             name="gender"
             value={pidData.gender}
             onChange={handleInputChange}
+            sx={{ mb: 2 }}
             >
             <MenuItem value="M">M</MenuItem>
             <MenuItem value="F">F</MenuItem>
@@ -103,6 +107,7 @@ const CredentialRequestPIDView = ({
             name="personalIdentifier"
             value={pidData.personalIdentifier}
             onChange={handleInputChange}
+            sx={{ mb: 2 }}
           />
           <TextField
             required
@@ -112,6 +117,7 @@ const CredentialRequestPIDView = ({
             name="placeOfBirth"
             value={pidData.placeOfBirth}
             onChange={handleInputChange}
+            sx={{ mb: 2 }}
           />
           <TextField
             required
@@ -121,6 +127,7 @@ const CredentialRequestPIDView = ({
             name="currentAddress"
             value={pidData.currentAddress}
             onChange={handleInputChange}
+            sx={{ mb: 2 }}
           />
             <DatePicker
               required
@@ -130,6 +137,7 @@ const CredentialRequestPIDView = ({
               name="dateOfBirth"
               value={pidData.dateOfBirth}
               onChange={(newValue) => setDateOfBirth(newValue)}
+              sx={{ mb: 2 }}
             />
             {/* Aggiungi altri campi per i dati PID */}
             <Button

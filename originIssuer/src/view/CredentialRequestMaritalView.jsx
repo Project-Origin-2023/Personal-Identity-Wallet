@@ -52,6 +52,7 @@ const CredentialRequestMaritalView = ({
         name="status"
         value={maritalData.status}
         onChange={handleInputChange}
+        sx={{ mb: 2 }}
       >
         <MenuItem value="canceled">canceled</MenuItem>
         <MenuItem value="married">married</MenuItem>
@@ -69,6 +70,7 @@ const CredentialRequestMaritalView = ({
             name="personalIdentifier"
             value={maritalData.personalIdentifier}
             onChange={handleInputChange}
+            sx={{ mb: 2 }}
           />
           {/* Aggiungi altri campi per i dati PID */}
           <Button
