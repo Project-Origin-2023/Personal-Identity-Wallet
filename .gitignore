@@ -193,3 +193,5 @@ dist-ssr
 dist
 package-lock.json
 
+
+*.sqlite
