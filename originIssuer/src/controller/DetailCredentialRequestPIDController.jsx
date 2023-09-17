@@ -39,6 +39,18 @@ const DetailCredentialRequestPIDController = ({ token }) => {
                 return alert(response.description);
             else
                 setvcStatus(response.data.verification);
+            //Fetch Wallets List
+            response = await viewModel.getWalletList(token);
+            if(!response.success)
+                return alert(response.description);
+            else{
+                let walletsInfo = response.data
+                let wallets = [];
+                Object.keys(walletsInfo).forEach(key => {
+                  wallets.push(walletsInfo[key].id)
+                });
+                setWalletList(wallets);
+            }
 
         };
         fetchData();
@@ -55,7 +67,8 @@ const DetailCredentialRequestPIDController = ({ token }) => {
 
     const [openWalletList, setOpenWalletList] = useState();
     const [openidIssuanceURIQR , setOpenidIssuanceURIQR ] = useState();
-    
+    const [walletList, setWalletList] = useState([]);
+
     const handleOpenWalletList = async () => {
       //Generate QR Code
       let result = await viewModel.releaseVCCrossDevice(id,token)
@@ -80,7 +93,7 @@ const DetailCredentialRequestPIDController = ({ token }) => {
       handleCloseWalletList={handleCloseWalletList}
       openWalletList={openWalletList}
       openidIssuanceURIQR={openidIssuanceURIQR}
-      wallets={['origin','waltid','waltiddemo']}
+      wallets={walletList}
     />
   );
 };

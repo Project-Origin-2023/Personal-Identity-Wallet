@@ -3,6 +3,7 @@ import { useSearchParams } from 'react-router-dom'
 
 import DetailCredentialRequestMaritalViewModel from '../viewmodel/DetailCredentialRequestMaritalViewModel';
 import DetailCredentialRequestMaritalView from '../view/DetailCredentialRequestMaritalView';
+import ViewModel from '../viewmodel/ViewModel';
 
 
 const DetailCredentialRequestMaritalController = ({ token }) => {
@@ -19,6 +20,8 @@ const DetailCredentialRequestMaritalController = ({ token }) => {
     const id = searchParams.get('id');
     const viewModel = new DetailCredentialRequestMaritalViewModel();
 
+    const [walletList, setWalletList] = useState([]);
+
     useEffect(() => {
         const fetchData = async () => {
             //VC Data
@@ -33,13 +36,25 @@ const DetailCredentialRequestMaritalController = ({ token }) => {
                 return alert(response.description);
             else
                 setvcStatus(response.data.verification);
+            //Fetch Wallets List
+            response = await viewModel.getWalletList(token);
+            if(!response.success)
+                return alert(response.description);
+            else{
+                let walletsInfo = response.data
+                let wallets = [];
+                Object.keys(walletsInfo).forEach(key => {
+                  wallets.push(walletsInfo[key].id)
+                });
+                setWalletList(wallets);
+            }
 
         };
         fetchData();
     }, [token]);
 
-    const handleRelease = async () => {
-        const response = await viewModel.releaseVC(id,token)
+    const handleRelease = async (wallet) => {
+        const response = await viewModel.releaseVC(id,wallet,token)
         if(!response.success)
             return alert(response.description);
         else{
@@ -75,7 +90,7 @@ const DetailCredentialRequestMaritalController = ({ token }) => {
       handleCloseWalletList={handleCloseWalletList}
       openWalletList={openWalletList}
       openidIssuanceURIQR={openidIssuanceURIQR}
-      wallets={['origin','waltid','waltiddemo']}
+      wallets={walletList}
     />
   );
 };

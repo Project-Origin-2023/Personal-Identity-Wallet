@@ -53,6 +53,19 @@ class DetailCredentialRequestPIDViewModel extends ViewModel{
       return error.response.data;
     }
   }
+
+  async getWalletList(jwtToken){
+    try {
+      const response = await axios.get(this.apiUrl+'/ci/info/wallets', {
+        headers: {
+          "x-access-token": `${jwtToken}`,
+        },
+      });
+      return response.data;
+    } catch (error) {
+      return error.response.data;
+    }
+  }
 }
 
 export default DetailCredentialRequestPIDViewModel;

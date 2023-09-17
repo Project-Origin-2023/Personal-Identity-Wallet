@@ -512,6 +512,19 @@ class Routing{
             res.end();return;
         });
 
+
+        /**
+         * Get VCS (Verification of Credential Status) Request Release.
+         *
+         * @param {Object} req - The HTTP request object with a decoded JWT token.
+         * @param {Object} res - The HTTP response object.
+         * @param {string} [req.query.wallet=origin] - The wallet to use for releasing the VCS request credential.
+         * @param {string} req.params.id - The ID of the VCS request whose credential is to be released.
+         * @returns {Object} An object containing the result of the VCS request credential release process.
+         *                   If successful, it includes a success message and the credential issuance data.
+         *                   If unsuccessful or if the request ID is missing, it includes an error message.
+         */
+        //Get VCS Request Release Cross Device
         this.#app.get(['/vcsrequest/releasecrossdevice/:id','/vcsrequest/releasecrossdevice/'],this.#auth.decodeToken, async (req, res) => {
             //Verifico che Non sia un Sys_admin
             if(req.jwtSysAdmin){
@@ -785,6 +798,24 @@ class Routing{
             }
             //Ritorno i risultati
             res.status(200).json(result);
+            res.end();return;
+        });
+
+        this.#app.get('/ci/info/wallets',this.#auth.decodeToken, async (req, res) => {
+            //Verifico che Non sia un Sys_admin
+            if(req.jwtSysAdmin){
+                res.status(500).json(new DataResponse(false,"Sys_Admin Authorization not valid, log in with an User Account"));
+                res.end();return;
+            }
+
+            //Prendo le vcs request pid
+            var result = await this.#oidc.getConfiguration();
+            if(!result.success){
+                res.status(500).json(result);
+                res.end();return;
+            }
+            //Ritorno i risultati
+            res.status(200).json(new DataResponse(true,"wallet list getted succesfully",result.data.wallets));
             res.end();return;
         });
 
