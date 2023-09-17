@@ -23,6 +23,9 @@ const DetailCredentialRequestMaritalController = ({ token }) => {
     const viewModel = new DetailCredentialRequestMaritalViewModel();
 
     const [walletList, setWalletList] = useState([]);
+    const [openidIssuanceURIQR , setOpenidIssuanceURIQR] = useState();
+    const [openidIssuanceURI , setOpenidIssuanceURI] = useState();
+    const [openWalletList, setOpenWalletList] = useState();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -54,7 +57,6 @@ const DetailCredentialRequestMaritalController = ({ token }) => {
                 });
                 setWalletList(wallets);
             }
-
         };
         fetchData();
     }, [token]);
@@ -67,17 +69,15 @@ const DetailCredentialRequestMaritalController = ({ token }) => {
           window.location.href = response.data.redirectWalletUri;
         }
     };
-
-    const [openWalletList, setOpenWalletList] = useState();
-    const [openidIssuanceURIQR , setOpenidIssuanceURIQR ] = useState();
     
     const handleOpenWalletList = async () => {
       //Generate QR Code
       let result = await viewModel.releaseVCCrossDevice(id,token)
-      let encodedOpenidIssuanceURI = '';
-      if(result.success)
-        encodedOpenidIssuanceURI = encodeURIComponent(result.data.redirectWalletUri);
-      setOpenidIssuanceURIQR(viewModel.getApiUrl()+'/qr?uri='+encodedOpenidIssuanceURI);
+      if(result.success){
+        let uri = result.data.redirectWalletUri;
+        setOpenidIssuanceURI(uri)
+        setOpenidIssuanceURIQR(viewModel.getApiUrl()+'/qr?uri='+encodeURIComponent(uri));
+      }
       //Show List
       setOpenWalletList(true)
     };
@@ -96,6 +96,7 @@ const DetailCredentialRequestMaritalController = ({ token }) => {
       handleCloseWalletList={handleCloseWalletList}
       openWalletList={openWalletList}
       openidIssuanceURIQR={openidIssuanceURIQR}
+      openidIssuanceURI={openidIssuanceURI}
       wallets={walletList}
     />
   );
