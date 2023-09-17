@@ -105,7 +105,7 @@ class Routing{
                 res.status(500).json(new DataResponse(false,"password Missing"));
                 res.end();return;
             }
-            //Verifico nr parametri correttamente
+            //Verifico parametri correttamente
             if(!this.#inputChecker.checkEmail(email)){
                 res.status(500).json(new DataResponse(false,"email format not valid"));
                 res.end();return;
@@ -158,7 +158,7 @@ class Routing{
                 res.status(500).json(new DataResponse(false,"password Missing"));
                 res.end();return;
             }
-            //Verifico nr parametri correttamente
+            //Verifico parametri correttamente
             if(!this.#inputChecker.checkEmail(email)){
                 res.status(500).json(new DataResponse(false,"email format not valid"));
                 res.end();return;
@@ -199,7 +199,7 @@ class Routing{
                 res.status(500).json(new DataResponse(false,"sessionId Missing"));
                 res.end();return;
             }
-            //Verifico nr parametri correttamente
+            //Verifico parametri correttamente
             if(!this.#inputChecker.checkString(sessionId)){
                 res.status(500).json(new DataResponse(false,"sessionId format not valid"));
                 res.end();return;
@@ -231,7 +231,7 @@ class Routing{
                 res.status(500).json(new DataResponse(false,"sessionId Missing"));
                 res.end();return;
             }
-            //Verifico nr parametri correttamente
+            //Verifico parametri correttamente
             if(!this.#inputChecker.checkString(sessionId)){
                 res.status(500).json(new DataResponse(false,"sessionId format not valid"));
                 res.end();return;
@@ -253,7 +253,7 @@ class Routing{
                 res.status(500).json(new DataResponse(false,"id Missing"));
                 res.end();return;
             }
-            //Verifico nr parametri correttamente
+            //Verifico parametri correttamente
             if(!this.#inputChecker.checkString(id)){
                 res.status(500).json(new DataResponse(false,"id format not valid"));
                 res.end();return;
@@ -278,7 +278,7 @@ class Routing{
                 res.end();return;
             }
             
-            //Verifico nr parametri correttamente
+            //Verifico parametri correttamente
             if(!this.#inputChecker.checkString(uri)){
                 res.status(500).json(new DataResponse(false,"uri format not valid"));
                 res.end();return;
@@ -305,7 +305,7 @@ class Routing{
                 res.end();return;
             }
             
-            //Verifico nr parametri correttamente
+            //Verifico parametri correttamente
             if(!this.#inputChecker.checkString(uri)){
                 res.status(500).json(new DataResponse(false,"uri format not valid"));
                 res.end();return;
@@ -329,7 +329,7 @@ class Routing{
                 res.status(500).json(new DataResponse(false,"sessionId Missing"));
                 res.end();return;
             }
-            //Verifico nr parametri correttamente
+            //Verifico parametri correttamente
             if(!this.#inputChecker.checkString(sessionId)){
                 res.status(500).json(new DataResponse(false,"sessionId format not valid"));
                 res.end();return;
@@ -351,7 +351,7 @@ class Routing{
                 res.status(500).json(new DataResponse(false,"sessionId Missing"));
                 res.end();return;
             }
-            //Verifico nr parametri correttamente
+            //Verifico parametri correttamente
             if(!this.#inputChecker.checkString(sessionId)){
                 res.status(500).json(new DataResponse(false,"sessionId format not valid"));
                 res.end();return;
@@ -366,7 +366,7 @@ class Routing{
                 res.end();return;
             }
             
-            //Verifico nr parametri correttamente
+            //Verifico parametri correttamente
             if(!this.#inputChecker.checkString(uri)){
                 res.status(500).json(new DataResponse(false,"claims format not valid"));
                 res.end();return;

@@ -54,6 +54,16 @@ const RegisterView = ({ email, password, setEmail, setPassword, handleRegister }
                   onChange={(e) => setPassword(e.target.value)}
                   autoComplete="nuova password"
                 />
+                <Typography variant="caption" color="textSecondary">
+                  Requisiti della password:
+                  <ul>
+                    <li>Almeno 1 lettera maiuscola</li>
+                    <li>Almeno 1 lettera minuscola</li>
+                    <li>Almeno 1 numero</li>
+                    <li>Almeno 1 carattere speciale @$!%*?&</li>
+                    <li>Lunghezza minima 8 caratteri</li>
+                  </ul>
+                </Typography>
               </Grid>
             </Grid>
             <Button
