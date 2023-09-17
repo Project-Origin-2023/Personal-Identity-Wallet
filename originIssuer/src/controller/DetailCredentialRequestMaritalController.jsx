@@ -39,7 +39,6 @@ const DetailCredentialRequestMaritalController = ({ token }) => {
 
     const handleRelease = async () => {
         const response = await viewModel.reeleaseVC(id,token)
-        console.log(response);
         if(!response.success)
             return alert(response.description);
         else{

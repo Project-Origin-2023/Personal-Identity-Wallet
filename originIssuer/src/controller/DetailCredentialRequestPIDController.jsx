@@ -44,9 +44,8 @@ const DetailCredentialRequestPIDController = ({ token }) => {
         fetchData();
     }, [token]);
 
-    const handleRelease = async () => {
-        const response = await viewModel.reeleaseVC(id,token)
-        console.log(response);
+    const handleRelease = async (wallet) => {
+        const response = await viewModel.reeleaseVC(id,wallet,token)
         if(!response.success)
             return alert(response.description);
         else{
@@ -60,6 +59,7 @@ const DetailCredentialRequestPIDController = ({ token }) => {
       pidData={pidData}
       vcStatus={vcStatus}
       handleRelease={handleRelease}
+      wallets={['origin','waltid','waltiddemo']}
     />
   );
 };

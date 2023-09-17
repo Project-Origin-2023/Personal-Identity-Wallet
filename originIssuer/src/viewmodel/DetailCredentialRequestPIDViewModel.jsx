@@ -28,9 +28,9 @@ class DetailCredentialRequestPIDViewModel extends ViewModel{
     }
   }
 
-  async reeleaseVC(id, jwtToken){
+  async reeleaseVC(id,wallet, jwtToken){
     try {
-      const response = await axios.get(this.apiUrl+'/vcsrequest/release/'+id , {
+      const response = await axios.get(this.apiUrl+'/vcsrequest/release/'+id+'?wallet='+wallet , {
         headers: {
           "x-access-token": `${jwtToken}`,
         },
