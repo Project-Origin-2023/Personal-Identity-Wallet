@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
@@ -10,9 +10,51 @@ import Typography from '@mui/material/Typography';
 import PropTypes from 'prop-types';
 import CheckSharpIcon from '@mui/icons-material/CheckSharp';
 import HighlightOffSharpIcon from '@mui/icons-material/HighlightOffSharp';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemAvatar from '@mui/material/ListItemAvatar';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemText from '@mui/material/ListItemText';
+import DialogTitle from '@mui/material/DialogTitle';
+import Dialog from '@mui/material/Dialog';
+import PersonIcon from '@mui/icons-material/Person';
+import AddIcon from '@mui/icons-material/Add';
+import { blue } from '@mui/material/colors';
 
-const DetailCredentialRequestPIDView = ({ pidData, vcStatus, handleRelease }) => {
+const DetailCredentialRequestPIDView = ({ wallets, openidIssuanceURI, pidData, vcStatus, handleRelease }) => {
+  const [openWalletList, setOpenWalletList] = useState();
+  
+  const handleOpenWalletList = () => {
+    setOpenWalletList(true)
+  };
+
+  const handleCloseWalletList = () => {
+    setOpenWalletList(false)
+  }
+
+  const handleWalletListItemClick = (wallet) => {
+    handleRelease(wallet);
+  };
+  
   return (
+    <div>
+    <Dialog onClose={handleCloseWalletList} open={openWalletList}>
+      <DialogTitle>Selezionare un Wallet <br/> oppure usa il QR Code</DialogTitle>
+      <List sx={{ pt: 0 }}>
+        {wallets.map((wallet) => (
+          <ListItem disableGutters key={wallet}>
+            <ListItemButton onClick={() => handleRelease(wallet)}>
+              <ListItemAvatar>
+                <Avatar sx={{ bgcolor: blue[100], color: blue[600] }}>
+                  <PersonIcon />
+                </Avatar>
+              </ListItemAvatar>
+              <ListItemText primary={wallet} />
+            </ListItemButton>
+          </ListItem>
+        ))}
+      </List>
+    </Dialog>
     <Container component="main" maxWidth="xs">
       <Grid container spacing={2}>
         <Grid item xs={12}>
@@ -60,8 +102,8 @@ const DetailCredentialRequestPIDView = ({ pidData, vcStatus, handleRelease }) =>
         </Grid>
         <Grid item xs={12}>
           <Button
-            disabled={vcStatus.pending || pidData.released || !vcStatus.status}
-            onClick={handleRelease}
+            //disabled={vcStatus.pending || pidData.released || !vcStatus.status}
+            onClick={handleOpenWalletList}
             fullWidth
             variant="contained"
             color="primary"
@@ -71,6 +113,7 @@ const DetailCredentialRequestPIDView = ({ pidData, vcStatus, handleRelease }) =>
         </Grid>
       </Grid>
     </Container>
+    </div>
   );
 };
 DetailCredentialRequestPIDView.propTypes = {
