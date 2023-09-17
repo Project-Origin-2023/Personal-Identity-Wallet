@@ -13,8 +13,19 @@ class OpenIdController {
             var response = await this.#axios(config);
             return {success:true,description:"OIDC Request with success",data:response.data};
         }catch(e){
-            return {success:false,description:"OIDC Error",data:null,error:e};
+            if(typeof e.response.data !== 'undefined')
+                return {success:false,description:e.response.data,data:null,error:e};
+            else
+                return {success:false,description:'General Open ID Connect Error, try Again',data:null,error:e};
         }
+    }
+
+    //Effettuo Richiesta OpenID per aggiornare token
+    //Attualmente openid non fa la verifica sulla password durante il login, nel caso la facesse
+    //questa parte di codice andrebbe modificata con un aggiornamento del token 
+    // anche per waltid
+    async refreshAuth(email,tokenOIDC){
+        return this.login(email,'');
     }
 
     async login(id, password){
@@ -56,20 +67,6 @@ class OpenIdController {
                 'Authorization': 'Bearer '+token
             }
         };
-        return await this.#makeRequest(config);
-    }
-
-    async getInfoSessionId(sessionID, token){
-        let config = {
-            method: 'get',
-            maxBodyLength: Infinity,
-            url: this.#walletUri+'/api/wallet/issuance/info?sessionId='+sessionID,
-            headers: { 
-              'accept': 'application/json', 
-              'Content-Type': 'application/json', 
-              'Authorization': 'Bearer '+token
-            }
-          };
         return await this.#makeRequest(config);
     }
 

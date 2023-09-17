@@ -16,6 +16,7 @@ const AdminListCredentialRequestsController = ({ token }) => {
       setvcs_requestsPending(responsePending.data.vcs_requests_pending);
 
       const responseNoPending = await viewModel.fetchDataNoPending(token);
+      console.log(responseNoPending)
       if(!responseNoPending.success)
         return alert(responseNoPending.description);
       setvcs_requestsNoPending(responseNoPending.data.vcs_requests_notpending);

@@ -1,8 +1,13 @@
 import  { useState } from 'react';
+import { Navigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
+
 import CredentialRequestMaritalViewModel from '../viewmodel/CredentialRequestMaritalViewModel'; // Assumi che VCSRequestViewModel sia stato importato correttamente
 import CredentialRequestMaritalView from '../view/CredentialRequestMaritalView';
 
 const CredentialRequestMaritalController = ({ token }) => {
+  //Reindirizzamento
+  let navigate = useNavigate();
   const [maritalData, setMaritalData] = useState({ //da sistemare
     status: '',
     personalIdentifier: '',
@@ -15,8 +20,7 @@ const CredentialRequestMaritalController = ({ token }) => {
     const response = await viewModel.requestVCS(maritalData,token);
     alert(response.description)
     if (response.success) {
-      //TODO
-      //rendirizzamento a lista richieste credenziali
+      navigate('/ListCredentialRequests');      
     }
   };
 

@@ -1,11 +1,15 @@
 import  { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
+import { Navigate } from 'react-router-dom'
 
 import AdminVerifyCredentialRequestViewModel from '../viewmodel/AdminVerifyCredentialRequestViewModel';
 import AdminVerifyCredentialRequestPidView from '../view/AdminVerifyCredentialRequestPidView';
 import AdminVerifyCredentialRequestMaritalView from '../view/AdminVerifyCredentialRequestMaritalView';
 
 const AdminVerifyCredentialRequestController = ({ token }) => {
+    //Reindirizzamento
+    let navigate = useNavigate();
     const [searchParams] = useSearchParams();
     const [type, setType] = useState("pid");
     const [pidData, setPIDData] = useState({
@@ -52,8 +56,7 @@ const AdminVerifyCredentialRequestController = ({ token }) => {
         if(!response.success)
             return alert(response.description);
         else{
-          //TODO
-          //REINDIRIZZA AL LINK DEL
+            navigate('/AdminListCredentialRequests');
         }
     };
   

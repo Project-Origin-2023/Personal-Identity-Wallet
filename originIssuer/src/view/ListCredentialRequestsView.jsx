@@ -52,7 +52,7 @@ const ListCredentialRequestsView = ({ vcs_requestsPID, vcs_requestsMarital}) => 
         </Table>
       </TableContainer>
     ):(
-      <p>Caricamento dati credenziali...</p>
+      <p>Ancora nessun dato da mostrare ...</p>
     )}
     <Typography
       component="h1"
@@ -89,7 +89,7 @@ const ListCredentialRequestsView = ({ vcs_requestsPID, vcs_requestsMarital}) => 
         </Table>
       </TableContainer>
     ):(
-      <p>Caricamento dati credenziali...</p>
+      <p>Ancora nessun dato da mostrare ...</p>
     )}
   </Container>
   );

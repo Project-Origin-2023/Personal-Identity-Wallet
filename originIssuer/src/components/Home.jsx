@@ -15,7 +15,6 @@ export function Home() {
   return (
     <div>
       <main>
-        {/* Hero unit */}
         <Box
           sx={{
             bgcolor: 'background.paper',
@@ -25,17 +24,17 @@ export function Home() {
         >
           <Container maxWidth="sm">
             <Typography
-              component="h1"
-              variant="h2"
+              component="h3"
+              variant="h3"
               align="center"
               color="text.primary"
               gutterBottom
             >
-              Servizi VC Offerti
+              Servizi Verifiable Credential Offerti
             </Typography>
             <Typography variant="h5" align="center" color="text.secondary" paragraph>
-              Origin Issuer è una piattaforma di issuing di Verifiable Credential.
-              Attraverso questa piattaforma si possono generare credenziali di tipo PID oppure Marital Status.
+              Origin Issuer è una piattaforma di issuing di Verifiable Credential.<br/>
+              Attraverso questa piattaforma si possono generare credenziali di tipo Personal Identity (PID) <br/>oppure una Electronic Attestation of Attributes di tipo Marital Status (EAA Marital Status).
             </Typography>
           </Container>
         </Box>
@@ -54,9 +53,9 @@ export function Home() {
                 />
                 <CardContent sx={{ flexGrow: 1 }}>
                   <Typography gutterBottom variant="h5" component="h2">
-                    Richiedi il tuo VC PID
+                    Richiedi una VC PID
                   </Typography>
-                  <Typography>Richiedi un Verifiable Credential di tipo Personal Identifier</Typography>
+                  <Typography>Richiedi una Verifiable Credential di tipo Personal Identity</Typography>
                 </CardContent>
                 <CardActions>
                   <Link to="/CredentialRequestPID">
@@ -77,9 +76,9 @@ export function Home() {
                 />
                 <CardContent sx={{ flexGrow: 1 }}>
                   <Typography gutterBottom variant="h5" component="h2">
-                    Richiedi il tuo VC Marital Status
+                    Richiedi una VC EAA Marital Status
                   </Typography>
-                  <Typography>Richiedi un Verifiable Credential di tipo Marital Status</Typography>
+                  <Typography>Richiedi un Verifiable Credential di tipo Electronic Attestation of Attributes Marital Status</Typography>
                 </CardContent>
                 <CardActions>
                 <Link to="/CredentialRequestMarital">

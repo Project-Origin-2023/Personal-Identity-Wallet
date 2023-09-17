@@ -28,9 +28,9 @@ const AdminListCredentialRequestsView = ({ vcs_requestsPending, vcs_requestsNoPe
         <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
           <TableHead>
             <TableRow>
-              <TableCell>id</TableCell>
-              <TableCell align="right">applicant</TableCell>
-              <TableCell align="right">released</TableCell>
+              <TableCell>VC Request Id</TableCell>
+              <TableCell align="right">Applicant email</TableCell>
+              <TableCell align="right">Released by Applicant</TableCell>
               <TableCell align="right">Verify</TableCell>
             </TableRow>
           </TableHead>
@@ -65,9 +65,10 @@ const AdminListCredentialRequestsView = ({ vcs_requestsPending, vcs_requestsNoPe
         <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
           <TableHead>
             <TableRow>
-              <TableCell>id</TableCell>
-              <TableCell align="right">applicant</TableCell>
-              <TableCell align="right">released</TableCell>
+              <TableCell>VC Request Id</TableCell>
+              <TableCell align="right">Applicant email</TableCell>
+              <TableCell align="right">Released by Applicant</TableCell>
+              <TableCell align="right">Verification Status</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -79,6 +80,7 @@ const AdminListCredentialRequestsView = ({ vcs_requestsPending, vcs_requestsNoPe
                 <TableCell>{row.id}</TableCell>
                 <TableCell align="right">{row.applicant}</TableCell>
                 <TableCell align="right">{row.released ? (<CheckSharpIcon></CheckSharpIcon>) : (<HighlightOffSharpIcon></HighlightOffSharpIcon>)}</TableCell>
+                <TableCell align="right">{row.status ? (<CheckSharpIcon></CheckSharpIcon>) : (<HighlightOffSharpIcon></HighlightOffSharpIcon>)}</TableCell>
               </TableRow>
             ))}
           </TableBody>

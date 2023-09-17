@@ -28,21 +28,16 @@ class Authentication {
         this.#jwt.verify(token, this.#jwtKey, (err, decoded) => {
             if (err)
                 res.status(401).send(new DataResponse(false,"Unauthorized"));
-            req.jwtAccountId = decoded.accountId;
+            req.jwtAccountId = decoded.id;
             req.jwtAccountEmail = decoded.email;
-            req.jwtDid = decoded.did;
+            req.jwtAccountDid = decoded.did;
+            req.jwtTokenOIDC = decoded.tokenOIDC;
             next();
         });
     };
 
-    decodeTokenOIDC = (req, res, next) => {
-        let tokenOIDC = req.headers["x-access-token-oidc"];
-        req.jwtTokenOIDC = tokenOIDC;
-        next();
-    };
-
-    #createToken(accountId,email,did){
-        const token = this.#jwt.sign({accountId,email,did}, this.#jwtKey, {
+    #createToken(id,email,did,tokenOIDC){
+        const token = this.#jwt.sign({id,email,did,tokenOIDC}, this.#jwtKey, {
             algorithm: "HS256",
             expiresIn: this.#jwtExpirySeconds,
         })
@@ -53,11 +48,20 @@ class Authentication {
         res.cookie("token", token, { maxAge: this.#jwtExpirySeconds * 1000 })
     }
 
-    addTokenOIDCCookie(res,token){
-        res.cookie("tokenOIDC", token, { maxAge: this.#jwtExpirySeconds * 1000 })
+    async refreshAuth(email, tokenOIDC){
+        //Get account info from DataScrapper
+        var result = await this.#scrapper.getAccountByEmail(email);
+        if (!result.success)
+            return result;
+        //save account
+        var account = result.data.account;
+        //Create token
+        let token = this.#createToken(account.id,account.email,account.did,tokenOIDC);
+        //return cookie with access token and isAdmin Permission
+        return new DataResponse(true,"Refresh Auth Successfuly Token created",{token:token});
     }
 
-    async login(email,password){
+    async login(email,password, tokenOIDC){
         //Get account info from DataScrapper
         var result = await this.#scrapper.getAccountByEmail(email);
         if (!result.success)
@@ -69,13 +73,13 @@ class Authentication {
         var CalculatedHash = this.#crypto.pbkdf2Sync(password, account.salt,500, 64, `sha512`).toString(`hex`);
         if(TrueHash != CalculatedHash)
             return new DataResponse(false,"Password is not correct");
-        //Verify SysAdmin Permision and create token
-        let token = this.#createToken(account.id,account.email,account.did);
+        //Create token
+        let token = this.#createToken(account.id,account.email,account.did,tokenOIDC);
         //return cookie with access token and isAdmin Permission
         return new DataResponse(true,"Auth Login Successfuly Token created",{token:token});
     }
 
-    async register(email,password,did){
+    async register(email,password,did,tokenOIDC){
         //Register User Account
         var salt = this.#crypto.randomBytes(16).toString('hex');
         var hashed_pass = this.#crypto.pbkdf2Sync(password, salt,500, 64, `sha512`).toString(`hex`);
@@ -84,7 +88,7 @@ class Authentication {
             return result;
         
         //Login User 
-        result = await this.login(email,password);
+        result = await this.login(email,password,tokenOIDC);
         if(!result.success)
             return result;
         //ritorno il token
