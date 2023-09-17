@@ -28,9 +28,22 @@ class DetailCredentialRequestMaritalViewModel extends ViewModel{
     }
   }
 
-  async reeleaseVC(id, jwtToken){
+  async releaseVC(id, jwtToken){
     try {
       const response = await axios.get(this.apiUrl+'/vcsrequest/release/'+id , {
+        headers: {
+          "x-access-token": `${jwtToken}`,
+        },
+      });
+      return response.data;
+    } catch (error) {
+      return error.response.data;
+    }
+  }
+
+  async releaseVCCrossDevice(id, jwtToken){
+    try {
+      const response = await axios.get(this.apiUrl+'/vcsrequest/releasecrossdevice/'+id, {
         headers: {
           "x-access-token": `${jwtToken}`,
         },
