@@ -2,7 +2,7 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import Link from '@mui/material/Link';
+import { Link } from "react-router-dom";
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
@@ -28,7 +28,7 @@ const RegisterView = ({ email, password, setEmail, setPassword, handleRegister }
           <Typography component="h1" variant="h5">
             Registrazione Nuovo Utente
           </Typography>
-          <Box component="form" noValidate onSubmit={handleRegister} sx={{ mt: 3 }}>
+          <Box component="form" noValidate onSubmit={handleRegister} sx={{ mt: 3, mb: 3 }}>
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <TextField
@@ -40,6 +40,7 @@ const RegisterView = ({ email, password, setEmail, setPassword, handleRegister }
                   onChange={(e) => setEmail(e.target.value)}
                   name="email"
                   autoComplete="email"
+                  sx={{ mb: 3 }}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -53,6 +54,7 @@ const RegisterView = ({ email, password, setEmail, setPassword, handleRegister }
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   autoComplete="nuova password"
+                  sx={{ mb: 3 }}
                 />
                 <Typography variant="caption" color="textSecondary">
                   Requisiti della password:
@@ -76,8 +78,8 @@ const RegisterView = ({ email, password, setEmail, setPassword, handleRegister }
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link href="/Login" variant="body2">
-                  Already have an account? Sign in
+                <Link to="/Login" variant="body2">
+                  <p>Already have an account? Sign in</p>
                 </Link>
               </Grid>
             </Grid>

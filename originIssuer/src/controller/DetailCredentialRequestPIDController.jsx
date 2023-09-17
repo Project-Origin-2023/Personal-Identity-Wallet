@@ -1,10 +1,12 @@
 import  { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 import DetailCredentialRequestPIDViewModel from '../viewmodel/DetailCredentialRequestPIDViewModel';
 import DetailCredentialRequestPIDView from '../view/DetailCredentialRequestPIDView';
 
 const DetailCredentialRequestPIDController = ({ token }) => {
+    let navigate = useNavigate();
     const [searchParams] = useSearchParams()
     const [pidData, setPIDData] = useState({
       currentAddress: '',
@@ -27,6 +29,10 @@ const DetailCredentialRequestPIDController = ({ token }) => {
 
     useEffect(() => {
         const fetchData = async () => {
+            //Redirect to Login if not present the Token
+            if(typeof token=== "undefined" || token===null || token==="") {
+              return navigate('/Login');      
+            }
             //VC Data
             let response = await viewModel.getVC(id, token);            
             if(!response.success)
@@ -39,14 +45,25 @@ const DetailCredentialRequestPIDController = ({ token }) => {
                 return alert(response.description);
             else
                 setvcStatus(response.data.verification);
+            //Fetch Wallets List
+            response = await viewModel.getWalletList(token);
+            if(!response.success)
+                return alert(response.description);
+            else{
+                let walletsInfo = response.data
+                let wallets = [];
+                Object.keys(walletsInfo).forEach(key => {
+                  wallets.push(walletsInfo[key].id)
+                });
+                setWalletList(wallets);
+            }
 
         };
         fetchData();
     }, [token]);
 
-    const handleRelease = async () => {
-        const response = await viewModel.reeleaseVC(id,token)
-        console.log(response);
+    const handleRelease = async (wallet) => {
+        const response = await viewModel.releaseVC(id,wallet,token)
         if(!response.success)
             return alert(response.description);
         else{
@@ -54,12 +71,35 @@ const DetailCredentialRequestPIDController = ({ token }) => {
         }
     };
 
+    const [openWalletList, setOpenWalletList] = useState();
+    const [openidIssuanceURIQR , setOpenidIssuanceURIQR ] = useState();
+    const [walletList, setWalletList] = useState([]);
 
-  return (
+    const handleOpenWalletList = async () => {
+      //Generate QR Code
+      let result = await viewModel.releaseVCCrossDevice(id,token)
+      let encodedOpenidIssuanceURI = '';
+      if(result.success)
+        encodedOpenidIssuanceURI = encodeURIComponent(result.data.redirectWalletUri);
+      setOpenidIssuanceURIQR(viewModel.getApiUrl()+'/qr?uri='+encodedOpenidIssuanceURI);
+      //Show List
+      setOpenWalletList(true)
+    };
+
+    const handleCloseWalletList = () => {
+      setOpenWalletList(false)
+    }
+
+    return (
     <DetailCredentialRequestPIDView
       pidData={pidData}
       vcStatus={vcStatus}
       handleRelease={handleRelease}
+      handleOpenWalletList={handleOpenWalletList}
+      handleCloseWalletList={handleCloseWalletList}
+      openWalletList={openWalletList}
+      openidIssuanceURIQR={openidIssuanceURIQR}
+      wallets={walletList}
     />
   );
 };

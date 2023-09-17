@@ -4,6 +4,10 @@ class ViewModel {
         //this.apiUrl = 'http://api.issuer.origin';
         this.apiUrl = 'http://localhost:3000';
     }
+
+    getApiUrl(){
+        return this.apiUrl;
+    }
 }
 
 export default ViewModel;
