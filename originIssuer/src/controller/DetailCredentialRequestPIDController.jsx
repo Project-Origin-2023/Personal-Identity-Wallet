@@ -1,10 +1,12 @@
 import  { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 import DetailCredentialRequestPIDViewModel from '../viewmodel/DetailCredentialRequestPIDViewModel';
 import DetailCredentialRequestPIDView from '../view/DetailCredentialRequestPIDView';
 
 const DetailCredentialRequestPIDController = ({ token }) => {
+    let navigate = useNavigate();
     const [searchParams] = useSearchParams()
     const [pidData, setPIDData] = useState({
       currentAddress: '',
@@ -27,6 +29,10 @@ const DetailCredentialRequestPIDController = ({ token }) => {
 
     useEffect(() => {
         const fetchData = async () => {
+            //Redirect to Login if not present the Token
+            if(typeof token=== "undefined" || token===null || token==="") {
+              return navigate('/Login');      
+            }
             //VC Data
             let response = await viewModel.getVC(id, token);            
             if(!response.success)

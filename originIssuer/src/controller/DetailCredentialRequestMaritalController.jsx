@@ -1,5 +1,6 @@
 import  { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 import DetailCredentialRequestMaritalViewModel from '../viewmodel/DetailCredentialRequestMaritalViewModel';
 import DetailCredentialRequestMaritalView from '../view/DetailCredentialRequestMaritalView';
@@ -7,6 +8,7 @@ import ViewModel from '../viewmodel/ViewModel';
 
 
 const DetailCredentialRequestMaritalController = ({ token }) => {
+    let navigate = useNavigate();
     const [searchParams] = useSearchParams()
     const [marData, setMARData] = useState({
       state: '',
@@ -24,6 +26,10 @@ const DetailCredentialRequestMaritalController = ({ token }) => {
 
     useEffect(() => {
         const fetchData = async () => {
+            //Redirect to Login if not present the Token
+            if(typeof token=== "undefined" || token===null || token==="") {
+              return navigate('/Login');      
+            }
             //VC Data
             let response = await viewModel.getVC(id, token);            
             if(!response.success)
