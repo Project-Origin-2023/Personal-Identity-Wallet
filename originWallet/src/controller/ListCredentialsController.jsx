@@ -8,12 +8,11 @@ const ListCredentialsController = ({ token , setToken}) => {
   const viewModel = new ListCredentialsViewModel();
   const [credentials, setCredentials] = useState([]);
 
-  // location for state pass parameter
-  const location = useLocation()
-  if (location.state === undefined || location.state === null){}else{
-    //alert(location.state.message)
-    //TODO show a message popup
-  }
+  //State from previous pages
+  const location = useLocation();
+  let state = {pending:false,type:null,message:null}
+  if (typeof location.state !== 'undefined' && location.state !== null)
+    state = useLocation().state;
   
 
   useEffect(() => {
