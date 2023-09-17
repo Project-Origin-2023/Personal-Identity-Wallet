@@ -14,7 +14,6 @@ describe('register and login email and password presence', () => {
     expect(response.status).toBe(500);
     expect(response.body).toEqual({ success: false, description: "email Missing" });
   });
-
   //test mancanza email su login (OK)
   it('should return 500 with "Email Missing" message if email is missing', async () => {
     const response = await request(routing.app)  // Utilizza l'istanza di Routing
@@ -110,7 +109,7 @@ describe('simulate a registration flow and a complete user experience', () => {
     .set('x-access-token', token)
     .send({
       currentAddress: 'Indirizzo attuale',
-      dateOfBirth: '01 01 1990',
+      dateOfBirth: '1990 01 01',
       familyName: 'Cognome',
       firstName: 'Nome',
       gender: 'M',
@@ -167,6 +166,73 @@ describe('simulate a registration flow and a complete user experience', () => {
       expect(response.body.description).toBe('Authorization token not found');
       }
     );
+
+    //request marital status personalIdentifier not found
+    it('should return an error for missing personalIdentifier', async () => {
+      const response = await request(routing.app)
+        .post('/vcsrequest/marital')
+        .set('x-access-token', token)
+        .send({
+          status: 'married', // married, divorced, single
+        });
+  
+      expect(response.status).toBe(500);
+      expect(response.body.success).toBe(false);
+      expect(response.body.description).toBe('personalIdentifier Missing');
+      }
+    );
+    var tokenAdmin;
+    var primoId;
+    //login whit sys admin
+    it('should login a user and return a token', async () => {
+      const response = await request(routing.app)  // Utilizza l'istanza di Routing
+      .post('/auth/login')
+      .send({ email: "ADMIN@admin.com", password: "ADmin1234?" });
+      
+    const data = response.body.data;
+    const body = response.body;
+    //memorize token received
+    tokenAdmin = data.token;
+    // Assicurati che la registrazione sia avvenuta con successo
+    expect(body.success).toBe(true);
+    expect(body.description).toBe('Auth Login Successfuly Token created');
+    expect(data).toBeDefined();
+    });
+    //admin retrieve all vcs request
+    it('should return all vcs request', async () => {
+      const response = await request(routing.app)
+      .get('/admin/vcsrequests/pending')
+      .set('x-access-token', tokenAdmin);
+      expect(response.status).toBe(200);
+      expect(response.body.success).toBe(true);
+      primoId = response.body.data.vcs_requests_pending[0].id;
+    });
+    //admin retrieve all vcs request token not found
+    it('should return an error for missing token', async () => {
+      const response = await request(routing.app)
+        .get('/admin/vcsrequest/pid/');
+  
+      expect(response.status).toBe(403);
+      expect(response.body.success).toBe(false);
+      expect(response.body.description).toBe('Authorization token not found');
+      }
+    );
+    /*
+    //admin approve vcs request
+    it('should approve a vcs request', async () => {
+      const response = await request(routing.app)
+      .get('/admin/vcsrequest/marital/:primoId')
+      .set('x-access-token', tokenAdmin)
+      .send({
+        id: primoId,
+      });
+      expect(response.status).toBe(200);
+      expect(response.body.success).toBe(true);
+    }
+    );*///non funziona
+
+
+
 });
 
 
