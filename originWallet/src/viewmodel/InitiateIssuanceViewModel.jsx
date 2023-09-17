@@ -17,7 +17,6 @@ class InitiateIssuanceViewModel extends ViewModel{
   }
 
   async infoIssuance(sessionId,jwtToken){
-    console.log(jwtToken)
     try {
       const response = await axios.get(this.apiUrl+'/ci/info/issuance?sessionId='+sessionId , {
         headers: {

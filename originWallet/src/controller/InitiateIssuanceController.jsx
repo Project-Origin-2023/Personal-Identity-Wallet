@@ -1,5 +1,6 @@
 import  { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom'
+import { Navigate } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
 
 
@@ -48,7 +49,7 @@ const InitiateIssuanceController = ({token, setToken}) => {
       if(!response.success)
           return alert(response.description);
       else{
-        navigate('/ListCredentials');      
+        navigate('/ListCredentials',{state:{message:response.description}});      
       }
   };
 

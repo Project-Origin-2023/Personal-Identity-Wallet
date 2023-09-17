@@ -11,28 +11,21 @@ import PropTypes from 'prop-types';
 
 const InitiateIssuanceView = ({ credentialOffer, handleAcceptIssuance}) => {
   return (
-    <Container component="main" maxWidth="sm">
+    <Container component="main" maxWidth="md">
       <Grid container spacing={2}>
         <Grid item xs={12}>
-          <Avatar>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography variant="h5">Credenziale</Typography>
+          <Typography variant="h3">VC Offer:</Typography>
         </Grid>
-        <Grid item xs={12}>
-          <Card>
-            <CardContent>
-              <Typography variant="h6">Dettagli </Typography>
-            </CardContent>
-          </Card>
-        </Grid>
-        <Grid item xs={12}>
-          <Typography variant="h6">Stato Credenziale:</Typography>
+        <Grid item xs={8}>
+          <Typography variant="h6">Dettaglio Verifiable Credential:</Typography>
           <Typography variant="body1">
-            <strong>Stato:</strong> {}
+            <strong>Types:</strong> {credentialOffer.credentialTypes}
+          </Typography>
+          <Typography variant="body1">
+            <strong>issuerId:</strong> {credentialOffer.issuerId}
           </Typography>
         </Grid>
-        <Grid item xs={12}>
+        <Grid item xs={4}>
           <Button
             onClick={handleAcceptIssuance}
             fullWidth
@@ -46,7 +39,7 @@ const InitiateIssuanceView = ({ credentialOffer, handleAcceptIssuance}) => {
           <Card>
               <CardContent style={{overflow: 'auto'}}>
                 <Typography gutterBottom variant="h5" component="div">
-                  JSON Credenziale
+                  JSON Credential Offer
                 </Typography>
                 <pre>{JSON.stringify(credentialOffer, null, 2) }</pre>
               </CardContent>

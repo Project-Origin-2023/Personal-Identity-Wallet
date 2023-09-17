@@ -5,7 +5,7 @@ import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
-import Container from '@mui/material/Container';
+import Grid from '@mui/material/Grid';
 
 
 
@@ -22,7 +22,14 @@ export default function BackdropView() {
       };
 
     return (
-        <Container maxWidth="lg">
+        <Grid
+        container
+        spacing={0}
+        direction="column"
+        alignItems="center"
+        justifyContent="center"
+        sx={{ minHeight: '100vh' }}
+         >
         <List component="container" aria-label="mailbox folders" >
                 <ListItem >
                     <Typography variant="h4" component="h4">
@@ -31,15 +38,10 @@ export default function BackdropView() {
                 </ListItem>
                 <Divider />
                 <ListItem>
-                    <CircularProgress color="inherit" />
+                    <CircularProgress 
+                    color="inherit" />
                 </ListItem>
-            </List>
-        <Backdrop
-          sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
-          open={open}
-          onClick={handleClose}
-        >   
-        </Backdrop>
-    </Container>
+        </List>
+        </Grid>
     );
 }

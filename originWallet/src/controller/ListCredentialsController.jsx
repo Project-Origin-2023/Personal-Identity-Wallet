@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom'
 import ListCredentialsViewModel from '../viewmodel/ListCredentialsViewModel';
 import ListCredentialsView from '../view/ListCredentialsView';
 import BackdropView from '../view/BackdropView';
@@ -6,6 +7,14 @@ import BackdropView from '../view/BackdropView';
 const ListCredentialsController = ({ token , setToken}) => {
   const viewModel = new ListCredentialsViewModel();
   const [credentials, setCredentials] = useState([]);
+
+  // location for state pass parameter
+  const location = useLocation()
+  if (location.state === undefined || location.state === null){}else{
+    //alert(location.state.message)
+    //TODO show a message popup
+  }
+  
 
   useEffect(() => {
     const fetchData = async () => {

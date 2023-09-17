@@ -1,4 +1,3 @@
-import  { useEffect, useState } from 'react';
 import { Navigate } from 'react-router-dom'
 import { useLocation, useNavigate } from 'react-router-dom'
 
@@ -7,9 +6,10 @@ import DetailCredentialViewModel from '../viewmodel/DetailCredentialViewModel';
 import DetailCredentialView from '../view/DetailCredentialView';
 
 const DetailCredentialController = ({token, setToken}) => {
-    const location = useLocation()
     //Reindirizzamento
     let navigate = useNavigate();
+    //Location state pass
+    const location = useLocation()
     if (location.state === undefined || location.state === null)
       return <Navigate to='/ListCredentials' />
         
