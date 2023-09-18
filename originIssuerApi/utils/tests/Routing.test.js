@@ -3,6 +3,10 @@ const { Routing } = require('../../utils/Routing.js');
 const routing = new Routing();
 routing.configEndpoint();
 
+
+let primoId;
+let secondoId;
+
 describe('register and login email and password presence', () => {
   
   //test mancanza email su registrazione (OK)
@@ -182,7 +186,6 @@ describe('simulate a registration flow and a complete user experience', () => {
       }
     );
     var tokenAdmin;
-    var primoId;
     //login whit sys admin
     it('should login a user and return a token', async () => {
       const response = await request(routing.app)  // Utilizza l'istanza di Routing
@@ -198,6 +201,7 @@ describe('simulate a registration flow and a complete user experience', () => {
     expect(body.description).toBe('Auth Login Successfuly Token created');
     expect(data).toBeDefined();
     });
+
     //admin retrieve all vcs request
     it('should return all vcs request', async () => {
       const response = await request(routing.app)
@@ -207,6 +211,7 @@ describe('simulate a registration flow and a complete user experience', () => {
       expect(response.body.success).toBe(true);
       primoId = response.body.data.vcs_requests_pending[0].id;
     });
+    secondoId = primoId;
     //admin retrieve all vcs request token not found
     it('should return an error for missing token', async () => {
       const response = await request(routing.app)
@@ -217,19 +222,30 @@ describe('simulate a registration flow and a complete user experience', () => {
       expect(response.body.description).toBe('Authorization token not found');
       }
     );
-    /*
     //admin approve vcs request
     it('should approve a vcs request', async () => {
+      //creami un nuovo id per il test
       const response = await request(routing.app)
-      .get('/admin/vcsrequest/marital/:primoId')
+      .get(`/admin/vcsrequest/marital/${primoId}`)
       .set('x-access-token', tokenAdmin)
-      .send({
-        id: primoId,
-      });
+      console.log(response.body);
+      expect(response.status).toBe(200);
+      expect(response.body.success).toBe(true);
+    });
+    //rilascio vcs token
+    //stampa primoId
+    it('should release a vcs token', async () => {
+      //creami un nuovo id per il test
+      console.log(primoId);
+      const response = await request(routing.app)
+      .get(`/vcsrequest/release/${primoId}`)
+      .set('x-access-token', token)
+      .query({ wallet: 'origin' });
+      console.log(response.body);
       expect(response.status).toBe(200);
       expect(response.body.success).toBe(true);
     }
-    );*///non funziona
+    );
 
 
 
