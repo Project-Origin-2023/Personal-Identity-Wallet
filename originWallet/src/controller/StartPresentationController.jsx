@@ -4,15 +4,15 @@ import { Navigate } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
 
 
-import StartIssuerInitiatedIssuanceViewModel from '../viewmodel/StartIssuerInitiatedIssuanceViewModel';
-import StartIssuerInitiatedIssuanceView from '../view/StartIssuerInitiatedIssuanceView';
+import StartPresentationViewModel from '../viewmodel/StartPresentationViewModel';
+import StartPresentationView from '../view/StartPresentationView';
 
-const StartIssuerInitiatedIssuanceController = ({token, setToken, state}) => {
+const StartPresentationController = ({token, setToken, state}) => {
     //Reindirizzamento
     let navigate = useNavigate();
 
     //Creazione ViewModel
-    const viewModel = new StartIssuerInitiatedIssuanceViewModel();
+    const viewModel = new StartPresentationViewModel();
     const [uri,setUri] = useState({uri:''});
     
     useEffect(() => {
@@ -30,30 +30,30 @@ const StartIssuerInitiatedIssuanceController = ({token, setToken, state}) => {
       setUri({uri:value});
     }
 
-    const handleStartIssuance = async () => {
+    const handleStartPresentation = async () => {
       //Auth Token Refresh
       let response = await viewModel.refreshAuth(token)
       if(response.success)
         setToken(response.data.token)
 
-      //Inizio la Procedura di Credential issuing
-      response = await viewModel.startIssuance(uri,token)
+      //Inizio la Procedura di Verifiable Presentation
+      response = await viewModel.startPresentation(uri,token)
       console.log(response)
       if(!response.success)
           return alert(response.description);
       else{
         let sessionId=response.data;
-        navigate('/InitiateIssuance/?sessionId='+sessionId);      
+        navigate('/CredentialRequest/?sessionId='+sessionId);      
       }
   };
 
 
   return (
-    <StartIssuerInitiatedIssuanceView
+    <StartPresentationView
       handleUriChange={handleUriChange}
-      handleStartIssuance={handleStartIssuance}
+      handleStartPresentation={handleStartPresentation}
     />
   );
 };
 
-export default StartIssuerInitiatedIssuanceController;
+export default StartPresentationController;

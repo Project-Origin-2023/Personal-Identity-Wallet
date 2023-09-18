@@ -10,15 +10,15 @@ import Typography from '@mui/material/Typography';
 import PropTypes from 'prop-types';
 import TextField from '@mui/material/TextField';
 
-const StartIssuerInitiatedIssuanceView = ({ handleUriChange, handleStartIssuance }) => {
+const StartPresentationView = ({ handleUriChange, handleStartPresentation}) => {
   return (
     <Container component="main" maxWidth="md">
       <Grid container spacing={2}>
         <Grid item xs={12}>
-          <Typography variant="h4">Issuer Initiated Verifiable Credential Issuance:</Typography>
+          <Typography variant="h4">Verifiable Presentation:</Typography>
         </Grid>
         <Grid item xs={8}>
-          <Typography variant="body3">Incolla qui il openid-initiate-issuance URI per iniziare la Verifiable Credential Issuance:</Typography>
+          <Typography variant="body3">Incolla qui il openid-initiate-issuance URI per iniziare la Verifiable Presentation:</Typography>
           <Card sx={{ maxWidth: 345 }}>
           <CardContent>
             <TextField
@@ -33,7 +33,7 @@ const StartIssuerInitiatedIssuanceView = ({ handleUriChange, handleStartIssuance
         </Grid>
         <Grid item xs={4}>
           <Button
-            onClick={handleStartIssuance}
+            onClick={handleStartPresentation}
             fullWidth
             variant="contained"
             color="primary"
@@ -45,4 +45,4 @@ const StartIssuerInitiatedIssuanceView = ({ handleUriChange, handleStartIssuance
     </Container>
   );
 };
-export default StartIssuerInitiatedIssuanceView;
+export default StartPresentationView;

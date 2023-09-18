@@ -12,8 +12,10 @@ import RegisterController from './controller/RegisterController'
 import LoginController from './controller/LoginController';
 import ListCredentialsController from './controller/ListCredentialsController';
 import DetailCredentialController from './controller/DetailCredentialController'
+import CredentialRequestController from './controller/CredentialRequestController';
 import InitiateIssuanceController from './controller/InitiateIssuanceController';
 import StartIssuerInitiatedIssuanceController from './controller/StartIssuerInitiatedIssuanceController';
+import StartPresentationController from './controller/StartPresentationController';
 import useToken from './components/useToken';
 import PageState from './components/PageState';
 
@@ -40,8 +42,10 @@ function App() {
             <Route path="/Login" element={<LoginController setToken={setToken} state={state}/>} />
             <Route path="/ListCredentials" element={<ListCredentialsController token={token} setToken={setToken} state={state} />} />
             <Route path="/DetailCredential" element={<DetailCredentialController token={token} setToken={setToken} state={state} />} />
+            <Route path="/CredentialRequest" element={<CredentialRequestController token={token} setToken={setToken} state={state} />} />
             <Route path="/InitiateIssuance" element={<InitiateIssuanceController token={token} setToken={setToken} state={state} />} />
             <Route path="/StartIssuerInitiatedIssuance" element={<StartIssuerInitiatedIssuanceController token={token} setToken={setToken} state={state} />} />
+            <Route path="/StartPresentation" element={<StartPresentationController token={token} setToken={setToken} state={state} />} />
           </Routes>
         </AuthProvider>
       </Router>

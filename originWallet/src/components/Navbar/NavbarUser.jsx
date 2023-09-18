@@ -13,7 +13,8 @@ function NavbarUser({ setToken}) {
           Origin Wallet Control Pannel
         </Typography>
         <Button color="inherit" component={Link} to="/">Home</Button>
-        <Button color="inherit" component={Link} to="/StartIssuerInitiatedIssuance">Issuer Initiated</Button>
+        <Button color="inherit" component={Link} to="/StartPresentation">Start Presentation</Button>
+        <Button color="inherit" component={Link} to="/StartIssuerInitiatedIssuance">Start Issuance</Button>
         <Button color="inherit" component={Link} to="/ListCredentials">Lista VC</Button>
         <Button color="inherit"><Logout setToken={setToken} /></Button>
       </Toolbar>

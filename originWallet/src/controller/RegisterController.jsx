@@ -19,7 +19,7 @@ const RegisterController = ({ setToken, state }) => {
         if (state.getPending()){
             switch (state.getType()) {
               case 'ci':
-                window.location.href = '/InitiateIssuance?sessionId='+state.getData().sessionId;
+                window.location.href = '/InitiateIssuance/?sessionId='+state.getData().sessionId;
                 break;
               default:
                 window.location.href = '/';
