@@ -5,7 +5,6 @@ routing.configEndpoint();
 
 
 let primoId;
-let secondoId;
 
 describe('register and login email and password presence', () => {
   
@@ -211,7 +210,6 @@ describe('simulate a registration flow and a complete user experience', () => {
       expect(response.body.success).toBe(true);
       primoId = response.body.data.vcs_requests_pending[0].id;
     });
-    secondoId = primoId;
     //admin retrieve all vcs request token not found
     it('should return an error for missing token', async () => {
       const response = await request(routing.app)
