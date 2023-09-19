@@ -90,14 +90,6 @@ export function Home() {
           </Grid>
         </Container>
       </main>
-      {/* Footer */}
-      <Box sx={{ bgcolor: 'background.paper', p: 6 }} component="footer">
-        <Typography variant="subtitle1" align="center" color="text.secondary" component="p">
-          Informazioni da footer
-        </Typography>
-        <LicenseLabel />
-      </Box>
-      {/* End footer */}
     </div>
   );
 }

@@ -18,6 +18,7 @@ import CredentialRequestMaritalController from './controller/CredentialRequestMa
 import DetailCredentialRequestPIDController from './controller/DetailCredentialRequestPIDController'
 import DetailCredentialRequestMaritalController from './controller/DetailCredentialRequestMaritalController'
 import useToken from './components/useToken';
+import Footer from './components/Footer';
 
 function App() {
   const { token, setToken , isAdmin, setIsAdmin} = useToken();
@@ -41,6 +42,7 @@ function App() {
           <Route path="/DetailCredentialRequestPID" element={<DetailCredentialRequestPIDController token={token}/>} />
           <Route path="/DetailCredentialRequestMarital" element={<DetailCredentialRequestMaritalController token={token}/>} />
         </Routes>
+        <Footer/>
       </AuthProvider>
     </Router>
   );

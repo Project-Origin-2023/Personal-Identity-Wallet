@@ -713,7 +713,7 @@ class Routing{
                 res.status(500).json({ success: false, message: 'credential request Missing' });
                 res.end();return;
             }
-            if (!status) {
+            if (typeof status === "undefined") {
                 res.status(500).json({ success: false, message: 'status Missing' });
                 res.end();return;
             }

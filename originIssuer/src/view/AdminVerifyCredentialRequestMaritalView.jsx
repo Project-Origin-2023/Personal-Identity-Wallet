@@ -8,8 +8,10 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import PropTypes from 'prop-types';
+import ToggleButton from '@mui/material/ToggleButton';
+import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 
-const AdminVerifyCredentialRequestMaritalView = ({ maritalData, handleVerify }) => {
+const AdminVerifyCredentialRequestMaritalView = ({ maritalData, statusVerification, setStatusVerification, handleVerify }) => {
   return (
     <Container component="main" maxWidth="xs">
       <Grid container spacing={2}>
@@ -32,7 +34,21 @@ const AdminVerifyCredentialRequestMaritalView = ({ maritalData, handleVerify }) 
             </CardContent>
           </Card>
         </Grid>
-        <Grid item xs={12}>
+        <Grid item md={6} xs={12}>
+          <ToggleButtonGroup
+            color="primary"
+            value={statusVerification}
+            exclusive
+            onChange={(event, newStatus) => {
+              setStatusVerification(newStatus);
+            }}
+            aria-label="Platform"
+          >
+            <ToggleButton value="true">Approva</ToggleButton>
+            <ToggleButton value="false">Rifiuta</ToggleButton>
+          </ToggleButtonGroup>
+        </Grid>
+        <Grid item md={6} xs={12}>
           <Button
             onClick={handleVerify}
             fullWidth
