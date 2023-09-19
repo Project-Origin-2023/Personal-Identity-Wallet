@@ -12,7 +12,7 @@ const Logout = ({ setToken }) => {
   };
 
   return (
-    <Typography variant="body1" component={Link} to="/" onClick={handleLogout} color="inherit" style={{ textDecoration: 'none' }}>
+    <Typography variant="body1" component={Link} to="/" onClick={handleLogout} color="error" style={{ textDecoration: 'none' }}>
       Logout
     </Typography>
   );

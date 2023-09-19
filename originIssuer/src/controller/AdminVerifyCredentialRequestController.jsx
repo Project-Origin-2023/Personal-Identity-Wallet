@@ -28,6 +28,8 @@ const AdminVerifyCredentialRequestController = ({ token }) => {
       personalIdentifier: ''
     });
 
+    const [statusVerification, setStatusVerification] = useState(true);
+
     const id = searchParams.get('id');
     const viewModel = new AdminVerifyCredentialRequestViewModel();
 
@@ -57,7 +59,7 @@ const AdminVerifyCredentialRequestController = ({ token }) => {
     }, [token]);
 
     const handleVerify = async () => {
-        const response = await viewModel.verifyVC(id,true,token)
+        const response = await viewModel.verifyVC(id,statusVerification=="true",token)
         if(!response.success)
             return alert(response.description);
         else{
@@ -69,11 +71,15 @@ const AdminVerifyCredentialRequestController = ({ token }) => {
     return (<AdminVerifyCredentialRequestPidView
     pidData={pidData}
     handleVerify={handleVerify}
+    statusVerification={statusVerification}
+    setStatusVerification={setStatusVerification}
     />)}
   else{
     return (<AdminVerifyCredentialRequestMaritalView
     maritalData={maritalData}
     handleVerify={handleVerify}
+    statusVerification={statusVerification}
+    setStatusVerification={setStatusVerification}
     />)}
 };
 

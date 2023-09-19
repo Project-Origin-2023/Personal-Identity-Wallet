@@ -356,19 +356,12 @@ class Routing{
                 res.status(500).json(new DataResponse(false,"sessionId format not valid"));
                 res.end();return;
             }
-            
             //uri
             const {claims} = req.body;
             //Verifica dati input
             // Verifica dati di input (presenza ed esistenza)
-            if (!claims || claims.trim() === '') {
+            if (!claims || claims.length == 0) {
                 res.status(500).json(new DataResponse(false,"claims Missing"));
-                res.end();return;
-            }
-            
-            //Verifico parametri correttamente
-            if(!this.#inputChecker.checkString(uri)){
-                res.status(500).json(new DataResponse(false,"claims format not valid"));
                 res.end();return;
             }
 
@@ -382,11 +375,6 @@ class Routing{
             res.status(200).json(result);
             res.end();return;
         });
-
-        
-
-        
-
         
     }
 

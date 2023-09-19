@@ -31,19 +31,19 @@ const StartIssuerInitiatedIssuanceController = ({token, setToken, state}) => {
     }
 
     const handleStartIssuance = async () => {
-      //Aggioranamento token
+      //Auth Token Refresh
       let response = await viewModel.refreshAuth(token)
       if(response.success)
         setToken(response.data.token)
 
-      //Accetto la credenziale CI
+      //Inizio la Procedura di Credential issuing
       response = await viewModel.startIssuance(uri,token)
       console.log(response)
       if(!response.success)
           return alert(response.description);
       else{
         let sessionId=response.data;
-        navigate('/InitiateIssuance?sessionId='+sessionId);      
+        navigate('/InitiateIssuance/?sessionId='+sessionId);      
       }
   };
 

@@ -9,27 +9,33 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Container from '@mui/material/Container';
+import Grid from '@mui/material/Grid';
 
 
 
 const ListCredentialsView = ({ credentials }) => {
  return(
-  <Container maxWidth="lg">
+  <Container maxWidth="md"
+      spacing={2}
+      direction="row"
+      justifyContent="space-evenly"
+      alignItems="center">
     <Typography
       component="h1"
-      variant="h5"
+      variant="h4"
       color="black"
       noWrap
-    >Visualizzazione Verifiable Credentials</Typography>
+    >Visualizzazione Lista Verifiable Credentials</Typography>
+    <Typography variant="caption">Di seguito si puo' visualizzare la lista con tutte le tue credenziali salvate nel Wallet</Typography>
     {credentials.length > 0 ? (
       <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
+        <Table>
           <TableHead>
             <TableRow>
-              <TableCell>ID</TableCell>
-              <TableCell align="right">Type</TableCell>
-              <TableCell align="right">Issuance Date</TableCell>
-              <TableCell align="right">Dettagli</TableCell>
+              <TableCell><strong>ID</strong></TableCell>
+              <TableCell align="right"><strong>Type</strong></TableCell>
+              <TableCell align="right"><strong>Issuance Date</strong></TableCell>
+              <TableCell align="right"><strong>Dettagli</strong></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -50,7 +56,12 @@ const ListCredentialsView = ({ credentials }) => {
         </Table>
       </TableContainer>
     ):(
-      <p>Ancora nessun dato da mostrare ...</p>
+      <Typography
+      component="h1"
+      variant="h4"
+      color="black"
+      noWrap
+      >Ancora nessun dato da mostrare ...</Typography>
     )}
   </Container>
   );

@@ -18,7 +18,7 @@ const ListCredentialsController = ({ token , setToken, state }) => {
       if(typeof token=== "undefined" || token===null || token==="") {
         return navigate('/Login');      
       }
-      //Aggioranamento token
+      //Auth Token Refresh
       let response = await viewModel.refreshAuth(token)
       if(response.success)
         setToken(response.data.token)

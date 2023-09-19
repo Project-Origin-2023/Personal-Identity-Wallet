@@ -84,7 +84,7 @@ const LoginView = ({ email, password, setEmail, setPassword, handleLogin }) => {
                     <li>Almeno 1 carattere speciale @$!%*?&</li>
                     <li>Lunghezza minima 8 caratteri</li>
                   </ul>
-                </Typography>
+              </Typography>
               <Button
                 type="submit"
                 fullWidth
