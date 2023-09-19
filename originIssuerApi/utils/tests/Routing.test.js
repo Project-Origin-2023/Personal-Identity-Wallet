@@ -240,16 +240,23 @@ describe('simulate a registration flow and a complete user experience', () => {
         expect(atLeastOneSuccess).toBe(true);
       });
   ///admin/vcsrequest/verify
-  it('should return all vcs request', async () => {
-    const response = await request(routing.app)
+  //admin verify vcs request
+it('should verify a VCS request', async () => {
+  const requestBody = {
+    vcsrequestId: primoId, // Sostituisci con l'ID effettivo
+    status: true, // Sostituisci con lo stato effettivo
+  };
+
+  const response = await request(routing.app)
     .post('/admin/vcsrequest/verify')
     .set('x-access-token', tokenAdmin)
-    .set('vcsrequestId',primoId);
-    console.log(response.body);
-    expect(response.status).toBe(200);
-    expect(response.body.success).toBe(true);
-  }
-  );
+    .send(requestBody);
+
+  console.log(response.body);
+  expect(response.status).toBe(200);
+  expect(response.body.success).toBe(true);
+});
+
 
 });
 
