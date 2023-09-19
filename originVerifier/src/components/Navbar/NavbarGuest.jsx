@@ -42,7 +42,6 @@ function NavbarGuest() {
     <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <WalletIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
           <Typography
             variant="h6"
             noWrap
@@ -58,7 +57,7 @@ function NavbarGuest() {
               textDecoration: 'none',
             }}
           >
-            Origin Wallet
+            Origin Verifier
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -94,10 +93,7 @@ function NavbarGuest() {
                   <Button sx={{ my: 2, color: 'white', display: 'block' }} component={Link} to="/">Home</Button>
                 </MenuItem>
                 <MenuItem  key="2" onClick={handleCloseUserMenu}>
-                  <Button sx={{ my: 2, color: 'white', display: 'block' }} component={Link} to="/Register">Registrati</Button>
-                </MenuItem>
-                <MenuItem  key="3"onClick={handleCloseUserMenu}>
-                  <Button sx={{ my: 2, color: 'white', display: 'block' }} component={Link} to="/Login">Login</Button>
+                  <Button sx={{ my: 2, color: 'white', display: 'block' }} component={Link} to="/Connect"> Connect</Button>
                 </MenuItem>
             </Menu>
           </Box>
@@ -122,8 +118,7 @@ function NavbarGuest() {
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             <Button sx={{ my: 2, color: 'white', display: 'block' }} component={Link} to="/">Home</Button>
-            <Button sx={{ my: 2, color: 'white', display: 'block' }} component={Link} to="/Register">Registrati</Button>
-            <Button sx={{ my: 2, color: 'white', display: 'block' }} component={Link} to="/Login">Login</Button>
+            <Button sx={{ my: 2, color: 'white', display: 'block' }} component={Link} to="/Connect">Connect</Button>
           </Box>
         </Toolbar>
       </Container>

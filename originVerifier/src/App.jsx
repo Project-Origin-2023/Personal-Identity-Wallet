@@ -8,14 +8,6 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 
 import Navbar from './components/Navbar';
 import Home from './components/Home';
-import RegisterController from './controller/RegisterController'
-import LoginController from './controller/LoginController';
-import ListCredentialsController from './controller/ListCredentialsController';
-import DetailCredentialController from './controller/DetailCredentialController'
-import CredentialRequestController from './controller/CredentialRequestController';
-import InitiateIssuanceController from './controller/InitiateIssuanceController';
-import StartIssuerInitiatedIssuanceController from './controller/StartIssuerInitiatedIssuanceController';
-import StartPresentationController from './controller/StartPresentationController';
 import useToken from './components/useToken';
 import PageState from './components/PageState';
 import Footer from './components/Footer';
@@ -25,22 +17,21 @@ function App() {
 
   const state = new PageState()
   
-  const lightTheme = createTheme({
+  const darkTheme = createTheme({
     palette: {
-      mode: 'light',
+      mode: 'dark',
     },
   });
 
   //Routing Pagine
   return (
-    <ThemeProvider theme={lightTheme}>
+    <ThemeProvider theme={darkTheme}>
       <Router>
         <AuthProvider>
-          <Navbar setToken={setToken} state={state}/>
+          <Navbar isLoggedIn={token!==null} setToken={setToken} state={state}/>
           <Routes>
             <Route path="/"  element={<Home />} />
-            <Route path="/ListCredentials" element={<ListCredentialsController token={token} setToken={setToken} state={state} />} />
-            </Routes>
+          </Routes>
           <Footer/>
         </AuthProvider>
       </Router>
