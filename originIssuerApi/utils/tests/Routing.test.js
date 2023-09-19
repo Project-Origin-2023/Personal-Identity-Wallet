@@ -258,12 +258,14 @@ describe('simulate a registration flow and a complete user experience', () => {
     expect(response.body.success).toBe(true);
   });
 
-  //user releases credential
-  it('should release a credential', async () => {
-    const response = await request(routing.app)
-    .get(`/vcsrequest/release/${primoId}`)
-    .set('x-access-token', token);
-    expect(response.status).toBe(200);
-    expect(response.body.success).toBe(true);
-  });
+    //user releases credential
+    it('should release a credential', async () => {
+      const response = await request(routing.app)
+      .get(`/vcsrequest/release/${primoId}`)
+      .set('x-access-token', token);
+      console.log(primoId);
+      console.log(response.body);
+      expect(response.status).toBe(200);
+      expect(response.body.success).toBe(true);
+    });
 });
