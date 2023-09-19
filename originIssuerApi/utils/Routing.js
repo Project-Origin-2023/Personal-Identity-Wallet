@@ -707,7 +707,6 @@ class Routing{
             }
             //applicantId,status,personalIdentifier
             const {vcsrequestId, status} = req.body;
-            //Verifica dati input
             // Verifica dati di input (presenza ed esistenza)
             if (!vcsrequestId || vcsrequestId.trim() === '') {
                 res.status(500).json({ success: false, message: 'credential request Missing' });
