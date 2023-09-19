@@ -28,6 +28,19 @@ class CredentialRequestViewModel extends ViewModel{
       return error.response.data;
     }
   }
+
+  async fulfill(sessionId,claims,jwtToken){
+    try {
+      const response = await axios.post(this.apiUrl+'/vp/fulfill?sessionId='+sessionId ,claims, {
+        headers: {
+          "x-access-token": `${jwtToken}`,
+        },
+      });
+      return response.data;
+    } catch (error) {
+      return error.response.data;
+    }
+  }
 }
 
 export default CredentialRequestViewModel;

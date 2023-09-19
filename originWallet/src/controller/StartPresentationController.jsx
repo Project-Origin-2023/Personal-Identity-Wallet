@@ -38,7 +38,6 @@ const StartPresentationController = ({token, setToken, state}) => {
 
       //Inizio la Procedura di Verifiable Presentation
       response = await viewModel.startPresentation(uri,token)
-      console.log(response)
       if(!response.success)
           return alert(response.description);
       else{

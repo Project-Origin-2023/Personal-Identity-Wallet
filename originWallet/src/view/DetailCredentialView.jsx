@@ -23,7 +23,7 @@ const DetailCredentialView = ({ credential, handleDelete }) => {
             <CardContent>
               {Object.keys(credential.credentialSubject).map((key)=>{
                 return (<Typography variant="body1">
-                <strong>{key}</strong> {credential.credentialSubject[key]}
+                <strong>{key}: </strong> {credential.credentialSubject[key]}
                 </Typography>)
               })}
             </CardContent>

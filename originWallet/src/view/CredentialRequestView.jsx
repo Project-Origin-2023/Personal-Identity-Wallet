@@ -17,21 +17,21 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Checkbox from '@mui/material/Checkbox';
 
 const CredentialRequestView = ({presentableCredentials,preferencesPC,setPreferencesPC, credentials,handleFulfill}) => {
-
+  //state for Accordion
   const [expanded, setExpanded] = useState(false);
   const handleChange = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
   };
-  function handleClickCheckbox(e) {
-    console.log(preferencesPC);
-    preferencesPC[e.target.value] = !preferencesPC[e.target.value]; 
-    console.log(preferencesPC);  
-    e.stopPropagation();
-  }
+  //state for button fullfill
+  const [fulfillDisabled, setFullfillDisabled] = useState(true);
 
-  function togglePreference(credentialId) { 
-    preferencesPC[credentialId] = !preferences[credentialId];     
-  } 
+  function handleChangeCheckbox(e) {
+    //Modifico le preferences del Presentation Credential da selezionare per l'invio come fullfill
+    let pr = preferencesPC;
+    pr[e.target.value] = !pr[e.target.value]
+    setPreferencesPC(pr)
+    setFullfillDisabled(!Object.values(preferencesPC).some(val => val === true));
+  }
 
   return (
     <Container component="main" maxWidth="md">
@@ -41,7 +41,7 @@ const CredentialRequestView = ({presentableCredentials,preferencesPC,setPreferen
         justifyContent="space-evenly"
         alignItems="center">
           {presentableCredentials.map((row, index) => (
-          <Grid item xs={12} md={8}>
+          <Grid item xs={12} md={9}>
             <Accordion expanded={expanded === `panel${row.credentialId}`} onChange={handleChange(`panel${row.credentialId}`)}>
               <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}
@@ -52,32 +52,43 @@ const CredentialRequestView = ({presentableCredentials,preferencesPC,setPreferen
                   <Checkbox
                     value={`${row.credentialId}`}
                     color="primary"
-                    onClick={e => handleClickCheckbox(e)}
-                    //checked={preferencesPC[row.credentialId]}
+                    onClick={e => e.stopPropagation()}
+                    onChange={e => handleChangeCheckbox(e)}
                   />
                 </Grid>
                 <Grid item md={5}>
                   <Typography variant="caption">
-                  {credentials.get(row.credentialId).type.join(' - ')}
+                  <strong>Type:</strong> {credentials.get(row.credentialId).type.join(' - ')}
                   </Typography>
                 </Grid>
                 <Grid item md={5}>
                   <Typography variant="caption">
-                  {credentials.get(row.credentialId).issuanceDate}
+                  <strong>Issuance Date:</strong> {new Date(credentials.get(row.credentialId).issuanceDate).toUTCString()}
                   </Typography>
                 </Grid>
               </AccordionSummary>
               <AccordionDetails>
-                <Typography>
-                  Nulla facilisi. Phasellus sollicitudin nulla et quam mattis feugiat.
-                  Aliquam eget maximus est, id dignissim quam.
-                </Typography>
+                  {Object.keys(credentials.get(row.credentialId).credentialSubject).map((key)=>{
+                    return (
+                    <Typography variant="caption">
+                    <strong>{key}: </strong> {credentials.get(row.credentialId).credentialSubject[key]} <br/>
+                    </Typography>)
+                  })}
               </AccordionDetails>
             </Accordion>
           </Grid>
           ))}
-          <Grid item xs={12} md={12}>
-          </Grid>
+          <Grid item xs={4} md={4}>
+          <Button
+            onClick={handleFulfill}
+            fullWidth
+            variant="contained"
+            color="primary"
+            disabled={fulfillDisabled}
+          >
+            Present Credentials
+          </Button>
+        </Grid>
         </Grid>
     </Container>
   );

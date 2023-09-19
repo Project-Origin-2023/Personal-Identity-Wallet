@@ -37,43 +37,59 @@ const CredentialRequestController = ({token, setToken, state}) => {
         let response = await viewModel.refreshAuth(token)
         if(response.success)
           setToken(response.data.token)
-  
-        //Get Credentials
-        response = await viewModel.fetchCredentials(token);
-        if(!response.success)
-          return alert(response.description);
-        //Transformo l-array di credentials da numerico a rintraciabile tramite id
-        let credsList = response.data.list;
-        const map = new Map();
-        credsList.forEach((n, i) => (map.set(n.id,n)));
-        setCredentials(map);
-
-        //Get info issuance with session ID
-        response = await viewModel.vpContinue(sessionId,token)
-        if(!response.success)
-            return alert(response.description);
-        let vp = response.data.presentableCredentials;
-        setPresentableCredentials(vp);
-        let preVP = {}
-        vp.forEach((n, i) => (preVP[n.credentialId]=false));
-        setPreferencesPC(preVP);
-        
+        //RUN that fetch credential and presentable credential algoritm
+        //only one time, or the first time, or if there is still no data to show
+        if(presentableCredentials.length == 0){
+            //Get Credentials
+            response = await viewModel.fetchCredentials(token);
+            if(!response.success)
+              return alert(response.description);
+            //Transformo l-array di credentials da numerico a rintraciabile tramite id
+            let credsList = response.data.list;
+            const map = new Map();
+            credsList.forEach((n, i) => (map.set(n.id,n)));
+            //Set Lista tutte le credential possedute
+            setCredentials(map);
+            //Get info issuance with session ID
+            response = await viewModel.vpContinue(sessionId,token)
+            if(!response.success)
+                return alert(response.description);
+            let vp = response.data.presentableCredentials;
+            //Set VP Presentable Credentials 
+            setPresentableCredentials(vp);
+            let preVP = {}
+            vp.forEach((n, i) => (preVP[n.credentialId]=false));
+            //Set list of preferences for selectiong presentable Credentials
+            setPreferencesPC(preVP);
+        }
       };
       fetchData();
     }, [token]);
 
-    const handleAcceptIssuance = async () => {
+    
+
+    const handleFulfill = async () => {
       //Auth Token Refresh
       let response = await viewModel.refreshAuth(token)
       if(response.success)
         setToken(response.data.token)
 
-      //Accetto credential Issuing
-      response = await viewModel.acceptIssuance(sessionId,token)
+      //Seleziono dalle presentable credentials, le vp selezionate con le preferences
+      let selectedPC = [];
+      for(let pref in preferencesPC){
+        if(preferencesPC[pref]){
+        for(let credId in presentableCredentials){
+          if (presentableCredentials[credId].credentialId === pref)
+            selectedPC.push(presentableCredentials[credId]);
+        }}
+      }
+
+      //effettuo la fullfill delle VP selezionate per terminare la Verifiable Presentation
+      response = await viewModel.fulfill(sessionId,{claims:selectedPC},token)
       if(!response.success)
         return alert(response.description);
       else{
-        navigate('/ListCredentials',{state:{description:response.description}});      
+        window.location.href = response.data.rp_response;
       }
   };
 
@@ -84,6 +100,7 @@ const CredentialRequestController = ({token, setToken, state}) => {
     preferencesPC={preferencesPC}
     setPreferencesPC={setPreferencesPC}
     credentials={credentials}
+    handleFulfill={handleFulfill}
     />
   );
 };
