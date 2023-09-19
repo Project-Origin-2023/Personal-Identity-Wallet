@@ -18,6 +18,7 @@ import StartIssuerInitiatedIssuanceController from './controller/StartIssuerInit
 import StartPresentationController from './controller/StartPresentationController';
 import useToken from './components/useToken';
 import PageState from './components/PageState';
+import Footer from './components/Footer';
 
 function App() {
   const { token, setToken } = useToken();
@@ -47,6 +48,7 @@ function App() {
             <Route path="/StartIssuerInitiatedIssuance" element={<StartIssuerInitiatedIssuanceController token={token} setToken={setToken} state={state} />} />
             <Route path="/StartPresentation" element={<StartPresentationController token={token} setToken={setToken} state={state} />} />
           </Routes>
+          <Footer/>
         </AuthProvider>
       </Router>
     </ThemeProvider>
