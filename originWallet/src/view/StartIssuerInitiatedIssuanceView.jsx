@@ -14,13 +14,14 @@ import SendIcon from '@mui/icons-material/Send';
 const StartIssuerInitiatedIssuanceView = ({ handleUriChange, handleStartIssuance }) => {
   return (
     <Container component="main" maxWidth="md">
-      <Grid container
+      <Grid sx={{pt: 8,pb: 6,}} 
+      container
       spacing={2}
       direction="row"
       justifyContent="space-evenly"
       alignItems="center">
         <Grid item xs={12}>
-          <Typography variant="h4">Issuer Initiated Verifiable Credential Issuance</Typography>
+          <Typography variant="h4" >Issuer Initiated Verifiable Credential Issuance</Typography>
           <Typography variant="body">Se si ha iniziato un processo di Credential Issuing da parte di un issuer si puo' continuare attraverso questa pagina il percorso di issuing e la memorizzazione della credenziale sul tuo Wallet.</Typography>
         </Grid>
         <Grid item md={4} xs={12}>

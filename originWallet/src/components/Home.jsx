@@ -15,7 +15,6 @@ export function Home() {
   return (
     <div>
       <main>
-        {/* Hero unit */}
         <Box
           sx={{
             bgcolor: 'background.paper',
@@ -31,16 +30,15 @@ export function Home() {
               color="text.primary"
               gutterBottom
             >
-              Servizi VC Offerti
+             Origin Wallet
             </Typography>
-            <Typography variant="h5" align="center" color="text.secondary" paragraph>
-              Origin Issuer è una piattaforma di issuing di Verifiable Credential.
-              Attraverso questa piattaforma si possono generare credenziali di tipo PID oppure Marital Status.
+            <Typography variant="body4" align="center" color="text.secondary" paragraph>
+              Origin Wallet ti offre la possibilita' di avere un wallet combatibile con la tecnologia OpenID 4 CI/VP.<br/>
+              Questa piattaforma ti permette di memorizzare in Cloud tutte le tue credenziali, di riceverne di nuove da un Issuer oppure di presentarne a un Verifier.<br/>
             </Typography>
           </Container>
         </Box>
         <Container sx={{ py: 8 }} maxWidth="md">
-          {/* End hero unit */}
           <Grid container spacing={4}>
             <Grid item xs={12} sm={6}>
               <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
@@ -54,13 +52,13 @@ export function Home() {
                 />
                 <CardContent sx={{ flexGrow: 1 }}>
                   <Typography gutterBottom variant="h5" component="h2">
-                    Richiedi il tuo VC PID
+                    Start Issuer Initiated Credential Issuing
                   </Typography>
-                  <Typography>Richiedi un Verifiable Credential di tipo Personal Identifier</Typography>
+                  <Typography>Se hai fatto partire un percorso di credential issuing dalla piattaforma di un issuer attraverso questa pagina potrai continuare il issuing e ricevere la credenziale sul tuo wallet.</Typography>
                 </CardContent>
                 <CardActions>
-                  <Link to="/CredentialRequestPID">
-                  <Button size="small">Richiedi</Button>
+                  <Link to="/StartIssuerInitiatedIssuance">
+                  <Button size="small">Start</Button>
                   </Link>
                 </CardActions>
               </Card>
@@ -77,13 +75,13 @@ export function Home() {
                 />
                 <CardContent sx={{ flexGrow: 1 }}>
                   <Typography gutterBottom variant="h5" component="h2">
-                    Richiedi il tuo VC Marital Status
+                    Start Verifiable Presentation
                   </Typography>
-                  <Typography>Richiedi un Verifiable Credential di tipo Marital Status</Typography>
+                  <Typography>Se un verifier ha bisogna di una presentazione, e hai fatto partire dalla sua piattaforma il percorso di verifiable presentation, attraverso questa pagina potrai completarla e fornire una credenziale al verifier.</Typography>
                 </CardContent>
                 <CardActions>
-                <Link to="/CredentialRequestMarital">
-                  <Button size="small">Richiedi</Button>
+                <Link to="/StartPresentation">
+                  <Button size="small">Start</Button>
                   </Link>
                 </CardActions>
               </Card>

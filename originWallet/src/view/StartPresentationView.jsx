@@ -14,7 +14,8 @@ import SendIcon from '@mui/icons-material/Send';
 const StartPresentationView = ({ handleUriChange, handleStartPresentation}) => {
   return (
     <Container component="main" maxWidth="md">
-      <Grid container 
+      <Grid sx={{pt: 8,pb: 6,}} 
+      container
       spacing={2}
       direction="row"
       justifyContent="space-evenly"

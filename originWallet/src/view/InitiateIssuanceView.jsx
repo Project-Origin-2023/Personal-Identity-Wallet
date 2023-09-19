@@ -16,7 +16,12 @@ const InitiateIssuanceView = ({ credentialOffer, handleAcceptIssuance}) => {
     <Container component="main" maxWidth="md">
     <Card>
     <CardContent>
-      <Grid container spacing={2}>
+    <Grid sx={{pt: 8,pb: 6,}} 
+      container
+      spacing={2}
+      direction="row"
+      justifyContent="space-evenly"
+      alignItems="center">
         <Grid item xs={12}>
           <Typography variant="h4">Richiesta di</Typography>
           <Typography variant="h6">Credential Issuing</Typography>

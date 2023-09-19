@@ -15,7 +15,8 @@ import DeleteIcon from '@mui/icons-material/Delete';
 const DetailCredentialView = ({ credential, handleDelete }) => {
   return (
     <Container component="main" maxWidth="md">
-      <Grid container 
+      <Grid sx={{pt: 8,pb: 6,}} 
+      container
       spacing={2}
       direction="row"
       justifyContent="space-evenly"

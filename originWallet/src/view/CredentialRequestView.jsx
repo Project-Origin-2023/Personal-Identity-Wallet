@@ -39,12 +39,12 @@ const CredentialRequestView = ({presentableCredentials,preferencesPC,setPreferen
     <Container component="main" maxWidth="md">
     <Card>
     <CardContent>
-        <Grid
-        container
-        spacing={2}
-        direction="row"
-        justifyContent="space-evenly"
-        alignItems="center">
+    <Grid sx={{pt: 8,pb: 6,}} 
+      container
+      spacing={2}
+      direction="row"
+      justifyContent="space-evenly"
+      alignItems="center">
           <Grid item xs={12}>
           <Typography variant="h4">RIchiesta di Credenziale per</Typography>
           <Typography variant="h6">Verifiable Presentation</Typography>

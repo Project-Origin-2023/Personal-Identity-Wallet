@@ -130,7 +130,7 @@ function NavbarUser({ setToken}) {
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
+            <Tooltip>
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
               </IconButton>
@@ -151,9 +151,6 @@ function NavbarUser({ setToken}) {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-                <MenuItem  key="4" onClick={handleCloseUserMenu}>
-                  <Button sx={{ my: 2, color: 'white', display: 'block' }} component={Link} to="/ListCredentials">Lista VC</Button>
-                </MenuItem>
                 <MenuItem  key="5" onClick={handleCloseUserMenu}>
                   <Button sx={{ my: 2, color: 'white', display: 'block' }}><Logout setToken={setToken} /></Button>
                 </MenuItem>
