@@ -241,18 +241,18 @@ describe('simulate a registration flow and a complete user experience', () => {
       });
   ///admin/vcsrequest/verify
   //admin verify vcs request
+//admin verify vcs request
 it('should verify a VCS request', async () => {
+  primoId = primoId.toString();
   const requestBody = {
     vcsrequestId: primoId, // Sostituisci con l'ID effettivo
     status: true, // Sostituisci con lo stato effettivo
   };
-
+//print type of primoId
   const response = await request(routing.app)
     .post('/admin/vcsrequest/verify')
     .set('x-access-token', tokenAdmin)
     .send(requestBody);
-
-  console.log(response.body);
   expect(response.status).toBe(200);
   expect(response.body.success).toBe(true);
 });
