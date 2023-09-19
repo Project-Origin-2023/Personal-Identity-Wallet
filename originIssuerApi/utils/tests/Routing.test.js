@@ -239,17 +239,31 @@ describe('simulate a registration flow and a complete user experience', () => {
         // Verifica che almeno una delle due risposte abbia avuto successo (status 200)
         expect(atLeastOneSuccess).toBe(true);
       });
-  ///admin/vcsrequest/verify
-  it('should return all vcs request', async () => {
+
+
+
+  //admin verify vcs request
+  it('should verify a VCS request', async () => {
+    primoId = primoId.toString();
+    const requestBody = {
+      vcsrequestId: primoId, // Sostituisci con l'ID effettivo
+      status: true, // Sostituisci con lo stato effettivo
+    };
+  //print type of primoId
     const response = await request(routing.app)
-    .post('/admin/vcsrequest/verify')
-    .set('x-access-token', tokenAdmin)
-    .set('vcsrequestId',primoId);
-    console.log(response.body);
+      .post('/admin/vcsrequest/verify')
+      .set('x-access-token', tokenAdmin)
+      .send(requestBody);
     expect(response.status).toBe(200);
     expect(response.body.success).toBe(true);
-  }
-  );
+  });
 
+  //user releases credential
+  it('should release a credential', async () => {
+    const response = await request(routing.app)
+    .get(`/vcsrequest/release/${primoId}`)
+    .set('x-access-token', token);
+    expect(response.status).toBe(200);
+    expect(response.body.success).toBe(true);
+  });
 });
-
