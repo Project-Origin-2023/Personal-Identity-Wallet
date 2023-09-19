@@ -1,0 +1,71 @@
+import PropTypes from 'prop-types';
+import {
+  TextField,
+  Box,
+  Paper,
+  Avatar,
+  CssBaseline,
+} from '@mui/material';
+import { Divider } from '@mui/material';
+import Chip from '@mui/material/Chip';
+import { LicenseLabel } from '../components/LicenseLabel';
+import { Link } from "react-router-dom";
+import Button from '@mui/material/Button';
+import Container from '@mui/material/Container';
+import Grid from '@mui/material/Grid';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import Typography from '@mui/material/Typography';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemText from '@mui/material/ListItemText';
+import ListItemAvatar from '@mui/material/ListItemAvatar';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import Checkbox from '@mui/material/Checkbox';
+
+const ConnectView = ({ wallets, walletList, handleConnect }) => {
+  return (
+    <Container component="main" maxWidth="md">
+        <Grid sx={{pt: 8,pb: 6,}} 
+        container
+        spacing={2}
+        direction="row"
+        justifyContent="space-evenly"
+        alignItems="center">
+            <Grid item xs={12}>
+              <Typography variant="h4">Connect con il tuo Wallet ai nostri servizi</Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <Typography variant="body3">Per accedere ai nostri servizi devi conneterti utilizzando un Wallet compatibile con la tecnologia OpenIDV4 CI/VP e fornire correttamente attraverso una Verifiable Presentation una credenziale di tipo Personal Identity (PID).<br/> Questa credenziale serve solo per autentificarti e capire chi sei, successivamente potrai accedere ai nostri servizi</Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <Typography variant="body1">Collegati con uno dei Wallet convenzionati</Typography>
+            </Grid>
+            <Grid item xs={4}>
+              {walletList.map((wallet) => (
+                <div>
+                    <Grid item xs={12}>
+                      <Typography variant="caption">{wallets[wallet].description}</Typography>
+                    </Grid>
+                    <Grid item xs={12}>
+                      <Button
+                      onClick={() => handleConnect(wallet)}
+                      variant="contained"
+                      value={wallet}
+                      >
+                        Connect with {wallet}
+                      </Button>
+                    </Grid>
+                </div>
+              ))}
+            </Grid>
+        </Grid>
+    </Container>
+      
+  );
+};
+
+
+export default ConnectView;

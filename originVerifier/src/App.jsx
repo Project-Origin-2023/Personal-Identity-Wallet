@@ -11,6 +11,7 @@ import Home from './components/Home';
 import useToken from './components/useToken';
 import PageState from './components/PageState';
 import Footer from './components/Footer';
+import ConnectController from './controller/ConnectController';
 
 function App() {
   const { token, setToken } = useToken();
@@ -31,6 +32,7 @@ function App() {
           <Navbar isLoggedIn={token!==null} setToken={setToken} state={state}/>
           <Routes>
             <Route path="/"  element={<Home />} />
+            <Route path="/Connect"  element={<ConnectController />} />
           </Routes>
           <Footer/>
         </AuthProvider>

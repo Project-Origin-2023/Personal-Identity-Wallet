@@ -56,25 +56,6 @@ services:
       - "issuer.origin:10.5.0.2"
       - "verifier.origin:10.5.0.2"
       - "wallet.origin:10.5.0.2"
-
-  originVerifier:
-    image: httpd:2.4
-    restart: unless-stopped
-    volumes:
-      - './originVerifier/dist/:/usr/local/apache2/htdocs/'
-      - './config/httpdConfigApache.conf:/usr/local/apache2/conf/httpd.conf'
-    networks:
-      network:
-        ipv4_address: 10.5.0.12
-    extra_hosts:
-      - "openid.issuer.origin:10.5.0.2"
-      - "openid.verifier.origin:10.5.0.2"
-      - "openid.wallet.origin:10.5.0.2"
-      - "api.issuer.origin:10.5.0.2"
-      - "api.wallet.origin:10.5.0.2"
-      - "issuer.origin:10.5.0.2"
-      - "verifier.origin:10.5.0.2"
-      - "wallet.origin:10.5.0.2"
   
   originIssuerApi:
     image: node:18-alpine
@@ -95,6 +76,63 @@ services:
       - "verifier.origin:10.5.0.2"
       - "wallet.origin:10.5.0.2"
 
+  originWallet:
+    image: httpd:2.4
+    restart: unless-stopped
+    volumes:
+      - './originWallet/dist/:/usr/local/apache2/htdocs/'
+      - './config/httpdConfigApache.conf:/usr/local/apache2/conf/httpd.conf'
+    networks:
+      network:
+        ipv4_address: 10.5.0.13
+    extra_hosts:
+      - "openid.issuer.origin:10.5.0.2"
+      - "openid.verifier.origin:10.5.0.2"
+      - "openid.wallet.origin:10.5.0.2"
+      - "api.issuer.origin:10.5.0.2"
+      - "api.wallet.origin:10.5.0.2"
+      - "issuer.origin:10.5.0.2"
+      - "verifier.origin:10.5.0.2"
+      - "wallet.origin:10.5.0.2"
+  
+  originWalletApi:
+    image: node:18-alpine
+    restart: unless-stopped
+    volumes:
+      - './originWalletApi/:/home/originWalletApi'
+    entrypoint: /bin/sh -c 'cd home/originWalletApi && ls && npm install && node index.js '
+    networks:
+      network:
+        ipv4_address: 10.5.0.43
+    extra_hosts:
+      - "openid.issuer.origin:10.5.0.2"
+      - "openid.verifier.origin:10.5.0.2"
+      - "openid.wallet.origin:10.5.0.2"
+      - "api.issuer.origin:10.5.0.2"
+      - "api.wallet.origin:10.5.0.2"
+      - "issuer.origin:10.5.0.2"
+      - "verifier.origin:10.5.0.2"
+      - "wallet.origin:10.5.0.2"
+
+  originVerifier:
+    image: httpd:2.4
+    restart: unless-stopped
+    volumes:
+      - './originVerifier/dist/:/usr/local/apache2/htdocs/'
+      - './config/httpdConfigApache.conf:/usr/local/apache2/conf/httpd.conf'
+    networks:
+      network:
+        ipv4_address: 10.5.0.12
+    extra_hosts:
+      - "openid.issuer.origin:10.5.0.2"
+      - "openid.verifier.origin:10.5.0.2"
+      - "openid.wallet.origin:10.5.0.2"
+      - "api.issuer.origin:10.5.0.2"
+      - "api.wallet.origin:10.5.0.2"
+      - "issuer.origin:10.5.0.2"
+      - "verifier.origin:10.5.0.2"
+      - "wallet.origin:10.5.0.2"
+  
   openidIssuer:
     image: waltid/walletkit
     restart: unless-stopped
