@@ -31,7 +31,7 @@ const DetailCredentialController = ({token, setToken, state}) => {
     }, [token]);
 
     const handleDelete = async () => {
-        //Aggioranamento token
+        //Auth Token Refresh
         let response = await viewModel.refreshAuth(token)
         if(response.success)
           setToken(response.data.token)

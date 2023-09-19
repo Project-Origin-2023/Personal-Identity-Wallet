@@ -10,26 +10,33 @@ import Typography from '@mui/material/Typography';
 import PropTypes from 'prop-types';
 import CheckSharpIcon from '@mui/icons-material/CheckSharp';
 import HighlightOffSharpIcon from '@mui/icons-material/HighlightOffSharp';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const DetailCredentialView = ({ credential, handleDelete }) => {
   return (
     <Container component="main" maxWidth="md">
-      <Grid container spacing={2}>
+      <Grid sx={{pt: 8,pb: 6,}} 
+      container
+      spacing={2}
+      direction="row"
+      justifyContent="space-evenly"
+      alignItems="center">
         <Grid item xs={12}>
-            <Typography variant="h6">Dettagli Verifiable Credential:</Typography>
+          <Typography variant="h4">Verifiable Credential</Typography>
         </Grid>
-        <Grid item xs={12}>
+        <Grid item md={8} xs={12}>
+          <Typography variant="h6">Dettagli Verifiable Credential:</Typography>
           <Card>
             <CardContent>
               {Object.keys(credential.credentialSubject).map((key)=>{
                 return (<Typography variant="body1">
-                <strong>{key}</strong> {credential.credentialSubject[key]}
+                <strong>{key}: </strong> {credential.credentialSubject[key]}
                 </Typography>)
               })}
             </CardContent>
           </Card>
         </Grid>
-        <Grid item xs={6}>
+        <Grid item md={8} xs={12}>
           <Typography variant="h6">Stato Credenziale:</Typography>
           <Typography variant="body1">
             <strong>issuanceDate:</strong> {new Date(credential.issuanceDate).toUTCString()}
@@ -45,13 +52,14 @@ const DetailCredentialView = ({ credential, handleDelete }) => {
           </Typography>
           
         </Grid>
-        <Grid item xs={6}>
+        <Grid item md={4} xs={12}>
           <Button
             onClick={handleDelete}
             fullWidth
             variant="contained"
-            color="primary"
-          >
+            color="error"
+            size="large"
+            startIcon={<DeleteIcon />}>
             Elimina Credenziale
           </Button>
         </Grid>

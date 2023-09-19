@@ -30,8 +30,9 @@ class AdminVerifyCredentialRequestViewModel extends ViewModel{
 
   async verifyVC(id, status, jwtToken){
     try {
+      console.log(status)
       const response = await axios.post(this.apiUrl+'/admin/vcsrequest/verify' ,
-      {vcsrequestId:id, status:status},{
+      {vcsrequestId:id, status:Boolean(status)},{
         headers: {
           "x-access-token": `${jwtToken}`,
         },

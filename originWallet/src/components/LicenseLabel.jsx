@@ -4,9 +4,9 @@ import Typography from '@mui/material/Typography';
 export function LicenseLabel(props) {
     return (
       <Typography variant="body2" color="text.secondary" align="center" {...props}>
-        {'Copyright © '}
-        <Link color="inherit" href="https://mui.com/">
-          Your Website
+        {'GNU GENERAL PUBLIC LICENSE '}
+        <Link color="inherit" href="https://wallet.origin/">
+          Origin Wallet
         </Link>{' '}
         {new Date().getFullYear()}
         {'.'}
