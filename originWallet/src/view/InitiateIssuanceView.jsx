@@ -8,15 +8,24 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import PropTypes from 'prop-types';
+import Chip from '@mui/material/Chip';
+import { Divider } from '@mui/material';
 
 const InitiateIssuanceView = ({ credentialOffer, handleAcceptIssuance}) => {
   return (
     <Container component="main" maxWidth="md">
+    <Card>
+    <CardContent>
       <Grid container spacing={2}>
         <Grid item xs={12}>
-          <Typography variant="h3">VC Offer:</Typography>
+          <Typography variant="h4">Richiesta di</Typography>
+          <Typography variant="h6">Credential Issuing</Typography>
+          <Typography variant="body2">Un issuer richiede la tua attenzione per accettare una credenziale che ti e' stata offerta</Typography>
+          <Divider>
+            <Chip label="Informazioni" />
+          </Divider>
         </Grid>
-        <Grid item xs={8}>
+        <Grid item xs={12} md={8}>
           <Typography variant="h6">Dettaglio Verifiable Credential:</Typography>
           <Typography variant="body1">
             <strong>Types:</strong> {credentialOffer.credentialTypes}
@@ -25,7 +34,7 @@ const InitiateIssuanceView = ({ credentialOffer, handleAcceptIssuance}) => {
             <strong>issuerId:</strong> {credentialOffer.issuerId}
           </Typography>
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={12} md={4}>
           <Button
             onClick={handleAcceptIssuance}
             fullWidth
@@ -46,6 +55,8 @@ const InitiateIssuanceView = ({ credentialOffer, handleAcceptIssuance}) => {
           </Card>
         </Grid>
       </Grid>
+    </CardContent>
+    </Card>
     </Container>
   );
 };

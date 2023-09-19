@@ -15,6 +15,8 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Checkbox from '@mui/material/Checkbox';
+import { Divider } from '@mui/material';
+import Chip from '@mui/material/Chip';
 
 const CredentialRequestView = ({presentableCredentials,preferencesPC,setPreferencesPC, credentials,handleFulfill}) => {
   //state for Accordion
@@ -35,11 +37,22 @@ const CredentialRequestView = ({presentableCredentials,preferencesPC,setPreferen
 
   return (
     <Container component="main" maxWidth="md">
+    <Card>
+    <CardContent>
         <Grid
         container
+        spacing={2}
         direction="row"
         justifyContent="space-evenly"
         alignItems="center">
+          <Grid item xs={12}>
+          <Typography variant="h4">RIchiesta di Credenziale per</Typography>
+          <Typography variant="h6">Verifiable Presentation</Typography>
+          <Typography variant="body2">Un verifier richiede la tua attenzione per fornirgli una credenziale per una verifiable presentation</Typography>
+          <Divider>
+            <Chip label="Credenziali Presentabili" />
+          </Divider>
+          </Grid>
           {presentableCredentials.map((row, index) => (
           <Grid item xs={12} md={9}>
             <Accordion expanded={expanded === `panel${row.credentialId}`} onChange={handleChange(`panel${row.credentialId}`)}>
@@ -78,18 +91,21 @@ const CredentialRequestView = ({presentableCredentials,preferencesPC,setPreferen
             </Accordion>
           </Grid>
           ))}
-          <Grid item xs={4} md={4}>
+          <Grid item xs={12} md={12}>
           <Button
             onClick={handleFulfill}
             fullWidth
             variant="contained"
-            color="primary"
+            color="success"
+            size="large"
             disabled={fulfillDisabled}
           >
             Present Credentials
           </Button>
+          </Grid>
         </Grid>
-        </Grid>
+    </CardContent>
+    </Card>
     </Container>
   );
 };
