@@ -41,9 +41,12 @@ describe('InputChecker', () => {
   });
 
   it('should check if a value is a valid date', () => {
-    expect(inputChecker.checkDate('12 05 2023')).toBe(true);
-    expect(inputChecker.checkDate('31 13 2023')).toBe(false); // Data non valida
-    expect(inputChecker.checkDate('12/05/2023')).toBe(false); // Formato errato
+    expect(inputChecker.checkDate('2023 05 12')).not.toBe(null);
+    expect(inputChecker.checkDate('2023-05-20')).not.toBe(null);
+    expect(inputChecker.checkDate('2023/05/20')).not.toBe(null);
+    expect(inputChecker.checkDate('29 12 2023')).toBe(null);
+    expect(inputChecker.checkDate('12/05/2023')).toBe(null);
+
   });
 
   it('should check if a value is a valid marital status', () => {

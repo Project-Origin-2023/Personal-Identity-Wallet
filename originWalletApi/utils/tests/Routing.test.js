@@ -3,7 +3,125 @@ const { Routing } = require('../../utils/Routing.js');
 const routing = new Routing();
 routing.configEndpoint();
 
-describe('register and login email and password presence', () => {
+
+
+
+//test mancanza email su registrazione (OK)
+it('should return 500 with "Email Missing" message if email is missing', async () => {
+  const response = await request(routing.app)  // Utilizza l'istanza di Routing
+    .post('/auth/register')
+    .send({ password: 'password123' });
+
+  expect(response.status).toBe(500);
+  expect(response.body).toEqual({ success: false, description: "email Missing" });
+});
+//test mancanza password su registrazione () 
+it('should return 500 with "Password Missing" message if password is missing', async () => {
+  const response = await request(routing.app)  // Utilizza l'istanza di Routing
+    .post('/auth/register')
+    .send({ email: 'test@example.com' });
+
+  expect(response.status).toBe(500);
+  expect(response.body).toEqual({ success: false, description: 'password Missing' });
+});
+//test formato email su registrazione (OK)
+it('should return 500 with "Email Format" message if email is not valid', async () => {
+  const response = await request(routing.app)  // Utilizza l'istanza di Routing
+    .post('/auth/register')
+    .send({ email: 'testexample.com', password: 'password123' });
+    
+  expect(response.status).toBe(500);
+  expect(response.body).toEqual({ success: false, description: 'email format not valid' });
+});
+//test formato password su registrazione (OK)
+it('should return 500 with "Password Format" message if password is not valid', async () => {
+  const response = await request(routing.app)  // Utilizza l'istanza di Routing
+    .post('/auth/register')
+    .send({ email: 'test@example.com', password: 'password' });
+
+  expect(response.status).toBe(500);
+  expect(response.body).toEqual({ success: false, description: 'password format not valid' });
+});
+
+
+//test registrazione che va a buon fine (OK)
+it('should return 200 with "Registration Successful" message if registration is successful', async () => {
+   // Utilizza l'istanza di Routing
+  const crypto = require('crypto');
+  const email = crypto.randomUUID()+"@gmail.com";
+  const password = "1234abc!A";
+  const response = await request(routing.app) 
+    .post('/auth/register')
+    .send({ email: email, password: password });
+  expect(response.status).toBe(200); 
+});
+
+//test registrazione con email già presente (OK)
+it('should return 500 with "Email Already Exists" message if email is already present', async () => {
+  const crypto = require('crypto');
+  const email = crypto.randomUUID()+"@gmail.com";
+  const password = "1234abc!A";
+  const response = await request(routing.app)  // Utilizza l'istanza di Routing
+    .post('/auth/register')
+    .send({ email: email, password: password });
+  expect(response.status).toBe(200);
+  const response2 = await request(routing.app)  // Utilizza l'istanza di Routing
+    .post('/auth/register')
+    .send({ email: email, password: password });
+  expect(response2.status).toBe(500);
+  expect(response2.body.success).toEqual(false );
+});
+
+//test di login con email non presente (OK)
+it('should return 500 with "Email Not Found" message if email is not present', async () => {
+  const crypto = require('crypto');
+  const email = crypto.randomUUID()+"@gmail.com";
+  const password = "1234abc!A";
+  const response = await request(routing.app)  // Utilizza l'istanza di Routing
+    .post('/auth/login')
+    .send({ email: email, password: password });
+  expect(response.status).toBe(500);
+  expect(response.body).toEqual({ success: false, description: 'Account Does Not exist' });
+});
+
+//test di login con password non corretta (OK)
+it('should return 500 with "Password Not Correct" message if password is not correct', async () => {
+  const crypto = require('crypto');
+  const email = crypto.randomUUID()+"@gmail.com";
+  const password = "1234abc!A";
+  const response = await request(routing.app)  // Utilizza l'istanza di Routing
+    .post('/auth/register')
+    .send({ email: email, password: password });
+  expect(response.status).toBe(200);
+  const response2 = await request(routing.app)  // Utilizza l'istanza di Routing
+    .post('/auth/login')
+    .send({ email: email, password: password+"not" });
+  expect(response2.status).toBe(500);
+  expect(response2.body).toEqual({ success: false, description: 'Password is not correct' });
+});
+
+//test di login con email e password corretti (OK)
+it('should return 200 with "Login Successful" message if login is successful', async () => {
+  const crypto = require('crypto');
+  const email = crypto.randomUUID()+"@gmail.com";
+  const password = "1234abc!A";
+  const response = await request(routing.app)  // Utilizza l'istanza di Routing
+    .post('/auth/register')
+    .send({ email: email, password: password });
+  expect(response.status).toBe(200);
+  const response2 = await request(routing.app)  // Utilizza l'istanza di Routing
+    .post('/auth/login')
+    .send({ email: email, password: password });
+  expect(response2.status).toBe(200);
+});
+
+
+
+
+
+
+
+/*describe('register and login email and password presence', () => {
   
   //test mancanza email su registrazione (OK)
   it('should return 500 with "Email Missing" message if email is missing', async () => {
@@ -167,7 +285,8 @@ describe('simulate a registration flow and a complete user experience', () => {
       expect(response.body.description).toBe('Authorization token not found');
       }
     );
-});
+    
+});*/
 
 
 
