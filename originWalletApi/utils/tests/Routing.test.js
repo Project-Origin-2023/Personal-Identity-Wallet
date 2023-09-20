@@ -57,9 +57,7 @@ it('should return 200 with "Registration Successful" message if registration is 
   const response = await request(routing.app) 
     .post('/auth/register')
     .send({ email: email, password: password });
-    console.log(response)
   expect(response.status).toBe(200); 
-  console.log(response)
 });
 
 //test di login con email e password corretti
