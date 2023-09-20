@@ -66,7 +66,7 @@ describe('simulate a registration flow and a complete user experience', () => {
     token = data.token;
     // Assicurati che la registrazione sia avvenuta con successo
     expect(body.success).toBe(true);
-    expect(body.description).toBe('Auth Login Successfuly Token created');
+    expect(body.description).toBe('Login Authorization Completed, you are welcome');
     expect(data).toBeDefined();
     
     // Verifica che il token sia una stringa non vuota
@@ -86,7 +86,7 @@ describe('simulate a registration flow and a complete user experience', () => {
     token = data.token;
     // Assicurati che la registrazione sia avvenuta con successo
     expect(body.success).toBe(true);
-    expect(body.description).toBe('Auth Login Successfuly Token created');
+    expect(body.description).toBe('Login Authorization Completed, you are welcome');
     expect(data).toBeDefined();
     
     // Verifica che il token sia una stringa non vuota
@@ -140,7 +140,7 @@ describe('simulate a registration flow and a complete user experience', () => {
 
     expect(response.status).toBe(403);
     expect(response.body.success).toBe(false);
-    expect(response.body.description).toBe('Authorization token not found');
+    expect(response.body.description).toBe('Auth Token Not found, be sure to be logged in');
     });
     //request marital status
     it('should create a VCS request marital', async () => {
@@ -166,7 +166,7 @@ describe('simulate a registration flow and a complete user experience', () => {
   
       expect(response.status).toBe(403);
       expect(response.body.success).toBe(false);
-      expect(response.body.description).toBe('Authorization token not found');
+      expect(response.body.description).toBe('Auth Token Not found, be sure to be logged in');
       }
     );
 });

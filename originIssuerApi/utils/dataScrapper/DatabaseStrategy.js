@@ -15,7 +15,7 @@ class DatabaseStrategy extends Database{
     async insertAccount(email, hashed_pass, salt){
         var check = await this.checkConnection();
         if(!check)
-            return new DataResponse(false,"Error in PG DB Connection");
+            return new DataResponse(false,"Error in Database Connection");
 
         try{
             var query='INSERT INTO "accounts" ("email", "hashed_pass", "salt") VALUES ($1,$2,$3);';
@@ -32,7 +32,7 @@ class DatabaseStrategy extends Database{
     async getAccountByEmail(email){
         var check = await this.checkConnection();
         if(!check)
-            return new DataResponse(false,"Error in PG DB Connection");
+            return new DataResponse(false,"Error in Database Connection");
 
         try{
             var query='SELECT * FROM "accounts" WHERE "email"=$1';
@@ -52,7 +52,7 @@ class DatabaseStrategy extends Database{
     async getAccountById(id){
         var check = await this.checkConnection();
         if(!check)
-            return new DataResponse(false,"Error in PG DB Connection");
+            return new DataResponse(false,"Error in Database Connection");
 
         try{
             var query='SELECT * FROM "accounts" WHERE "id"=$1';
@@ -72,7 +72,7 @@ class DatabaseStrategy extends Database{
     async insertSys_admin(accountId,role){
         var check = await this.checkConnection();
         if(!check)
-            return new DataResponse(false,"Error in PG DB Connection");
+            return new DataResponse(false,"Error in Database Connection");
 
         try{
             var query='INSERT INTO "sys_admins" ("account", "role") VALUES ($1,$2);';
@@ -89,7 +89,7 @@ class DatabaseStrategy extends Database{
     async insertSys_adminAccount(email, hashed_pass, salt,role){
         var check = await this.checkConnection();
         if(!check)
-            return new DataResponse(false,"Error in PG DB Connection");
+            return new DataResponse(false,"Error in Database Connection");
 
         try{
             var query='INSERT INTO "accounts" ("email", "hashed_pass", "salt") VALUES ($1,$2,$3);';
@@ -111,7 +111,7 @@ class DatabaseStrategy extends Database{
     async getSys_adminById(id){
         var check = await this.checkConnection();
         if(!check)
-            return new DataResponse(false,"Error in PG DB Connection");
+            return new DataResponse(false,"Error in Database Connection");
 
         try{
             var query='SELECT * FROM "sys_admins" WHERE "account"=$1';
@@ -131,7 +131,7 @@ class DatabaseStrategy extends Database{
     async insertUser(accountId){
         var check = await this.checkConnection();
         if(!check)
-            return new DataResponse(false,"Error in PG DB Connection");
+            return new DataResponse(false,"Error in Database Connection");
 
         try{
             var query='INSERT INTO "users" ("account", "created_at") VALUES ($1, now());';
@@ -148,7 +148,7 @@ class DatabaseStrategy extends Database{
     async insertUserAccount(email, hashed_pass, salt){
         var check = await this.checkConnection();
         if(!check)
-            return new DataResponse(false,"Error in PG DB Connection");
+            return new DataResponse(false,"Error in Database Connection");
 
         try{
             var query='INSERT INTO "accounts" ("email", "hashed_pass", "salt") VALUES ($1,$2,$3);';
@@ -170,7 +170,7 @@ class DatabaseStrategy extends Database{
     async getUserById(id){
         var check = await this.checkConnection();
         if(!check)
-            return new DataResponse(false,"Error in PG DB Connection");
+            return new DataResponse(false,"Error in Database Connection");
 
         try{
             var query='SELECT * FROM "users" WHERE "id"=$1';
@@ -190,7 +190,7 @@ class DatabaseStrategy extends Database{
     async getVCSRequestById(id){
         var check = await this.checkConnection();
         if(!check)
-            return new DataResponse(false,"Error in PG DB Connection");
+            return new DataResponse(false,"Error in Database Connection");
 
         try{
             var query='SELECT * FROM "vcs_requests" WHERE "id"= $1';
@@ -210,7 +210,7 @@ class DatabaseStrategy extends Database{
     async getVCSRequestsMarByUserId(id){
         var check = await this.checkConnection();
         if(!check)
-            return new DataResponse(false,"Error in PG DB Connection");
+            return new DataResponse(false,"Error in Database Connection");
 
         try{
             var query='SELECT * FROM "vcs_requests" JOIN "vcs_content_marital_status" ON id=vcs_content_marital_status.vcs_request WHERE "applicant"= $1';
@@ -228,7 +228,7 @@ class DatabaseStrategy extends Database{
     async getVCSRequestMarById(id){
         var check = await this.checkConnection();
         if(!check)
-            return new DataResponse(false,"Error in PG DB Connection");
+            return new DataResponse(false,"Error in Database Connection");
 
         try{
             var query='SELECT * FROM "vcs_requests" JOIN "vcs_content_marital_status" ON id=vcs_content_marital_status.vcs_request WHERE "id"= $1';
@@ -248,7 +248,7 @@ class DatabaseStrategy extends Database{
     async insertVCSRequestMar(applicantId,status,personalIdentifier){
         var check = await this.checkConnection();
         if(!check)
-            return new DataResponse(false,"Error in PG DB Connection");
+            return new DataResponse(false,"Error in Database Connection");
 
         try{
             var query='INSERT INTO "vcs_requests" ("applicant") VALUES ($1);';
@@ -270,7 +270,7 @@ class DatabaseStrategy extends Database{
     async getVCSRequestsPidByUserId(id){
         var check = await this.checkConnection();
         if(!check)
-            return new DataResponse(false,"Error in PG DB Connection");
+            return new DataResponse(false,"Error in Database Connection");
 
         try{
             var query='SELECT * FROM "vcs_requests" JOIN "vcs_content_pid" ON id=vcs_content_pid.vcs_request WHERE "applicant"= $1';
@@ -288,7 +288,7 @@ class DatabaseStrategy extends Database{
     async getVCSRequestPidById(id){
         var check = await this.checkConnection();
         if(!check)
-            return new DataResponse(false,"Error in PG DB Connection");
+            return new DataResponse(false,"Error in Database Connection");
 
         try{
             var query='SELECT * FROM "vcs_requests" JOIN "vcs_content_pid" ON id=vcs_content_pid.vcs_request WHERE "id"= $1';
@@ -308,7 +308,7 @@ class DatabaseStrategy extends Database{
     async insertVCSRequestPid(applicantId,currentAddress,dateOfBirth,familyName,firstName,gender,nameAndFamilyNameAtBirth,personalIdentifier,placeOfBirth){
         var check = await this.checkConnection();
         if(!check)
-            return new DataResponse(false,"Error in PG DB Connection");
+            return new DataResponse(false,"Error in Database Connection");
 
         try{
             await this.query('BEGIN');
@@ -333,7 +333,7 @@ class DatabaseStrategy extends Database{
     async getVCSRequestVerification(id){
         var check = await this.checkConnection();
         if(!check)
-            return new DataResponse(false,"Error in PG DB Connection");
+            return new DataResponse(false,"Error in Database Connection");
 
         try{
             //Veirifico esistenza vcs request id
@@ -360,7 +360,7 @@ class DatabaseStrategy extends Database{
     async updateVCSRequestReleased(vcs_requestId,released){
         var check = await this.checkConnection();
         if(!check)
-            return new DataResponse(false,"Error in PG DB Connection");
+            return new DataResponse(false,"Error in Database Connection");
 
         try{
             var query='UPDATE "vcs_requests" SET "released" = $2 WHERE "id" = $1';
@@ -377,7 +377,7 @@ class DatabaseStrategy extends Database{
     async updateVCSRequestVerificationStatus(vcs_requestId,status){
         var check = await this.checkConnection();
         if(!check)
-            return new DataResponse(false,"Error in PG DB Connection");
+            return new DataResponse(false,"Error in Database Connection");
 
         try{
             var query='UPDATE "vcs_requests_verifications" SET "status" = $2 WHERE "vcs_request" = $1';
@@ -394,7 +394,7 @@ class DatabaseStrategy extends Database{
     async getVCSRequestsPending(){
         var check = await this.checkConnection();
         if(!check)
-            return new DataResponse(false,"Error in PG DB Connection");
+            return new DataResponse(false,"Error in Database Connection");
 
         try{
             //query get verification
@@ -413,7 +413,7 @@ class DatabaseStrategy extends Database{
     async getVCSRequestsNotPending(){
         var check = await this.checkConnection();
         if(!check)
-            return new DataResponse(false,"Error in PG DB Connection");
+            return new DataResponse(false,"Error in Database Connection");
 
         try{
             //query get verification
@@ -432,7 +432,7 @@ class DatabaseStrategy extends Database{
     async insertVCSRequestVerification(vcs_request,admin_verifier,status){
         var check = await this.checkConnection();
         if(!check)
-            return new DataResponse(false,"Error in PG DB Connection");
+            return new DataResponse(false,"Error in Database Connection");
 
         try{
             var query='INSERT INTO "vcs_requests_verifications" ("vcs_request", "admin_verifier", "status") VALUES ($1, $2, $3);';

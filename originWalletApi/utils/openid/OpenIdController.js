@@ -11,7 +11,7 @@ class OpenIdController {
     async #makeRequest(config){
         try{
             var response = await this.#axios(config);
-            return {success:true,description:"OIDC Request with success",data:response.data};
+            return {success:true,description:"Open ID Request end with success",data:response.data};
         }catch(e){
             if(typeof e.response.data.message !== 'undefined')
                 return {success:false,description:e.response.data.message,data:null,error:e};

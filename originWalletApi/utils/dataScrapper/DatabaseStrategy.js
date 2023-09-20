@@ -15,7 +15,7 @@ class DatabaseStrategy extends Database{
     async insertAccount(email, did, hashed_pass, salt){
         var check = await this.checkConnection();
         if(!check)
-            return new DataResponse(false,"Error in PG DB Connection");
+            return new DataResponse(false,"Error in Database Connection");
 
         try{
             var query='INSERT INTO "accounts" ("email", "did","hashed_pass", "salt") VALUES ($1,$2,$3,$4);';
@@ -32,7 +32,7 @@ class DatabaseStrategy extends Database{
     async getAccountByEmail(email){
         var check = await this.checkConnection();
         if(!check)
-            return new DataResponse(false,"Error in PG DB Connection");
+            return new DataResponse(false,"Error in Database Connection");
 
         try{
             var query='SELECT * FROM "accounts" WHERE "email"=$1';
@@ -52,7 +52,7 @@ class DatabaseStrategy extends Database{
     async getAccountById(id){
         var check = await this.checkConnection();
         if(!check)
-            return new DataResponse(false,"Error in PG DB Connection");
+            return new DataResponse(false,"Error in Database Connection");
 
         try{
             var query='SELECT * FROM "accounts" WHERE "id"=$1';
