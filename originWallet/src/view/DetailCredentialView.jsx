@@ -5,7 +5,6 @@ import Grid from '@mui/material/Grid';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
-import PropTypes from 'prop-types';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 const DetailCredentialView = ({ credential, handleDelete }) => {
@@ -73,8 +72,5 @@ const DetailCredentialView = ({ credential, handleDelete }) => {
     </Container>
   );
 };
-DetailCredentialView.propTypes = {
-  credential: PropTypes.object.isRequired,
-  handleDelete: PropTypes.func.isRequired,
-};
+
 export default DetailCredentialView;
