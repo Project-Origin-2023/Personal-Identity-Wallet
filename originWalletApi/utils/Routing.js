@@ -29,7 +29,7 @@ class Routing{
         try{
             this.#scrapper.setStrategy(new DatabaseStrategy());
         }catch(e){
-            console.log("Error DB Connection")
+            console.log("Error in Database Connection, reload and try again")
         }
         //OpenId
         this.#oidc = new OpenIdController();

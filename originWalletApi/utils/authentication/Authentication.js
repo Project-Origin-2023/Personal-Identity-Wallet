@@ -16,18 +16,18 @@ class Authentication {
         try{
             this.#scrapper.setStrategy(new DatabaseStrategy());
         }catch(e){
-            console.log("Error DB Connection")
+            console.log("Error in Database Connection, reload and try again")
         }
     }
 
     decodeToken = (req, res, next) => {
         let token = req.headers["x-access-token"];
         if (!token)
-            res.status(403).send(new DataResponse(false,"Authorization token not found"));
+            res.status(403).send(new DataResponse(false,"Auth Token Not found, be sure to be logged in"));
       
         this.#jwt.verify(token, this.#jwtKey, (err, decoded) => {
             if (err)
-                res.status(401).send(new DataResponse(false,"Unauthorized"));
+                res.status(401).send(new DataResponse(false,"Authorization token not valid"));
             req.jwtAccountId = decoded.id;
             req.jwtAccountEmail = decoded.email;
             req.jwtAccountDid = decoded.did;
@@ -54,7 +54,7 @@ class Authentication {
         //Create token
         let token = this.#createToken(account.id,account.email,account.did,tokenOIDC);
         //return cookie with access token and isAdmin Permission
-        return new DataResponse(true,"Refresh Auth Successfuly Token created",{token:token});
+        return new DataResponse(true,"Authorization Token successfully refreshed",{token:token});
     }
 
     async login(email,password, tokenOIDC){
@@ -72,7 +72,7 @@ class Authentication {
         //Create token
         let token = this.#createToken(account.id,account.email,account.did,tokenOIDC);
         //return cookie with access token and isAdmin Permission
-        return new DataResponse(true,"Auth Login Successfuly Token created",{token:token});
+        return new DataResponse(true,"Login Authorization Completed, you are welcome",{token:token});
     }
 
     async register(email,password,did,tokenOIDC){
@@ -89,7 +89,7 @@ class Authentication {
             return result;
         //ritorno il token
         var token = result.data.token;
-        return new DataResponse(true,"Auth Register Successfuly Token created",{token:token});
+        return new DataResponse(true,"Registration Authorization Completed, you are welcome",{token:token});
     }
 }
 

@@ -12,7 +12,7 @@ class OpenIdController {
     async #makeRequest(config){
         try{
             var response = await this.#axios(config);
-            return {success:true,description:"OIDC Request with success",data:response.data};
+            return {success:true,description:"Open ID Request end with success",data:response.data};
         }catch(e){
             return {success:false,description:"OIDC Error",data:null,error:e};
         }
