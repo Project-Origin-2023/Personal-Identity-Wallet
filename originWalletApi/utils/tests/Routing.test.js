@@ -2,6 +2,7 @@
 require('dotenv').config({ path: `.env.${process.env.NODE_ENV}` })
 const request = require('supertest');
 const { Routing } = require('../../utils/Routing.js');
+const crypto = require('crypto');
 const routing = new Routing();
 routing.configEndpoint();
 
@@ -45,79 +46,55 @@ it('should return 500 with "Password Format" message if password is not valid', 
   expect(response.body).toEqual({ success: false, description: 'password format not valid' });
 });
 
-
+let email;
+let password;
 //test registrazione che va a buon fine
 it('should return 200 with "Registration Successful" message if registration is successful', async () => {
    // Utilizza l'istanza di Routing
-  const crypto = require('crypto');
-  const email = crypto.randomUUID()+"@gmail.com";
-  const password = "1234abc!A";
+  email = crypto.randomUUID()+"@gmail.com";
+  password = "1234abc!A";
   const response = await request(routing.app) 
     .post('/auth/register')
     .send({ email: email, password: password });
   expect(response.status).toBe(200); 
 });
 
+//test di login con email e password corretti
+it('should return 200 with "Login Successful" message if login is successful', async () => {
+  const response = await request(routing.app) 
+    .post('/auth/login')
+    .send({ email: email, password: password });
+  expect(response.status).toBe(200);
+});
+
 //test registrazione con email già presente
 it('should return 500 with "Email Already Exists" message if email is already present', async () => {
-  const crypto = require('crypto');
-  const email = crypto.randomUUID()+"@gmail.com";
-  const password = "1234abc!A";
   const response = await request(routing.app)  
     .post('/auth/register')
     .send({ email: email, password: password });
-  expect(response.status).toBe(200);
-  const response2 = await request(routing.app)  
-    .post('/auth/register')
-    .send({ email: email, password: password });
-  expect(response2.status).toBe(500);
-  expect(response2.body.success).toEqual(false );
+  expect(response.status).toBe(500);
+  expect(response.body.success).toEqual(false);
 });
 
 //test di login con email non presente
 it('should return 500 with "Email Not Found" message if email is not present', async () => {
-  const crypto = require('crypto');
-  const email = crypto.randomUUID()+"@gmail.com";
-  const password = "1234abc!A";
   const response = await request(routing.app)  
     .post('/auth/login')
-    .send({ email: email, password: password });
+    .send({ email: email+'1', password: password });
   expect(response.status).toBe(500);
   expect(response.body).toEqual({ success: false, description: 'Account Does Not exist' });
 });
 
 //test di login con password non corretta
 it('should return 500 with "Password Not Correct" message if password is not correct', async () => {
-  const crypto = require('crypto');
-  const email = crypto.randomUUID()+"@gmail.com";
-  const password = "1234abc!A";
   const response = await request(routing.app) 
-    .post('/auth/register')
-    .send({ email: email, password: password });
-  expect(response.status).toBe(200);
-  const response2 = await request(routing.app) 
     .post('/auth/login')
     .send({ email: email, password: password+"not" });
-  expect(response2.status).toBe(500);
-  expect(response2.body).toEqual({ success: false, description: 'Password is not correct' });
+  expect(response.status).toBe(500);
+  expect(response.body).toEqual({ success: false, description: 'Password is not correct' });
 });
 
-//test di login con email e password corretti
-it('should return 200 with "Login Successful" message if login is successful', async () => {
-  const crypto = require('crypto');
-  const email = crypto.randomUUID()+"@gmail.com";
-  const password = "1234abc!A";
-  const response = await request(routing.app) 
-    .post('/auth/register')
-    .send({ email: email, password: password });
-  expect(response.status).toBe(200);
-  const response2 = await request(routing.app) 
-    .post('/auth/login')
-    .send({ email: email, password: password });
-  expect(response2.status).toBe(200);
-});
-
-//login con account valido
+//login con account valido gia' presente nel DB
 it('should return 200 with "Login Successful" message if login is successful', async () => {
   const email = "mario.rossi@gmail.com";
   const password = "Mariorossi123!";
