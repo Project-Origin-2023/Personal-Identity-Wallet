@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom'
-import PropTypes from 'prop-types';
+import { useNavigate } from 'react-router-dom'
 import ListCredentialRequestsViewModel from '../viewmodel/ListCredentialRequestsViewModel';
 import ListCredentialRequestsView from '../view/ListCredentialRequestsView';
 

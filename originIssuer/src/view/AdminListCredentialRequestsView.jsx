@@ -1,5 +1,4 @@
-import PropTypes from 'prop-types';
-import { Typography, Button, styled } from '@mui/material';
+import { Typography, Button } from '@mui/material';
 import { Link } from 'react-router-dom';
 import Grid from '@mui/material/Grid';
 import * as React from 'react';
@@ -102,11 +101,6 @@ const AdminListCredentialRequestsView = ({ vcs_requestsPending, vcs_requestsNoPe
     </Grid>
   </Container>
   );
-};
-
-AdminListCredentialRequestsView.propTypes = {
-  vcs_requestsPending: PropTypes.array.isRequired,
-  vcs_requestsNoPending: PropTypes.array.isRequired,
 };
 
 export default AdminListCredentialRequestsView;

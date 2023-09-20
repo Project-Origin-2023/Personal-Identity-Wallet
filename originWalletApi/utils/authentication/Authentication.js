@@ -44,10 +44,6 @@ class Authentication {
         return token;
     }
 
-    addTokenCookie(res,token){
-        res.cookie("token", token, { maxAge: this.#jwtExpirySeconds * 1000 })
-    }
-
     async refreshAuth(email, tokenOIDC){
         //Get account info from DataScrapper
         var result = await this.#scrapper.getAccountByEmail(email);

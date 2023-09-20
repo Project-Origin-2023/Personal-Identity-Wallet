@@ -5,7 +5,7 @@ class OpenIdController {
     
     constructor(){
         
-        this.#issuerUri = 'http://openid.issuer.origin'
+        this.#issuerUri = process.env.OPENID_URI
         this.#axios = require('axios');
     }
 
