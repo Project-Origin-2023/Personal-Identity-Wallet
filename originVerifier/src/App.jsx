@@ -12,6 +12,7 @@ import useToken from './components/useToken';
 import PageState from './components/PageState';
 import Footer from './components/Footer';
 import ConnectController from './controller/ConnectController';
+import PresentationSuccessController from './controller/PresentationSuccessController';
 
 function App() {
   const { token, setToken } = useToken();
@@ -33,6 +34,8 @@ function App() {
           <Routes>
             <Route path="/"  element={<Home />} />
             <Route path="/Connect"  element={<ConnectController />} />
+            <Route path="/success"  element={<PresentationSuccessController setToken={setToken} token={token}/>} />
+            
           </Routes>
           <Footer/>
         </AuthProvider>

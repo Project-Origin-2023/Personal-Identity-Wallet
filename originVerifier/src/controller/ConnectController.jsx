@@ -18,8 +18,6 @@ const ConnectController = () => {
           walletListN.push(walletsN[key].id)
         });
         setWalletList(walletListN)
-        console.log(wallets)
-        console.log(walletList)
     }
     fetchData();
   }, []);
@@ -31,7 +29,6 @@ const ConnectController = () => {
 
 
   if (typeof wallets !== "undefined"){
-  console.log(wallets)
   return (
     <ConnectView
     walletList={walletList}
