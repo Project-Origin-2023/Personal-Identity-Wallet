@@ -24,7 +24,7 @@ const PresentationSuccessController = ({token, setToken}) => {
         //Se sono gia' Connessio rendirizzo verso Home
         //Redirect to Home if already COnnected
         if(typeof token=== "undefined" || token===null || token==="") {}else
-          return navigate('/Login'); 
+          return navigate('/'); 
         //faccio il fetch dei dati della presentazione
         let result = await viewModel.getPresentationSuccess(access_token);
         if (!result.success){

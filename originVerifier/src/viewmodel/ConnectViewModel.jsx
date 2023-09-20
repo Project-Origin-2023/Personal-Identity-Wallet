@@ -21,6 +21,16 @@ class ConnectViewModel extends ViewModel{
       return error.response.data;
     }
   }
+
+  async presentxdevice(type) {
+    try {
+      const response = await axios.get(`${this.apiUrl}/presentXDevice/?vcType=${type}`);
+      return response.data;
+  
+    } catch (error) {
+      return error.response.data;
+    }
+  }
 }
 
 export default ConnectViewModel;
