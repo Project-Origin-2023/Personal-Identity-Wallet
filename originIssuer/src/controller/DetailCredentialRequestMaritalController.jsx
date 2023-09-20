@@ -1,10 +1,9 @@
 import  { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 import DetailCredentialRequestMaritalViewModel from '../viewmodel/DetailCredentialRequestMaritalViewModel';
 import DetailCredentialRequestMaritalView from '../view/DetailCredentialRequestMaritalView';
-import ViewModel from '../viewmodel/ViewModel';
 
 
 const DetailCredentialRequestMaritalController = ({ token }) => {

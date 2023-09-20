@@ -1,15 +1,10 @@
 import React from 'react';
-import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
-import PropTypes from 'prop-types';
-import CheckSharpIcon from '@mui/icons-material/CheckSharp';
-import HighlightOffSharpIcon from '@mui/icons-material/HighlightOffSharp';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 const DetailCredentialView = ({ credential, handleDelete }) => {
@@ -77,8 +72,5 @@ const DetailCredentialView = ({ credential, handleDelete }) => {
     </Container>
   );
 };
-DetailCredentialView.propTypes = {
-  credential: PropTypes.object.isRequired,
-  handleDelete: PropTypes.func.isRequired,
-};
+
 export default DetailCredentialView;

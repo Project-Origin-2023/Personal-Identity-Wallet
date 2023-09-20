@@ -1,9 +1,5 @@
-//Per Home
-//import Blog from './blog/Blog';
-
 import { AuthProvider } from 'react-auth-kit';
 import { BrowserRouter as Router, Routes, Route} from 'react-router-dom';
-import { useState } from 'react';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 
 import Navbar from './components/Navbar';

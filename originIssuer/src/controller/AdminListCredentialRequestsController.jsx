@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom'
-import PropTypes from 'prop-types';
+import { useNavigate } from 'react-router-dom'
 import AdminListCredentialRequestsViewModel from '../viewmodel/AdminListCredentialRequestsViewModel';
 import AdminListCredentialRequestsView from '../view/AdminListCredentialRequestsView';
 

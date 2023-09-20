@@ -1,7 +1,5 @@
 import  { useEffect, useState } from 'react';
-import { Navigate } from 'react-router-dom'
-import { useLocation, useNavigate } from 'react-router-dom'
-
+import { useNavigate } from 'react-router-dom'
 
 import CredentialRequestPIDViewModel from '../viewmodel/CredentialRequestPIDViewModel'; // Assumi che VCSRequestViewModel sia stato importato correttamente
 import CredentialRequestPIDView from '../view/CredentialRequestPIDView';

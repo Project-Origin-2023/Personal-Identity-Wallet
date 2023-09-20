@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import { Typography, Button, styled } from '@mui/material';
 import { Link } from 'react-router-dom';
 import Grid from '@mui/material/Grid';
@@ -106,11 +105,6 @@ const ListCredentialRequestsView = ({ vcs_requestsPID, vcs_requestsMarital}) => 
     </Grid>
   </Container>
   );
-};
-
-ListCredentialRequestsView.propTypes = {
-  vcs_requestsPID: PropTypes.array.isRequired,
-  vcs_requestsMarital: PropTypes.array.isRequired,
 };
 
 export default ListCredentialRequestsView;

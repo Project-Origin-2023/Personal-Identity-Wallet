@@ -3,13 +3,13 @@ import { useState } from 'react';
 export default function useToken() {
   
   const getToken = () => {
-    const tokenString = sessionStorage.getItem('token');
+    const tokenString = localStorage.getItem('token');
     const userToken = JSON.parse(tokenString);
     return userToken
   };
 
   const getIsAdmin = () => {
-    const isAdminString = sessionStorage.getItem('isAdmin');
+    const isAdminString = localStorage.getItem('isAdmin');
     return JSON.parse(isAdminString);
   };
 
@@ -19,20 +19,20 @@ export default function useToken() {
   const saveToken = userToken => {
     if(userToken===null){
       saveIsAdmin(null);
-      sessionStorage.removeItem('token');
+      localStorage.removeItem('token');
       setToken(null)
     }else{
-      sessionStorage.setItem('token', JSON.stringify(userToken));
+      localStorage.setItem('token', JSON.stringify(userToken));
       setToken(userToken);  
     }
   };
 
   const saveIsAdmin = isA => {
     if(isA===null){
-      sessionStorage.removeItem('isAdmin');
+      localStorage.removeItem('isAdmin');
       setIsAdmin(null)
     }else{
-      sessionStorage.setItem('isAdmin', isA);
+      localStorage.setItem('isAdmin', isA);
       setIsAdmin(isA);  
     }
   };

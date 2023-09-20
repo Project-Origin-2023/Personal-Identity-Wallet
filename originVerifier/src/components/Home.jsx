@@ -30,59 +30,55 @@ export function Home() {
               color="text.primary"
               gutterBottom
             >
-             Origin Wallet
+            {import.meta.env.VITE_WEBAPP_NAME}
             </Typography>
             <Typography variant="body4" align="center" color="text.secondary" paragraph>
-              Origin Wallet ti offre la possibilita' di avere un wallet combatibile con la tecnologia OpenID 4 CI/VP.<br/>
-              Questa piattaforma ti permette di memorizzare in Cloud tutte le tue credenziali, di riceverne di nuove da un Issuer oppure di presentarne a un Verifier.<br/>
+            {import.meta.env.VITE_WEBAPP_NAME} (Origin CAF) ti permette di accedere a servizi di patronato CAF gratuitamente e in maniera immediata.<br/>
+              Attraverso questa piattaforma potrai accedere per esempio a servizi come la richiesta del tuo ISEE, Modello Unico o CUD.<br/>
+              Per accedere a questi servizi non necessiti di nessun sportello fisico, infatti la procedura di autenticazione e la fornitura dei documenti avviene tramite la tecnologia OpenID 4 CI/VP.
             </Typography>
           </Container>
         </Box>
         <Container sx={{ py: 8 }} maxWidth="md">
           <Grid container spacing={4}>
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12} sm={4}>
               <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
-                <CardMedia
-                  component="div"
-                  sx={{
-                    // 16:9
-                    pt: '56.25%',
-                  }}
-                  image="https://source.unsplash.com/random?wallpapers"
-                />
                 <CardContent sx={{ flexGrow: 1 }}>
                   <Typography gutterBottom variant="h5" component="h2">
-                    Start Issuer Initiated Credential Issuing
+                    Servizio Richiesta ISEE
                   </Typography>
-                  <Typography>Se hai fatto partire un percorso di credential issuing dalla piattaforma di un issuer attraverso questa pagina potrai continuare il issuing e ricevere la credenziale sul tuo wallet.</Typography>
+                  <Typography>Attraverso questo servizio potrai richiedere il tuo ISEE parificato, unificato o ISEE MINI.</Typography>
                 </CardContent>
                 <CardActions>
-                  <Link to="/StartIssuerInitiatedIssuance">
-                  <Button size="small">Start</Button>
+                  <Link to="/ServiceIsee">
+                    <Button size="small">Accedi</Button>
                   </Link>
                 </CardActions>
               </Card>
             </Grid>
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12} sm={4}>
               <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
-                <CardMedia
-                  component="div"
-                  sx={{
-                    // 16:9
-                    pt: '56.25%',
-                  }}
-                  image="https://source.unsplash.com/random?wallpapers"
-                />
                 <CardContent sx={{ flexGrow: 1 }}>
                   <Typography gutterBottom variant="h5" component="h2">
-                    Start Verifiable Presentation
+                    Servizio richiesta Modello Unico
                   </Typography>
-                  <Typography>Se un verifier ha bisogna di una presentazione, e hai fatto partire dalla sua piattaforma il percorso di verifiable presentation, attraverso questa pagina potrai completarla e fornire una credenziale al verifier.</Typography>
+                  <Typography>Attraverso questo servizio potrai richiedere il tuo modello unico e consultare l'archivio con tutti i tuoi reditti, il modello unico e' dedicato a persone con Partita IVA</Typography>
                 </CardContent>
                 <CardActions>
-                <Link to="/StartPresentation">
-                  <Button size="small">Start</Button>
-                  </Link>
+                <Typography>Coming Soon</Typography>
+                </CardActions>
+              </Card>
+            </Grid>
+            <Grid item xs={12} sm={4}>
+              <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+                <CardContent sx={{ flexGrow: 1 }}>
+                  <Typography gutterBottom variant="h5" component="h2">
+                    Servizio Richiesta CUD
+                  </Typography>
+                  <Typography>Attraverso questo servizio potrai richiedere il uo CUD, un CUD e' un documento dato per ogni rapporto lavorativo avutoin una annata e si puo' richiedere da qualsiasi persona avente un contratto di lavoro</Typography>
+                </CardContent>
+                <CardActions>
+                <Typography>Coming Soon</Typography>
                 </CardActions>
               </Card>
             </Grid>

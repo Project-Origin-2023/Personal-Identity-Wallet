@@ -57,7 +57,7 @@ function NavbarUser({ setToken}) {
               textDecoration: 'none',
             }}
           >
-            Origin Wallet
+            {import.meta.env.VITE_WEBAPP_NAME}
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -93,13 +93,7 @@ function NavbarUser({ setToken}) {
                   <Button sx={{ my: 2, color: 'white', display: 'block' }} component={Link} to="/">Home</Button>
                 </MenuItem>
                 <MenuItem  key="2" onClick={handleCloseUserMenu}>
-                  <Button sx={{ my: 2, color: 'white', display: 'block' }} component={Link} to="/StartPresentation">Start Presentation</Button>
-                </MenuItem>
-                <MenuItem  key="3"onClick={handleCloseUserMenu}>
-                  <Button sx={{ my: 2, color: 'white', display: 'block' }} component={Link} to="/StartIssuerInitiatedIssuance">Start Issuance</Button>
-                </MenuItem>
-                <MenuItem  key="4" onClick={handleCloseUserMenu}>
-                  <Button sx={{ my: 2, color: 'white', display: 'block' }} component={Link} to="/ListCredentials">Lista VC</Button>
+                  <Button sx={{ my: 2, color: 'white', display: 'block' }} component={Link} to="/ServiceIsee">Servizio Isee</Button>
                 </MenuItem>
             </Menu>
           </Box>
@@ -120,13 +114,11 @@ function NavbarUser({ setToken}) {
               textDecoration: 'none',
             }}
           >
-            Origin Wallet
+            {import.meta.env.VITE_WEBAPP_NAME}
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             <Button sx={{ my: 2, color: 'white', display: 'block' }}  component={Link} to="/">Home</Button>
-            <Button sx={{ my: 2, color: 'white', display: 'block' }}  component={Link} to="/StartPresentation">Start Presentation</Button>
-            <Button sx={{ my: 2, color: 'white', display: 'block' }}  component={Link} to="/StartIssuerInitiatedIssuance">Start Issuance</Button>
-            <Button sx={{ my: 2, color: 'white', display: 'block' }}  component={Link} to="/ListCredentials">Lista VC</Button>
+            <Button sx={{ my: 2, color: 'white', display: 'block' }}  component={Link} to="/ServiceIsee">Servizio Isee</Button>
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
