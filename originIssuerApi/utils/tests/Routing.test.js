@@ -5,6 +5,7 @@ routing.configEndpoint();
 
 
 let primoId;
+let secondoId;
 
 describe('register and login email and password presence', () => {
   
@@ -210,8 +211,7 @@ describe('simulate a registration flow and a complete user experience', () => {
       expect(response.body.success).toBe(true);
       response.body.data.vcs_requests_pending.sort((a, b) => b.id - a.id);
       primoId = response.body.data.vcs_requests_pending[0].id;
-      console.log(response.body.data.vcs_requests_pending);
-      console.log(primoId);
+      secondoId=primoId-1;//questa ci servirà più tardi
     });
     //admin retrieve all vcs request token not found
     it('should return an error for missing token', async () => {
@@ -223,6 +223,16 @@ describe('simulate a registration flow and a complete user experience', () => {
       expect(response.body.description).toBe('Authorization token not found');
       }
     );
+
+    //user retrieves his PID requests
+    it('should return all user PID requests', async () => {
+      const response = await request(routing.app)
+      .get('/vcsrequests/pid')
+      .set('x-access-token', token);
+      expect(response.status).toBe(200);
+      expect(response.body.success).toBe(true);
+      expect(response.body.data.vcs_requests).toBeDefined();
+    });
     //admin approve vcs request
        //admin approve vcs request
        it('should approve a vcs request for either marital or PID', async () => {
@@ -235,7 +245,6 @@ describe('simulate a registration flow and a complete user experience', () => {
             .get(`/admin/vcsrequest/pid/${primoId}`)
             .set('x-access-token', tokenAdmin)
         ]);
-        console.log(primoId);
       
         // Verifica che almeno una delle due risposte abbia uno stato 200
         const atLeastOneSuccess = responseArray.some(response => response.status === 200);
@@ -260,17 +269,99 @@ describe('simulate a registration flow and a complete user experience', () => {
       .send(requestBody);
     expect(response.status).toBe(200);
     expect(response.body.success).toBe(true);
-    console.log(primoId);
+  });
+/************************* */
+    //admin approve vcs request
+       //admin approve vcs request
+       it('should approve a vcs request for either marital or PID', async () => {
+        // Crea un nuovo ID per il test
+        const responseArray = await Promise.all([
+          request(routing.app)
+            .get(`/admin/vcsrequest/marital/${secondoId}`)
+            .set('x-access-token', tokenAdmin),
+          request(routing.app)
+            .get(`/admin/vcsrequest/pid/${secondoId}`)
+            .set('x-access-token', tokenAdmin)
+        ]);
+      
+        // Verifica che almeno una delle due risposte abbia uno stato 200
+        const atLeastOneSuccess = responseArray.some(response => response.status === 200);
+      
+        // Verifica che almeno una delle due risposte abbia avuto successo (status 200)
+        expect(atLeastOneSuccess).toBe(true);
+      });
+
+
+
+  //admin verify vcs request
+  it('should verify a VCS request', async () => {
+    secondoId = secondoId.toString();
+    const requestBody = {
+      vcsrequestId: secondoId, // Sostituisci con l'ID effettivo
+      status: true, // Sostituisci con lo stato effettivo
+    };
+  //print type of secondoId
+    const response = await request(routing.app)
+      .post('/admin/vcsrequest/verify')
+      .set('x-access-token', tokenAdmin)
+      .send(requestBody);
+    expect(response.status).toBe(200);
+    expect(response.body.success).toBe(true);
   });
 
+  it('should release a credential', async () => {
+    const response = await request(routing.app)
+    .get(`/vcsrequest/releasecrossdevice/${secondoId}`)
+    .set('x-access-token', token);
+    expect(response.status).toBe(200);
+    expect(response.body.success).toBe(true);
+  });
+
+/*************************  */
     //user releases credential
     it('should release a credential', async () => {
       const response = await request(routing.app)
       .get(`/vcsrequest/release/${primoId}`)
       .set('x-access-token', token);
-      console.log(primoId);
-      console.log(response.body);
       expect(response.status).toBe(200);
       expect(response.body.success).toBe(true);
+      //uri=response.body.data.redirectWalletUri;
+      uri='nejxciewnmsxoikl';
+
+      //qr code
+      const response2 = await request(routing.app)
+      .get(`/qr/`)
+      .set('x-access-token', token);
+      expect(response2.status).toBe(500);
+      expect(response2.body.description).toBe('uri Missing');
+    });
+
+
+
+    //user checks status of released credential
+    it('checks that the credential is released', async () => { 
+    const response = await request(routing.app)
+    .get(`/vcsrequest/status/${primoId}`)
+    .set('x-access-token', token);
+    expect(response.status).toBe(200);
+    expect(response.body.data.verification.status).toBe(true);
+    });
+
+    //user checks status of released marital credential
+    it('checks that the marital credential is released', async () => {
+      const response = await request(routing.app)
+      .get(`/vcsrequest/marital/ ${primoId}`)
+      .set('x-access-token', token);
+      expect(response.status).toBe(200);
+      expect(response.body.description).toBe(' vcs request married status successfully retrieved');
+    });
+
+    //user checks status of released PID credential
+    it('checks that the PID credential is released', async () => {
+      const response = await request(routing.app)
+      .get(`/vcsrequest/pid/ ${secondoId}`)
+      .set('x-access-token', token);
+      expect(response.status).toBe(200);
+      expect(response.body.description).toBe('Vcs request PID successfully retrieved');
     });
 });
