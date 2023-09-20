@@ -6,16 +6,13 @@ import {
   Avatar,
   CssBaseline,
 } from '@mui/material';
-import { Divider } from '@mui/material';
-import Chip from '@mui/material/Chip';
-import { LicenseLabel } from '../components/LicenseLabel';
-import { Link } from "react-router-dom";
+import CardMedia from '@mui/material/CardMedia';
+import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
@@ -24,8 +21,9 @@ import ListItemText from '@mui/material/ListItemText';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Checkbox from '@mui/material/Checkbox';
+import QRCode from 'react-qr-code';
 
-const ConnectView = ({ wallets, walletList, handleConnect }) => {
+const ConnectView = ({ wallets, walletList, handleConnect,openidPresentationURIQR, openidPresentationURI }) => {
   return (
     <Container component="main" maxWidth="md">
         <Grid sx={{pt: 8,pb: 6,}} 
@@ -43,7 +41,7 @@ const ConnectView = ({ wallets, walletList, handleConnect }) => {
             <Grid item xs={12}>
               <Typography variant="body1">Collegati con uno dei Wallet convenzionati</Typography>
             </Grid>
-            <Grid item xs={4}>
+            <Grid item xs={6}>
               {walletList.map((wallet) => (
                 <div>
                     <Grid item xs={12}>
@@ -60,6 +58,20 @@ const ConnectView = ({ wallets, walletList, handleConnect }) => {
                     </Grid>
                 </div>
               ))}
+            </Grid>
+            <Grid item xs={6}>
+              <Card>
+              <CardMedia
+                    component="img"
+                    alt="OIDC Presentation QR Code Not Found"
+                    image={openidPresentationURIQR}
+                  />
+                <CardContent>
+                <Typography noWrap sx={{fontSize: '0.5rem'}}>
+                    {openidPresentationURI}
+                </Typography>
+                </CardContent>
+              </Card>
             </Grid>
         </Grid>
     </Container>

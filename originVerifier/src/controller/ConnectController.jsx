@@ -7,6 +7,8 @@ const ConnectController = () => {
   const viewModel = new ConnectViewModel();
   const [wallets,setWallets] = useState()
   const [walletList,setWalletList] = useState()
+  const [openidPresentationURIQR , setOpenidPresentationURIQR] = useState();
+  const [openidPresentationURI , setOpenidPresentationURI] = useState();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -18,6 +20,12 @@ const ConnectController = () => {
           walletListN.push(walletsN[key].id)
         });
         setWalletList(walletListN)
+        //Get URI Presentation
+        let result = await viewModel.presentxdevice("PID");
+        setOpenidPresentationURI(result.url)
+        //setOpenidPresentationURIQR('http://api.issuer.origin/qr?uri='+encodeURIComponent(result.url));
+        setOpenidPresentationURIQR('https://api.qrserver.com/v1/create-qr-code/?size=300x300&data='+encodeURIComponent(result.url));
+        //Decodificato in maniera sbagliata, da fare come nel Issuer per production level
     }
     fetchData();
   }, []);
@@ -34,6 +42,8 @@ const ConnectController = () => {
     walletList={walletList}
     wallets={wallets}
     handleConnect={handleConnect}
+    openidPresentationURIQR={openidPresentationURIQR}
+    openidPresentationURI={openidPresentationURI}
     />
   )}else{return(<hr/>)}
 

@@ -60,7 +60,7 @@ const PresentationSuccessView = ({presentationInfo,handleContinueConnect}) => {
             </Grid>
             <Grid item md={12} xs={12}>
               {presentationInfo.vps.map((vp, index) => (
-                <Grid item md={6} xs={12}>
+                <Grid item md={12} xs={12}>
                     <Typography variant="h6">Presentazione:</Typography>
                     <Typography variant="body2">
                       <strong>Holder: </strong> {vp.vp.holder}
@@ -90,7 +90,7 @@ const PresentationSuccessView = ({presentationInfo,handleContinueConnect}) => {
                     {vp.vcs.map((vc, index) => (
                       <Card>
                         <CardContent>
-                          <Grid item md={6} xs={6}>
+                          <Grid item md={6} xs={12}>
                             <Typography variant="h6">Credenziale Offerta:</Typography>
                             <Typography variant="body1">
                               <strong>issuanceDate:</strong> {new Date(vc.issuanceDate).toUTCString()}
