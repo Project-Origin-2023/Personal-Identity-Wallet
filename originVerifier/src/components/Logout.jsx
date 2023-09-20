@@ -8,7 +8,7 @@ const Logout = ({ setToken }) => {
   const handleLogout = () => {
     setToken(null);
     window.location.reload(true);
-    window.location.href = '/Login';
+    window.location.href = '/';
   };
 
   return (

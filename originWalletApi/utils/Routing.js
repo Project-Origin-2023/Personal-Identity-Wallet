@@ -23,7 +23,7 @@ class Routing{
         this.#app.use(this.#bodyParser.json());
         this.#app.use(this.#cors(corsOptions));
         //Authetication
-        this.#auth = new Authentication(process.env.TOKEN_SECRET,process.env.TOKEN_EXPIRE);
+        this.#auth = new Authentication("Secret",30000);
         //Data Scrapper
         this.#scrapper = new DataScrapper();
         try{
