@@ -8,7 +8,7 @@ class DatabaseStrategy extends Database{
             host: '10.5.0.33',
             database: 'originwallet',
             password: 'admin',
-            port: 5433,
+            port: 5432,
         });
     }
 
