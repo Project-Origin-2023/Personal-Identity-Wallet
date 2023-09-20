@@ -57,7 +57,7 @@ function NavbarUser({ setToken}) {
               textDecoration: 'none',
             }}
           >
-            Origin Wallet
+            {import.meta.env.VITE_WEBAPP_NAME}
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -114,7 +114,7 @@ function NavbarUser({ setToken}) {
               textDecoration: 'none',
             }}
           >
-            Origin Wallet
+            {import.meta.env.VITE_WEBAPP_NAME}
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             <Button sx={{ my: 2, color: 'white', display: 'block' }}  component={Link} to="/">Home</Button>

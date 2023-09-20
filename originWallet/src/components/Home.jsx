@@ -30,10 +30,10 @@ export function Home() {
               color="text.primary"
               gutterBottom
             >
-             Origin Wallet
+             {import.meta.env.VITE_WEBAPP_NAME}
             </Typography>
             <Typography variant="body4" align="center" color="text.secondary" paragraph>
-              Origin Wallet ti offre la possibilita' di avere un wallet combatibile con la tecnologia OpenID 4 CI/VP.<br/>
+              {import.meta.env.VITE_WEBAPP_NAME} ti offre la possibilita' di avere un wallet combatibile con la tecnologia OpenID 4 CI/VP.<br/>
               Questa piattaforma ti permette di memorizzare in Cloud tutte le tue credenziali, di riceverne di nuove da un Issuer oppure di presentarne a un Verifier.<br/>
             </Typography>
           </Container>

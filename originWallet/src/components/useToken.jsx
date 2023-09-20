@@ -8,13 +8,7 @@ export default function useToken() {
     return userToken
   };
 
-  const getIsAdmin = () => {
-    const isAdminString = localStorage.getItem('isAdmin');
-    return JSON.parse(isAdminString);
-  };
-
   const [token, setToken] = useState(getToken());
-  const [isAdmin, setIsAdmin] = useState(getIsAdmin());
 
   const saveToken = userToken => {
     if(userToken===null){
@@ -27,21 +21,8 @@ export default function useToken() {
     }
   };
 
-  const saveIsAdmin = isA => {
-    if(isA===null){
-      localStorage.removeItem('isAdmin');
-      setIsAdmin(null)
-    }else{
-      localStorage.setItem('isAdmin', isA);
-      setIsAdmin(isA);  
-    }
-  };
-
-
   return {
     setToken: saveToken,
-    token,
-    isAdmin,
-    setIsAdmin: saveIsAdmin
+    token
   };
 }
