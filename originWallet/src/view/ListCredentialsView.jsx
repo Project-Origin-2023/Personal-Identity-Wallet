@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import { Typography, Button, styled } from '@mui/material';
 import { Link } from 'react-router-dom';
 import Table from '@mui/material/Table';
@@ -9,7 +8,6 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Container from '@mui/material/Container';
-import Grid from '@mui/material/Grid';
 
 
 
@@ -65,10 +63,6 @@ const ListCredentialsView = ({ credentials }) => {
     )}
   </Container>
   );
-};
-
-ListCredentialsView.propTypes = {
-  credentials: PropTypes.array.isRequired,
 };
 
 export default ListCredentialsView;

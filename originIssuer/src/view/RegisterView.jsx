@@ -8,7 +8,6 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import PropTypes from 'prop-types';
 
 const RegisterView = ({ email, password, setEmail, setPassword, handleRegister }) => {
   return (
@@ -88,12 +87,5 @@ const RegisterView = ({ email, password, setEmail, setPassword, handleRegister }
       </Container>
   );
 }
-RegisterView.propTypes = {
-    email: PropTypes.string.isRequired,
-    password: PropTypes.string.isRequired,
-    setEmail: PropTypes.func.isRequired,
-    setPassword: PropTypes.func.isRequired,
-    handleRegister: PropTypes.func.isRequired,
-  };
   
-  export default RegisterView;
+export default RegisterView;

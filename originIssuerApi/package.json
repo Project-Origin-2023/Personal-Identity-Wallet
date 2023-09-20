@@ -13,10 +13,13 @@
         "pg": "^8.11.1",
         "qrcode": "^1.5.3",
         "querystring": "^0.2.1",
-        "sanitize": "^2.1.2"
+        "sanitize": "^2.1.2",
+        "dotenv": "^16.3.1"
     },
     "scripts": {
-        "test": "jest"
+        "dev": "NODE_ENV=development node index.js",
+        "build": "NODE_ENV=production node index.js",
+        "test": "NODE_ENV=development jest"
     },
     "jest": {
         "testEnvironment": "node"

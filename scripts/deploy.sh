@@ -1,6 +1,7 @@
 #!/bin/bash
 #Build APP
 sh ./.build/buildOriginIssuer.sh
+sh ./.build/buildOriginWallet.sh
 sh ./.build/buildOriginVerifier.sh
 
 #modify Hosts

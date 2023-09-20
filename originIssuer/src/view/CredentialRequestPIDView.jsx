@@ -1,17 +1,14 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
-import { Link } from "react-router-dom";
-import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import PropTypes from 'prop-types';
 import { InputLabel } from '@mui/material';
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers'; // Importa DatePicker da @mui/x-date-pickers
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'; // Importa AdapterDateFns da @mui/x-date-pickers
@@ -153,12 +150,6 @@ const CredentialRequestPIDView = ({
       </Container>
     </LocalizationProvider>
   );
-};
-
-CredentialRequestPIDView.propTypes = {
-  pidData: PropTypes.object.isRequired,
-  setPIDData: PropTypes.func.isRequired,
-  handleSubmit: PropTypes.func.isRequired,
 };
 
 export default CredentialRequestPIDView;

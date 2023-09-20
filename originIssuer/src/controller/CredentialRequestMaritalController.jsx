@@ -1,6 +1,5 @@
 import  { useEffect, useState } from 'react';
-import { Navigate } from 'react-router-dom'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 import CredentialRequestMaritalViewModel from '../viewmodel/CredentialRequestMaritalViewModel'; // Assumi che VCSRequestViewModel sia stato importato correttamente
 import CredentialRequestMaritalView from '../view/CredentialRequestMaritalView';

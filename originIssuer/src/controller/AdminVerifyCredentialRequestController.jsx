@@ -1,7 +1,6 @@
 import  { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom'
-import { useLocation, useNavigate } from 'react-router-dom'
-import { Navigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 import AdminVerifyCredentialRequestViewModel from '../viewmodel/AdminVerifyCredentialRequestViewModel';
 import AdminVerifyCredentialRequestPidView from '../view/AdminVerifyCredentialRequestPidView';

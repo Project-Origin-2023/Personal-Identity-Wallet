@@ -89,7 +89,10 @@ const CredentialRequestController = ({token, setToken, state}) => {
       if(!response.success)
         return alert(response.description);
       else{
-        window.location.href = response.data.rp_response;
+        if(response.data.rp_response == null || typeof response.data.rp_response !== "string")
+          alert("Verifiable Presentation Not Fulfilled, it is a problem of OpenID Protocol")
+        else
+          window.location.href = response.data.rp_response;
       }
   };
 

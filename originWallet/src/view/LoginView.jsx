@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import {
   Typography,
   TextField,
@@ -9,10 +8,10 @@ import {
   CssBaseline,
   Grid,
 } from '@mui/material';
-
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import { LicenseLabel } from '../components/LicenseLabel';
 import { Link } from "react-router-dom";
+
+import { LicenseLabel } from '../components/LicenseLabel';
 
 const LoginView = ({ email, password, setEmail, setPassword, handleLogin }) => {
   return (
@@ -108,14 +107,6 @@ const LoginView = ({ email, password, setEmail, setPassword, handleLogin }) => {
       </Grid>
     </div>
   );
-};
-
-LoginView.propTypes = {
-  email: PropTypes.string.isRequired,
-  password: PropTypes.string.isRequired,
-  setEmail: PropTypes.func.isRequired,
-  setPassword: PropTypes.func.isRequired,
-  handleLogin: PropTypes.func.isRequired,
 };
 
 export default LoginView;

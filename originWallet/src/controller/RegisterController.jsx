@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { useLocation } from 'react-router-dom'
 import RegisterViewModel from '../viewmodel/RegisterViewModel'; // Assumi che LoginViewModel sia stato importato correttamente
 import RegisterView from '../view/RegisterView';
 
