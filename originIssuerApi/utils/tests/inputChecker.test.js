@@ -1,3 +1,5 @@
+//Include variabili di ambiente
+require('dotenv').config({ path: `.env.${process.env.NODE_ENV}` })
 const { InputChecker } = require('../../utils/InputChecker');
 
 describe('InputChecker', () => {
