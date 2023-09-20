@@ -2,8 +2,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 15.3 (Debian 15.3-1.pgdg120+1)
--- Dumped by pg_dump version 15.3 (Debian 15.3-1.pgdg120+1)
+-- Dumped from database version 15.4 (Debian 15.4-1.pgdg120+1)
+-- Dumped by pg_dump version 15.4 (Debian 15.4-1.pgdg120+1)
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -178,7 +178,8 @@ ALTER TABLE public.vcs_requests_verifications OWNER TO admin;
 --
 
 COPY public.accounts (id, email, hashed_pass, salt) FROM stdin;
-41	andreibobirica99@gmail.com	1a9d0e276b131de912a9b7a1a8edeb3735cd32c425314fcb21752217990d34a19b420131ad164c9602774357c8dbf25aa41a551788d3a7ea97494fa25a929d17	ba6ce660f64705e89157f23aaecbe4df
+47	ADMIN@admin.com	2e724b573ffa1de32bd7ae87bd9eb905ec7087a3715ba3e98293fcc526aee44afcd0cf432c68d8abad4422314c7285972b75f4a98ad4b6af369bb6909a72b098	f53df345e2dcc42b9454238ad632d5e5
+48	andreibobirica99@gmail.com	0e58c8a96eaae657816411c039ac8237c1cb8f64916fd759ad0b1580314330badb82dc95d81cfd89a531f76cb8671bf1d8ab1fa2ceba31d32b8a462cd1de3e31	691dec187ba03ed8d133c01a15d970fc
 \.
 
 
@@ -187,7 +188,7 @@ COPY public.accounts (id, email, hashed_pass, salt) FROM stdin;
 --
 
 COPY public.sys_admins (account, role) FROM stdin;
-41	verifier
+47	verifier
 \.
 
 
@@ -196,6 +197,7 @@ COPY public.sys_admins (account, role) FROM stdin;
 --
 
 COPY public.users (account, created_at) FROM stdin;
+48	2023-09-20 20:54:25.398764
 \.
 
 
@@ -212,6 +214,7 @@ COPY public.vcs_content_marital_status (vcs_request, status, "personalIdentifier
 --
 
 COPY public.vcs_content_pid (vcs_request, "currentAddress", "dateOfBirth", "familyName", "firstName", gender, "nameAndFamilyNameAtBirth", "personalIdentifier", "placeOfBirth") FROM stdin;
+89	Via Padova 20	1999-12-29	Bobirica	Andrei Cristia	M	Bobirica Andrei Cristian	BBRNRTT772BBSFV	Targoviste Roma nia
 \.
 
 
@@ -220,6 +223,7 @@ COPY public.vcs_content_pid (vcs_request, "currentAddress", "dateOfBirth", "fami
 --
 
 COPY public.vcs_requests (id, applicant, released) FROM stdin;
+89	48	f
 \.
 
 
@@ -228,6 +232,7 @@ COPY public.vcs_requests (id, applicant, released) FROM stdin;
 --
 
 COPY public.vcs_requests_verifications (vcs_request, admin_verifier, status) FROM stdin;
+89	47	t
 \.
 
 
@@ -235,14 +240,14 @@ COPY public.vcs_requests_verifications (vcs_request, admin_verifier, status) FRO
 -- Name: accounts_id_seq; Type: SEQUENCE SET; Schema: public; Owner: admin
 --
 
-SELECT pg_catalog.setval('public.accounts_id_seq', 46, true);
+SELECT pg_catalog.setval('public.accounts_id_seq', 48, true);
 
 
 --
 -- Name: vcs_requests_id_seq; Type: SEQUENCE SET; Schema: public; Owner: admin
 --
 
-SELECT pg_catalog.setval('public.vcs_requests_id_seq', 88, true);
+SELECT pg_catalog.setval('public.vcs_requests_id_seq', 89, true);
 
 
 --
