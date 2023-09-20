@@ -1,7 +1,7 @@
-import ServiceIseeView from '../view/ServiceIseeView';
-import { useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom'
 
+import ServiceIseeView from '../view/ServiceIseeView';
 import ServiceIseeViewModel from '../viewmodel/ServiceIseeViewModel';
 
 const ServiceIseeController = ({token}) => {
@@ -15,7 +15,6 @@ const ServiceIseeController = ({token}) => {
         alert(result.description)
         if(!result.success)
           navigate('/'); 
-
     }
     fetchData();
   }, []);

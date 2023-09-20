@@ -1,27 +1,10 @@
-import PropTypes from 'prop-types';
-import {
-  TextField,
-  Box,
-  Paper,
-  Avatar,
-  CssBaseline,
-} from '@mui/material';
 import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Card from '@mui/material/Card';
 import Typography from '@mui/material/Typography';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemText from '@mui/material/ListItemText';
-import ListItemAvatar from '@mui/material/ListItemAvatar';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import Checkbox from '@mui/material/Checkbox';
-import QRCode from 'react-qr-code';
 
 const ConnectView = ({ wallets, walletList, handleConnect,openidPresentationURIQR, openidPresentationURI }) => {
   return (

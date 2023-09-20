@@ -1,7 +1,7 @@
-import { useLocation } from 'react-router-dom'
+import { useEffect, useState } from 'react';
+
 import ConnectViewModel from '../viewmodel/ConnectViewModel'; 
 import ConnectView from '../view/ConnectView';
-import { useEffect, useState } from 'react';
 
 const ConnectController = () => {
   const viewModel = new ConnectViewModel();

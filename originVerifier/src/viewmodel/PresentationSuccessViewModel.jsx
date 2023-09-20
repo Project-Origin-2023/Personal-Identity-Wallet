@@ -13,5 +13,4 @@ class PresentationSuccessViewModel extends ViewModel{
   }
 }
 
-
 export default PresentationSuccessViewModel;

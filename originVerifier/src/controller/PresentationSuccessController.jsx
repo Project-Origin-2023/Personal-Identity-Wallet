@@ -1,8 +1,8 @@
+import { useEffect, useState } from 'react';
+import { useSearchParams , useNavigate } from 'react-router-dom'
+
 import PresentationSuccessViewModel from '../viewmodel/PresentationSuccessViewModel'; 
 import PresentationSuccessView from '../view/PresentationSuccessView';
-import { useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router-dom'
-import { useLocation, useNavigate } from 'react-router-dom'
 
 const PresentationSuccessController = ({token, setToken}) => {
   //Reindirizzamento
