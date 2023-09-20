@@ -1,5 +1,5 @@
 #!/bin/bash
 
-cd ../originIssuer
+cd ../originWallet
 npm install
 npm run build
