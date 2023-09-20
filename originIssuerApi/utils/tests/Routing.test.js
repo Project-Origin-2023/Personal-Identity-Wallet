@@ -208,7 +208,10 @@ describe('simulate a registration flow and a complete user experience', () => {
       .set('x-access-token', tokenAdmin);
       expect(response.status).toBe(200);
       expect(response.body.success).toBe(true);
+      response.body.data.vcs_requests_pending.sort((a, b) => b.id - a.id);
       primoId = response.body.data.vcs_requests_pending[0].id;
+      console.log(response.body.data.vcs_requests_pending);
+      console.log(primoId);
     });
     //admin retrieve all vcs request token not found
     it('should return an error for missing token', async () => {
@@ -232,6 +235,7 @@ describe('simulate a registration flow and a complete user experience', () => {
             .get(`/admin/vcsrequest/pid/${primoId}`)
             .set('x-access-token', tokenAdmin)
         ]);
+        console.log(primoId);
       
         // Verifica che almeno una delle due risposte abbia uno stato 200
         const atLeastOneSuccess = responseArray.some(response => response.status === 200);
@@ -256,6 +260,7 @@ describe('simulate a registration flow and a complete user experience', () => {
       .send(requestBody);
     expect(response.status).toBe(200);
     expect(response.body.success).toBe(true);
+    console.log(primoId);
   });
 
     //user releases credential
