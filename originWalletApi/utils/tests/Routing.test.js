@@ -1,3 +1,5 @@
+//Include variabili di ambiente
+require('dotenv').config({ path: `.env.${process.env.NODE_ENV}` })
 const request = require('supertest');
 const { Routing } = require('../../utils/Routing.js');
 const routing = new Routing();
