@@ -51,12 +51,15 @@ let password;
 //test registrazione che va a buon fine
 it('should return 200 with "Registration Successful" message if registration is successful', async () => {
    // Utilizza l'istanza di Routing
+  console.log(crypto.randomUUID()+"@gmail.com")
   email = crypto.randomUUID()+"@gmail.com";
   password = "1234abc!A";
   const response = await request(routing.app) 
     .post('/auth/register')
     .send({ email: email, password: password });
+    console.log(response)
   expect(response.status).toBe(200); 
+  console.log(response)
 });
 
 //test di login con email e password corretti
