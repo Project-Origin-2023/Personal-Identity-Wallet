@@ -1,6 +1,6 @@
 class ViewModel {
     constructor() {
-        this.apiUrl = 'http://openid.verifier.origin/verifier-api/default';
+        this.apiUrl = import.meta.env.VITE_OPENID_URI
     }
 }
 

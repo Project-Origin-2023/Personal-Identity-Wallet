@@ -30,10 +30,10 @@ export function Home() {
               color="text.primary"
               gutterBottom
             >
-             Origin Verifier
+            {import.meta.env.VITE_WEBAPP_NAME}
             </Typography>
             <Typography variant="body4" align="center" color="text.secondary" paragraph>
-              Origin Verifier (Origin CAF) ti permette di accedere a servizi di patronato CAF gratuitamente e in maniera immediata.<br/>
+            {import.meta.env.VITE_WEBAPP_NAME} (Origin CAF) ti permette di accedere a servizi di patronato CAF gratuitamente e in maniera immediata.<br/>
               Attraverso questa piattaforma potrai accedere per esempio a servizi come la richiesta del tuo ISEE, Modello Unico o CUD.<br/>
               Per accedere a questi servizi non necessiti di nessun sportello fisico, infatti la procedura di autenticazione e la fornitura dei documenti avviene tramite la tecnologia OpenID 4 CI/VP.
             </Typography>

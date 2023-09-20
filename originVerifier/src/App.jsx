@@ -13,8 +13,6 @@ import ServiceIseeController from './controller/ServiceIseeController';
 function App() {
   const { token, setToken } = useToken();
 
-  const state = new PageState()
-  
   const darkTheme = createTheme({
     palette: {
       mode: 'dark',
@@ -26,7 +24,7 @@ function App() {
     <ThemeProvider theme={darkTheme}>
       <Router>
         <AuthProvider>
-          <Navbar isLoggedIn={token!==null} setToken={setToken} state={state}/>
+          <Navbar isLoggedIn={token!==null} setToken={setToken} />
           <Routes>
             <Route path="/"  element={<Home />} />
             <Route path="/Connect"  element={<ConnectController />} />

@@ -57,7 +57,7 @@ function NavbarGuest() {
               textDecoration: 'none',
             }}
           >
-            Origin Verifier
+            {import.meta.env.VITE_WEBAPP_NAME}
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
