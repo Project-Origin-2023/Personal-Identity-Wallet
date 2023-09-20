@@ -4,11 +4,11 @@ const { DataResponse } = require('../DataResponse.js');
 class DatabaseStrategy extends Database{
     constructor() {
         super({
-            user: 'admin',
-            host: '10.5.0.31',
-            database: 'originissuer',
-            password: 'admin',
-            port: 5432,
+            user: process.env.DBUSER,
+            host: process.env.DBHOST,
+            database: process.env.DBDATABASE,
+            password: process.env.DBPASSWORD,
+            port: process.env.DBPORT,
         });
     }
 
