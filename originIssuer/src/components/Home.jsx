@@ -9,7 +9,6 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { Link } from 'react-router-dom';
-import { LicenseLabel } from './LicenseLabel';
 
 export function Home() {
   return (
@@ -33,7 +32,7 @@ export function Home() {
               Servizi Verifiable Credential Offerti
             </Typography>
             <Typography variant="h5" align="center" color="text.secondary" paragraph>
-              Origin Issuer è una piattaforma di issuing di Verifiable Credential.<br/>
+            {import.meta.env.VITE_WEBAPP_NAME} è una piattaforma di issuing di Verifiable Credential.<br/>
               Attraverso questa piattaforma si possono generare credenziali di tipo Personal Identity (PID) <br/>oppure una Electronic Attestation of Attributes di tipo Marital Status (EAA Marital Status).
             </Typography>
           </Container>

@@ -9,7 +9,7 @@ function NavbarAdmin({ setToken }) {
     <AppBar position="static">
       <Toolbar>
         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-          Origin Issuer System Admin Controll
+        {import.meta.env.VITE_WEBAPP_NAME} System Admin Controll
         </Typography>
         <Button color="inherit" component={Link} to="/">Home</Button>
         <Button color="inherit" component={Link} to="/AdminListCredentialRequests">VCS Request List</Button>

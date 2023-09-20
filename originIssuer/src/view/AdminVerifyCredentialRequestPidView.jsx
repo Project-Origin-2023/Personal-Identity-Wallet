@@ -7,7 +7,6 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
-import PropTypes from 'prop-types';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 
@@ -77,11 +76,6 @@ const AdminVerifyCredentialRequestPidView = ({ pidData, statusVerification, setS
       </Grid>
     </Container>
   );
-};
-
-AdminVerifyCredentialRequestPidView.propTypes = {
-  pidData: PropTypes.object.isRequired,
-  handleVerify: PropTypes.func.isRequired,
 };
 
 export default AdminVerifyCredentialRequestPidView;

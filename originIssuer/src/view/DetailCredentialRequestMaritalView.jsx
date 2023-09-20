@@ -7,7 +7,6 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
-import PropTypes from 'prop-types';
 import CheckSharpIcon from '@mui/icons-material/CheckSharp';
 import HighlightOffSharpIcon from '@mui/icons-material/HighlightOffSharp';
 import List from '@mui/material/List';
@@ -18,7 +17,6 @@ import ListItemText from '@mui/material/ListItemText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Dialog from '@mui/material/Dialog';
 import PersonIcon from '@mui/icons-material/Person';
-import AddIcon from '@mui/icons-material/Add';
 import { blue } from '@mui/material/colors';
 import CardMedia from '@mui/material/CardMedia';
 
@@ -105,12 +103,6 @@ const DetailCredentialRequestMaritalView = ({marData,vcStatus,handleRelease,hand
     </Container>
     </div>
   );
-};
-
-DetailCredentialRequestMaritalView.propTypes = {
-  marData: PropTypes.object.isRequired,
-  vcStatus: PropTypes.object.isRequired,
-  handleRelease: PropTypes.func.isRequired,
 };
 
 export default DetailCredentialRequestMaritalView;
