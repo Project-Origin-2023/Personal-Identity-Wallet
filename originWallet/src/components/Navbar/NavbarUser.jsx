@@ -1,6 +1,3 @@
-
-import Logout from '../Logout';
-
 import * as React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -16,6 +13,9 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import WalletIcon from '@mui/icons-material/Wallet';
 import { Link } from 'react-router-dom';
+
+import Logout from '../Logout';
+
 
 
 function NavbarUser({ setToken}) {

@@ -17,13 +17,13 @@ class Routing{
     constructor(){
         //Initialize cors option with origin parameter
         var corsOptions = {
-            origin: ['http://localhost:5003','http://wallet.origin'],
+            origin: process.env.CORSORIGIN,
         };
         this.#app = this.#express();
         this.#app.use(this.#bodyParser.json());
         this.#app.use(this.#cors(corsOptions));
         //Authetication
-        this.#auth = new Authentication("Secret",30000);
+        this.#auth = new Authentication(process.env.TOKEN_SECRET,process.env.TOKEN_EXPIRE);
         //Data Scrapper
         this.#scrapper = new DataScrapper();
         try{

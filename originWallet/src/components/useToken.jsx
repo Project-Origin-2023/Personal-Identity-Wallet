@@ -12,7 +12,6 @@ export default function useToken() {
 
   const saveToken = userToken => {
     if(userToken===null){
-      saveIsAdmin(null);
       localStorage.removeItem('token');
       setToken(null)
     }else{

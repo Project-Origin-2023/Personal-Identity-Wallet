@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom'
 import ListCredentialsViewModel from '../viewmodel/ListCredentialsViewModel';
 import ListCredentialsView from '../view/ListCredentialsView';
 import BackdropView from '../view/BackdropView';

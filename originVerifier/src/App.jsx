@@ -5,7 +5,6 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import Navbar from './components/Navbar';
 import Home from './components/Home';
 import useToken from './components/useToken';
-import PageState from './components/PageState';
 import Footer from './components/Footer';
 import ConnectController from './controller/ConnectController';
 import PresentationSuccessController from './controller/PresentationSuccessController';

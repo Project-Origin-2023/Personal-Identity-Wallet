@@ -4,7 +4,7 @@ class OpenIdController {
     
     constructor(){
         
-        this.#walletUri = 'http://openid.wallet.origin'
+        this.#walletUri = process.env.OPENID_URI;
         this.#axios = require('axios');
     }
 

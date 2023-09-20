@@ -9,10 +9,10 @@ import {
   CssBaseline,
   Grid,
 } from '@mui/material';
-
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import { LicenseLabel } from '../components/LicenseLabel';
 import { Link } from "react-router-dom";
+
+import { LicenseLabel } from '../components/LicenseLabel';
 
 const LoginView = ({ email, password, setEmail, setPassword, handleLogin }) => {
   return (
