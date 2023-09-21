@@ -129,6 +129,63 @@ it('should return 500 with "Token Missing" message if token is missing', async (
 }
 );
 
+//fa partire una CI
+it('should return 200 with "ci start success" message if the openid components works', async () => {
+  const response = await request(routing.app)
+    .post('/auth/login')
+    .send({ email: email, password: password });
+  expect(response.status).toBe(200);
+  const response2 = await request(routing.app)
+    .post('/ci/continuexdevice')
+    .set('x-access-token', response.body.data.token)
+    .send({uri:"openid-initiate-issuance://?issuer=http%3A%2F%2Fopenid.issuer.origin%2Fissuer-api%2Fdefault%2Foidc%2F&credential_type=PID&pre-authorized_code=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjMDAwNGQ4Mi04YjNjLTQ1ZGUtYjFjYi02ZWVmNjE0MzMyYjEiLCJwcmUtYXV0aG9yaXplZCI6dHJ1ZX0.fz1ayO8o0NGruREXwmtKO54K_Z56nZh7MnOSENN8hBA&user_pin_required=false"});
+  expect(response2.status).toBe(200);
+  console.log(response2)
+  expect(response2.body.description).toEqual("Open ID Request end with success");
+  expect(response2.body.success).toEqual(true);
+});
+
+//Errore CI
+it('should return 500 with "ci start success" message if the openid components', async () => {
+  const response = await request(routing.app)
+    .post('/auth/login')
+    .send({ email: email, password: password });
+  expect(response.status).toBe(200);
+  const response2 = await request(routing.app)
+    .post('/ci/continuexdevice')
+    .set('x-access-token', response.body.data.token)
+    .send({uri:"opensid-initiate-issuance://?"});
+  expect(response2.status).toBe(500);
+});
+
+//fa partire una VP
+it('should return 200 with "vp start success" message if the openid components works', async () => {
+  const response = await request(routing.app)
+    .post('/auth/login')
+    .send({ email: email, password: password });
+  expect(response.status).toBe(200);
+  const response2 = await request(routing.app)
+    .post('/vp/start')
+    .set('x-access-token', response.body.data.token)
+    .send({uri:"openid://?scope=openid&presentation_definition=%7B%22format%22+%3A+null%2C+%22id%22+%3A+%221%22%2C+%22input_descriptors%22+%3A+%5B%7B%22constraints%22+%3A+%7B%22fields%22+%3A+%5B%7B%22filter%22+%3A+%7B%22const%22%3A+%22PID%22%7D%2C+%22id%22+%3A+null%2C+%22path%22+%3A+%5B%22%24.type%22%5D%2C+%22purpose%22+%3A+null%7D%5D%7D%2C+%22format%22+%3A+null%2C+%22group%22+%3A+null%2C+%22id%22+%3A+%221%22%2C+%22name%22+%3A+null%2C+%22purpose%22+%3A+null%2C+%22schema%22+%3A+null%7D%5D%2C+%22name%22+%3A+null%2C+%22purpose%22+%3A+null%2C+%22submission_requirements%22+%3A+null%7D&response_type=vp_token&redirect_uri=http%3A%2F%2Fopenid.verifier.origin%2Fverifier-api%2Fdefault%2Fverify&state=3FR81DO6T9Sv-8j0DiUA4g&nonce=3FR81DO6T9Sv-8j0DiUA4g&client_id=http%3A%2F%2Fopenid.verifier.origin%2Fverifier-api%2Fdefault%2Fverify&response_mode=post"});
+  expect(response2.status).toBe(200);
+  console.log(response2)
+  expect(response2.body.description).toEqual("Open ID Request end with success");
+  expect(response2.body.success).toEqual(true);
+});
+
+//Errore vP
+it('should return 500 with "vp start error" message if the openid components works', async () => {
+  const response = await request(routing.app)
+    .post('/auth/login')
+    .send({ email: email, password: password });
+  expect(response.status).toBe(200);
+  const response2 = await request(routing.app)
+    .post('/vp/start')
+    .set('x-access-token', response.body.data.token)
+    .send({uri:"opens://?"});
+  expect(response2.status).toBe(500);
+});
 
   
 
