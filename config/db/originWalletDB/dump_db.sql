@@ -69,6 +69,8 @@ ALTER TABLE ONLY public.accounts ALTER COLUMN id SET DEFAULT nextval('public.acc
 --
 
 COPY public.accounts (id, email, did, hashed_pass, salt) FROM stdin;
+1	andreibobirica99@gmail.com	did:key:z6MkiF9PT4KjS6cowwSPVdYYCEP4DiRHcMdhWb6z8uD52ahT	59d69d24b25e5b29b54f977019e7e9e6bae8c80dea32c13b31a2ec6902c48d940cf68ab802a1914563c9c7131ced19309bddff3d93fc0e5a216702f40d4a36b4	e1e5b170209a4a543875cbaad4e2e474
+2	mario.rossi@gmail.com	did:key:z6MkweeD5HJ4juSxMWHDPXf3QuSm9DJf3g8YyScukFdMLRRR	d9d58216b660378a7e3c7e645414c27df13d12269b41d965f096f28ae33af4eb5ec67183e5198be7424272eb78344185e825e9ad06704a05063ed0dac15ae95a	1ca7d7b70e174b2d7f68bd63c2a6ea46
 \.
 
 
@@ -76,7 +78,7 @@ COPY public.accounts (id, email, did, hashed_pass, salt) FROM stdin;
 -- Name: accounts_id_seq; Type: SEQUENCE SET; Schema: public; Owner: admin
 --
 
-SELECT pg_catalog.setval('public.accounts_id_seq', 1, false);
+SELECT pg_catalog.setval('public.accounts_id_seq', 2, true);
 
 
 --
